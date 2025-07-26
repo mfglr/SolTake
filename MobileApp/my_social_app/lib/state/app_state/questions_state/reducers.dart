@@ -7,10 +7,16 @@ import 'package:my_social_app/state/entity_state/pagination_state/map_extentions
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
+//questions
 QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
   prev.create(action.question);
 QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action) =>
   prev.delete(action.question);
+QuestionsState markSolutionAsCorrectSuccessReducer(QuestionsState prev, MarkSolutionAsCorrectSuccessAction action) =>
+  prev.markSolutionAsCorrect(action.question, action.solution);
+QuestionsState markSolutionAsIncorrectSuccessReducer(QuestionsState prev, MarkSolutionAsIncorrectSuccessAction action) =>
+  prev.markSolutionAsIncorrect(action.question, action.solution);
+//questions
 
 //comments action
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
@@ -277,8 +283,12 @@ QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTo
 //topic questions
 
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
+  //questions
   TypedReducer<QuestionsState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
+  TypedReducer<QuestionsState,MarkSolutionAsCorrectSuccessAction>(markSolutionAsCorrectSuccessReducer).call,
+  TypedReducer<QuestionsState,MarkSolutionAsIncorrectSuccessAction>(markSolutionAsIncorrectSuccessReducer).call,
+  //questions
 
   //coments
   TypedReducer<QuestionsState,CreateCommentsSuccessAction>(createCommentSuccessReducer).call,

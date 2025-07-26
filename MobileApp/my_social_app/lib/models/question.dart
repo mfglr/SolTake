@@ -4,7 +4,7 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 part 'question.g.dart';
 
 @immutable

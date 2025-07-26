@@ -15,8 +15,8 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_statu
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';

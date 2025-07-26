@@ -46,6 +46,28 @@ void deleteSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void markSolutionAsCorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkSolutionAsCorrectAction){
+    SolutionService()
+      .markAsCorrect(action.solution.id)
+      .then((_) => store.dispatch(MarkSolutionAsCorrectSuccessAction(
+        question: action.question,
+        solution: action.solution
+      )));
+  }
+  next(action);
+}
+void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is MarkSolutionAsIncorrectAction){
+    SolutionService()
+      .markAsIncorrect(action.solution.id)
+      .then((_) => store.dispatch(MarkSolutionAsIncorrectSuccessAction(
+        question: action.question,
+        solution: action.solution
+      )));
+  }
+  next(action);
+}
 //solutions
 
 //question solutions

@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/comment_button.dart';

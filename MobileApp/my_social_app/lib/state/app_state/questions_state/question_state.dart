@@ -3,11 +3,11 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_status.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 
@@ -121,6 +121,10 @@ class QuestionState extends Entity<int> implements Avatar{
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions
     );
+  QuestionState markSolutionAsCorrect(SolutionState solution) =>
+    _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1);
+  QuestionState markSolutionAsIncorrect(SolutionState solution) =>
+    _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions - 1);
   //solutions
 
   
@@ -145,18 +149,6 @@ class QuestionState extends Entity<int> implements Avatar{
   QuestionState removeNewLike(int userId) =>
     _optional(
       newNumberOfLikes: numberOfLikes - 1
-    );
-
-  QuestionState markSolutionAsCorrect(int solutionId) =>
-    _optional(
-      // newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
-      newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1,
-      // newCorrectSolutions: correctSolutions.addInOrder(Id(id: solutionId)),
-    );
-  QuestionState markSolutionAsIncorrect(int solutionId) =>
-    _optional(
-      // newPendingSolutions: pendingSolutions.where((e) => e.id != solutionId),
-      // newIncorrectSolutions: incorrectSolutions.addInOrder(Id(id: solutionId)),
     );
 
   QuestionState createNewSolution(int solutionId) => 
@@ -200,7 +192,6 @@ class QuestionState extends Entity<int> implements Avatar{
           : numberOfVideoSolutions,
     );
  
-  QuestionState markAsSolved() => _optional();
   QuestionState save() => _optional(newIsSaved: true);
   QuestionState unsave() => _optional(newIsSaved: false);
 

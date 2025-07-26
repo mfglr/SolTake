@@ -6,7 +6,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page.dart';
 import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/extract_video_frame_page.dart';

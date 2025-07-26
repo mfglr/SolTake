@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/views/solution/widgets/no_question_solutions/no_question_solutions_constants.dart';
 
 class NoQuestionSolutions extends StatelessWidget {

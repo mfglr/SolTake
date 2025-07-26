@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/views/question/pages/display_question_likes_page/display_question_likes_page.dart';
 
 class DisplayQuestionLikesButton extends StatelessWidget {

@@ -7,6 +7,10 @@ SolutionsState createSolutionSuccessReducer(SolutionsState prev, CreateSolutionS
   => prev.create(action.solution);
 SolutionsState deleteSolutionSuccessReducer(SolutionsState prev, DeleteSolutionSuccessAction action)
   => prev.delete(action.solution);
+SolutionsState markAsCorrectSuccessReducer(SolutionsState prev, MarkSolutionAsCorrectSuccessAction action)
+  => prev.markAsCorrect(action.solution);
+SolutionsState markAsIncorrectSuccessReducer(SolutionsState prev, MarkSolutionAsIncorrectSuccessAction action)
+  => prev.markAsIncorrect(action.solution);
 // solutions
 
 //question solutions
@@ -58,6 +62,8 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   //solutions
   TypedReducer<SolutionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
   TypedReducer<SolutionsState,DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
+  TypedReducer<SolutionsState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectSuccessReducer).call,
+  TypedReducer<SolutionsState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectSuccessReducer).call,
   //solutions
 
   //question solutions
@@ -85,11 +91,4 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsAction>(nextQuestionVideoSolutionsReducer).call,
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsSuccessAction>(nextQuestionVideoSolutionsSuccessReducer).call,
   TypedReducer<SolutionsState,NextQuestionVideoSolutionsFailedAction>(nextQuestionVideoSolutionsFailedReducer).call,
-
-  // TypedReducer<SolutionsState,NextSavedSolutionsAction>(nextSavedSolutionsReducer).call,
-  // TypedReducer<SolutionsState,NextSavedSolutionsSuccessAction>(nextSavedSolutionsSuccessReducer).call,
-  // TypedReducer<SolutionsState,NextSavedSolutionsFailedAction>(nextSavedSolutionsFailedReducer).call,
-
-  // TypedReducer<SolutionsState,SaveSolutionSuccessAction>(saveSolutionSuccessReducer).call,
-  // TypedReducer<SolutionsState,UnsaveSolutionSuccessAction>(unsaveSolutionsSuccessReducer).call,
 ]);

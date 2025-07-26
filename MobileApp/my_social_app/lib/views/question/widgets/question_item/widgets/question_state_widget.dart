@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_status.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_status.dart';
 
 class QuestionStateWidget extends StatelessWidget {
   final QuestionState question;

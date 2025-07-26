@@ -5,7 +5,7 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_search_questions_page/display_search_questions_page_constant.dart';

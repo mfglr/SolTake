@@ -1,8 +1,8 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 
 @immutable

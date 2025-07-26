@@ -2,7 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
@@ -150,7 +150,11 @@ class QuestionUserSaveState extends Entity<int>{
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions
     );
-
+  QuestionUserSaveState markSolutionAsCorrect(SolutionState solution) =>
+    _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1);
+  QuestionUserSaveState markSolutionAsIncorrect(SolutionState solution) =>
+    _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions - 1);
+  
   QuestionUserSaveState like() => _optional(newIsLiked: true, newNumberOfLikes: numberOfLikes + 1);
   QuestionUserSaveState dislike() => _optional(newIsLiked: false, newNumberOfLikes: numberOfLikes - 1); 
   QuestionUserSaveState save() => _optional(newIsSaved: true);

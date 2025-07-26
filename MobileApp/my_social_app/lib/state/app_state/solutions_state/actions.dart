@@ -1,7 +1,7 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 
@@ -65,6 +65,27 @@ class MarkSolutionAsCorrectSuccessAction extends AppAction{
   final SolutionState solution;
 
   const MarkSolutionAsCorrectSuccessAction({
+    required this.question,
+    required this.solution
+  });
+}
+
+@immutable
+class MarkSolutionAsIncorrectAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+
+  const MarkSolutionAsIncorrectAction({
+    required this.question,
+    required this.solution
+  });
+}
+@immutable
+class MarkSolutionAsIncorrectSuccessAction extends AppAction{
+  final QuestionState question;
+  final SolutionState solution;
+
+  const MarkSolutionAsIncorrectSuccessAction({
     required this.question,
     required this.solution
   });

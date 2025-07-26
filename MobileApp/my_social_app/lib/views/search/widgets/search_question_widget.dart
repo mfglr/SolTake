@@ -5,7 +5,7 @@ import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/app_exams_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';

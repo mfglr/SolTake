@@ -19,8 +19,8 @@ import 'package:my_social_app/state/app_state/notification_entity_state.dart/mid
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
@@ -144,6 +144,8 @@ final store = Store(
     //solutions
     createSolutionMiddleware,
     deleteSolutionMiddleware,
+    markSolutionAsCorrectMiddleware,
+    markSolutionAsIncorrectMiddleware,
     nextQuestionSolutionsMiddleware,
     refreshQuestionSolutionsMiddleware,
     nextQuestionCorrectSolutionsMiddleware,
@@ -294,8 +296,6 @@ final store = Store(
 
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
-    markSolutionAsCorrectMiddleware,
-    markSolutionAsIncorrectMiddleware,
     makeSolutionDownvoteMiddleware,
     removeSolutionDownvoteMiddleware,
     nextSolutionUpvotesMiddleware,

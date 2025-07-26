@@ -6,7 +6,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/latex_sperator/latex.dart';
 import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
@@ -77,7 +77,7 @@ class SolutionItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: SolutionStateWidget(solution: solution),
+                      child: SolutionStateWidget(question: question, solution: solution),
                     ),
                     AppDateWidget(
                       dateTime: solution.createdAt,

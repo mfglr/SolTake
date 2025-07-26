@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
 class MarkSolutionAsCorrectButton extends StatelessWidget {
+  final QuestionState question;
   final SolutionState solution;
-  const MarkSolutionAsCorrectButton({super.key,required this.solution});
+  const MarkSolutionAsCorrectButton({
+    super.key,
+    required this.solution,
+    required this.question
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        store.dispatch(MarkSolutionAsCorrectAction(solutionId: solution.id,questionId: solution.questionId));
+        store.dispatch(MarkSolutionAsCorrectAction(question: question, solution: solution));
       },
       style: ButtonStyle(
         padding: WidgetStateProperty.all(const EdgeInsets.all(0)),

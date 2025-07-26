@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia_grid/multimedia_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 
 class QuestionAbstractItemWidget extends StatelessWidget {
   final QuestionState question;

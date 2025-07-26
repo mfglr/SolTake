@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_status.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -93,8 +94,6 @@ class QuestionsState{
         : questionUserSaves,
     );
   }
-
-  //solutions
   QuestionsState deleteSolution(QuestionState question, SolutionState solution){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
@@ -152,7 +151,48 @@ class QuestionsState{
       questionUserLikes: questionUserLikes
     );
   }
-  //solutions
+  QuestionsState markSolutionAsCorrect(QuestionState question, SolutionState solution){
+    if(question.state == QuestionStatus.solved) return this;
+    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
+    return optional(
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        userQuestions[question.userId]?.updateOne(question.markSolutionAsCorrect(solution))
+      ),
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        question.userId,
+        userSolvedQuestions[question.userId]?.addInOrder(question.markSolutionAsCorrect(solution))
+      ),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        question.userId,
+        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
+      ),
+      newQuestionUserSaves: questionUserSave != null
+        ? questionUserSaves.updateOne(questionUserSave.markSolutionAsCorrect(solution))
+        : questionUserSaves,
+    );
+  }
+  QuestionsState markSolutionAsIncorrect(QuestionState question, SolutionState solution){
+    if(question.state == QuestionStatus.unsolved) return this;
+    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
+    return optional(
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        userQuestions[question.userId]?.updateOne(question.markSolutionAsIncorrect(solution))
+      ),
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        question.userId,
+        userSolvedQuestions[question.userId]?.addInOrder(question.markSolutionAsIncorrect(solution))
+      ),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        question.userId,
+        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
+      ),
+      newQuestionUserSaves: questionUserSave != null
+        ? questionUserSaves.updateOne(questionUserSave.markSolutionAsIncorrect(solution))
+        : questionUserSaves,
+    );
+  }
 
   QuestionsState like(QuestionState question, QuestionUserLikeState questionUserLike){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);

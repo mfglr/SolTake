@@ -36,6 +36,7 @@ class SolutionsState {
       questionVideoSolutions: newQuestionVideoSolutions ?? questionVideoSolutions,
     );
 
+  //solutions
   SolutionsState create(SolutionState solution) => 
     _optional(
       newQuestionSolutions: questionSolutions.updateElsePrependOne(
@@ -96,6 +97,45 @@ class SolutionsState {
         : questionVideoSolutions,
       // newSavedSolutions: savedSolutions.removeOne(solution.questionId)
     );
+  SolutionsState markAsCorrect(SolutionState solution) =>
+    _optional(
+      newQuestionSolutions: questionSolutions.setOne(
+        solution.questionId,
+        questionSolutions[solution.questionId]?.updateOne(solution.markAsCorrect())
+      ),
+      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
+        solution.questionId,
+        questionCorrectSolutions[solution.questionId]?.addInOrder(solution.markAsCorrect())
+      ),
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
+        solution.questionId,
+        questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
+      ),
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
+        solution.questionId,
+        questionVideoSolutions[solution.questionId]?.updateOne(solution.markAsCorrect())
+      )
+    );
+  SolutionsState markAsIncorrect(SolutionState solution) =>
+    _optional(
+      newQuestionSolutions: questionSolutions.setOne(
+        solution.questionId,
+        questionSolutions[solution.questionId]?.updateOne(solution.markAsIncorrect())
+      ),
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
+        solution.questionId,
+        questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
+      ),
+      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
+        solution.questionId,
+        questionIncorrectSolutions[solution.questionId]?.addInOrder(solution.markAsIncorrect())
+      ),
+      newQuestionVideoSolutions: questionVideoSolutions.setOne(
+        solution.questionId,
+        questionVideoSolutions[solution.questionId]?.updateOne(solution.markAsIncorrect())
+      )
+    );
+  //solutions
 
   // question solutions;
   SolutionsState startLoadingNextQuestionSolutions(int questionId) => 

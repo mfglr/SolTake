@@ -36,11 +36,6 @@ EntityState<int,SolutionState> removeDownVoteAction(EntityState<int,SolutionStat
 EntityState<int,SolutionState> addNewSolutionDownvoteReducer(EntityState<int,SolutionState> prev,AddNewSolutionDownvoteAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.addNewDownvote(action.solutionUserVoteState));
 
-EntityState<int,SolutionState> markAsCorrectReducer(EntityState<int,SolutionState> prev, MarkSolutionAsCorrectSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.markAsCorrect()) ;
-EntityState<int,SolutionState> markAsIncorrectReducer(EntityState<int,SolutionState> prev, MarkSolutionAsIncorrectSuccessAction action)
-  => prev.updateOne(prev.getValue(action.solutionId)!.markAsIncorrect());
-
 EntityState<int,SolutionState> saveSolutionReducer(EntityState<int,SolutionState> prev, SaveSolutionAction action)
   => prev.updateOne(prev.getValue(action.solutionId)!.save()) ;
 EntityState<int,SolutionState> unsaveSolutionReducer(EntityState<int,SolutionState> prev, UnsaveSolutionAction action)
@@ -63,9 +58,6 @@ Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineRed
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesAction>(nextDownvotesReducer).call,
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesSuccessAction>(nextDownvotesSuccessReducer).call,
   TypedReducer<EntityState<int,SolutionState>,NextSolutionDownvotesFailedAction>(nextDownvotesFailedReducer).call,
-
-  TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsCorrectSuccessAction>(markAsCorrectReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectReducer).call,
 
   TypedReducer<EntityState<int,SolutionState>,SaveSolutionAction>(saveSolutionReducer).call,
   TypedReducer<EntityState<int,SolutionState>,UnsaveSolutionAction>(unsaveSolutionReducer).call,
