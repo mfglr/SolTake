@@ -10,6 +10,7 @@ class QuestionsAction extends AppAction{
   const QuestionsAction();
 }
 
+//questions
 @immutable
 class CreateQuestionAction extends QuestionsAction{
   final String id;
@@ -44,7 +45,37 @@ class DeleteQuestionSuccessAction extends QuestionsAction{
   final QuestionState question;
   const DeleteQuestionSuccessAction({required this.question});
 }
+//questions
 
+//search page questions
+@immutable
+class NextSearchPageQuestionsAction extends AppAction{
+  const NextSearchPageQuestionsAction();
+}
+@immutable
+class NextSearchPageQuestionsSuccessAction extends AppAction{
+  final Iterable<QuestionState> questions;
+  const NextSearchPageQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class NextSearchPageQuestionsFailedAction extends AppAction{
+  const NextSearchPageQuestionsFailedAction();
+}
+
+@immutable
+class RefreshSearchPageQuestionsAction extends AppAction{
+  const RefreshSearchPageQuestionsAction();
+}
+@immutable
+class RefreshSearchPageQuestionsSuccessAction extends AppAction{
+  final Iterable<QuestionState> questions;
+  const RefreshSearchPageQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class RefreshSearchPageQuestionsFailedAction extends AppAction{
+  const RefreshSearchPageQuestionsFailedAction();
+}
+//search page questions
 
 //question user likes
 @immutable

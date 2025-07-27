@@ -1,6 +1,7 @@
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/search_page_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:redux/redux.dart';
 
@@ -14,6 +15,29 @@ QuestionsState markSolutionAsCorrectSuccessReducer(QuestionsState prev, MarkSolu
 QuestionsState markSolutionAsIncorrectSuccessReducer(QuestionsState prev, MarkSolutionAsIncorrectSuccessAction action) =>
   prev.markSolutionAsIncorrect(action.question, action.solution);
 //questions
+
+//search page state
+QuestionsState nextSearchPageQuestionsReducer(QuestionsState prev, NextSearchPageQuestionsAction action) =>
+  prev.startLoadingNextSearchPageQuestions();
+QuestionsState nextSearchPageQuestionsSuccessReducer(QuestionsState prev, NextSearchPageQuestionsSuccessAction action) =>
+  prev.addNextPageSearchPageQuestions(action.questions);
+QuestionsState nextSearchPageQuestionsFailedReducer(QuestionsState prev, NextSearchPageQuestionsFailedAction action) =>
+  prev.stopLoadingNextSearchPageQuestions();
+
+QuestionsState refreshSearchPageQuestionsReducer(QuestionsState prev, RefreshSearchPageQuestionsAction action) =>
+  prev.startLoadingNextSearchPageQuestions();
+QuestionsState refreshSearchPageQuestionsSuccessReducer(QuestionsState prev, RefreshSearchPageQuestionsSuccessAction action) =>
+  prev.refreshSearchPageQuestions(action.questions);
+QuestionsState refreshSearchPageQuestionsFailedReducer(QuestionsState prev, RefreshSearchPageQuestionsFailedAction action) =>
+  prev.stopLoadingNextSearchPageQuestions();
+
+QuestionsState changeExamReducer(QuestionsState prev, ChangeExamAction action) =>
+  prev.startLoadingNextSearchPageQuestions();
+QuestionsState changeSubjectReducer(QuestionsState prev, ChangeSubjectAction action) =>
+  prev.startLoadingNextSearchPageQuestions();
+QuestionsState changeTopicReducer(QuestionsState prev, ChangeTopicAction action) =>
+  prev.startLoadingNextSearchPageQuestions();
+//search page state
 
 //comments action
 QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
@@ -234,6 +258,20 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,RefreshHomePageQuestionsSuccessAction>(refreshHomePageQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,RefreshHomePageQuestionsFailedAction>(refreshHomePageQuestionsFailedReducer).call,
   // home page questions
+
+  // search page questions
+  TypedReducer<QuestionsState,NextSearchPageQuestionsAction>(nextSearchPageQuestionsReducer).call,
+  TypedReducer<QuestionsState,NextSearchPageQuestionsSuccessAction>(nextSearchPageQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,NextSearchPageQuestionsFailedAction>(nextSearchPageQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshSearchPageQuestionsAction>(refreshSearchPageQuestionsReducer).call,
+  TypedReducer<QuestionsState,RefreshSearchPageQuestionsSuccessAction>(refreshSearchPageQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,RefreshSearchPageQuestionsFailedAction>(refreshSearchPageQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,ChangeExamAction>(changeExamReducer).call,
+  TypedReducer<QuestionsState,ChangeSubjectAction>(changeSubjectReducer).call,
+  TypedReducer<QuestionsState,ChangeTopicAction>(changeTopicReducer).call,
+  // search page questions
 
   //user questions
   TypedReducer<QuestionsState,NextUserQuestionsAction>(nextUserQuestionsReducer).call,

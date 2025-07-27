@@ -2,15 +2,17 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/app_exams_state/actions.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/exams_state/actions.dart';
+import 'package:my_social_app/state/app_state/exams_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/actions.dart';
+import 'package:my_social_app/state/app_state/subjects_state/selectors.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
@@ -39,7 +41,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
               child: Container(
                 margin: const EdgeInsets.all(5),
                 child: StoreConnector<AppState,Iterable<ExamState>>(
-                  onInit: (store) => getNextPageIfNoPage(store,store.state.appExams,const NextExamsAction()),
+                  onInit: (store) => getNextPageIfNoPage(store,selectExams(store),const NextExamsAction()),
                   converter: (store) => store.state.examEntityState.values,
                   builder:(context,exams) => DropdownSearch<String>(
                     selectedItem: exams.where((x) => x.id == _examId).firstOrNull?.initialism,
@@ -60,7 +62,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
                         _topicId = null;
                       });
                       
-                      getNextPageIfNoPage(store, exam.subjects, NextExamSubjectsAction(examId: exam.id));
+                      getNextPageIfNoPage(store, selectExamSubjects(store, exam.id), NextExamSubjectsAction(examId: exam.id));
                       store.dispatch(FirstSearchQuestionsAction(examId: _examId, subjectId: _subjectId, topicId: _topicId));
                     },
                   ),
@@ -71,7 +73,7 @@ class _SearchQuestionWidgetState extends State<SearchQuestionWidget> {
               child: Container(
                 margin: const EdgeInsets.all(5),
                 child: StoreConnector<AppState,Iterable<SubjectState>>(
-                  converter: (store) => _examId != null ? store.state.selectExamSubjects(_examId!) : [],
+                  converter: (store) => _examId != null ? selectExamSubjects(store, _examId!).values : [],
                   builder: (context,subjects) => DropdownSearch<String>(
                     enabled: subjects.isNotEmpty,
                     dropdownDecoratorProps: DropDownDecoratorProps(

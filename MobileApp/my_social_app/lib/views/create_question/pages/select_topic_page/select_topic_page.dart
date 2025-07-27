@@ -10,7 +10,7 @@ import 'package:my_social_app/views/create_question/pages/select_topic_page/widg
 import 'package:my_social_app/views/create_question/widgets/create_question_button/create_question_button.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/views/create_question/pages/add_question_medias_page/add_question_medias_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';

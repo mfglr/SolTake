@@ -6,6 +6,8 @@ import 'package:my_social_app/services/question_user_save_service.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/search_page_state/actions.dart';
+import 'package:my_social_app/state/app_state/search_page_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
@@ -44,6 +46,56 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   next(action);
 }
 
+//search page state
+void changeExamMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is ChangeExamAction){
+    final searchPageState = selectSearchPageState(store).changeExam(action.exam);
+    final pagination = selectSearchPageQuestion(store);
+    QuestionService()
+      .searchQuestions(searchPageState.exam?.id, searchPageState.subject?.id, searchPageState.topic?.id, pagination.first)
+      .then((questions) => store.dispatch(RefreshSearchPageQuestionsSuccessAction(
+        questions: questions.map(((e) => e.toQuestionState()))
+      )))
+      .catchError((e){
+        store.dispatch(const RefreshSearchPageQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+void changeSubjectMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is ChangeSubjectAction){
+    final searchPageState = selectSearchPageState(store).changeSubject(action.subject);
+    final pagination = selectSearchPageQuestion(store);
+    QuestionService()
+      .searchQuestions(searchPageState.exam?.id, searchPageState.subject?.id, searchPageState.topic?.id, pagination.first)
+      .then((questions) => store.dispatch(RefreshSearchPageQuestionsSuccessAction(
+        questions: questions.map(((e) => e.toQuestionState()))
+      )))
+      .catchError((e){
+        store.dispatch(const RefreshSearchPageQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+void changeTopicMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is ChangeTopicAction){
+    final searchPageState = selectSearchPageState(store).changeTopic(action.topic);
+    final pagination = selectSearchPageQuestion(store);
+    QuestionService()
+      .searchQuestions(searchPageState.exam?.id, searchPageState.subject?.id, searchPageState.topic?.id, pagination.first)
+      .then((questions) => store.dispatch(RefreshSearchPageQuestionsSuccessAction(
+        questions: questions.map(((e) => e.toQuestionState()))
+      )))
+      .catchError((e){
+        store.dispatch(const RefreshSearchPageQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+//search page state
 
 //question user likes;
 void likeQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){

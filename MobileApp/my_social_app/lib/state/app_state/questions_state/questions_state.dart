@@ -614,6 +614,17 @@ class QuestionsState{
     );
   //topic questions
 
+  //search questions
+  QuestionsState startLoadingNextSearchPageQuestions() =>
+    _optional(newSearchPageQuestions: searchPageQuestions.startLoadingNext());
+  QuestionsState addNextPageSearchPageQuestions(Iterable<QuestionState> questions) =>
+    _optional(newSearchPageQuestions: searchPageQuestions.addNextPage(questions));
+  QuestionsState refreshSearchPageQuestions(Iterable<QuestionState> questions) =>
+    _optional(newSearchPageQuestions: searchPageQuestions.refreshPage(questions));
+  QuestionsState stopLoadingNextSearchPageQuestions() =>
+    _optional(newSearchPageQuestions: searchPageQuestions.stopLoadingNext());
+  //search quesitons
+
   QuestionsState increaseNumberOfComments(QuestionState question){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(

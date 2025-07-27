@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_status.dart';
@@ -127,15 +127,11 @@ class QuestionState extends Entity<int> implements Avatar{
     _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions - 1);
   //solutions
 
-  
   QuestionState like() =>
     _optional(
       newIsLiked: true,
       newNumberOfLikes: numberOfLikes + 1
     );
-
-  
-
   QuestionState dislike() => 
     _optional(
       newIsLiked: false,
@@ -174,18 +170,6 @@ class QuestionState extends Entity<int> implements Avatar{
         solution.state == SolutionStatus.correct
           ? numberOfCorrectSolutions - 1
           : numberOfCorrectSolutions,
-      // newCorrectSolutions: 
-      //   solution.state == SolutionStatus.correct
-      //     ? correctSolutions.where((e) => e.id != solution.id) 
-      //     : correctSolutions,
-      // newPendingSolutions: 
-      //   solution.state == SolutionStatus.pending 
-      //     ? pendingSolutions.where((e) => e.id != solution.id)
-      //     : pendingSolutions,
-      // newIncorrectSolutions: 
-      //   solution.state == SolutionStatus.incorrect
-      //     ? incorrectSolutions.where((e) => e.id != solution.id)
-      //     : incorrectSolutions,
       newNumberOfVideoSolutions: 
         solution.medias.any((e) => e.multimediaType == MultimediaType.video)
           ? numberOfVideoSolutions - 1

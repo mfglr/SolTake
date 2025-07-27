@@ -7,13 +7,13 @@ import 'package:my_social_app/state/app_state/comment_entity_state/comment_state
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/exams_state/middleware.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
@@ -24,6 +24,7 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
+import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
@@ -33,7 +34,10 @@ import 'package:my_social_app/state/app_state/solutions_state/solutions_state.da
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/subjects_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subjects_state.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
@@ -77,6 +81,16 @@ final store = Store(
       children: <int, Pagination<int, CommentState>>{}
     ),
 
+    searchPageState: const SearchPageState(
+      exam: null,
+      subject: null,
+      topic: null
+    ),
+
+    exams: Pagination.init(examsPerPage, true),
+
+    subjects: const SubjectsState(examSubjects: <int,Pagination<int,SubjectState>>{}),
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -98,7 +112,6 @@ final store = Store(
 
     questionEntityState: EntityState(),
     examEntityState: EntityState(),
-    appExams: Pagination.init(examsPerPage, true),
     login: Login.loading(),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
@@ -115,6 +128,11 @@ final store = Store(
     //questions
     createQuestionMiddleware,
     deleteQuestionMiddleware,
+
+    changeExamMiddleware,
+    changeSubjectMiddleware,
+    changeTopicMiddleware,
+
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
     nextQuestionUserLikesMiddleware,
@@ -156,8 +174,6 @@ final store = Store(
     refreshQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
     refreshQuestionVideoSolutionsMiddleware,
-    // nextSavedSolutionsMiddleware,
-    // refreshSavedSolutionsMiddleware,
     saveSolutionMiddeleware,
     unsaveSolutionMiddeleware,
     //solutions
@@ -169,6 +185,16 @@ final store = Store(
     nextSolutionCommentsMiddleware,
     refreshSolutionCommentsMiddleware,
     //comments
+
+    //exams middlewares
+    nextExamsMiddleware,
+    refreshExamsMiddleware,
+    //exams middlewares
+
+    //subjects middlewares
+    nextExamSubjectsMiddleware,
+    refreshExamSubjectsMiddleware,
+    //subjects middlewares
 
     //user user block middlewares
     blockUserMiddleware,
@@ -211,9 +237,6 @@ final store = Store(
     nextTransactionsMiddleware,
     firstTransactionsMiddleware,
     //transactions state
-
-    //exams middlewares
-    nextExamsMidleware,
 
     //Comment entity state middleware
     getNextPageCommentLikesMiddleware,
@@ -278,7 +301,6 @@ final store = Store(
 
     //Exam entity state
     loadExamMiddleare,
-    nextExamSubjectsMiddleware,
 
     //subject entity state
     loadSubjectMiddleware,

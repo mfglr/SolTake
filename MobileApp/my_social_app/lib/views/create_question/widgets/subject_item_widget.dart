@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page/select_topic_page.dart';
 
 class SubjectItemWidget extends StatelessWidget {

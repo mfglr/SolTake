@@ -30,7 +30,8 @@ class AppClient{
   Uri generateUri(String url) => Uri.parse("$apiUrl/$url");
   
   Future<StreamedResponse> send(BaseRequest request, {Map<String, String>? headers}) async {
-    request.headers.addAll(await getHeader());
+    var h = await getHeader();
+    request.headers.addAll(h);
     if(headers != null) request.headers.addAll(headers);
 
     var response = await request.send();

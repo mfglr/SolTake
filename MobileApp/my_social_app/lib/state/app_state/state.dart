@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/exam_state.dart';
+import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
@@ -18,12 +18,14 @@ import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/subject_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
+import 'package:my_social_app/state/app_state/subjects_state/subjects_state.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/topic_request_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
@@ -42,6 +44,9 @@ class AppState{
   final QuestionsState questions;
   final SolutionsState solutions;
   final CommentsState comments;
+  final SearchPageState searchPageState;
+  final Pagination<int,ExamState> exams;
+  final SubjectsState subjects;
 
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
@@ -63,7 +68,6 @@ class AppState{
 
   final EntityState<int,QuestionState> questionEntityState;
   final EntityState<int,ExamState> examEntityState;
-  final Pagination<int,Id<int>> appExams;
   final Pagination<int,NotificationState> notifications;
   final EntityState<int,SubjectState> subjectEntityState;
   final Login login;
@@ -80,6 +84,9 @@ class AppState{
     required this.questions,
     required this.solutions,
     required this.comments,
+    required this.searchPageState,
+    required this.exams,
+    required this.subjects,
     
     required this.searchUsers,
     required this.searchQuestions,
@@ -101,7 +108,6 @@ class AppState{
 
     required this.questionEntityState,
     required this.examEntityState,
-    required this.appExams,
     required this.conversations,
     required this.login,
     required this.subjectEntityState,
@@ -145,6 +151,16 @@ class AppState{
       children: <int, Pagination<int, CommentState>>{}
     ),
 
+    searchPageState: const SearchPageState(
+      exam: null,
+      subject: null,
+      topic: null
+    ),
+
+    exams: Pagination.init(examsPerPage, true),
+
+    subjects: const SubjectsState(examSubjects: <int,Pagination<int,SubjectState>>{}),
+
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
@@ -165,7 +181,6 @@ class AppState{
 
     questionEntityState: EntityState(),
     examEntityState: EntityState(),
-    appExams: Pagination.init(examsPerPage, true),
     conversations: Pagination.init(conversationsPerPage,true),
     login: Login.init(),
     
@@ -228,13 +243,6 @@ class AppState{
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-
-  //select exams
-  Iterable<ExamState> get selectExams => appExams.values.map((e) => examEntityState.getValue(e.id)!);
-
-  //Select Subjects
-  Iterable<SubjectState> selectExamSubjects(int examId)
-    => examEntityState.getValue(examId)!.subjects.values.map((e) => subjectEntityState.getValue(e.id)!);
 
   // select topics
   Iterable<TopicState> selectSubjectTopics(int subjectId)
