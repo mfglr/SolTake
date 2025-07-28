@@ -27,6 +27,7 @@ import 'package:my_social_app/state/app_state/subject_request_state/reducers.dar
 import 'package:my_social_app/state/app_state/subjects_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/reducers.dart';
+import 'package:my_social_app/state/app_state/topics_state/reducers.dart';
 import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
@@ -46,6 +47,7 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   searchPageState: searchPageReducers(prev.searchPageState, action),
   exams: examsReducer(prev.exams, action),
   subjects: subjectsReducer(prev.subjects, action),
+  topics: topicsReducers(prev.topics, action),
 
   searchUsers: searchUsersReducers(prev.searchUsers,action),
   searchQuestions: searchQuestionsReducer(prev.searchQuestions,action),

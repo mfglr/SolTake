@@ -1,5 +1,5 @@
 import 'package:my_social_app/state/app_state/topic_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity_state.dart';
 import 'package:redux/redux.dart';
 

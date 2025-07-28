@@ -21,22 +21,22 @@ class SubjectItemWidget extends StatelessWidget {
                 .of(context)
                 .push(MaterialPageRoute(builder: (context) => SelectTopicPage(subjectId: subject.id)))
                 .then((value){
-                  if(value == null) return;
-                  if(context.mounted){
-                    Navigator
-                      .of(context)
-                      .pop((
-                        subjectId: subject.id,
-                        topicId: value.topicId,
-                        content: value.content,
-                        medias: value.medias
-                      ));
-                  }
-                  
-                })
-            ,
+                  if(value == null || !context.mounted) return;
+                  Navigator
+                    .of(context)
+                    .pop((
+                      subjectId: subject.id,
+                      topicId: value.topicId,
+                      content: value.content,
+                      medias: value.medias
+                    ));
+                }),
             style: ButtonStyle(
-              shape: WidgetStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))))
+              shape: WidgetStateProperty.all(
+                const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))
+                )
+              )
             ),
             child: Text(
               textAlign: TextAlign.center,

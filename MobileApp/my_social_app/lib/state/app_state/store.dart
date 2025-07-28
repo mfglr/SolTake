@@ -39,6 +39,9 @@ import 'package:my_social_app/state/app_state/subject_request_state/middlewares.
 import 'package:my_social_app/state/app_state/subjects_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subjects_state.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/topics_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
@@ -88,8 +91,8 @@ final store = Store(
     ),
 
     exams: Pagination.init(examsPerPage, true),
-
     subjects: const SubjectsState(examSubjects: <int,Pagination<int,SubjectState>>{}),
+    topics: const TopicsState(subjectTopics: <int, Pagination<int, TopicState>>{}),
 
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
@@ -195,6 +198,11 @@ final store = Store(
     nextExamSubjectsMiddleware,
     refreshExamSubjectsMiddleware,
     //subjects middlewares
+
+    //topics middlewares
+    nextSubjectTopicsMiddleware,
+    refreshSubjectTopicsMiddleware,
+    //topics middlewares
 
     //user user block middlewares
     blockUserMiddleware,

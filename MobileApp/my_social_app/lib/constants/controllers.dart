@@ -2,7 +2,6 @@ const userController = "users";
 const userUserSearchController = "userUserSearchs";
 const followController = "follows";
 const examController = "exams";
-const topicController = "topics";
 const questionController = "questions";
 const questionUserLikeController = "QuestionUserLikes";
 const solutionController = "solutions";

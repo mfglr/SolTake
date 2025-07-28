@@ -17,20 +17,3 @@ class AddSubjectsAction extends AppAction{
   final Iterable<SubjectState> subjects;
   const AddSubjectsAction({required this.subjects});
 }
-
-@immutable
-class NextSubjectTopicsAction extends AppAction{
-  final int subjectId;
-  const NextSubjectTopicsAction({required this.subjectId});
-}
-@immutable
-class NextSubjectTopicsSuccessAction extends AppAction{
-  final int subjectId;
-  final Iterable<int> topicIds;
-  const NextSubjectTopicsSuccessAction({required this.subjectId, required this.topicIds});
-}
-@immutable
-class NextSubjectTopicsFailedAction extends AppAction{
-  final int subjectId;
-  const NextSubjectTopicsFailedAction({required this.subjectId});
-}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 
 @immutable
 class SearchPageState {

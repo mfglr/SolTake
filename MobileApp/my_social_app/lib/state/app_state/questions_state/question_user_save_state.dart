@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/questions_state/question_state.dar
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable

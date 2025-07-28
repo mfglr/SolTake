@@ -26,8 +26,9 @@ import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subjects_state.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/topic_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/topic_request_state.dart';
+import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
@@ -47,6 +48,7 @@ class AppState{
   final SearchPageState searchPageState;
   final Pagination<int,ExamState> exams;
   final SubjectsState subjects;
+  final TopicsState topics;
 
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,Id<int>> searchQuestions;
@@ -87,6 +89,7 @@ class AppState{
     required this.searchPageState,
     required this.exams,
     required this.subjects,
+    required this.topics,
     
     required this.searchUsers,
     required this.searchQuestions,
@@ -158,8 +161,8 @@ class AppState{
     ),
 
     exams: Pagination.init(examsPerPage, true),
-
     subjects: const SubjectsState(examSubjects: <int,Pagination<int,SubjectState>>{}),
+    topics: const TopicsState(subjectTopics: <int, Pagination<int, TopicState>>{}),
 
     searchUsers: Pagination.init(usersPerPage, true),
     searchQuestions: Pagination.init(questionsPerPage, true),
@@ -227,14 +230,6 @@ class AppState{
   UserState? get currentUser => userEntityState.getValue(login.login!.id);
 
   //Select questions
-  Iterable<QuestionState> selectSubjectQuestions(int subjectId)
-    => subjectEntityState.getValue(subjectId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> selectTopicQuestions(int topicId)
-    => topicEntityState.getValue(topicId)!.questions.values.map((e) => questionEntityState.getValue(e.id)!);
-  Iterable<QuestionState> get selectSearchQuestions
-    => searchQuestions.values.map((e) => questionEntityState.getValue(e.id)!);
-
-  QuestionState? selectQuestion(int questionId) => questionEntityState.getValue(questionId);
 
   //Select comments
   Iterable<CommentState> getSolutionComments(int solutionId)
@@ -243,10 +238,6 @@ class AppState{
     => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
   Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
     => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-
-  // select topics
-  Iterable<TopicState> selectSubjectTopics(int subjectId)
-    => subjectEntityState.getValue(subjectId)!.topics.values.map((e) => topicEntityState.getValue(e.id)!);
 
   //select privacy policy
   String? get selectPrivacyPolicy => policyState.privacyPolicies[login.login?.language];
