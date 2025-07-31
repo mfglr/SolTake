@@ -1,6 +1,5 @@
 const userController = "users";
 const userUserSearchController = "userUserSearchs";
-const followController = "follows";
 const examController = "exams";
 const questionController = "questions";
 const questionUserLikeController = "QuestionUserLikes";

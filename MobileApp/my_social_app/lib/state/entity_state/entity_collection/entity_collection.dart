@@ -14,7 +14,7 @@ class EntityCollection<K,V> {
   EntityCollection<K,V> notFound(K key) => EntityCollection._(_map.setOne(key, EntityContainer.notFound()));
   
   EntityCollection<K,V> setOne(K key, V? entity) => EntityCollection._(_map.setOne(key,this[key].updateOne(entity)));
-  EntityCollection<K,V> setMany(Map<K, V?> map) => EntityCollection._(_map.setMany(map));
+  // EntityCollection<K,V> setMany(Map<K, V?> map) => EntityCollection._(_map.setMany(map));
   
   EntityContainer<V> operator[](K key) => _map[key] ?? EntityContainer.notLoading();
 }

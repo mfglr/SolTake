@@ -44,6 +44,7 @@ import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
+import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
@@ -62,7 +63,9 @@ final store = Store(
   initialState: AppState(
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
-      usersByUserName: EntityCollection<String, UserState>()
+      usersByUserName: EntityCollection<String, UserState>(),
+      followeds: const <int, Pagination<int, FollowState>>{},
+      followers: const <int, Pagination<int, FollowState>>{}
     ),
     
     questions: QuestionsState(
@@ -139,6 +142,12 @@ final store = Store(
     //users
     loadUserByIdMiddleware,
     loadUserByUserNameMiddleware,
+    followMiddleware,
+    unfollowMiddleware,
+    nextFollowersMiddleware,
+    refreshFollowersMiddleware,
+    nextFollowedsMiddleware,
+    refreshFollowedsMiddleware,
     //users
 
     //questions
@@ -295,20 +304,6 @@ final store = Store(
 
     //message
     nextUserMessagesMiddleware,
-
-    //user entity state
-    // followMiddleware,
-    // unfollowMiddleware,
-    // removeFollowerMiddleware,
-
-    // nextUserFollowersMiddleware,
-    // nextUserFollowedsMiddleware,
-
-    // updateUserNameMiddleware,
-    // updateNameMiddleware,
-    // updateBiographyMidleware,
-    // uploadUserImageMiddleware,
-    // removeUserImageMiddleware,
     
     //Exam requests state
     createExamRequestMiddleware,

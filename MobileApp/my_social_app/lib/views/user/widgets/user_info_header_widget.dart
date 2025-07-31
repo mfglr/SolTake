@@ -81,7 +81,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
                           .push(
                             MaterialPageRoute(
                               builder: (context) => UserFollowersPage(
-                                userId: user.id
+                                user: user
                               )
                             )
                           ),
@@ -110,7 +110,7 @@ class UserInfoHeaderWidget extends StatelessWidget {
               
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(userId: user.id)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserFollowedsPage(user: user)));
                     },
                     style: ButtonStyle(
                       padding: WidgetStateProperty.all(EdgeInsets.zero),

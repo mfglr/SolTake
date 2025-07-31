@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/users_state/selectors.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
@@ -35,16 +36,66 @@ class UsersState {
 
   UsersState createQuestion(QuestionState question) =>
     _optional(
-      newUsersById: usersById.updateOne(question.userId, usersById[question.userId].entity?.createQuestion()),
-      newUsersByUserName: usersByUserName.updateOne(question.userName, usersByUserName[question.userName].entity?.createQuestion())
+      newUsersById:
+        usersById
+          .setOne(question.userId, usersById[question.userId].entity?.createQuestion()),
+      newUsersByUserName:
+        usersByUserName
+          .setOne(question.userName, usersByUserName[question.userName].entity?.createQuestion())
     );
 
-  UsersState follow(UserState follower, UserState followed) =>
+  UsersState follow(UserState follower, UserState followed, int followId) =>
     _optional(
-      newUsersById: usersById.setOne(follower.id, followed.follow()),
-      newUsersByUserName: usersByUserName.setOne(follower.userName, followed.follow()),
-      newFolloweds: followeds.setOne(follower.id, followeds[follower.id]?.prependOne(followed.toFollowed()))
+      newUsersById:
+        usersById
+          .setOne(followed.id, followed.follow())
+          .setOne(follower.id, follower.increaseNumberFolloweds()),
+      newUsersByUserName:
+        usersByUserName
+          .setOne(followed.userName, followed.follow())
+          .setOne(follower.userName, follower.increaseNumberFolloweds()),
+      newFolloweds:
+        followeds
+          .setOne(follower.id, followeds[follower.id]?.addOne(followed.toFollowed(followId))),
+      newFollowers:
+        followers
+          .setOne(followed.id, followers[followed.id]?.addOne(follower.toFollower(followId)))
     );
+  UsersState unfollow(UserState follower, UserState followed) =>
+    _optional(
+      newUsersById:
+        usersById
+          .setOne(followed.id, followed.unfollow())
+          .setOne(follower.id, follower.decreaseNumberFolloweds()),
+      newUsersByUserName:
+        usersByUserName
+          .setOne(followed.userName, followed.unfollow())
+          .setOne(follower.userName, follower.decreaseNumberFolloweds()),
+      newFolloweds:
+        followeds
+          .setOne(follower.id, followeds[follower.id]?.where((e) => e.userId != followed.id)),
+      newFollowers:
+        followers
+          .setOne(followed.id, followers[followed.id]?.where((e) => e.userId != follower.id))
+    );
+  
+  UsersState startLoadingNextFollowers(int userId) =>
+    _optional(newFollowers: followers.setOne(userId, selectFollowersFromState(this,userId).startLoadingNext()));
+  UsersState addNextFollowers(int userId, Iterable<FollowState> follows) =>
+    _optional(newFollowers: followers.setOne(userId, selectFollowersFromState(this,userId).addNextPage(follows)));
+  UsersState refreshFollowers(int userId, Iterable<FollowState> follows) =>
+    _optional(newFollowers: followers.setOne(userId, selectFollowersFromState(this,userId).refreshPage(follows)));
+  UsersState stopLoadingNextFollowers(int userId) =>
+    _optional(newFollowers: followers.setOne(userId, selectFollowersFromState(this,userId).stopLoadingNext()));
+
+  UsersState startLoadingNextFolloweds(int userId) =>
+    _optional(newFolloweds: followeds.setOne(userId, selectFollowedsFromState(this,userId).startLoadingNext()));
+  UsersState addNextFolloweds(int userId, Iterable<FollowState> follows) =>
+    _optional(newFolloweds: followeds.setOne(userId, selectFollowedsFromState(this,userId).addNextPage(follows)));
+  UsersState refreshFolloweds(int userId, Iterable<FollowState> follows) =>
+    _optional(newFolloweds: followeds.setOne(userId, selectFollowedsFromState(this,userId).refreshPage(follows)));
+  UsersState stopLoadingNextFolloweds(int userId) =>
+    _optional(newFolloweds: followeds.setOne(userId, selectFollowedsFromState(this,userId).stopLoadingNext()));
 
   UsersState loadUsersById(int id) => _optional(newUsersById: usersById.loading(id));
   UsersState successUsersById(UserState user) => _optional(newUsersById: usersById.success(user.id, user));

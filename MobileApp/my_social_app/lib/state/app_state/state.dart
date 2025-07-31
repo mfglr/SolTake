@@ -31,6 +31,7 @@ import 'package:my_social_app/state/app_state/topic_requests_state/topic_request
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
+import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
@@ -131,7 +132,9 @@ class AppState{
   AppState clear() => AppState(
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
-      usersByUserName: EntityCollection<String, UserState>()
+      usersByUserName: EntityCollection<String, UserState>(),
+      followeds: const <int, Pagination<int, FollowState>>{},
+      followers: const <int, Pagination<int, FollowState>>{}
     ),
 
     questions: QuestionsState(
@@ -235,7 +238,7 @@ class AppState{
         .length;
 
   //select users
-  UserState? get currentUser => users.usersById[login.login!.id]?.entity;
+  UserState? get currentUser => users.usersById[login.login!.id].entity;
 
   //Select questions
 

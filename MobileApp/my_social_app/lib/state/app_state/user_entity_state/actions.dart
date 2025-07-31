@@ -2,7 +2,6 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
@@ -28,97 +27,6 @@ class MarkUserQuestionAsUnsolvedAction extends AppAction{
   final int userId;
   final int questionId;
   const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
-}
-
-
-@immutable
-class AddNewFollowerAction extends AppAction{
-  final int curentUserId;
-  final int followerId;
-  final int followId;
-  const AddNewFollowerAction({
-    required this.curentUserId,
-    required this.followerId,
-    required this.followId
-  });
-}
-
-@immutable
-class FollowUserAction extends AppAction{
-  final int followedId;
-  const FollowUserAction({required this.followedId});
-}
-@immutable
-class FollowUserSuccessAction extends AppAction{
-  final int currentUserId;
-  final int followedId;
-  final int followId;
-  const FollowUserSuccessAction({
-    required this.currentUserId,
-    required this.followedId,
-    required this.followId
-  });
-}
-@immutable
-class UnfollowUserAction extends AppAction{
-  final int followedId;
-  const UnfollowUserAction({required this.followedId});
-}
-@immutable
-class UnfollowUserSuccessAction extends AppAction{
-  final int currentUserId;
-  final int followedId;
-  const UnfollowUserSuccessAction({
-    required this.currentUserId,
-    required this.followedId,
-  });
-}
-@immutable
-class RemoveFollowerAction extends AppAction{
-  final int followerId;
-  const RemoveFollowerAction({required this.followerId});
-}
-@immutable
-class RemoveFollowerSuccessAction extends AppAction{
-  final int currentUserId;
-  final int followerId;
-  const RemoveFollowerSuccessAction({required this.currentUserId, required this.followerId});
-}
-
-//followers
-@immutable
-class NextUserFollowersAction extends AppAction{
-  final int userId;
-  const NextUserFollowersAction({required this.userId});
-}
-@immutable
-class NextUserFollowersSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<FollowState> followers;
-  const NextUserFollowersSuccessAction({required this.userId, required this.followers});
-}
-@immutable
-class NextUserFollowersFailedAction extends AppAction{
-  final int userId;
-  const NextUserFollowersFailedAction({required this.userId});
-}
-
-//followeds
-@immutable
-class NextUserFollowedsAction extends AppAction{
-  final int userId;
-  const NextUserFollowedsAction({required this.userId});
-}
-@immutable
-class NextUserFollowedsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<FollowState> followeds;
-  const NextUserFollowedsSuccessAction({required this.userId, required this.followeds});
-}
-@immutable
-class NextuserFollowedsFailedAction extends AppAction{
-  final int userId;
-  const NextuserFollowedsFailedAction({required this.userId});
 }
 
 @immutable

@@ -49,12 +49,6 @@ extension MapExtentions1<K, V> on Map<K,V>{
     value != null
       ? { for (var entry in [...entries, MapEntry(key, value)]) entry.key : entry.value }
       : this;
-  Map<K,V> setMany(Map<K,V?> map) => 
-    { for (var entry in [
-      ...entries,
-      ...map.entries.where((e) => e.value != null)]) entry.key : entry.value as V
-    };
-
 
   Map<K,V> prependOne(K key, V value) => { for (var entry in [MapEntry(key, value), ...entries]) entry.key : entry.value };
   // Map<K,V> updateOne(K key, V value) => { for( var entry in [...entries.map((e) => e.key.compareTo(key) == 0 ? MapEntry(key, value) : e)]) entry.key : entry.value };

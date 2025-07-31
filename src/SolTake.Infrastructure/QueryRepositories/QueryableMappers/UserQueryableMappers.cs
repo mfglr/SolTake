@@ -1,4 +1,5 @@
 ﻿using SolTake.Application.Queries.UserDomain;
+using SolTake.Domain.QuestionAggregate.ValueObjects;
 using SolTake.Domain.UserAggregate.Entities;
 using SolTake.Infrastructure.DbContexts;
 
@@ -22,7 +23,7 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                         join.user.UserName.Value,
                         join.user.Name,
                         join.user.Biography.Value,
-                        context.Questions.Count(question => question.UserId == join.user.Id),
+                        context.Questions.Count(question => question.UserId == join.user.Id && question.PublishingState == QuestionPublishingState.Published),
                         context.UserUserFollows.Count(follow => follow.FollowedId == join.user.Id),
                         context.UserUserFollows.Count(follow => follow.FollowerId == join.user.Id),
                         context.UserUserFollows.Any(follow => follow.FollowerId == join.user.Id && follow.FollowedId == forUserId),

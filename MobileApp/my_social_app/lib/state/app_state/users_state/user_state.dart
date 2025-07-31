@@ -7,7 +7,6 @@ import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class UserState extends Entity<int> implements Avatar{
@@ -24,8 +23,6 @@ class UserState extends Entity<int> implements Avatar{
   final Multimedia? image;
   final Iterable<UserStoryState> stories;
   final UserImageState? userImageState;
-  final Pagination<int,FollowState> followers;
-  final Pagination<int,FollowState> followeds;
 
   @override
   Multimedia? get avatar => image;
@@ -53,8 +50,6 @@ class UserState extends Entity<int> implements Avatar{
     required this.numberOfFolloweds,
     required this.isFollower,
     required this.isFollowed,
-    required this.followers,
-    required this.followeds,
     required this.image,
     required this.userImageState,
     required this.stories
@@ -70,8 +65,6 @@ class UserState extends Entity<int> implements Avatar{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Pagination<int,FollowState>? newFollowers,
-    Pagination<int,FollowState>? newFolloweds,
     Multimedia? newImage,
     UserImageState? newUserImageState
   }) => UserState(
@@ -86,8 +79,6 @@ class UserState extends Entity<int> implements Avatar{
     numberOfFolloweds: newNumberOfFolloweds ?? numberOfFolloweds,
     isFollower: newIsFollower ?? isFollower,
     isFollowed: newIsFollowed ?? isFollowed,
-    followers: newFollowers ?? followers,
-    followeds: newFolloweds ?? followeds,
     image: newImage ?? image,
     stories: stories,
     userImageState: newUserImageState ?? userImageState,
@@ -118,77 +109,21 @@ class UserState extends Entity<int> implements Avatar{
     newIsFollowed: true,
     newNumberOfFollowers: numberOfFollowers + 1
   );
-  UserState currentFollow() => _optional(
+  UserState increaseNumberFolloweds() => _optional(
     newNumberOfFolloweds: numberOfFolloweds + 1
+  );
+
+  UserState unfollow() => _optional(
+    newIsFollowed: false,
+    newNumberOfFollowers: numberOfFollowers - 1
+  );
+  UserState decreaseNumberFolloweds() => _optional(
+    newNumberOfFolloweds: numberOfFolloweds - 1
   );
 
   //questions
   UserState createQuestion() => _optional(newNumberOfQuestions: numberOfQuestions + 1);
   //questions
-
-  //followers
-  UserState startLoadingNextFollowers() => 
-    _optional(newFollowers: followers.startLoadingNext());
-  UserState addNextFollowers(Iterable<FollowState> followers) => 
-    _optional(newFollowers: this.followers.addNextPage(followers));
-  UserState stopLoadingNextFollowers() =>
-    _optional(newFollowers: followers.stopLoadingNext());
-
-  UserState addFollower(FollowState follower) => 
-    _optional(
-      newNumberOfFollowers: numberOfFollowers + 1,
-      newIsFollowed: true,
-      newFollowers: followers.prependOne(follower)
-    );
-  UserState addFollowerToCurrentUser(FollowState follower) =>
-    _optional(
-      newNumberOfFollowers: numberOfFollowers + 1,
-      newFollowers: followers.prependOne(follower)
-    );
-  
-  UserState removeFollower(int followerId) => 
-    _optional(
-      newNumberOfFollowers: numberOfFollowers - 1,
-      newIsFollowed: false,
-      newFollowers: followers.where((e) => e.userId != followerId)
-    );
-  UserState removeFollowerToCurrentUser(int followerId) =>
-    _optional(
-      newNumberOfFollowers: numberOfFollowers - 1,
-      newFollowers: followers.where((e) => e.userId != followerId)
-    );
-
-  //followeds
-  UserState startLoadingNextFolloweds() =>
-    _optional(newFolloweds: followeds.startLoadingNext());
-  UserState addNextFolloweds(Iterable<FollowState> followeds) =>
-    _optional(newFolloweds: this.followeds.addNextPage(followeds));
-  UserState stopLoadingNextFolloweds() =>
-    _optional(newFolloweds: followeds.stopLoadingNext());
-    
-  UserState addFollowed(FollowState followed)
-    => _optional(
-        newNumberOfFolloweds: numberOfFolloweds + 1,
-        newIsFollower: true,
-        newFolloweds: followeds.prependOne(followed)
-      );
-  UserState addFollowedToCurrentUser(FollowState followed) =>
-    _optional(
-      newNumberOfFolloweds: numberOfFolloweds + 1,
-      newFolloweds: followeds.prependOne(followed)
-    );
-
-  UserState removeFollowed(int followedId) =>
-    _optional(
-      newIsFollower: false,
-      newNumberOfFolloweds: numberOfFolloweds - 1,
-      newFolloweds: followeds.where((e) => e.userId != followedId)
-    );
-  UserState removeFollowedToCurrentUser(int followedId) =>
-    _optional(
-      newNumberOfFolloweds: numberOfFolloweds - 1,
-      newFolloweds: followeds.where((e) => e.userId != followedId)
-    );
 
   UserState updateUserName(String userName) => 
     _optional(newUserName: userName);

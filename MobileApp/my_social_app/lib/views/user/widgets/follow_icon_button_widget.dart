@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 
 class FollowIconButtonWidget extends StatelessWidget {
@@ -14,11 +14,11 @@ class FollowIconButtonWidget extends StatelessWidget {
       onPressed: () {
         if(user.isFollowed){
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(UnfollowUserAction(followedId: user.id));
+          store.dispatch(UnfollowAction(followed: user));
         }
         else{
           final store = StoreProvider.of<AppState>(context,listen: false);
-          store.dispatch(FollowUserAction(followedId: user.id));
+          store.dispatch(FollowAction(followed: user));
         }
       },
       icon: Icon(user.isFollowed ? Icons.person_remove : Icons.person_add)

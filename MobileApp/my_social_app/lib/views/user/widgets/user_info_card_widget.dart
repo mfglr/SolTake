@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/views/user/widgets/follow_button_widget.dart';
+import 'package:my_social_app/views/user/widgets/follow_button_widget/follow_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/profile_edit_button.dart';
 import 'package:my_social_app/views/user/widgets/message_button_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_info_header_widget.dart';

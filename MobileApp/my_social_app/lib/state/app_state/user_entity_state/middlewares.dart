@@ -1,6 +1,5 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/services/follow_service.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/notification_hub.dart';
@@ -10,40 +9,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
-
-void followMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is FollowUserAction){
-    FollowService()
-      .follow(action.followedId)
-      .then((response){
-        store.dispatch(FollowUserSuccessAction(
-          currentUserId: store.state.login.login!.id,
-          followedId: action.followedId,
-          followId: response.id
-        ));
-      });
-  }
-  next(action);
-}
-void unfollowMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is UnfollowUserAction){
-    FollowService()
-      .unfollow(action.followedId)
-      .then((_) => store.dispatch(UnfollowUserSuccessAction(
-        currentUserId: store.state.login.login!.id,
-        followedId: action.followedId
-      )));
-  }
-  next(action);
-}
-void removeFollowerMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is RemoveFollowerAction){
-    FollowService()
-      .removeFollower(action.followerId)
-      .then((_) => store.dispatch(RemoveFollowerSuccessAction(currentUserId: store.state.login.login!.id,followerId: action.followerId)));
-  }
-  next(action);
-}
 
 void updateUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UpdateUserNameAction){
@@ -123,31 +88,3 @@ void removeUserImageMiddleware(Store<AppState> store,action,NextDispatcher next)
   }
   next(action);
 }
-
-void nextUserFollowersMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserFollowersAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.followers;
-    FollowService()
-      .getFollowersByUserId(action.userId, pagination.next)
-      .then((followers) => store.dispatch(NextUserFollowersSuccessAction(userId: action.userId,followers: followers.map((e) => e.toFollowState()))))
-      .catchError((e){
-        store.dispatch(NextUserFollowersFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-void nextUserFollowedsMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is NextUserFollowedsAction){
-    final pagination = store.state.userEntityState.getValue(action.userId)!.followeds;
-    FollowService()
-      .getFollowedsByUserId(action.userId,pagination.next)
-      .then((followeds) => store.dispatch(NextUserFollowedsSuccessAction(userId: action.userId,followeds: followeds.map((e) => e.toFollowState()))))
-      .catchError((e){
-        store.dispatch(NextuserFollowedsFailedAction(userId: action.userId));
-        throw e;
-      });
-  }
-  next(action);
-}
-
