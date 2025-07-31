@@ -15,6 +15,7 @@ import 'package:my_social_app/state/entity_state/pagination_state/pagination.dar
 class QuestionsState{
   final Pagination<int,QuestionState> homePageQuestions;
   final Pagination<int,QuestionState> searchPageQuestions;
+  final Pagination<int,QuestionState> videoQuestions;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
   final Map<int,Pagination<int,QuestionState>> userQuestions;
   final Map<int,Pagination<int,QuestionState>> userSolvedQuestions;
@@ -26,6 +27,7 @@ class QuestionsState{
 
   const QuestionsState({
     required this.userQuestions,
+    required this.videoQuestions,
     required this.userSolvedQuestions,
     required this.userUnsolvedQuestions,
     required this.examQuestions,
@@ -39,8 +41,9 @@ class QuestionsState{
 
   QuestionsState _optional({
     Pagination<int,QuestionState>? newHomePageQuestions,
-    Pagination<int,QuestionUserSaveState>? newQuestionUserSaves,
     Pagination<int,QuestionState>? newSearchPageQuestions,
+    Pagination<int,QuestionState>? newVideoQuestions,
+    Pagination<int,QuestionUserSaveState>? newQuestionUserSaves,
     Map<int,Pagination<int,QuestionState>>? newUserQuestions,
     Map<int,Pagination<int,QuestionState>>? newUserSolvedQuestions,
     Map<int,Pagination<int,QuestionState>>? newUserUnsolvedQuestions,
@@ -53,6 +56,7 @@ class QuestionsState{
     QuestionsState(
       homePageQuestions: newHomePageQuestions ?? homePageQuestions,
       searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
+      videoQuestions: newVideoQuestions ?? videoQuestions,
       questionUserSaves: newQuestionUserSaves ?? questionUserSaves,
       userQuestions: newUserQuestions ?? userQuestions,
       userSolvedQuestions: newUserSolvedQuestions ?? userSolvedQuestions,
@@ -92,6 +96,56 @@ class QuestionsState{
       newQuestionUserSaves: questionUserSave != null
         ? questionUserSaves.removeOne(questionUserSave.id)
         : questionUserSaves,
+    );
+  }
+  
+  //solutions
+  QuestionsState createSolution(QuestionState question, SolutionState solution){
+    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
+    return QuestionsState(
+      examQuestions:
+        examQuestions.setOne(
+            question.exam.id,
+            examQuestions[question.exam.id]?.updateOne(question.createSolution(solution))
+          ),
+      subjectQuestions:
+        subjectQuestions.setOne(
+          question.subject.id,
+          subjectQuestions[question.subject.id]?.updateOne(question.createSolution(solution))
+        ),
+      topicQuestions: 
+        question.topic != null
+          ? topicQuestions.setOne(
+              question.topic!.id,
+              topicQuestions[question.topic!.id]?.updateOne(question.createSolution(solution))
+            )
+          : topicQuestions,
+      userQuestions:
+        userQuestions.setOne(
+          question.userId,
+          userQuestions[question.userId]?.updateOne(question.createSolution(solution))
+        ),
+      userSolvedQuestions: 
+        userSolvedQuestions.setOne(
+          question.userId,
+          userSolvedQuestions[question.userId]?.updateOne(question.createSolution(solution))
+        ),
+      userUnsolvedQuestions:
+        userUnsolvedQuestions.setOne(
+          question.userId,
+          userUnsolvedQuestions[question.userId]?.updateOne(question.createSolution(solution)) 
+        ),
+
+      homePageQuestions: homePageQuestions.updateOne(question.createSolution(solution)),
+      searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
+      videoQuestions: videoQuestions.updateOne(question.createSolution(solution)),
+
+      questionUserSaves:
+        questionUserSave != null
+          ? questionUserSaves.updateOne(questionUserSave.createSolution(solution))
+          : questionUserSaves,
+
+      questionUserLikes: questionUserLikes
     );
   }
   QuestionsState deleteSolution(QuestionState question, SolutionState solution){
@@ -139,9 +193,9 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.deleteSolution(solution))
             )
           : topicQuestions,
-
-      searchPageQuestions: searchPageQuestions.updateOne(question.deleteSolution(solution)),
       homePageQuestions: homePageQuestions.updateOne(question.deleteSolution(solution)),
+      searchPageQuestions: searchPageQuestions.updateOne(question.deleteSolution(solution)),
+      videoQuestions: videoQuestions.updateOne(question.deleteSolution(solution)),
       
       questionUserSaves:
         questionUserSave != null
@@ -193,6 +247,7 @@ class QuestionsState{
         : questionUserSaves,
     );
   }
+  //solutions
 
   // question user likes
   QuestionsState startLoadingNextQuestionUserLikes(int questionId) =>
@@ -266,6 +321,7 @@ class QuestionsState{
 
       homePageQuestions: homePageQuestions.updateOne(question.like()),
       searchPageQuestions: searchPageQuestions.updateOne(question.like()),
+      videoQuestions: videoQuestions.updateOne(question.like()),
 
       questionUserSaves: 
         questionUserSave != null
@@ -322,6 +378,8 @@ class QuestionsState{
 
       homePageQuestions: homePageQuestions.updateOne(question.dislike()),
       searchPageQuestions: searchPageQuestions.updateOne(question.dislike()),
+      videoQuestions: videoQuestions.updateOne(question.dislike()),
+
       questionUserSaves:
         questionUserSave != null
           ? questionUserSaves.updateOne(questionUserSave.dislike())
@@ -367,8 +425,10 @@ class QuestionsState{
         userUnsolvedQuestions[question.userId]?.updateOne(question.save())
       ),
       newHomePageQuestions: homePageQuestions.updateOne(question.save()),
-      newQuestionUserSaves: questionUserSaves.prependOne(questionUserSave.save()),
       newSearchPageQuestions: searchPageQuestions.updateOne(question.save()),
+      newVideoQuestions: videoQuestions.updateOne(question.save()),
+
+      newQuestionUserSaves: questionUserSaves.prependOne(questionUserSave.save()),
     );
   }
   QuestionsState unsave(QuestionState question){
@@ -401,8 +461,10 @@ class QuestionsState{
         userUnsolvedQuestions[question.userId]?.updateOne(question.unsave())
       ),
       newHomePageQuestions: homePageQuestions.updateOne(question.unsave()),
-      newQuestionUserSaves: questionUserSave != null ? questionUserSaves.removeOne(questionUserSave.id) : questionUserSaves,
       newSearchPageQuestions: searchPageQuestions.updateOne(question.unsave()),
+      newVideoQuestions: videoQuestions.updateOne(question.unsave()),
+
+      newQuestionUserSaves: questionUserSave != null ? questionUserSaves.removeOne(questionUserSave.id) : questionUserSaves,
     );
   }
   QuestionsState startLoadingQuestionUserSaves() => 
@@ -425,6 +487,17 @@ class QuestionsState{
   QuestionsState stopLoadingHomePageQuestions() =>
     _optional(newHomePageQuestions: homePageQuestions.stopLoadingNext());
   //home page questions
+
+  //video questions
+  QuestionsState startLoadingNextVideoQuestions() =>
+    _optional(newVideoQuestions: videoQuestions.startLoadingNext());
+  QuestionsState addNextVideoQuestions(Iterable<QuestionState> questions) =>
+    _optional(newVideoQuestions: videoQuestions.addNextPage(questions));
+  QuestionsState refreshVideoQuestions(Iterable<QuestionState> questions) =>
+    _optional(newVideoQuestions: videoQuestions.refreshPage(questions));
+  QuestionsState stopLoadingNextVideoQuestions() =>
+    _optional(newVideoQuestions: videoQuestions.stopLoadingNext());
+  //video questions
 
   // user questions
   QuestionsState startLoadingNextUserQuestions(int userId) =>
@@ -660,8 +733,8 @@ class QuestionsState{
         ),
 
       homePageQuestions: homePageQuestions.updateOne(question.increaseNumberOfComments()),
-      
       searchPageQuestions: searchPageQuestions.updateOne(question.increaseNumberOfComments()),
+      videoQuestions: videoQuestions.updateOne(question.increaseNumberOfComments()),
       
       questionUserSaves:
         questionUserSave != null
@@ -671,51 +744,5 @@ class QuestionsState{
       questionUserLikes: questionUserLikes
     );
   }
-  QuestionsState createSolution(QuestionState question, SolutionState solution){
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return QuestionsState(
-      examQuestions:
-        examQuestions.setOne(
-            question.exam.id,
-            examQuestions[question.exam.id]?.updateOne(question.createSolution(solution))
-          ),
-      subjectQuestions:
-        subjectQuestions.setOne(
-          question.subject.id,
-          subjectQuestions[question.subject.id]?.updateOne(question.createSolution(solution))
-        ),
-      topicQuestions: 
-        question.topic != null
-          ? topicQuestions.setOne(
-              question.topic!.id,
-              topicQuestions[question.topic!.id]?.updateOne(question.createSolution(solution))
-            )
-          : topicQuestions,
-      userQuestions:
-        userQuestions.setOne(
-          question.userId,
-          userQuestions[question.userId]?.updateOne(question.createSolution(solution))
-        ),
-      userSolvedQuestions: 
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.createSolution(solution))
-        ),
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.createSolution(solution)) 
-        ),
-      homePageQuestions: homePageQuestions.updateOne(question.createSolution(solution)),
-      
-      searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
-
-      questionUserSaves:
-        questionUserSave != null
-          ? questionUserSaves.updateOne(questionUserSave.createSolution(solution))
-          : questionUserSaves,
-
-      questionUserLikes: questionUserLikes
-    );
-  }
+  
 }

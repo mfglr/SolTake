@@ -421,3 +421,30 @@ void refreshTopicQuestionsMiddleware(Store<AppState> store, action, NextDispatch
   next(action);
 }
 //topic questions
+
+//video questions
+void nextVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextVideoQuestionsAction){
+    QuestionService()
+      .getVideoQuestions(selectVideoQuestions(store).next)
+      .then((questions) => store.dispatch(NextVideoQuestionsSuccessAction(questions: questions.map((e) => e.toQuestionState()))))
+      .catchError((e){
+        store.dispatch(const NextVideoQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshVideoQuestionsAction){
+    QuestionService()
+      .getVideoQuestions(selectVideoQuestions(store).first)
+      .then((questions) => store.dispatch(RefreshVideoQuestionsSuccessAction(questions: questions.map((e) => e.toQuestionState()))))
+      .catchError((e){
+        store.dispatch(const RefreshVideoQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+//video questions

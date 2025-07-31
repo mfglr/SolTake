@@ -77,6 +77,36 @@ class RefreshSearchPageQuestionsFailedAction extends AppAction{
 }
 //search page questions
 
+//video questions
+@immutable
+class NextVideoQuestionsAction extends AppAction{
+  const NextVideoQuestionsAction();
+}
+@immutable
+class NextVideoQuestionsSuccessAction extends AppAction{
+  final Iterable<QuestionState> questions;
+  const NextVideoQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class NextVideoQuestionsFailedAction extends AppAction{
+  const NextVideoQuestionsFailedAction();
+}
+
+@immutable
+class RefreshVideoQuestionsAction extends AppAction{
+  const RefreshVideoQuestionsAction();
+}
+@immutable
+class RefreshVideoQuestionsSuccessAction extends AppAction{
+  final Iterable<QuestionState> questions;
+  const RefreshVideoQuestionsSuccessAction({required this.questions});
+}
+@immutable
+class RefreshVideoQuestionsFailedAction extends AppAction{
+  const RefreshVideoQuestionsFailedAction();
+}
+//video questions
+
 //question user likes
 @immutable
 class NextQuestionUserLikesAction extends QuestionsAction{

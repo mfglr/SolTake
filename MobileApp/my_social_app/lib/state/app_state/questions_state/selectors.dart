@@ -10,6 +10,9 @@ import 'package:redux/redux.dart';
 Pagination<int, QuestionState> selectHomePageQuestionPagination(Store<AppState> store) =>
   store.state.questions.homePageQuestions;
 
+Pagination<int, QuestionState> selectVideoQuestions(Store<AppState> store) =>
+  store.state.questions.videoQuestions;
+
 Pagination<int, QuestionUserSaveState> selectQuestionUserSaves(Store<AppState> store) =>
   store.state.questions.questionUserSaves;
 

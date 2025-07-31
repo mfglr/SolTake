@@ -6,7 +6,6 @@ import 'package:my_social_app/state/app_state/exam_requests_state/reducers.dart'
 import 'package:my_social_app/state/app_state/exams_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
@@ -36,7 +35,6 @@ import 'package:my_social_app/state/app_state/user_user_block_state/reducers.dar
 import 'package:my_social_app/state/app_state/user_user_conversation_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
 import 'package:my_social_app/state/app_state/users_state/reducers.dart';
-import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
 
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
@@ -69,7 +67,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
   topicRequests: topicRequestsReducers(prev.topicRequests, action),
 
-  examEntityState: examEntityStateReducers(prev.examEntityState,action),
   subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
   topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
@@ -79,7 +76,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   conversations: conversationsReducer(prev.conversations,action),
   questionEntityState: questionsReducer(prev.questionEntityState,action),
   policyState: policyReducers(prev.policyState,action),
-  videoQuestions: videoQuestionsReducers(prev.videoQuestions, action),
   uploadEntityState: uploadingEntityStateReducers(prev.uploadEntityState, action)
 );
 

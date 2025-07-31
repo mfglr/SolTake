@@ -10,7 +10,6 @@ import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.da
 import 'package:my_social_app/state/app_state/exams_state/middleware.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/exam_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
@@ -52,7 +51,6 @@ import 'package:my_social_app/state/app_state/user_message_state/middlewares.dar
 import 'package:my_social_app/state/app_state/user_user_block_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
@@ -77,6 +75,7 @@ final store = Store(
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
+      videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
@@ -125,7 +124,6 @@ final store = Store(
     userMessageState: EntityState(),
 
     questionEntityState: EntityState(),
-    examEntityState: EntityState(),
     login: Login.loading(),
     subjectEntityState: EntityState(),
     topicEntityState: EntityState(),
@@ -135,7 +133,6 @@ final store = Store(
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
@@ -182,6 +179,8 @@ final store = Store(
     refreshSubjectQuestionsMiddleware,
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
+    nextVideoQuestionsMiddleware,
+    refreshVideoQuestionsMiddleware,
     //questions
 
     //solutions
@@ -312,9 +311,6 @@ final store = Store(
     firstExamRequestsMiddleware,
     //Exam requests state
 
-    //Exam entity state
-    loadExamMiddleare,
-
     //subject entity state
     loadSubjectMiddleware,
     nextSubjectTopicsMiddleware,
@@ -361,9 +357,6 @@ final store = Store(
     //policyState
     loadPrivacyPolicyMiddleware,
     loadTermsOfUseMiddleware,
-
-    //video questions
-    nextVideoQuestionsMiddleware,
 
     //subject requests
     createSubjectRequestMiddleware,

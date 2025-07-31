@@ -73,7 +73,6 @@ class AppState{
   final EntityState<int,UserMessageState> userMessageState;
 
   final EntityState<int,QuestionState> questionEntityState;
-  final EntityState<int,ExamState> examEntityState;
   final Pagination<int,NotificationState> notifications;
   final EntityState<int,SubjectState> subjectEntityState;
   final Login login;
@@ -83,7 +82,6 @@ class AppState{
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
   final PolicyState policyState;
-  final Pagination<int,Id<int>> videoQuestions;
   final UploadEntityState uploadEntityState;
 
   const AppState({
@@ -115,7 +113,6 @@ class AppState{
     required this.userMessageState,
 
     required this.questionEntityState,
-    required this.examEntityState,
     required this.conversations,
     required this.login,
     required this.subjectEntityState,
@@ -125,7 +122,6 @@ class AppState{
     required this.notifications,
     required this.messageEntityState,
     required this.policyState,
-    required this.videoQuestions,
     required this.uploadEntityState
   });
 
@@ -146,6 +142,7 @@ class AppState{
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
+      videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),
       questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
@@ -194,7 +191,6 @@ class AppState{
     userMessageState: EntityState(),
 
     questionEntityState: EntityState(),
-    examEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     login: Login.init(),
     
@@ -205,7 +201,6 @@ class AppState{
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    videoQuestions: Pagination.init(questionsPerPage, true),
     uploadEntityState: UploadEntityState.init()
   );
 
@@ -254,8 +249,4 @@ class AppState{
   String? get selectPrivacyPolicy => policyState.privacyPolicies[login.login?.language];
   //select terms of use
   String? get selectTermsOfUse => policyState.termOfUses[login.login?.language];
-
-  //select video questions
-  Iterable<QuestionState> get selectVideoQuestions => 
-    videoQuestions.values.map((id) => questionEntityState.getValue(id.id)!);
 }

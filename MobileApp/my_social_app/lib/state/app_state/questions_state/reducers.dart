@@ -109,6 +109,22 @@ QuestionsState refreshHomePageQuestionsFailedReducer(QuestionsState prev, Refres
   => prev.startLoadingHomePageQuestions();
 // home page questions
 
+// video questions
+QuestionsState nextVideoQuestionsReducer(QuestionsState prev, NextVideoQuestionsAction action)
+  => prev.startLoadingNextVideoQuestions();
+QuestionsState nextVideoQuestionsSuccessReducer(QuestionsState prev, NextVideoQuestionsSuccessAction action)
+  => prev.addNextVideoQuestions(action.questions);
+QuestionsState nextVideoQuestionsFailedReducer(QuestionsState prev, NextVideoQuestionsFailedAction action)
+  => prev.stopLoadingNextVideoQuestions();
+
+QuestionsState refreshVideoQuestionsReducer(QuestionsState prev, RefreshVideoQuestionsAction action)
+  => prev.startLoadingNextVideoQuestions();
+QuestionsState refreshVideoQuestionsSuccessReducer(QuestionsState prev, RefreshVideoQuestionsSuccessAction action)
+  => prev.refreshVideoQuestions(action.questions);
+QuestionsState refreshVideoQuestionsFailedReducer(QuestionsState prev, RefreshVideoQuestionsFailedAction action)
+  => prev.startLoadingNextVideoQuestions();
+// video questions
+
 // user questions
 QuestionsState nextUserQuestionsReducer(QuestionsState prev, NextUserQuestionsAction action)
   => prev.startLoadingNextUserQuestions(action.userId);
@@ -124,7 +140,6 @@ QuestionsState refreshUserQuestionsSuccessReducer(QuestionsState prev, RefreshUs
 QuestionsState refreshUserQuestionsFailedReducer(QuestionsState prev, RefreshUserQuestionsFailedAction action)
   => prev.stopLoadingNextUserQuestions(action.userId);
 // user questions
-
 
 // user solved questions
 QuestionsState nextUserSolvedQuestionsReducer(QuestionsState prev, NextUserSolvedQuestionsAction action)
@@ -332,4 +347,15 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,RefreshTopicQuestionsSuccessAction>(refreshTopicQuestionsSuccessReducer).call,
   TypedReducer<QuestionsState,RefreshTopicQuestionsFailedAction>(refreshTopicQuestionsFailedReducer).call,
   //topic questions
+
+  // video questions
+  TypedReducer<QuestionsState,NextVideoQuestionsAction>(nextVideoQuestionsReducer).call,
+  TypedReducer<QuestionsState,NextVideoQuestionsSuccessAction>(nextVideoQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,NextVideoQuestionsFailedAction>(nextVideoQuestionsFailedReducer).call,
+
+  TypedReducer<QuestionsState,RefreshVideoQuestionsAction>(refreshVideoQuestionsReducer).call,
+  TypedReducer<QuestionsState,RefreshVideoQuestionsSuccessAction>(refreshVideoQuestionsSuccessReducer).call,
+  TypedReducer<QuestionsState,RefreshVideoQuestionsFailedAction>(refreshVideoQuestionsFailedReducer).call,
+  // video questions
+
 ]);
