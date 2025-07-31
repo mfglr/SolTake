@@ -35,12 +35,14 @@ import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/reducers.dart';
+import 'package:my_social_app/state/app_state/users_state/reducers.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/reducers.dart';
 import 'package:redux/redux.dart';
 
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  users: usersReducer(prev.users, action),
   questions: questionsReducers(prev.questions, action),
   solutions: solutionsReducer(prev.solutions, action),
   comments: commentsReducer(prev.comments, action),

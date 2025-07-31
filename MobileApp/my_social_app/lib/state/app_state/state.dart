@@ -32,16 +32,19 @@ import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/users_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/user_message_state.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class AppState{
+  final UsersState users;
   final QuestionsState questions;
   final SolutionsState solutions;
   final CommentsState comments;
@@ -83,6 +86,7 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
+    required this.users,
     required this.questions,
     required this.solutions,
     required this.comments,
@@ -125,7 +129,10 @@ class AppState{
   });
 
   AppState clear() => AppState(
-    
+    users: UsersState(
+      users: EntityCollection<int, UserState>()
+    ),
+
     questions: QuestionsState(
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},

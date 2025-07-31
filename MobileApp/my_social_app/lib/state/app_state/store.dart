@@ -44,19 +44,26 @@ import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/users_state/users_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/video_questions_state/middlewares.dart';
-import 'package:my_social_app/state/entity_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
   reducers,
   initialState: AppState(
+    users: UsersState(
+      users: EntityCollection<int, UserState>()
+    ),
+    
     questions: QuestionsState(
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
@@ -128,6 +135,10 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
+    //users
+    loadUserMiddleware,
+    //users
+
     //questions
     createQuestionMiddleware,
     deleteQuestionMiddleware,
@@ -284,21 +295,18 @@ final store = Store(
     nextUserMessagesMiddleware,
 
     //user entity state
-    loadUserMiddleware,
-    loadUserByUserNameMiddleware,
+    // followMiddleware,
+    // unfollowMiddleware,
+    // removeFollowerMiddleware,
 
-    followMiddleware,
-    unfollowMiddleware,
-    removeFollowerMiddleware,
+    // nextUserFollowersMiddleware,
+    // nextUserFollowedsMiddleware,
 
-    nextUserFollowersMiddleware,
-    nextUserFollowedsMiddleware,
-
-    updateUserNameMiddleware,
-    updateNameMiddleware,
-    updateBiographyMidleware,
-    uploadUserImageMiddleware,
-    removeUserImageMiddleware,
+    // updateUserNameMiddleware,
+    // updateNameMiddleware,
+    // updateBiographyMidleware,
+    // uploadUserImageMiddleware,
+    // removeUserImageMiddleware,
     
     //Exam requests state
     createExamRequestMiddleware,

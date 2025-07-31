@@ -1,4 +1,0 @@
-enum EntityStatus {
-  loading,
-  success
-}

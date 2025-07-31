@@ -1,4 +1,4 @@
-abstract class Entity<K extends Comparable> {
-  final K id;
+abstract class Entity<I extends Comparable> {
+  final I id;
   Entity({required this.id});
 }

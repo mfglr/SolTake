@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/subject_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
-import 'package:my_social_app/state/entity_state/entity_state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:redux/redux.dart';
 
 EntityState<int,SubjectState> addSubjectReducer(EntityState<int,SubjectState> prev,AddSubjectAction action)
