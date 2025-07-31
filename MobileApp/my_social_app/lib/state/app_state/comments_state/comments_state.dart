@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
@@ -33,7 +33,7 @@ class CommentsState {
       newQuestionComments: 
         comment.questionId == null
           ? questionComments
-          : questionComments.updateElsePrependOne(
+          : questionComments.setOne(
               comment.questionId!,
               (
                 questionComments[comment.questionId] ??
@@ -43,7 +43,7 @@ class CommentsState {
       newSolutionComments: 
         comment.solutionId == null
           ? solutionComments
-          : solutionComments.updateElsePrependOne(
+          : solutionComments.setOne(
               comment.solutionId!,
               (
                 solutionComments[comment.solutionId] ??
@@ -53,7 +53,7 @@ class CommentsState {
       newChildren:
         comment.parentId == null
           ? children
-          : children.updateElsePrependOne(
+          : children.setOne(
               comment.parentId!,
               selectChildrenFromCommentsState(this, comment.parentId!).addOne(comment)
             ),
@@ -62,28 +62,28 @@ class CommentsState {
   //question comments
   CommentsState startLoadingNextQuestionComments(int questionId) =>
     _optional(
-      newQuestionComments: questionComments.updateElsePrependOne(
+      newQuestionComments: questionComments.setOne(
         questionId,
         (questionComments[questionId] ?? Pagination.init(commentsPerPage, true)).startLoadingNext()
       )
     );
   CommentsState addNextPageQuestionComments(int questionId, Iterable<CommentState> comments) =>
     _optional(
-      newQuestionComments: questionComments.updateOne(
+      newQuestionComments: questionComments.setOne(
         questionId,
         questionComments[questionId]!.addNextPage(comments)
       )
     );
   CommentsState refreshPageQuestionComments(int questionId, Iterable<CommentState> comments) =>
     _optional(
-      newQuestionComments: questionComments.updateOne(
+      newQuestionComments: questionComments.setOne(
         questionId,
         questionComments[questionId]!.refreshPage(comments)
       )
     );
   CommentsState stopLoadingNextQuestionComments(int questionId) =>
     _optional(
-      newQuestionComments: questionComments.updateOne(
+      newQuestionComments: questionComments.setOne(
         questionId,
         questionComments[questionId]!.startLoadingNext()
       )
@@ -93,28 +93,28 @@ class CommentsState {
   //solution comments
   CommentsState startNextLoadingSolutionComments(int solutionId) =>
     _optional(
-      newSolutionComments: solutionComments.updateElsePrependOne(
+      newSolutionComments: solutionComments.setOne(
         solutionId,
         (solutionComments[solutionId] ?? Pagination.init(commentsPerPage, true)).startLoadingNext()
       )
     );
   CommentsState addNextPageSolutionComments(int solutionId, Iterable<CommentState> comments) =>
     _optional(
-      newSolutionComments: solutionComments.updateOne(
+      newSolutionComments: solutionComments.setOne(
         solutionId,
         solutionComments[solutionId]!.addNextPage(comments)
       )
     );
   CommentsState refreshPageSolutionComments(int solutionId, Iterable<CommentState> comments) =>
     _optional(
-      newSolutionComments: solutionComments.updateOne(
+      newSolutionComments: solutionComments.setOne(
         solutionId,
         solutionComments[solutionId]!.refreshPage(comments)
       )
     );
   CommentsState stopLoadingNextSolutionComments(int solutionId) =>
     _optional(
-      newSolutionComments: solutionComments.updateOne(
+      newSolutionComments: solutionComments.setOne(
         solutionId,
         solutionComments[solutionId]!.startLoadingNext()
       )
@@ -125,28 +125,28 @@ class CommentsState {
   //children
   CommentsState startLoadingNextChildren(int parentId) =>
     _optional(
-      newChildren: children.updateElsePrependOne(
+      newChildren: children.setOne(
         parentId,
         (children[parentId] ?? Pagination.init(commentsPerPage, true)).startLoadingNext()
       )
     );
   CommentsState addNextPageChildren(int parentId, Iterable<CommentState> comments) =>
     _optional(
-      newChildren: children.updateOne(
+      newChildren: children.setOne(
         parentId,
         children[parentId]!.addNextPage(comments)
       )
     );
   CommentsState refreshPageChildren(int parentId, Iterable<CommentState> comments) =>
     _optional(
-      newChildren: children.updateOne(
+      newChildren: children.setOne(
         parentId,
         children[parentId]!.refreshPage(comments)
       )
     );
   CommentsState stopLoadingNextChildren(int parentId) =>
     _optional(
-      newChildren: children.updateOne(
+      newChildren: children.setOne(
         parentId,
         children[parentId]!.startLoadingNext()
       )

@@ -10,7 +10,6 @@ EntityState<int,QuestionState> addQuestionsReducer(EntityState<int,QuestionState
   => prev.appendMany(action.questions);
 
 
-
 Reducer<EntityState<int,QuestionState>> questionsReducer = combineReducers<EntityState<int,QuestionState>>([
   TypedReducer<EntityState<int,QuestionState>,AddQuestionAction>(addQuestionReducer).call,
   TypedReducer<EntityState<int,QuestionState>,AddQuestionsAction>(addQuestionsReducer).call,

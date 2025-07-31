@@ -4,7 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photot_modal_texts.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';
@@ -19,7 +20,7 @@ class UpdateProfilePhotoModal extends StatelessWidget {
     return StoreConnector<AppState,LoginState>(
       converter: (store) => store.state.login.login!,
       builder: (store,login) => StoreConnector<AppState,UserState?>(
-        onInit: (store) => store.dispatch(LoadUserAction(userId: login.id)),
+        onInit: (store) => store.dispatch(LoadUserByIdAction(id: login.id)),
         converter: (store) => store.state.userEntityState.getValue(login.id),
         builder: (store,user){
           if(user == null) return const LoadingView();

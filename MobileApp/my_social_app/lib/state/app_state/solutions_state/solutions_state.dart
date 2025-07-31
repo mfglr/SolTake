@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
@@ -39,16 +39,16 @@ class SolutionsState {
   //solutions
   SolutionsState create(SolutionState solution) => 
     _optional(
-      newQuestionSolutions: questionSolutions.updateElsePrependOne(
+      newQuestionSolutions: questionSolutions.setOne(
         solution.questionId,
         selectQuestionSolutionsFromState(this, solution.questionId).prependOne(solution)
       ),
-      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
         solution.questionId,
         selectQuestionPendingSolutionsFromState(this, solution.questionId).prependOne(solution)
       ),
       newQuestionVideoSolutions: solution.hasVideo
-        ? questionVideoSolutions.updateElsePrependOne(
+        ? questionVideoSolutions.setOne(
             solution.questionId,
             selectQuestionVideoSolutionsFromState(this, solution.questionId).prependOne(solution)
           )
@@ -57,45 +57,42 @@ class SolutionsState {
   SolutionsState delete(SolutionState solution) =>
     _optional(
       
-      newQuestionSolutions: questionSolutions[solution.questionId] != null 
-        ? questionSolutions.updateOne(
-            solution.questionId,
-            questionSolutions[solution.questionId]!.removeOne(solution.id)
-          )
-        : questionSolutions,
+      newQuestionSolutions: questionSolutions.setOne(
+        solution.questionId,
+        questionSolutions[solution.questionId]?.removeOne(solution.id)
+      ),
 
-      newQuestionCorrectSolutions: questionCorrectSolutions[solution.questionId] != null && 
-      solution.state == SolutionStatus.correct
-        ? questionCorrectSolutions.updateOne(
-            solution.questionId,
-            questionCorrectSolutions[solution.questionId]!.removeOne(solution.id)
-          )
-        : questionCorrectSolutions,
+      newQuestionCorrectSolutions: 
+        solution.state == SolutionStatus.correct
+          ? questionCorrectSolutions.setOne(
+              solution.questionId,
+              questionCorrectSolutions[solution.questionId]?.removeOne(solution.id)
+            )
+          : questionCorrectSolutions,
 
-      newQuestionPendingSolutions: questionPendingSolutions[solution.questionId] != null &&
-      solution.state == SolutionStatus.pending
-        ? questionPendingSolutions.updateOne(
-            solution.questionId,
-            questionPendingSolutions[solution.questionId]!.removeOne(solution.id)
-          )
-        : questionPendingSolutions,
+      newQuestionPendingSolutions:
+        solution.state == SolutionStatus.pending
+          ? questionPendingSolutions.setOne(
+              solution.questionId,
+              questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
+            )
+          : questionPendingSolutions,
 
-      newQuestionIncorrectSolutions: questionIncorrectSolutions[solution.questionId] != null &&
-      solution.state == SolutionStatus.incorrect
-        ? questionIncorrectSolutions.updateOne(
-            solution.questionId,
-            questionIncorrectSolutions[solution.questionId]!.removeOne(solution.questionId)
-          )
-        : questionIncorrectSolutions,
+      newQuestionIncorrectSolutions:
+        solution.state == SolutionStatus.incorrect
+          ? questionIncorrectSolutions.setOne(
+              solution.questionId,
+              questionIncorrectSolutions[solution.questionId]?.removeOne(solution.questionId)
+            )
+          : questionIncorrectSolutions,
 
-      newQuestionVideoSolutions: questionVideoSolutions[solution.questionId] != null &&
-      solution.hasVideo
-        ? questionVideoSolutions.updateOne(
-            solution.questionId,
-            questionVideoSolutions[solution.questionId]!.removeOne(solution.questionId)
-          )
+      newQuestionVideoSolutions:
+        solution.hasVideo
+          ? questionVideoSolutions.setOne(
+              solution.questionId,
+              questionVideoSolutions[solution.questionId]?.removeOne(solution.questionId)
+            )
         : questionVideoSolutions,
-      // newSavedSolutions: savedSolutions.removeOne(solution.questionId)
     );
   SolutionsState markAsCorrect(SolutionState solution) =>
     _optional(
@@ -161,7 +158,7 @@ class SolutionsState {
     );
   SolutionsState stopLoadingNextQuestionSolutions(int questionId) => 
     _optional(
-      newQuestionSolutions: questionSolutions.updateElsePrependOne(
+      newQuestionSolutions: questionSolutions.setOne(
         questionId,
         selectQuestionSolutionsFromState(this, questionId).stopLoadingNext()
       )
@@ -209,7 +206,7 @@ class SolutionsState {
     );
   SolutionsState addNextPageQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
-      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
         selectQuestionPendingSolutionsFromState(this, questionId).addNextPage(solutions)
       )
@@ -223,7 +220,7 @@ class SolutionsState {
     );
   SolutionsState stopLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
-      newQuestionPendingSolutions: questionPendingSolutions.updateElsePrependOne(
+      newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
         selectQuestionPendingSolutionsFromState(this, questionId).stopLoadingNext()
       )

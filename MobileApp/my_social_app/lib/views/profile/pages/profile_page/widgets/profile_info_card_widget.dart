@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/login_state/login_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions/display_user_questions_page.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/profile_image_widget.dart';
 import 'package:my_social_app/views/user/pages/display_user_image_page.dart';
@@ -58,7 +58,7 @@ class ProfileInfoCardWidget extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 15),
                           child: TextButton(
                             onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(userId: user.id))
+                              MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(user: user))
                             ),
                             style: ButtonStyle(
                               padding: WidgetStateProperty.all(EdgeInsets.zero),

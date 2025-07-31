@@ -5,8 +5,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/login_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/action.dart';
+import 'package:my_social_app/state/app_state/users_state/selectors.dart';
 import 'package:my_social_app/views/login/pages/application_loading_page.dart';
 import 'package:my_social_app/views/display_video_questions/display_video_questions.dart';
 import 'package:my_social_app/views/home_page/home_page.dart';
@@ -44,12 +45,12 @@ class _RootViewState extends State<RootView> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,UserState?>(
+    return StoreConnector<AppState, UserState?>(
       onInit: (store){
-        store.dispatch(LoadUserAction(userId: store.state.login.login!.id));
+        store.dispatch(LoadUserByIdAction(id: store.state.login.login!.id));
         store.dispatch(const GetStoriesAction());
       },
-      converter: (store) => store.state.currentUser,
+      converter: (store) => selectUserById(store, store.state.login.login!.id).entity,
       builder: (context,user){
         if(user == null) return const ApplicationLoadingPage();
         return Scaffold(

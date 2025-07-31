@@ -4,18 +4,18 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:redux/redux.dart';
 
-void loadUserMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is LoadUserAction){
+void loadUserByIdMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is LoadUserByIdAction){
     UserService()
       .getById(action.id)
-      .then((user) => store.dispatch(LoadUserSuccessAction(user: user.toUserState())))
+      .then((user) => store.dispatch(LoadUserByIdSuccessAction(user: user.toUserState())))
       .catchError((e){
         if(e is BackendException){
           if(e.statusCode == 404){
-            store.dispatch(UserNotFoundAction(id: action.id));
+            store.dispatch(UserNotFoundByIdAction(id: action.id));
           }
           else{
-            store.dispatch(LoadUserFailedAction(id: action.id));
+            store.dispatch(LoadUserByIdFailedAction(id: action.id));
           }
         }
         throw e;
@@ -23,19 +23,18 @@ void loadUserMiddleware(Store<AppState> store, action, NextDispatcher next){
   }
   next(action);
 }
-
 void loadUserByUserNameMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is LoadUserByUserNameAction){
     UserService()
       .getByUserName(action.userName)
-      .then((user) => store.dispatch(LoadUserSuccessAction(user: user.toUserState())))
+      .then((user) => store.dispatch(LoadUserByUserNameSuccessAction(user: user.toUserState())))
       .catchError((e){
         if(e is BackendException){
           if(e.statusCode == 404){
-            store.dispatch(UserNotFoundAction(id: action.id));
+            store.dispatch(UserNotFoundByUserNameAction(userName: action.userName));
           }
           else{
-            store.dispatch(LoadUserFailedAction(id: action.id));
+            store.dispatch(LoadUserByUserNameFailedAction(userName: action.userName));
           }
         }
         throw e;

@@ -6,7 +6,8 @@ import 'package:my_social_app/state/app_state/questions_state/question_state.dar
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page_constants.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page/display_user_unsolved_questions_page.dart';
@@ -14,10 +15,10 @@ import 'package:my_social_app/views/question/widgets/question_abstract_item_widg
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class DisplayAbstractsUserUnsolvedQuestionsPage extends StatefulWidget {
-  final int userId;
+  final UserState user;
   const DisplayAbstractsUserUnsolvedQuestionsPage({
     super.key,
-    required this.userId
+    required this.user
   });
 
   @override
@@ -34,8 +35,8 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
         final store = StoreProvider.of<AppState>(context,listen: false);
         getNextEntitiesIfReady(
           store,
-          selectUserUnsolvedQuestions(store, widget.userId),
-          NextUserUnsolvedQuestionsAction(userId: widget.userId)
+          selectUserUnsolvedQuestions(store, widget.user.id),
+          NextUserUnsolvedQuestionsAction(userId: widget.user.id)
         );
       }
     );
@@ -58,10 +59,10 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
     return StoreConnector<AppState,Pagination<int, QuestionState>>(
       onInit: (store) => getNextEntitiesIfNoPage(
         store,
-        selectUserUnsolvedQuestions(store, widget.userId),
-        NextUserUnsolvedQuestionsAction(userId: widget.userId)
+        selectUserUnsolvedQuestions(store, widget.user.id),
+        NextUserUnsolvedQuestionsAction(userId: widget.user.id)
       ),
-      converter: (store) => selectUserUnsolvedQuestions(store, widget.userId),
+      converter: (store) => selectUserUnsolvedQuestions(store, widget.user.id),
       builder: (context, pagination) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -92,7 +93,7 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
                     Navigator
                       .of(context)
                       .push(MaterialPageRoute(builder: (context) => DisplayUserUnsolvedQuestionsPage(
-                        userId: widget.userId,
+                        user: widget.user,
                         firstDisplayedQuestionId: id,
                       ))),
                 )

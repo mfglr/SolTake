@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
@@ -92,6 +92,39 @@ class UserState extends Entity<int> implements Avatar{
     stories: stories,
     userImageState: newUserImageState ?? userImageState,
   );
+
+  FollowState toFollower(int id) => 
+    FollowState(
+      id: id,
+      userId: this.id,
+      userName: userName,
+      name: name,
+      image: image,
+      isFollower: true,
+      isFollowed: isFollowed
+    );
+  FollowState toFollowed(int id) => 
+    FollowState(
+      id: id,
+      userId: this.id,
+      userName: userName,
+      name: name,
+      image: image,
+      isFollower: isFollower,
+      isFollowed: true
+    );
+
+  UserState follow() => _optional(
+    newIsFollowed: true,
+    newNumberOfFollowers: numberOfFollowers + 1
+  );
+  UserState currentFollow() => _optional(
+    newNumberOfFolloweds: numberOfFolloweds + 1
+  );
+
+  //questions
+  UserState createQuestion() => _optional(newNumberOfQuestions: numberOfQuestions + 1);
+  //questions
 
   //followers
   UserState startLoadingNextFollowers() => 

@@ -6,7 +6,7 @@ import 'package:my_social_app/views/story/pages/display_story_page/widgets/displ
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
-import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
 import 'package:video_player/video_player.dart';
 
 class StoryVideoItem extends StatefulWidget {

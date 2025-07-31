@@ -44,7 +44,7 @@ import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
 import 'package:my_social_app/state/app_state/user_message_state/middlewares.dart';
@@ -61,7 +61,8 @@ final store = Store(
   reducers,
   initialState: AppState(
     users: UsersState(
-      users: EntityCollection<int, UserState>()
+      usersById: EntityCollection<int, UserState>(),
+      usersByUserName: EntityCollection<String, UserState>()
     ),
     
     questions: QuestionsState(
@@ -136,7 +137,8 @@ final store = Store(
   ),
   middleware: [
     //users
-    loadUserMiddleware,
+    loadUserByIdMiddleware,
+    loadUserByUserNameMiddleware,
     //users
 
     //questions

@@ -6,7 +6,8 @@ import 'package:my_social_app/state/app_state/questions_state/question_state.dar
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page_constants.dart';
 import 'package:my_social_app/views/question/pages/display_user_questions/display_user_questions_page.dart';
@@ -14,10 +15,10 @@ import 'package:my_social_app/views/question/widgets/question_abstract_item_widg
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class DisplayAbstractsUserQuestionsPage extends StatefulWidget {
-  final int userId;
+  final UserState user;
   const DisplayAbstractsUserQuestionsPage({
     super.key,
-    required this.userId
+    required this.user
   });
 
   @override
@@ -34,8 +35,8 @@ class _DisplayAbstractsUserQuestionsPageState extends State<DisplayAbstractsUser
         final store = StoreProvider.of<AppState>(context,listen: false);
         getNextEntitiesIfReady(
           store,
-          selectUserQuestions(store, widget.userId),
-          NextUserQuestionsAction(userId: widget.userId)
+          selectUserQuestions(store, widget.user.id),
+          NextUserQuestionsAction(userId: widget.user.id)
         );
       }
     );
@@ -58,10 +59,10 @@ class _DisplayAbstractsUserQuestionsPageState extends State<DisplayAbstractsUser
     return StoreConnector<AppState,Pagination<int,QuestionState>>(
       onInit: (store) => getNextEntitiesIfNoPage(
         store,
-        selectUserQuestions(store, widget.userId),
-        NextUserQuestionsAction(userId: widget.userId)
+        selectUserQuestions(store, widget.user.id),
+        NextUserQuestionsAction(userId: widget.user.id)
       ),
-      converter: (store) => selectUserQuestions(store, widget.userId),
+      converter: (store) => selectUserQuestions(store, widget.user.id),
       builder: (context, pagination) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -92,7 +93,7 @@ class _DisplayAbstractsUserQuestionsPageState extends State<DisplayAbstractsUser
                     Navigator
                       .of(context)
                       .push(MaterialPageRoute(builder: (context) => DisplayUserQuestionsPage(
-                        userId: widget.userId,
+                        user: widget.user,
                         firstDisplayedQuestionId: id,
                       ))),
                 )

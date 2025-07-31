@@ -11,28 +11,6 @@ import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
-void loadUserMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadUserAction){
-    if(store.state.userEntityState.getValue(action.userId) == null){
-      UserService()
-        .getById(action.userId)
-        .then((user) => store.dispatch(AddUserAction(user: user.toUserState())));
-    }
-  }
-  next(action);
-}
-void loadUserByUserNameMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadUserByUserNameAction){
-    final user = store.state.userEntityState.get((e) => e.userName == action.userName);
-    if(user == null){
-      UserService()
-        .getByUserName(action.userName)
-        .then((user) => store.dispatch(AddUserAction(user: user.toUserState())));
-    }
-  }
-  next(action);
-}
-
 void followMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is FollowUserAction){
     FollowService()

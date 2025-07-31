@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/select_medias_page.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/story/widgets/story_circle_widget.dart';

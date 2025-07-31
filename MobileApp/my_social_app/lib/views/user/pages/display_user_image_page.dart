@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 
 class DisplayUserImagePage extends StatefulWidget {
   final int userId;

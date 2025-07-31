@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 part 'follow.g.dart';
 
 @JsonSerializable()

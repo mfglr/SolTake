@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/subjects_state/actions.dart';
 import 'package:my_social_app/state/app_state/subjects_state/selectors.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';

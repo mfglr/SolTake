@@ -1,44 +1,58 @@
 import 'package:flutter/widgets.dart';
-import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_status.dart';
 
 @immutable
-class EntityContainer<I extends Comparable, E extends Entity<I>> {
-  final I id;
+class EntityContainer<V> {
   final EntityStatus status;
-  final E? entity;
+  final V? entity;
+
+  bool get isSuccess => status == EntityStatus.success;
 
   const EntityContainer._({
-    required this.id,
     required this.status,
     required this.entity
   });
 
-  factory EntityContainer.loading(I id) => 
-    EntityContainer<I,E>._(
-      id: id,
+
+  factory EntityContainer.notLoading() => 
+    EntityContainer<V>._(
+      status: EntityStatus.notLoading,
+      entity: null
+    );
+
+  factory EntityContainer.loading() => 
+    EntityContainer<V>._(
       status: EntityStatus.loading,
       entity: null
     );
 
-  factory EntityContainer.success(E entity) =>
-    EntityContainer._(
-      id: entity.id,
+  factory EntityContainer.success(V entity) =>
+    EntityContainer<V>._(
       status: EntityStatus.success,
       entity: entity
     );
   
-  factory EntityContainer.failed(I id) =>
-    EntityContainer._(
-      id: id,
+  factory EntityContainer.failed() =>
+    const EntityContainer._(
       status: EntityStatus.failed,
       entity: null
     );
   
-  factory EntityContainer.notFound(I id) =>
-    EntityContainer._(
-      id: id,
+  factory EntityContainer.notFound() =>
+    EntityContainer<V>._(
       status: EntityStatus.notFound,
       entity: null
+    );
+
+  EntityContainer<V> updateOne(V? entity) =>
+    EntityContainer<V>._(
+      status: status,
+      entity: entity,
+    );
+
+  EntityContainer<V> removeOne() =>
+    EntityContainer<V>._(
+      status: EntityStatus.notFound,
+      entity: null,
     );
 }

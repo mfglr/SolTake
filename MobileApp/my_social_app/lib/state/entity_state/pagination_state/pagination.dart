@@ -58,6 +58,7 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
   bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
   bool get isReadyForPrevPage => !loadingPrev;
   bool get isEmpty => isLast && values.isEmpty;
+  K? get firstId => values.firstOrNull?.id;
 
   V? get(bool Function(V) test) => values.where(test).firstOrNull; 
   V? getById(K id) => values.where((e) => e.id.compareTo(id) == 0).firstOrNull;

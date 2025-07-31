@@ -9,7 +9,7 @@ import 'package:my_social_app/state/app_state/story_state/story_circle_state.dar
 import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';

@@ -5,8 +5,8 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/views/message/pages/display_message_images_page/widgets/message_content.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -77,7 +77,7 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
                           ),
                           StoreConnector<AppState,UserState?>(
                             converter: (store) => store.state.userEntityState.getValue(widget.message.senderId),
-                            onInit: (store) => store.dispatch(LoadUserAction(userId: widget.message.senderId)),
+                            onInit: (store) => store.dispatch(LoadUserByIdAction(id: widget.message.senderId)),
                             builder: (store,user){
                               if(user == null) return const SpaceSavingWidget();
                               return UserImageWithNamesWidget(

@@ -1,3 +1,5 @@
+import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_status.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -37,6 +39,12 @@ void getPrevEntitiesIfReady(Store<AppState> store, Pagination pagination, action
 
 void refreshEntities(Store<AppState> store, Pagination pagination, action){
   if(!pagination.loadingNext){
+    store.dispatch(action);
+  }
+}
+
+void loadIfNotLoading(Store<AppState> store, EntityContainer container, action){
+  if(container.status == EntityStatus.notLoading){
     store.dispatch(action);
   }
 }

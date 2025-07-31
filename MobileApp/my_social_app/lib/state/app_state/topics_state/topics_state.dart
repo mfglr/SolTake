@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/topics_state/selectors.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable

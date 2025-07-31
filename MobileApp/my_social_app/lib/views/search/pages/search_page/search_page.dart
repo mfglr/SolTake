@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/search_users_state/search_user_sta
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/search/pages/search_page/search_page_texts.dart';
 import 'package:my_social_app/views/search/widgets/search_question_widget.dart';

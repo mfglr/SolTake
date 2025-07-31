@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart
 import 'package:my_social_app/state/app_state/ai_model_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page_texts.dart';
 // import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sorting_menu_widget/sorting_button_widget.dart';

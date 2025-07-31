@@ -2,20 +2,10 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/follow_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
-@immutable
-class LoadUserAction extends AppAction{
-  final int userId;
-  const LoadUserAction({required this.userId});
-}
-@immutable
-class LoadUserByUserNameAction extends AppAction{
-  final String userName;
-  const LoadUserByUserNameAction({required this.userName});
-}
 @immutable
 class AddUserAction extends AppAction{
   final UserState user;

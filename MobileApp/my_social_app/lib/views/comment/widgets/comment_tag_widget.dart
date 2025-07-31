@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/user/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
 
 class CommentTagWidget extends StatelessWidget {
   final String userName;

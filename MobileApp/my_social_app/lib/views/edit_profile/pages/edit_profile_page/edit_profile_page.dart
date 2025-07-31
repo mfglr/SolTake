@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photo_modal.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_biography_page/edit_biography_page.dart';
 import 'package:my_social_app/views/edit_profile/pages/edit_name_page/edit_name_page.dart';

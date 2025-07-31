@@ -1,5 +1,4 @@
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
 
 extension MapExtentions<K extends Comparable, V extends Entity<K>> on Map<K,V>{
   Map<K,V> prependOne(V value) =>
@@ -45,20 +44,19 @@ extension MapExtentions<K extends Comparable, V extends Entity<K>> on Map<K,V>{
     appendMany(list.expand((e) => e));
 }
 
-extension MapExtentions1<K extends Comparable, V> on Map<K,V>{
+extension MapExtentions1<K, V> on Map<K,V>{
   Map<K,V> setOne(K key, V? value) => 
     value != null
       ? { for (var entry in [...entries, MapEntry(key, value)]) entry.key : entry.value }
       : this;
+  Map<K,V> setMany(Map<K,V?> map) => 
+    { for (var entry in [
+      ...entries,
+      ...map.entries.where((e) => e.value != null)]) entry.key : entry.value as V
+    };
+
 
   Map<K,V> prependOne(K key, V value) => { for (var entry in [MapEntry(key, value), ...entries]) entry.key : entry.value };
-  Map<K,V> updateOne(K key, V value) => { for( var entry in [...entries.map((e) => e.key.compareTo(key) == 0 ? MapEntry(key, value) : e)]) entry.key : entry.value };
-  Map<K,V> updateElsePrependOne(K key, V value) => this[key] != null ? updateOne(key, value) : prependOne(key, value);
-}
-
-extension MapExtentions2<I extends Comparable, E extends Entity<I>, C extends EntityContainer<I,E>> on Map<I, C>{
-  Map<I, C> setOne(C? value) =>
-    value != null
-      ? { for (var e in [...values, value]) e.id : e }
-      : this;
+  // Map<K,V> updateOne(K key, V value) => { for( var entry in [...entries.map((e) => e.key.compareTo(key) == 0 ? MapEntry(key, value) : e)]) entry.key : entry.value };
+  // Map<K,V> updateElsePrependOne(K key, V value) => this[key] != null ? updateOne(key, value) : prependOne(key, value);
 }

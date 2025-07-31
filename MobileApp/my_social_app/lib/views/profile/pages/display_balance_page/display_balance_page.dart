@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/actions.dart';
 import 'package:my_social_app/state/app_state/transaction_state/selectors.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/profile/pages/display_balance_page/widgets/add_funds/add_funds_button.dart';
 import 'package:my_social_app/views/profile/pages/display_balance_page/widgets/transactions_widget.dart';

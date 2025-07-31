@@ -8,7 +8,7 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_save
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/map_extentions.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
@@ -273,7 +273,7 @@ class QuestionsState{
           : questionUserSaves,
 
       questionUserLikes:
-        questionUserLikes.updateElsePrependOne(
+        questionUserLikes.setOne(
           question.id,
           (questionUserLikes[question.id] ?? Pagination.init(questionUserLikesPerPage, true)).prependOne(questionUserLike)
         )
@@ -328,12 +328,10 @@ class QuestionsState{
           : questionUserSaves,
 
       questionUserLikes:
-        questionUserLikes[question.id] != null
-          ? questionUserLikes.updateOne(
-              question.id,
-              questionUserLikes[question.id]!.where((e) => e.userId != userId)
-            )
-          : questionUserLikes
+        questionUserLikes.setOne(
+          question.id,
+          questionUserLikes[question.id]?.where((e) => e.userId != userId)
+        )
     );
   }
   // question user likes
@@ -629,43 +627,37 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       examQuestions:
-        examQuestions[question.exam.id] != null
-          ? examQuestions.updateOne(
-              question.exam.id,
-              examQuestions[question.exam.id]!.updateOne(question.increaseNumberOfComments())
-            )
-          : examQuestions,
-      subjectQuestions: subjectQuestions[question.subject.id] != null
-        ? subjectQuestions.updateOne(
-            question.subject.id,
-            subjectQuestions[question.subject.id]!.updateOne(question.increaseNumberOfComments())
-          )
-        : subjectQuestions,
+        examQuestions.setOne(
+          question.exam.id,
+          examQuestions[question.exam.id]?.updateOne(question.increaseNumberOfComments())
+        ),
+      subjectQuestions: 
+        subjectQuestions.setOne(
+          question.subject.id,
+          subjectQuestions[question.subject.id]?.updateOne(question.increaseNumberOfComments())
+        ),
       topicQuestions: 
-        question.topic?.id != null && topicQuestions[question.topic?.id] != null
-          ? topicQuestions.updateOne(
+        question.topic?.id != null
+          ? topicQuestions.setOne(
               question.topic!.id,
-              topicQuestions[question.topic!.id]!.updateOne(question.increaseNumberOfComments())
+              topicQuestions[question.topic!.id]?.updateOne(question.increaseNumberOfComments())
             )
           : topicQuestions,
-      userQuestions: userQuestions[question.userId] != null
-        ? userQuestions.updateOne(
-            question.userId,
-            userQuestions[question.userId]!.updateOne(question.increaseNumberOfComments())
-          )
-        : userQuestions,
-      userSolvedQuestions: userSolvedQuestions[question.userId] != null
-        ? userSolvedQuestions.updateOne(
-            question.userId,
-            userSolvedQuestions[question.userId]!.updateOne(question.increaseNumberOfComments())
-          )
-        : userSolvedQuestions,
-      userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
-        ? userUnsolvedQuestions.updateOne(
-            question.userId,
-            userUnsolvedQuestions[question.userId]!.updateOne(question.increaseNumberOfComments()) 
-          )
-        : userUnsolvedQuestions,
+      userQuestions: 
+        userQuestions.setOne(
+          question.userId,
+          userQuestions[question.userId]?.updateOne(question.increaseNumberOfComments())
+        ),
+      userSolvedQuestions: 
+        userSolvedQuestions.setOne(
+          question.userId,
+          userSolvedQuestions[question.userId]?.updateOne(question.increaseNumberOfComments())
+        ),
+      userUnsolvedQuestions:
+        userUnsolvedQuestions.setOne(
+          question.userId,
+          userUnsolvedQuestions[question.userId]?.updateOne(question.increaseNumberOfComments()) 
+        ),
 
       homePageQuestions: homePageQuestions.updateOne(question.increaseNumberOfComments()),
       
@@ -683,43 +675,37 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       examQuestions:
-        examQuestions[question.exam.id] != null
-          ? examQuestions.updateOne(
-              question.exam.id,
-              examQuestions[question.exam.id]!.updateOne(question.createSolution(solution))
-            )
-          : examQuestions,
-      subjectQuestions: subjectQuestions[question.subject.id] != null
-        ? subjectQuestions.updateOne(
-            question.subject.id,
-            subjectQuestions[question.subject.id]!.updateOne(question.createSolution(solution))
-          )
-        : subjectQuestions,
+        examQuestions.setOne(
+            question.exam.id,
+            examQuestions[question.exam.id]?.updateOne(question.createSolution(solution))
+          ),
+      subjectQuestions:
+        subjectQuestions.setOne(
+          question.subject.id,
+          subjectQuestions[question.subject.id]?.updateOne(question.createSolution(solution))
+        ),
       topicQuestions: 
-        question.topic?.id != null && topicQuestions[question.topic?.id] != null
-          ? topicQuestions.updateOne(
+        question.topic != null
+          ? topicQuestions.setOne(
               question.topic!.id,
-              topicQuestions[question.topic!.id]!.updateOne(question.createSolution(solution))
+              topicQuestions[question.topic!.id]?.updateOne(question.createSolution(solution))
             )
           : topicQuestions,
-      userQuestions: userQuestions[question.userId] != null
-        ? userQuestions.updateOne(
-            question.userId,
-            userQuestions[question.userId]!.updateOne(question.createSolution(solution))
-          )
-        : userQuestions,
-      userSolvedQuestions: userSolvedQuestions[question.userId] != null
-        ? userSolvedQuestions.updateOne(
-            question.userId,
-            userSolvedQuestions[question.userId]!.updateOne(question.createSolution(solution))
-          )
-        : userSolvedQuestions,
-      userUnsolvedQuestions: userUnsolvedQuestions[question.userId] != null
-        ? userUnsolvedQuestions.updateOne(
-            question.userId,
-            userUnsolvedQuestions[question.userId]!.updateOne(question.createSolution(solution)) 
-          )
-        : userUnsolvedQuestions,
+      userQuestions:
+        userQuestions.setOne(
+          question.userId,
+          userQuestions[question.userId]?.updateOne(question.createSolution(solution))
+        ),
+      userSolvedQuestions: 
+        userSolvedQuestions.setOne(
+          question.userId,
+          userSolvedQuestions[question.userId]?.updateOne(question.createSolution(solution))
+        ),
+      userUnsolvedQuestions:
+        userUnsolvedQuestions.setOne(
+          question.userId,
+          userUnsolvedQuestions[question.userId]?.updateOne(question.createSolution(solution)) 
+        ),
       homePageQuestions: homePageQuestions.updateOne(question.createSolution(solution)),
       
       searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),

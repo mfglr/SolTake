@@ -5,7 +5,7 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_question_likes_page/display_question_likes_page_constants.dart';
 import 'package:my_social_app/views/question/widgets/question_user_like/question_user_likes_widget.dart';

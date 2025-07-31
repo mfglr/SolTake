@@ -4,7 +4,7 @@ import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/display_subject_requests_page_constants.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/widgets/create_subject_button/create_subject_request_button.dart';
