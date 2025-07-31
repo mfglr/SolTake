@@ -3,7 +3,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/search_questions_state/actions.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -41,16 +40,16 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
         ),
       ),
       body: StoreConnector<AppState,Pagination<int,QuestionState>>(
-        onInit: (store) => 
-          getNextPageIfNoPage(
-            store,
-            store.state.searchQuestions,
-            NextSearchQuestionsAction(
-              examId: examId,
-              subjectId: subjectId,
-              topicId: topicId
-            )
-          ),
+        // onInit: (store) => 
+        //   getNextPageIfNoPage(
+        //     store,
+        //     store.state.searchQuestions,
+        //     NextSearchQuestionsAction(
+        //       examId: examId,
+        //       subjectId: subjectId,
+        //       topicId: topicId
+        //     )
+        //   ),
         converter: (store) => selectSearchPageQuestion(store),
         builder: (context, pagination) => QuestionItemsWidget(
           firstDisplayedQuestionId: firstDisplayedQuestionId,
@@ -58,15 +57,15 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
           noQuestionContent: questionNotFound[getLanguage(context)]!,
           onScrollBottom: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
-            getNextPageIfReady(
-              store,
-              store.state.searchQuestions,
-              NextSearchQuestionsAction(
-                examId: examId,
-                subjectId: subjectId,
-                topicId: topicId
-              )
-            );
+            // getNextPageIfReady(
+            //   store,
+            //   store.state.searchQuestions,
+            //   NextSearchQuestionsAction(
+            //     examId: examId,
+            //     subjectId: subjectId,
+            //     topicId: topicId
+            //   )
+            // );
           },
         ),
       ),

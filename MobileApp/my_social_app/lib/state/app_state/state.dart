@@ -55,7 +55,6 @@ class AppState{
   final TopicsState topics;
 
   final Pagination<int,SearchUserState> searchUsers;
-  final Pagination<int,Id<int>> searchQuestions;
   final Pagination<int,UserUserSearchState> userUserSearchs;
   final EntityState<int,MessageConnectionState> messageConnectionEntityState;
   final Pagination<int,UserUserBlockState> userUserBlocks;
@@ -95,7 +94,6 @@ class AppState{
     required this.topics,
     
     required this.searchUsers,
-    required this.searchQuestions,
     required this.userUserSearchs,
     required this.messageConnectionEntityState,
     required this.userUserBlocks,
@@ -173,7 +171,6 @@ class AppState{
     topics: const TopicsState(subjectTopics: <int, Pagination<int, TopicState>>{}),
 
     searchUsers: Pagination.init(usersPerPage, true),
-    searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),

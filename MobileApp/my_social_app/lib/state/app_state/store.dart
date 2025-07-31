@@ -24,7 +24,6 @@ import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
-import 'package:my_social_app/state/app_state/search_questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -105,7 +104,6 @@ final store = Store(
     topics: const TopicsState(subjectTopics: <int, Pagination<int, TopicState>>{}),
 
     searchUsers: Pagination.init(usersPerPage, true),
-    searchQuestions: Pagination.init(questionsPerPage, true),
     userUserSearchs: Pagination.init(usersPerPage, true),
     messageConnectionEntityState: EntityState(),
     userUserBlocks: Pagination.init(usersPerPage, true),
@@ -236,11 +234,6 @@ final store = Store(
     nextSearchUsersMiddleware,
     prevSearchUsersMiddleware,
     //search users middleware
-
-    //search questions middleware
-    firstSearchQuestionsMiddleware,
-    nextSearchQuestionsMiddleware,
-    //search questions middleware
 
     //user user conversations middlewares
     nextUserUserConversationsMiddleware,
