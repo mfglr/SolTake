@@ -2,45 +2,8 @@ import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/uploading_circle/uploading_file_status.dart';
 
-@immutable
-class AddUserAction extends AppAction{
-  final UserState user;
-  const AddUserAction({required this.user});
-}
-@immutable
-class AddUsersAction extends AppAction{
-  final Iterable<UserState> users;
-  const AddUsersAction({required this.users});
-}
-
-@immutable
-class MarkUserQuestionAsSolvedAction extends AppAction{
-  final int userId;
-  final int questionId;
-  const MarkUserQuestionAsSolvedAction({required this.userId, required this.questionId});
-}
-@immutable
-class MarkUserQuestionAsUnsolvedAction extends AppAction{
-  final int userId;
-  final int questionId;
-  const MarkUserQuestionAsUnsolvedAction({required this.userId, required this.questionId});
-}
-
-@immutable
-class AddNewUserQuestionAction extends AppAction{
-  final int userId;
-  final int questionId;
-  const AddNewUserQuestionAction({required this.userId,required this.questionId});
-}
-@immutable
-class RemoveUserQuestionAction extends AppAction{
-  final int userId;
-  final int questionId;
-  const RemoveUserQuestionAction({required this.userId, required this.questionId});
-}
 
 @immutable
 class UpdateUserNameAction extends AppAction{

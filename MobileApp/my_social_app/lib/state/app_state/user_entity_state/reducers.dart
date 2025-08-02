@@ -4,11 +4,6 @@ import 'package:my_social_app/state/entity_state/entity_collection/entity_state.
 import 'package:redux/redux.dart';
 
 
-EntityState<int,UserState> addUserReducer(EntityState<int,UserState> prev,AddUserAction action)
-  => prev.appendOne(action.user);
-EntityState<int,UserState> addUsersReducer(EntityState<int,UserState> prev,AddUsersAction action)
-  => prev.appendMany(action.users);
-
 //following ************************************* following//
 
 EntityState<int,UserState> updateUserNameReducer(EntityState<int,UserState> prev,UpdateUserNameSuccessAction action)
@@ -31,8 +26,6 @@ EntityState<int,UserState> changeUserImageRateReducer(EntityState<int,UserState>
 
 
 Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<EntityState<int,UserState>>([
-  TypedReducer<EntityState<int,UserState>,AddUserAction>(addUserReducer).call,
-  TypedReducer<EntityState<int,UserState>,AddUsersAction>(addUsersReducer).call,
 
   //followers
   TypedReducer<EntityState<int,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,

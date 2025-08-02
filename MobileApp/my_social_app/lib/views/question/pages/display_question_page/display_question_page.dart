@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
 // import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
-import 'package:my_social_app/views/question/pages/display_question_page/display_question_page_texts.dart';
-import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_view.dart';
+import 'package:my_social_app/views/question/pages/display_question_page/pages/question_success_page.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
 class DisplayQuestionPage extends StatefulWidget {
   final int questionId;
@@ -48,26 +46,16 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,QuestionState?>(
+    return StoreConnector<AppState,EntityContainer<QuestionState>>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
-      converter: (store) => store.state.questionEntityState.getValue(widget.questionId),
-      builder: (context,question){
-        if(question == null) return const LoadingView();
-        return Scaffold(
-          appBar: AppBar(
-            leading: const AppBackButtonWidget(),
-            title: LanguageWidget(
-              child: (language) => AppTitle(
-                title: "${question.userName}${title[language]}"
-              ),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: QuestionItemWidget(
-              question: question,
-            )
-          ),
-        );
+      converter: (store) => selectQuestion(store, widget.questionId),
+      builder: (context, container){
+        if(container.isSuccess){
+          return QuestionSuccessPage(question: container.entity!,);
+        }
+        else{
+          return const LoadingCircleWidget();
+        }
       }
     );
   }

@@ -4,8 +4,12 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:redux/redux.dart';
+
+EntityContainer<QuestionState> selectQuestion(Store<AppState> store, int questionId) =>
+  store.state.questions.questions[questionId];
 
 Pagination<int, QuestionState> selectHomePageQuestionPagination(Store<AppState> store) =>
   store.state.questions.homePageQuestions;

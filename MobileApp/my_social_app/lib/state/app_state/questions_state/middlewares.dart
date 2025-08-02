@@ -1,4 +1,5 @@
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/services/question_user_like_service.dart';
@@ -15,6 +16,26 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
+//questions
+void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is LoadQuestionAction){
+    QuestionService()
+      .getById(action.questionId)
+      .then((question) => store.dispatch(LoadQuestionSuccessAction(question: question.toQuestionState())))
+      .catchError((e){
+        if(e is BackendException){
+          if(e.statusCode == 404){
+            store.dispatch(LoadQuestionNotFoundAction(questionId: action.questionId));
+          }
+          else{
+            store.dispatch(LoadQuestionFailedAction(questionId: action.questionId));
+          }
+        }
+        throw e;
+      });
+  }
+  next(action);
+}
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
@@ -45,6 +66,7 @@ void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+//questions
 
 //search page state
 void changeExamMiddleware(Store<AppState> store, action, NextDispatcher next){

@@ -12,7 +12,6 @@ import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart'
 import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
@@ -20,10 +19,8 @@ import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dar
 import 'package:my_social_app/state/app_state/solutions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/reducers.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/reducers.dart';
 import 'package:my_social_app/state/app_state/subjects_state/reducers.dart';
-import 'package:my_social_app/state/app_state/topic_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topics_state/reducers.dart';
 import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
@@ -65,14 +62,11 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
   topicRequests: topicRequestsReducers(prev.topicRequests, action),
 
-  subjectEntityState: subjectEntityStateReducers(prev.subjectEntityState, action),
-  topicEntityState: topicEntityStateReducers(prev.topicEntityState, action),
   solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
   commentEntityState: questionCommentEntityStateReducers(prev.commentEntityState,action),
   notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
   conversations: conversationsReducer(prev.conversations,action),
-  questionEntityState: questionsReducer(prev.questionEntityState,action),
   policyState: policyReducers(prev.policyState,action),
   uploadEntityState: uploadingEntityStateReducers(prev.uploadEntityState, action)
 );

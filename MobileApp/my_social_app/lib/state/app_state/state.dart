@@ -71,11 +71,8 @@ class AppState{
   final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
 
-  final EntityState<int,QuestionState> questionEntityState;
   final Pagination<int,NotificationState> notifications;
-  final EntityState<int,SubjectState> subjectEntityState;
   final Login login;
-  final EntityState<int,TopicState> topicEntityState;
   final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,CommentState> commentEntityState;
   final EntityState<int,MessageState> messageEntityState;
@@ -110,11 +107,8 @@ class AppState{
     required this.userEntityState,
     required this.userMessageState,
 
-    required this.questionEntityState,
     required this.conversations,
     required this.login,
-    required this.subjectEntityState,
-    required this.topicEntityState,
     required this.solutionEntityState,
     required this.commentEntityState,
     required this.notifications,
@@ -132,6 +126,7 @@ class AppState{
     ),
 
     questions: QuestionsState(
+      questions: EntityCollection(),
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
@@ -187,12 +182,9 @@ class AppState{
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 
-    questionEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     login: Login.init(),
     
-    subjectEntityState: EntityState(),
-    topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),

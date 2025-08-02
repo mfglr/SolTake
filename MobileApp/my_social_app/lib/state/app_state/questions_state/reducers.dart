@@ -6,6 +6,15 @@ import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:redux/redux.dart';
 
 //questions
+QuestionsState loadQuestionReducer(QuestionsState prev, LoadQuestionAction action) =>
+  prev.load(action.questionId);
+QuestionsState loadQuestionSuccessReducer(QuestionsState prev, LoadQuestionSuccessAction action) =>
+  prev.success(action.question);
+QuestionsState loadQuestionFailedReducer(QuestionsState prev, LoadQuestionFailedAction action) =>
+  prev.failed(action.questionId);
+QuestionsState loadQuestionNotFoundReducer(QuestionsState prev, LoadQuestionNotFoundAction action) =>
+  prev.notFound(action.questionId);
+
 QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
   prev.create(action.question);
 QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action) =>
@@ -223,6 +232,11 @@ QuestionsState refreshTopicQuestionsFailedReducer(QuestionsState prev, RefreshTo
 
 Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   //questions
+  TypedReducer<QuestionsState,LoadQuestionAction>(loadQuestionReducer).call,
+  TypedReducer<QuestionsState,LoadQuestionSuccessAction>(loadQuestionSuccessReducer).call,
+  TypedReducer<QuestionsState,LoadQuestionFailedAction>(loadQuestionFailedReducer).call,
+  TypedReducer<QuestionsState,LoadQuestionNotFoundAction>(loadQuestionNotFoundReducer).call,
+
   TypedReducer<QuestionsState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,MarkSolutionAsCorrectSuccessAction>(markSolutionAsCorrectSuccessReducer).call,

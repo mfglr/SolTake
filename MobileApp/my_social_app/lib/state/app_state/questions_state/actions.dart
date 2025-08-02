@@ -6,13 +6,30 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 
 @immutable
-class QuestionsAction extends AppAction{
-  const QuestionsAction();
+class LoadQuestionAction extends AppAction{
+  final int questionId;
+  const LoadQuestionAction({required this.questionId});
 }
+@immutable
+class LoadQuestionSuccessAction extends AppAction{
+  final QuestionState question;
+  const LoadQuestionSuccessAction({required this.question});
+}
+@immutable
+class LoadQuestionFailedAction extends AppAction{
+  final int questionId;
+  const LoadQuestionFailedAction({required this.questionId});
+}
+@immutable
+class LoadQuestionNotFoundAction extends AppAction{
+  final int questionId;
+  const LoadQuestionNotFoundAction({required this.questionId});
+}
+
 
 //questions
 @immutable
-class CreateQuestionAction extends QuestionsAction{
+class CreateQuestionAction extends AppAction{
   final String id;
   final int examId;
   final int subjectId;
@@ -30,18 +47,18 @@ class CreateQuestionAction extends QuestionsAction{
   });
 }
 @immutable
-class CreateQuestionSuccessAction extends QuestionsAction{
+class CreateQuestionSuccessAction extends AppAction{
   final QuestionState question;
   const CreateQuestionSuccessAction({required this.question});
 }
 
 @immutable
-class DeleteQuestionAction extends QuestionsAction{
+class DeleteQuestionAction extends AppAction{
   final QuestionState question;
   const DeleteQuestionAction({required this.question});
 }
 @immutable
-class DeleteQuestionSuccessAction extends QuestionsAction{
+class DeleteQuestionSuccessAction extends AppAction{
   final QuestionState question;
   const DeleteQuestionSuccessAction({required this.question});
 }
@@ -109,58 +126,58 @@ class RefreshVideoQuestionsFailedAction extends AppAction{
 
 //question user likes
 @immutable
-class NextQuestionUserLikesAction extends QuestionsAction{
+class NextQuestionUserLikesAction extends AppAction{
   final int questionId;
   const NextQuestionUserLikesAction({required this.questionId});
 }
 @immutable
-class NextQuestionUserLikesSuccessAction extends QuestionsAction{
+class NextQuestionUserLikesSuccessAction extends AppAction{
   final int questionId;
   final Iterable<QuestionUserLikeState> questionUserLikes;
   const NextQuestionUserLikesSuccessAction({required this.questionId, required this.questionUserLikes});
 }
 @immutable
-class NextQuestionUserLikesFailedAction extends QuestionsAction{
+class NextQuestionUserLikesFailedAction extends AppAction{
   final int questionId;
   const NextQuestionUserLikesFailedAction({required this.questionId});
 }
 
 @immutable
-class RefreshQuestionUserLikesAction extends QuestionsAction{
+class RefreshQuestionUserLikesAction extends AppAction{
   final int questionId;
   const RefreshQuestionUserLikesAction({required this.questionId});
 }
 @immutable
-class RefreshQuestionUserLikesSuccessAction extends QuestionsAction{
+class RefreshQuestionUserLikesSuccessAction extends AppAction{
   final int questionId;
   final Iterable<QuestionUserLikeState> questionUserLikes;
   const RefreshQuestionUserLikesSuccessAction({required this.questionId, required this.questionUserLikes});
 }
 @immutable
-class RefreshQuestionUserLikesFailedAction extends QuestionsAction{
+class RefreshQuestionUserLikesFailedAction extends AppAction{
   final int questionId;
   const RefreshQuestionUserLikesFailedAction({required this.questionId});
 }
 
 @immutable
-class LikeQuestionAction extends QuestionsAction{
+class LikeQuestionAction extends AppAction{
   final QuestionState question;
   const LikeQuestionAction({required this.question});
 }
 @immutable
-class LikeQuestionSuccessAction extends QuestionsAction{
+class LikeQuestionSuccessAction extends AppAction{
   final QuestionState question;
   final QuestionUserLikeState questionUserLike;
   const LikeQuestionSuccessAction({required this.question, required this.questionUserLike});
 }
 
 @immutable
-class DislikeQuestionAction extends QuestionsAction{
+class DislikeQuestionAction extends AppAction{
   final QuestionState question;
   const DislikeQuestionAction({required this.question});
 }
 @immutable
-class DislikeQuestionSuccessAction extends QuestionsAction{
+class DislikeQuestionSuccessAction extends AppAction{
   final QuestionState question;
   final int userId;
   const DislikeQuestionSuccessAction({required this.question, required this.userId});
@@ -169,51 +186,51 @@ class DislikeQuestionSuccessAction extends QuestionsAction{
 
 //question user saves
 @immutable
-class NextQuestionUserSavesAction extends QuestionsAction{
+class NextQuestionUserSavesAction extends AppAction{
   const NextQuestionUserSavesAction();
 }
 @immutable
-class NextQuestionUserSavesSuccessAction extends QuestionsAction{
+class NextQuestionUserSavesSuccessAction extends AppAction{
   final Iterable<QuestionUserSaveState> questionUserSaves;
   const NextQuestionUserSavesSuccessAction({required this.questionUserSaves});
 }
 @immutable
-class NextQuestionUserSavesFailedAction extends QuestionsAction{
+class NextQuestionUserSavesFailedAction extends AppAction{
   const NextQuestionUserSavesFailedAction();
 }
 
 @immutable
-class RefreshQuestionUserSavesAction extends QuestionsAction{
+class RefreshQuestionUserSavesAction extends AppAction{
   const RefreshQuestionUserSavesAction();
 }
 @immutable
-class RefreshQuestionUserSavesSuccessAction extends QuestionsAction{
+class RefreshQuestionUserSavesSuccessAction extends AppAction{
   final Iterable<QuestionUserSaveState> questionUserSaves;
   const RefreshQuestionUserSavesSuccessAction({required this.questionUserSaves});
 }
 @immutable
-class RefreshQuestionUserSavesFailedAction extends QuestionsAction{
+class RefreshQuestionUserSavesFailedAction extends AppAction{
   const RefreshQuestionUserSavesFailedAction();
 }
 
 @immutable
-class SaveQuestionAction extends QuestionsAction{
+class SaveQuestionAction extends AppAction{
   final QuestionState question;
   const SaveQuestionAction({required this.question});
 }
 @immutable
-class SaveQuestionSuccessAction extends QuestionsAction{
+class SaveQuestionSuccessAction extends AppAction{
   final QuestionUserSaveState questionUserSave;
   const SaveQuestionSuccessAction({required this.questionUserSave});
 }
 
 @immutable
-class UnsaveQuestionAction extends QuestionsAction{
+class UnsaveQuestionAction extends AppAction{
   final QuestionState question;
   const UnsaveQuestionAction({required this.question});
 }
 @immutable
-class UnsaveQuestionSuccessAction extends QuestionsAction{
+class UnsaveQuestionSuccessAction extends AppAction{
   final QuestionState question;
   const UnsaveQuestionSuccessAction({required this.question});
 } 
@@ -222,65 +239,65 @@ class UnsaveQuestionSuccessAction extends QuestionsAction{
 
 // home page questions
 @immutable
-class NextHomePageQuestionsAction extends QuestionsAction{
+class NextHomePageQuestionsAction extends AppAction{
   const NextHomePageQuestionsAction();
 }
 @immutable
-class NextHomePageQuestionsSuccessAction extends QuestionsAction{
+class NextHomePageQuestionsSuccessAction extends AppAction{
   final Iterable<QuestionState> questions;
   const NextHomePageQuestionsSuccessAction({required this.questions});
 }
 @immutable
-class NextHomePageQuestionsFailedAction extends QuestionsAction{
+class NextHomePageQuestionsFailedAction extends AppAction{
   const NextHomePageQuestionsFailedAction();
 }
 
 @immutable
-class RefreshHomePageQuestionsAction extends QuestionsAction{
+class RefreshHomePageQuestionsAction extends AppAction{
   const RefreshHomePageQuestionsAction();
 }
 @immutable
-class RefreshHomePageQuestionsSuccessAction extends QuestionsAction{
+class RefreshHomePageQuestionsSuccessAction extends AppAction{
   final Iterable<QuestionState> questions;
   const RefreshHomePageQuestionsSuccessAction({required this.questions});
 }
 @immutable
-class RefreshHomePageQuestionsFailedAction extends QuestionsAction{
+class RefreshHomePageQuestionsFailedAction extends AppAction{
   const RefreshHomePageQuestionsFailedAction();
 }
 // home page questions
 
 //user questions
 @immutable
-class NextUserQuestionsAction extends QuestionsAction{
+class NextUserQuestionsAction extends AppAction{
   final int userId;
   const NextUserQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserQuestionsSuccessAction extends QuestionsAction{
+class NextUserQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const NextUserQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class NextUserQuestionsFailedAction extends QuestionsAction{
+class NextUserQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class RefreshUserQuestionsAction extends QuestionsAction{
+class RefreshUserQuestionsAction extends AppAction{
   final int userId;
   const RefreshUserQuestionsAction({required this.userId});
 }
 @immutable
-class RefreshUserQuestionsSuccessAction extends QuestionsAction{
+class RefreshUserQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const RefreshUserQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class RefreshUserQuestionsFailedAction extends QuestionsAction{
+class RefreshUserQuestionsFailedAction extends AppAction{
   final int userId;
   const RefreshUserQuestionsFailedAction({required this.userId});
 }
@@ -288,35 +305,35 @@ class RefreshUserQuestionsFailedAction extends QuestionsAction{
 
 //user solved questions
 @immutable
-class NextUserSolvedQuestionsAction extends QuestionsAction{
+class NextUserSolvedQuestionsAction extends AppAction{
   final int userId;
   const NextUserSolvedQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserSolvedQuestionsSuccessAction extends QuestionsAction{
+class NextUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const NextUserSolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class NextUserSolvedQuestionsFailedAction extends QuestionsAction{
+class NextUserSolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserSolvedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class RefreshUserSolvedQuestionsAction extends QuestionsAction{
+class RefreshUserSolvedQuestionsAction extends AppAction{
   final int userId;
   const RefreshUserSolvedQuestionsAction({required this.userId});
 }
 @immutable
-class RefreshUserSolvedQuestionsSuccessAction extends QuestionsAction{
+class RefreshUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const RefreshUserSolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class RefreshUserSolvedQuestionsFailedAction extends QuestionsAction{
+class RefreshUserSolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const RefreshUserSolvedQuestionsFailedAction({required this.userId});
 }
@@ -324,35 +341,35 @@ class RefreshUserSolvedQuestionsFailedAction extends QuestionsAction{
 
 //user unsolved questions
 @immutable
-class NextUserUnsolvedQuestionsAction extends QuestionsAction{
+class NextUserUnsolvedQuestionsAction extends AppAction{
   final int userId;
   const NextUserUnsolvedQuestionsAction({required this.userId});
 }
 @immutable
-class NextUserUnsolvedQuestionsSuccessAction extends QuestionsAction{
+class NextUserUnsolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const NextUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class NextUserUnsolvedQuestionsFailedAction extends QuestionsAction{
+class NextUserUnsolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const NextUserUnsolvedQuestionsFailedAction({required this.userId});
 }
 
 @immutable
-class RefreshUserUnsolvedQuestionsAction extends QuestionsAction{
+class RefreshUserUnsolvedQuestionsAction extends AppAction{
   final int userId;
   const RefreshUserUnsolvedQuestionsAction({required this.userId});
 }
 @immutable
-class RefreshUserUnsolvedQuestionsSuccessAction extends QuestionsAction{
+class RefreshUserUnsolvedQuestionsSuccessAction extends AppAction{
   final int userId;
   final Iterable<QuestionState> questions;
   const RefreshUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
-class RefreshUserUnsolvedQuestionsFailedAction extends QuestionsAction{
+class RefreshUserUnsolvedQuestionsFailedAction extends AppAction{
   final int userId;
   const RefreshUserUnsolvedQuestionsFailedAction({required this.userId});
 }
@@ -360,35 +377,35 @@ class RefreshUserUnsolvedQuestionsFailedAction extends QuestionsAction{
 
 //exams questions
 @immutable
-class NextExamQuestionsAction extends QuestionsAction{
+class NextExamQuestionsAction extends AppAction{
   final int examId;
   const NextExamQuestionsAction({required this.examId});
 }
 @immutable
-class NextExamQuestionsSuccessAction extends QuestionsAction{
+class NextExamQuestionsSuccessAction extends AppAction{
   final int examId;
   final Iterable<QuestionState> questions;
   const NextExamQuestionsSuccessAction({required this.examId, required this.questions});
 }
 @immutable
-class NextExamQuestionsFailedAction extends QuestionsAction{
+class NextExamQuestionsFailedAction extends AppAction{
   final int examId;
   const NextExamQuestionsFailedAction({required this.examId});
 }
 
 @immutable
-class RefreshExamQuestionsAction extends QuestionsAction{
+class RefreshExamQuestionsAction extends AppAction{
   final int examId;
   const RefreshExamQuestionsAction({required this.examId});
 }
 @immutable
-class RefreshExamQuestionsSuccessAction extends QuestionsAction{
+class RefreshExamQuestionsSuccessAction extends AppAction{
   final int examId;
   final Iterable<QuestionState> questions;
   const RefreshExamQuestionsSuccessAction({required this.examId, required this.questions});
 }
 @immutable
-class RefreshExamQuestionsFailedAction extends QuestionsAction{
+class RefreshExamQuestionsFailedAction extends AppAction{
   final int examId;
   const RefreshExamQuestionsFailedAction({required this.examId});
 }
@@ -396,35 +413,35 @@ class RefreshExamQuestionsFailedAction extends QuestionsAction{
 
 //subject questions
 @immutable
-class NextSubjectQuestionsAction extends QuestionsAction{
+class NextSubjectQuestionsAction extends AppAction{
   final int subjectId;
   const NextSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
-class NextSubjectQuestionsSuccessAction extends QuestionsAction{
+class NextSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
   final Iterable<QuestionState> questions;
   const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
 @immutable
-class NextSubjectQuestionsFailedAction extends QuestionsAction{
+class NextSubjectQuestionsFailedAction extends AppAction{
   final int subjectId;
   const NextSubjectQuestionsFailedAction({required this.subjectId});
 }
 
 @immutable
-class RefreshSubjectQuestionsAction extends QuestionsAction{
+class RefreshSubjectQuestionsAction extends AppAction{
   final int subjectId;
   const RefreshSubjectQuestionsAction({required this.subjectId});
 }
 @immutable
-class RefreshSubjectQuestionsSuccessAction extends QuestionsAction{
+class RefreshSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
   final Iterable<QuestionState> questions;
   const RefreshSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
 @immutable
-class RefreshSubjectQuestionsFailedAction extends QuestionsAction{
+class RefreshSubjectQuestionsFailedAction extends AppAction{
   final int subjectId;
   const RefreshSubjectQuestionsFailedAction({required this.subjectId});
 }
@@ -432,35 +449,35 @@ class RefreshSubjectQuestionsFailedAction extends QuestionsAction{
 
 //topic questions
 @immutable
-class NextTopicQuestionsAction extends QuestionsAction{
+class NextTopicQuestionsAction extends AppAction{
   final int topicId;
   const NextTopicQuestionsAction({required this.topicId});
 }
 @immutable
-class NextTopicQuestionsSuccessAction extends QuestionsAction{
+class NextTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
   final Iterable<QuestionState> questions;
   const NextTopicQuestionsSuccessAction({required this.topicId, required this.questions});
 }
 @immutable
-class NextTopicQuestionsFailedAction extends QuestionsAction{
+class NextTopicQuestionsFailedAction extends AppAction{
   final int topicId;
   const NextTopicQuestionsFailedAction({required this.topicId});
 }
 
 @immutable
-class RefreshTopicQuestionsAction extends QuestionsAction{
+class RefreshTopicQuestionsAction extends AppAction{
   final int topicId;
   const RefreshTopicQuestionsAction({required this.topicId});
 }
 @immutable
-class RefreshTopicQuestionsSuccessAction extends QuestionsAction{
+class RefreshTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
   final Iterable<QuestionState> questions;
   const RefreshTopicQuestionsSuccessAction({required this.topicId, required this.questions});
 }
 @immutable
-class RefreshTopicQuestionsFailedAction extends QuestionsAction{
+class RefreshTopicQuestionsFailedAction extends AppAction{
   final int topicId;
   const RefreshTopicQuestionsFailedAction({required this.topicId});
 }

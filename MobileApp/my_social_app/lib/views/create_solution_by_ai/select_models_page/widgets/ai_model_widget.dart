@@ -5,7 +5,6 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page.dart';
-// import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sol_widget.dart';
 
 class AiModelWidget extends StatelessWidget {
   final AIModelState aiModel;
@@ -24,7 +23,7 @@ class AiModelWidget extends StatelessWidget {
         if(question.medias.isNotEmpty){
           Navigator
             .of(context)
-            .push(MaterialPageRoute(builder: (context) => SelectMediaPage(questionId: question.id)))
+            .push(MaterialPageRoute(builder: (context) => SelectMediaPage(question: question)))
             .then((value){
               if(value != null && context.mounted){
                 Navigator

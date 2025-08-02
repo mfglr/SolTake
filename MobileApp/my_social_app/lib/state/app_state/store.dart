@@ -17,7 +17,6 @@ import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
-import 'package:my_social_app/state/app_state/question_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
@@ -31,7 +30,6 @@ import 'package:my_social_app/state/app_state/solutions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/subject_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/subjects_state/middlewares.dart';
@@ -66,6 +64,7 @@ final store = Store(
     ),
     
     questions: QuestionsState(
+      questions: EntityCollection(),
       userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
@@ -121,10 +120,7 @@ final store = Store(
     userEntityState: EntityState(),
     userMessageState: EntityState(),
 
-    questionEntityState: EntityState(),
     login: Login.loading(),
-    subjectEntityState: EntityState(),
-    topicEntityState: EntityState(),
     solutionEntityState: EntityState(),
     commentEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
@@ -146,6 +142,8 @@ final store = Store(
     //users
 
     //questions
+    loadQuestionMiddleware,
+
     createQuestionMiddleware,
     deleteQuestionMiddleware,
 
@@ -304,15 +302,7 @@ final store = Store(
     firstExamRequestsMiddleware,
     //Exam requests state
 
-    //subject entity state
-    loadSubjectMiddleware,
-    nextSubjectTopicsMiddleware,
-
     // Questions entity state
-    loadQuestionMiddleware,
-    // saveQuestionMiddleware,
-    
-    // unsaveQuestionMiddleware,
 
     //solution entity state
     createSolutionByAiMiddleware,

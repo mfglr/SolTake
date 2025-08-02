@@ -8,11 +8,13 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_save
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 
 @immutable
 class QuestionsState{
+  final EntityCollection<int,QuestionState> questions;
   final Pagination<int,QuestionState> homePageQuestions;
   final Pagination<int,QuestionState> searchPageQuestions;
   final Pagination<int,QuestionState> videoQuestions;
@@ -26,6 +28,7 @@ class QuestionsState{
   final Map<int, Pagination<int, QuestionUserLikeState>> questionUserLikes;
 
   const QuestionsState({
+    required this.questions,
     required this.userQuestions,
     required this.videoQuestions,
     required this.userSolvedQuestions,
@@ -40,20 +43,22 @@ class QuestionsState{
   });
 
   QuestionsState _optional({
-    Pagination<int,QuestionState>? newHomePageQuestions,
-    Pagination<int,QuestionState>? newSearchPageQuestions,
-    Pagination<int,QuestionState>? newVideoQuestions,
-    Pagination<int,QuestionUserSaveState>? newQuestionUserSaves,
-    Map<int,Pagination<int,QuestionState>>? newUserQuestions,
-    Map<int,Pagination<int,QuestionState>>? newUserSolvedQuestions,
-    Map<int,Pagination<int,QuestionState>>? newUserUnsolvedQuestions,
-    Map<int,Pagination<int,QuestionState>>? newExamQuestions,
-    Map<int,Pagination<int,QuestionState>>? newSubjectQuestions,
-    Map<int,Pagination<int,QuestionState>>? newTopicQuestions,
+    EntityCollection<int, QuestionState>? newQuestions,
+    Pagination<int, QuestionState>? newHomePageQuestions,
+    Pagination<int, QuestionState>? newSearchPageQuestions,
+    Pagination<int, QuestionState>? newVideoQuestions,
+    Pagination<int, QuestionUserSaveState>? newQuestionUserSaves,
+    Map<int, Pagination<int, QuestionState>>? newUserQuestions,
+    Map<int,Pagination<int, QuestionState>>? newUserSolvedQuestions,
+    Map<int,Pagination<int, QuestionState>>? newUserUnsolvedQuestions,
+    Map<int,Pagination<int, QuestionState>>? newExamQuestions,
+    Map<int,Pagination<int, QuestionState>>? newSubjectQuestions,
+    Map<int,Pagination<int, QuestionState>>? newTopicQuestions,
     Map<int, Pagination<int, QuestionUserLikeState>>? newQuestionUserLikes,
   })
     =>
     QuestionsState(
+      questions: newQuestions ?? questions,
       homePageQuestions: newHomePageQuestions ?? homePageQuestions,
       searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
       videoQuestions: newVideoQuestions ?? videoQuestions,
@@ -66,6 +71,11 @@ class QuestionsState{
       topicQuestions: newTopicQuestions ?? topicQuestions,
       questionUserLikes: newQuestionUserLikes ?? questionUserLikes,
     );
+
+  QuestionsState load(int questionId) => _optional(newQuestions: questions.loading(questionId));
+  QuestionsState success(QuestionState question) => _optional(newQuestions: questions.success(question.id, question));
+  QuestionsState failed(int questionId) => _optional(newQuestions: questions.failed(questionId));
+  QuestionsState notFound(int questionId) => _optional(newQuestions: questions.notFound(questionId));
 
   QuestionsState create(QuestionState question) =>
     _optional(
@@ -103,6 +113,7 @@ class QuestionsState{
   QuestionsState createSolution(QuestionState question, SolutionState solution){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
+      questions: questions.setOne(solution.questionId, question.createSolution(solution)),
       examQuestions:
         examQuestions.setOne(
             question.exam.id,
@@ -151,6 +162,7 @@ class QuestionsState{
   QuestionsState deleteSolution(QuestionState question, SolutionState solution){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
+      questions: questions.setOne(solution.questionId, question.deleteSolution(solution)),
       
       userQuestions:
         userQuestions.setOne(
@@ -209,6 +221,7 @@ class QuestionsState{
     if(question.state == QuestionStatus.solved) return this;
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return _optional(
+      newQuestions: questions.setOne(solution.questionId, question.markSolutionAsCorrect(solution)),
       newUserQuestions: userQuestions.setOne(
         question.userId,
         userQuestions[question.userId]?.updateOne(question.markSolutionAsCorrect(solution))
@@ -230,6 +243,7 @@ class QuestionsState{
     if(question.state == QuestionStatus.unsolved) return this;
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return _optional(
+      newQuestions: questions.setOne(solution.questionId, question.markSolutionAsIncorrect(solution)),
       newUserQuestions: userQuestions.setOne(
         question.userId,
         userQuestions[question.userId]?.updateOne(question.markSolutionAsIncorrect(solution))
@@ -281,6 +295,8 @@ class QuestionsState{
   QuestionsState like(QuestionState question, QuestionUserLikeState questionUserLike){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
+      questions: questions.setOne(question.id, question.like()),
+
       examQuestions:
         examQuestions.setOne(
           question.exam.id,
@@ -338,6 +354,8 @@ class QuestionsState{
   QuestionsState dislike(QuestionState question, int userId){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
+      questions: questions.setOne(question.id, question.dislike()),
+
       examQuestions:
         examQuestions.setOne(
           question.exam.id,
@@ -699,6 +717,7 @@ class QuestionsState{
   QuestionsState increaseNumberOfComments(QuestionState question){
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
+      questions: questions.setOne(question.id, question.increaseNumberOfComments()),
       examQuestions:
         examQuestions.setOne(
           question.exam.id,
