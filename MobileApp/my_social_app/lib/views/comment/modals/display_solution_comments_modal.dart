@@ -30,7 +30,8 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   late SolutionState? _solution;
-  CommentState? _comment;
+  CommentState? _parent;
+  CommentState? _replied;
   final _visibilitySubject = BehaviorSubject<int>();
 
   void createComment(){
@@ -38,27 +39,30 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
     store.dispatch(CreateCommentAction(
       content: _contentController.text,
       solution: _solution,
+      parent: _parent,
       question: null,
-      replied: _comment
+      replied: _replied
     ));
-    if(_comment != null){
-      _visibilitySubject.add(_comment!.id);
+    if(_replied != null){
+      _visibilitySubject.add(_replied!.id);
     }
     cancelReplying();
     _contentController.clear();
     _focusNode.unfocus();
   }
 
-  void replyComment(CommentState comment) => setState((){
-    _comment = comment;
-    _contentController.text = "@${comment.userName} ";
+  void replyComment(CommentState replied) => setState((){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _parent = replied.parentId == null ? replied : selectSolutionComment(store, widget.solution.id, replied.parentId!);
+    _replied = replied;
+    _contentController.text = "@${replied.userName} ";
     _solution = null;
   });
 
   void cancelReplying() => setState((){
-    _contentController.text = _contentController.text.replaceFirst("@${_comment?.userName} ",'');
+    _contentController.text = _contentController.text.replaceFirst("@${_replied?.userName} ",'');
     _solution = widget.solution;
-    _comment = null;
+    _replied = null;
   });
   
   @override
@@ -131,7 +135,7 @@ class _DisplaySolutionCommentsModalState extends State<DisplaySolutionCommentsMo
                   scrollController: _scrollController,
                   cancelReplying: cancelReplying,
                   createComment: createComment,
-                  comment: _comment,
+                  comment: _replied,
                 ),
               ),
             ],

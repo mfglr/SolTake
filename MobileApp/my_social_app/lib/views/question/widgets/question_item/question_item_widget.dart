@@ -14,7 +14,7 @@ import 'package:my_social_app/views/question/widgets/question_item/widgets/save_
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_comment_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/widgets/question_like_button.dart';
@@ -43,14 +43,7 @@ class QuestionItemWidget extends StatelessWidget {
                   onPressed: () =>
                     Navigator
                       .of(context)
-                      .push(
-                        MaterialPageRoute(
-                          builder: (context) => UserPage(
-                            userId: question.userId,
-                            userName: null
-                          )
-                        )
-                      ),
+                      .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
                   style: ButtonStyle(
                     padding: WidgetStateProperty.all(EdgeInsets.zero),
                     minimumSize: WidgetStateProperty.all(const Size(0, 0)),

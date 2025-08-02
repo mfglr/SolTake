@@ -10,34 +10,29 @@ import 'package:my_social_app/state/entity_state/entity_collection/entity_status
 import 'package:my_social_app/views/user/pages/user_page/pages/user_loading_page/user_loading_page.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_success_page/user_success_page.dart';
 
-class UserPage extends StatefulWidget {
-  final int? userId;
-  final String? userName;
+class UserPageByUserName extends StatefulWidget {
+  final String userName;
 
-  const UserPage({
+  const UserPageByUserName({
     super.key,
-    this.userId,
-    this.userName
+    required this.userName
   });
 
   @override
-  State<UserPage> createState() => _UserPageState();
+  State<UserPageByUserName> createState() => _UserPageByUserNameState();
 }
 
-class _UserPageState extends State<UserPage> {
+class _UserPageByUserNameState extends State<UserPageByUserName> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EntityContainer<UserState>>(
       onInit: (store) =>
-        widget.userId != null
-          ? loadIfNotLoading(store, selectUserById(store, widget.userId!), LoadUserByIdAction(id: widget.userId!))
-          : loadIfNotLoading(store, selectUserByUserName(store, widget.userName!), LoadUserByIdAction(id: widget.userId!)),
-
-      converter: (store) =>
-        widget.userId != null
-         ? selectUserById(store, widget.userId!)
-         : selectUserByUserName(store, widget.userName!),
-
+        loadIfNotLoading(
+          store,
+          selectUserByUserName(store, widget.userName),
+          LoadUserByUserNameAction(userName: widget.userName)
+        ),
+      converter: (store) => selectUserByUserName(store, widget.userName),
       builder: (context, container){
         if(container.status == EntityStatus.success){
           return UserSuccessPage(user: container.entity!);

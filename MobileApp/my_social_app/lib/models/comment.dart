@@ -20,7 +20,7 @@ class Comment{
   final String content;
   final bool isLiked;
   final int numberOfLikes;
-  final int numberOfReplies;
+  final int numberOfChildren;
   final int? questionId;
   final int? solutionId;
   final int? parentId;
@@ -37,7 +37,7 @@ class Comment{
     required this.content,
     required this.isLiked,
     required this.numberOfLikes,
-    required this.numberOfReplies,
+    required this.numberOfChildren,
     required this.questionId,
     required this.solutionId,
     required this.parentId,
@@ -62,7 +62,7 @@ class Comment{
       isLiked: isLiked,
       likes: Pagination.init(usersPerPage,true),
       children: Pagination.init(commentsPerPage,true),
-      numberOfReplies: numberOfReplies,
+      numberOfChildren: numberOfChildren,
       parentId: parentId,
       solutionId: solutionId,
       image: image

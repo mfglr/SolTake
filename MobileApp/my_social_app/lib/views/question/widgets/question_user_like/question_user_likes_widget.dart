@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
 import 'package:my_social_app/views/shared/user_item/user_item_widget.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class QuestionUserLikesWidget extends StatelessWidget {
   final Iterable<QuestionUserLikeState> likes;
@@ -20,7 +20,7 @@ class QuestionUserLikesWidget extends StatelessWidget {
           onPressed: () =>
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => UserPage(userId: e.userId))),
+              .push(MaterialPageRoute(builder: (context) => UserPageById(userId: e.userId))),
         )
       )
     );

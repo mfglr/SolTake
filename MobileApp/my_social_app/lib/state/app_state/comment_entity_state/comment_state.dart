@@ -15,7 +15,7 @@ class CommentState extends Entity<int> implements Avatar{
   final String content;
   final bool isLiked;
   final int numberOfLikes;
-  final int numberOfReplies;
+  final int numberOfChildren;
   final int? questionId;
   final int? solutionId;
   final int? parentId;
@@ -39,7 +39,7 @@ class CommentState extends Entity<int> implements Avatar{
     required this.content,
     required this.isLiked,
     required this.numberOfLikes,
-    required this.numberOfReplies,
+    required this.numberOfChildren,
     required this.questionId,
     required this.solutionId,
     required this.parentId,
@@ -56,10 +56,9 @@ class CommentState extends Entity<int> implements Avatar{
     String? newContent,
     bool? newIsLiked,
     int? newNumberOfLikes,
-    int? newNumberOfReplies,
+    int? newNumberOfChildren,
     Pagination<int,CommentUserLikeState>? newLikes,
     Pagination<int,Id<int>>? newChildren,
-    bool? newRepliesVisibility,
     Multimedia? newImage,
   }) => CommentState(
       id: id,
@@ -72,7 +71,7 @@ class CommentState extends Entity<int> implements Avatar{
       content: newContent ?? content,
       isLiked: newIsLiked ?? isLiked,
       numberOfLikes: newNumberOfLikes ?? numberOfLikes,
-      numberOfReplies: newNumberOfReplies ?? numberOfReplies,
+      numberOfChildren: newNumberOfChildren ?? numberOfChildren,
       questionId: questionId,
       solutionId: solutionId,
       parentId: parentId,
@@ -81,7 +80,7 @@ class CommentState extends Entity<int> implements Avatar{
       image: newImage ?? image
     );
   
-  CommentState increaseNumberOfReplies() => _optional(newNumberOfReplies: numberOfReplies + 1);
+  CommentState increaseNumberOfChildren() => _optional(newNumberOfChildren: numberOfChildren + 1);
 
 
   CommentState startLoadingNextLikes()
@@ -112,24 +111,4 @@ class CommentState extends Entity<int> implements Avatar{
   CommentState startLoadingNextReplies() => _optional(newChildren: children.startLoadingNext());
   CommentState stopLoadingNextReplies() => _optional(newChildren: children.stopLoadingNext());
   CommentState addNextReplies(Iterable<int> replyIds) => _optional(newChildren: children.addNextPage(replyIds.map((e) => Id(id: e))));
-  CommentState addReply(int replyId) =>
-    _optional(
-      newChildren: children.prependOne(Id(id: replyId)),
-      newNumberOfReplies: numberOfReplies + 1,
-      newRepliesVisibility: true,
-    );
-  CommentState removeReply(int replyId) =>
-    _optional(
-      newChildren: children.where((e) => e.id != replyId),
-      newNumberOfReplies: numberOfReplies - 1,
-      newRepliesVisibility: true,
-    );
-  CommentState addNewReply(int replyId) =>
-    _optional(
-      newChildren: children.addInOrder(Id(id: replyId)),
-      newNumberOfReplies: numberOfReplies + 1,
-      newRepliesVisibility: true,
-    );
-
-  CommentState changeVisibility(bool visibility) => _optional(newRepliesVisibility: visibility);
 }

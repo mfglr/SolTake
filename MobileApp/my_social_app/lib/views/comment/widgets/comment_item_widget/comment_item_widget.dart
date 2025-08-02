@@ -7,9 +7,12 @@ import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
-import 'package:my_social_app/views/comment/widgets/comment_header_widget.dart';
-import 'package:my_social_app/views/comment/widgets/buttons/hide_replies_button/hide_replies_button.dart';
+import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/comment_header_widget.dart';
+import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_remain_replies_button.dart';
+import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_replies_button.dart';
+import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentItemWidget extends StatefulWidget {
@@ -76,6 +79,43 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
     super.dispose();
   }
 
+  Widget generateSideButton() => StoreConnector<AppState, int>(
+    converter: (store) => selectNumberOfNotDisplayedReplies(store, _isVisible, widget.comment),
+    builder: (context, numberOfNotDisplayedReplies){
+      if(!_isVisible && numberOfNotDisplayedReplies > 0){
+        return DisplayRepliesButton(
+          comment: widget.comment,
+          isVisible: _isVisible,
+          onPressed: changeChildrenVisibility,
+        );
+      }
+      else if (_isVisible && numberOfNotDisplayedReplies > 0){
+        return Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(right: 20),
+              child: HideRepliesButton(
+                comment: widget.comment,
+                onPressed: changeChildrenVisibility,
+              )
+            ),
+            DisplayRemainRepliesButton(
+              comment: widget.comment,
+              isVisible: _isVisible,
+            ),
+          ],
+        );
+      }
+      else if(_isVisible && numberOfNotDisplayedReplies <= 0){
+        return HideRepliesButton(
+          comment: widget.comment,
+          onPressed: changeChildrenVisibility,
+        );
+      }
+      return const SpaceSavingWidget();/////////
+    }
+  );
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -93,8 +133,8 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               cancelReplying: widget.cancelReplying,
               changeChildrenVisibility: changeChildrenVisibility,
               isVisible: _isVisible,
-              isRoot: true,
               diameter: 45,
+              child: generateSideButton(),
             ),
     
             if(_isVisible)
@@ -116,7 +156,6 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                         padding: const EdgeInsets.only(left: 50,top: 20),
                         child: CommentHeaderWidget(
                           comment: child,
-                          isRoot: false,
                           replyComment: widget.replyComment,
                           cancelReplying: widget.cancelReplying,
                           contentController: widget.contentController,

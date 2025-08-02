@@ -11,8 +11,9 @@ void createCommentMiddleware(Store<AppState> store, action, NextDispatcher next)
       .then((e) => store.dispatch(CreateCommentsSuccessAction(
         comment: e.toCommentState(),
         question: action.question,
+        solution: action.solution,
+        parent: action.parent,
         replied: action.replied,
-        solution: action.solution
       )));
   }
   next(action);

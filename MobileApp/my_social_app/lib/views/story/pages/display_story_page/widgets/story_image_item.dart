@@ -10,7 +10,7 @@ import 'package:my_social_app/views/story/pages/display_story_page/widgets/displ
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_delete_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_loading_line.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_user_header.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class StoryImageItem extends StatefulWidget {
   final StoryState story;
@@ -176,7 +176,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
                       _timer.stop();
                       Navigator
                         .of(context)
-                        .push(MaterialPageRoute(builder: (context) => UserPage(userId: widget.story.userId,)))
+                        .push(MaterialPageRoute(builder: (context) => UserPageById(userId: widget.story.userId,)))
                         .then((_) => _timer.start());
                     },
                     child: StoryUserHeader(story: widget.story,)

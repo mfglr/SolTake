@@ -13,7 +13,7 @@ import 'package:my_social_app/views/question/widgets/question_video_page_slider/
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/solution_button.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class QuestionVideoPageSlider extends StatefulWidget {
   final Iterable<QuestionState> questions;
@@ -97,7 +97,7 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
                             onPressed: () => 
                               Navigator
                                 .of(context)
-                                .push(MaterialPageRoute(builder: (context) => UserPage(userId: question.userId))),
+                                .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
                             style: ButtonStyle(
                               padding: WidgetStateProperty.all(EdgeInsets.zero),
                               minimumSize: WidgetStateProperty.all(const Size(0, 0)),

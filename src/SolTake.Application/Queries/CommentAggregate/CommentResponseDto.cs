@@ -4,7 +4,7 @@ using SolTake.Domain.CommentAggregate.Entities;
 
 namespace SolTake.Application.Queries.CommentAggregate
 {
-    public record CommentResponseDto(int Id, DateTime CreatedAt,DateTime? UpdatedAt, string UserName, int UserId,bool IsEdited,string Content,bool IsLiked,int NumberOfLikes,int NumberOfReplies, bool IsOwner, int? QuestionId,int? SolutionId,int? ParentId, Multimedia? Image)
+    public record CommentResponseDto(int Id, DateTime CreatedAt,DateTime? UpdatedAt, string UserName, int UserId,bool IsEdited,string Content,bool IsLiked,int NumberOfLikes,int NumberOfChildren, bool IsOwner, int? QuestionId,int? SolutionId,int? ParentId, Multimedia? Image)
     {
         public static CommentResponseDto Create(Comment comment, Login login) =>
             new(

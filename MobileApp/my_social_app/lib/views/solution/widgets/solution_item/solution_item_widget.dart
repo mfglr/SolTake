@@ -19,7 +19,7 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_comm
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class SolutionItemWidget extends StatelessWidget {
   final QuestionState question;
@@ -47,14 +47,7 @@ class SolutionItemWidget extends StatelessWidget {
                   onPressed: () => 
                     Navigator
                       .of(context)
-                      .push(
-                        MaterialPageRoute(
-                          builder: (context) => UserPage(
-                            userId: solution.userId,
-                            userName: null
-                          )
-                        )
-                      ),
+                      .push(MaterialPageRoute(builder: (context) => UserPageById(userId: solution.userId))),
                   style: ButtonStyle(
                     padding: WidgetStateProperty.all(EdgeInsets.zero),
                     minimumSize: WidgetStateProperty.all(const Size(0, 0)),

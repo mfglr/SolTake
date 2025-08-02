@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_user_name.dart';
 
 class CommentTagWidget extends StatelessWidget {
   final String userName;
@@ -8,7 +8,10 @@ class CommentTagWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: null, userName: userName))),
+      onPressed: () => 
+        Navigator
+          .of(context)
+          .push(MaterialPageRoute(builder: (context) => UserPageByUserName(userName: userName))),
       style: ButtonStyle(
         padding: WidgetStateProperty.all(EdgeInsets.zero),
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),

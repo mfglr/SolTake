@@ -8,11 +8,13 @@ import 'package:my_social_app/state/app_state/solution_entity_state/solution_sta
 class CreateCommentAction extends AppAction{
   final QuestionState? question;
   final SolutionState? solution;
+  final CommentState? parent;
   final CommentState? replied;
   final String content;
   const CreateCommentAction({
     required this.question,
     required this.solution,
+    required this.parent,
     required this.replied,
     required this.content
   });
@@ -21,13 +23,15 @@ class CreateCommentAction extends AppAction{
 class CreateCommentsSuccessAction extends AppAction{
    final QuestionState? question;
   final SolutionState? solution;
+  final CommentState? parent;
   final CommentState? replied;
   final CommentState comment;
   const CreateCommentsSuccessAction({
-    required this.comment,
     required this.question,
     required this.solution,
+    required this.parent,
     required this.replied,
+    required this.comment,
   });
 }
 

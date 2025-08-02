@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 import 'package:my_social_app/views/user/widgets/user_image_with_names_widget.dart';
 
 class UserItemWidget extends StatelessWidget {
@@ -22,7 +22,7 @@ class UserItemWidget extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         child: TextButton(
           onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPage(userId: user.id)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserPageById(userId: user.id)));
             if(onPressed != null){
               onPressed!(user);
             }

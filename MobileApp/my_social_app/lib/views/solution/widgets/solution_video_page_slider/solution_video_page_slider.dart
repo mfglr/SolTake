@@ -11,7 +11,7 @@ import 'package:my_social_app/views/solution/widgets/solution_item/solution_stat
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/upvote_button.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class SolutionVideoPageSlider extends StatefulWidget {
   final QuestionState question;
@@ -63,7 +63,7 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
                           onPressed: () => 
                             Navigator
                               .of(context)
-                              .push(MaterialPageRoute(builder: (context) => UserPage(userId: solution.userId))),
+                              .push(MaterialPageRoute(builder: (context) => UserPageById(userId: solution.userId))),
                           style: ButtonStyle(
                             padding: WidgetStateProperty.all(EdgeInsets.zero),
                             minimumSize: WidgetStateProperty.all(const Size(0, 0)),

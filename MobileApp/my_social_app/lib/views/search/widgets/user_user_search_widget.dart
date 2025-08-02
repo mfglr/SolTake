@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
-import 'package:my_social_app/views/user/pages/user_page/pages/user_page/user_page.dart';
+import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class UserUserSearchWidget extends StatelessWidget {
   final UserUserSearchState userUserSearch;
@@ -22,7 +22,7 @@ class UserUserSearchWidget extends StatelessWidget {
           onPressed: (){
             Navigator
               .of(context)
-              .push(MaterialPageRoute(builder: (context) => UserPage(userId: userUserSearch.userId)));
+              .push(MaterialPageRoute(builder: (context) => UserPageById(userId: userUserSearch.userId)));
             final store = StoreProvider.of<AppState>(context,listen: false);
             store.dispatch(CreateUserUserSearchAction(searchedId: userUserSearch.userId));
           },

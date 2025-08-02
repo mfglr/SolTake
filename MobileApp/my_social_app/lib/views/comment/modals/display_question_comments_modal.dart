@@ -31,19 +31,23 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   late QuestionState? _question;
-  CommentState? _comment;
+  CommentState? _parent;
+  CommentState? _replied;
   final _visibilitySubject = BehaviorSubject<int>();
 
-  void replyComment(CommentState comment) => setState((){
-    _comment = comment;
-    _contentController.text = "@${comment.userName} ";
+  void replyComment(CommentState replied) => setState((){
+    final store = StoreProvider.of<AppState>(context,listen: false);
+    _parent = replied.parentId == null ? replied : selectQuestionComment(store, widget.question.id, replied.parentId!);
+    _replied = replied;
+    _contentController.text = "@${replied.userName} ";
     _question = null;
   });
 
   void cancelReplying() => setState((){
-    _contentController.text = _contentController.text.replaceFirst("@${_comment?.userName} ",'');
+    _contentController.text = _contentController.text.replaceFirst("@${_replied?.userName} ",'');
     _question = widget.question;
-    _comment = null;
+    _parent = null;
+    _replied = null;
   });
 
   void createComment(){
@@ -52,10 +56,11 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
       content: _contentController.text,
       question: _question,
       solution: null,
-      replied: _comment
+      parent: _parent,
+      replied: _replied
     ));
-    if(_comment != null){
-      _visibilitySubject.add(_comment!.id);
+    if(_replied != null){
+      _visibilitySubject.add(_replied!.id);
       cancelReplying();
     }
     _contentController.clear();
@@ -78,7 +83,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Pagination<int,CommentState>>(
+    return StoreConnector<AppState, Pagination<int, CommentState>>(
       onInit: (store) => 
         getNextEntitiesIfNoPage(
           store,
@@ -99,7 +104,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                 children: [
                   IconButton(
                     onPressed: (){
-                      final store = StoreProvider.of<AppState>(context,listen: false);
+                      final store = StoreProvider.of<AppState>(context, listen: false);
                       refreshEntities(
                         store,
                         selectQuestionComments(store, widget.question.id),
@@ -143,7 +148,7 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                   scrollController: _scrollController,
                   cancelReplying: cancelReplying,
                   createComment: createComment,
-                  comment: _comment,
+                  comment: _replied,
                 ),
               ),
             ],

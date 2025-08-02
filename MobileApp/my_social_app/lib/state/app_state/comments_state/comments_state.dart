@@ -32,23 +32,32 @@ class CommentsState {
     _optional(
       newQuestionComments: 
         comment.questionId == null
-          ? questionComments
+          ? parent == null
+              ? questionComments
+              : questionComments.setOne(
+                  comment.questionId!,
+                  selectQuestionCommentsFromState(this,comment.questionId!).updateOne(parent.increaseNumberOfChildren())
+                )
           : questionComments.setOne(
               comment.questionId!,
-              (
-                questionComments[comment.questionId] ??
-                Pagination.init(commentsPerPage, true)
-              ).addOne(comment)
+              parent != null
+                ? selectQuestionCommentsFromState(this,comment.questionId!)
+                    .addOne(comment)
+                : selectQuestionCommentsFromState(this,comment.questionId!)
+                    .addOne(comment)
+                    .updateOne(parent!.increaseNumberOfChildren())
             ),
       newSolutionComments: 
         comment.solutionId == null
           ? solutionComments
           : solutionComments.setOne(
               comment.solutionId!,
-              (
-                solutionComments[comment.solutionId] ??
-                Pagination.init(commentsPerPage, true)
-              ).addOne(comment)
+              parent != null
+                ? selectQuestionCommentsFromState(this, comment.solutionId!)
+                    .addOne(comment)
+                : selectQuestionCommentsFromState(this, comment.solutionId!)
+                    .addOne(comment)
+                    .updateOne(parent!.increaseNumberOfChildren())
             ),
       newChildren:
         comment.parentId == null

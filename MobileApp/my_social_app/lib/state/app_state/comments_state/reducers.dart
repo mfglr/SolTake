@@ -3,7 +3,7 @@ import 'package:my_social_app/state/app_state/comments_state/comments_state.dart
 import 'package:redux/redux.dart';
 
 CommentsState createCommentReducer(CommentsState prev, CreateCommentsSuccessAction action) =>
-  prev.create(action.comment);
+  prev.create(action.parent, action.comment);
 
 //question comments
 CommentsState nextQuestionCommentsReducer(CommentsState prev, NextQuestionCommentsAction action) =>
