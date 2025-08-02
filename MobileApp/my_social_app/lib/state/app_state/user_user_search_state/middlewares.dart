@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 void createUserUserSearchMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is CreateUserUserSearchAction){
     final dynamic user = 
-      store.state.searchUsers.getById(action.searchedId) ??
+      store.state.searchUsers[action.searchedId] ??
       store.state.userUserSearchs.get((e) => e.userId == action.searchedId);
     UserUserSearchService()
       .create(action.searchedId)

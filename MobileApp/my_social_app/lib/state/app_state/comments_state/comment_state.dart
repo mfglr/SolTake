@@ -1,6 +1,6 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
@@ -107,8 +107,4 @@ class CommentState extends Entity<int> implements Avatar{
       newNumberOfLikes: numberOfLikes + 1,
       newLikes: likes.addInOrder(commentUserLike)
     );
- 
-  CommentState startLoadingNextReplies() => _optional(newChildren: children.startLoadingNext());
-  CommentState stopLoadingNextReplies() => _optional(newChildren: children.stopLoadingNext());
-  CommentState addNextReplies(Iterable<int> replyIds) => _optional(newChildren: children.addNextPage(replyIds.map((e) => Id(id: e))));
 }

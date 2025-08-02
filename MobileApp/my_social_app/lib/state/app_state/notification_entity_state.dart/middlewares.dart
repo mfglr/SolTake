@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 
 void markNotificationsAsViewedMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is MarkNotificationsAsViewedAction){
-    final ids = store.state.notifications.select((e) => !e.isViewed).map((e) => e.id);
+    final ids = store.state.notifications.where((e) => !e.isViewed).values.map((e) => e.id);
     if(ids.isNotEmpty){
       NotificationService()
         .markNotificationsAsViewed(ids.toList())

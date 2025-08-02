@@ -18,18 +18,18 @@ class NotificationButton extends StatelessWidget {
         store.dispatch(const MarkNotificationsAsViewedAction());
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationPage()));
       },
-      icon: StoreConnector<AppState,Pagination<num,NotificationState>>(
+      icon: StoreConnector<AppState,Pagination<int,NotificationState>>(
         converter: (store) => store.state.notifications,
         builder: (context,state) => badges.Badge(
-          badgeContent: state.select((e) => !e.isViewed).isNotEmpty ? Text(
-            state.select((e) => !e.isViewed).length.toString(),
+          badgeContent: state.where((e) => !e.isViewed).values.isNotEmpty ? Text(
+            state.where((e) => !e.isViewed).values.length.toString(),
             style:const TextStyle(
               color: Colors.white,
               fontSize: 12
             ),
           ) : null,
           badgeStyle: badges.BadgeStyle(
-            badgeColor: state.select((e) => !e.isViewed).isNotEmpty ? Colors.red : Colors.transparent,
+            badgeColor: state.where((e) => !e.isViewed).values.isNotEmpty ? Colors.red : Colors.transparent,
           ),
           child: const Icon(Icons.notifications),
         ),

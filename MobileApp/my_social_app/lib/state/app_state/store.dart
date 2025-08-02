@@ -3,7 +3,7 @@ import 'package:my_social_app/state/app_state/active_login_page_state/active_log
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';

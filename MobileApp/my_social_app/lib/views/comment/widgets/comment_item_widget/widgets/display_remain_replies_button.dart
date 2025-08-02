@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 
 class DisplayRemainRepliesButton extends StatelessWidget {
   final CommentState comment;
@@ -18,7 +18,7 @@ class DisplayRemainRepliesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState,int>(
-      converter: (store) => selectNumberOfNotDisplayedReplies(store, isVisible, comment),
+      converter: (store) => selectNumberOfNotDisplayedChildren(store, isVisible, comment),
       builder:(context, numberOfNotDisplayedReplies) => 
       TextButton(
         onPressed: (){

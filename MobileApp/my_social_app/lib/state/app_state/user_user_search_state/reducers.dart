@@ -4,7 +4,7 @@ import 'package:my_social_app/state/entity_state/pagination_state/pagination.dar
 import 'package:redux/redux.dart';
 
 Pagination<int,UserUserSearchState> createUserUserSearchSuccessReducer(Pagination<int,UserUserSearchState> prev, CreateUserUserSearchSuccessAction action)
-  => prev.prependOneAndRemoveWhere(action.userUserSearch,(e) => e.userId != action.userUserSearch.userId);
+  => prev.prependOne(action.userUserSearch);
 Pagination<int,UserUserSearchState> removeUserUserSearchSuccessReducer(Pagination<int,UserUserSearchState> prev, RemoveUserUserSearchSuccessAction action)
   => prev.where((e) => e.userId != action.searchedId);
 

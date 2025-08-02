@@ -4,7 +4,7 @@ import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_field_widget/comment_field_widget.dart';

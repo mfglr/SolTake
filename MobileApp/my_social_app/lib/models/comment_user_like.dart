@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 part 'comment_user_like.g.dart';
 
 @immutable

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -9,10 +9,8 @@ import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/comment_header_widget.dart';
 import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_remain_replies_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_replies_button.dart';
 import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentItemWidget extends StatefulWidget {
@@ -79,48 +77,11 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
     super.dispose();
   }
 
-  Widget generateSideButton() => StoreConnector<AppState, int>(
-    converter: (store) => selectNumberOfNotDisplayedReplies(store, _isVisible, widget.comment),
-    builder: (context, numberOfNotDisplayedReplies){
-      if(!_isVisible && numberOfNotDisplayedReplies > 0){
-        return DisplayRepliesButton(
-          comment: widget.comment,
-          isVisible: _isVisible,
-          onPressed: changeChildrenVisibility,
-        );
-      }
-      else if (_isVisible && numberOfNotDisplayedReplies > 0){
-        return Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: HideRepliesButton(
-                comment: widget.comment,
-                onPressed: changeChildrenVisibility,
-              )
-            ),
-            DisplayRemainRepliesButton(
-              comment: widget.comment,
-              isVisible: _isVisible,
-            ),
-          ],
-        );
-      }
-      else if(_isVisible && numberOfNotDisplayedReplies <= 0){
-        return HideRepliesButton(
-          comment: widget.comment,
-          onPressed: changeChildrenVisibility,
-        );
-      }
-      return const SpaceSavingWidget();/////////
-    }
-  );
-
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
           
@@ -132,53 +93,69 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
               replyComment: widget.replyComment,
               cancelReplying: widget.cancelReplying,
               changeChildrenVisibility: changeChildrenVisibility,
+              isParent: true,
               isVisible: _isVisible,
               diameter: 45,
-              child: generateSideButton(),
             ),
-    
             if(_isVisible)
-              StoreConnector<AppState, Pagination<int,CommentState>>(
-                onInit: (store){
-                  getNextEntitiesIfNoPage(
-                    store,
-                    selectChildren(store, widget.comment.id),
-                    NextCommentChildrenAction(parentId: widget.comment.id)
-                  );
-                },
-                converter: (store) => selectChildren(store, widget.comment.id),
-                builder: (context,pagination) => Column(
-                  children: [
-                    if(pagination.loadingNext)
-                      const LoadingCircleWidget(strokeWidth: 2),
-                    ...pagination.values.map(
-                      (child) => Padding(
-                        padding: const EdgeInsets.only(left: 50,top: 20),
-                        child: CommentHeaderWidget(
-                          comment: child,
-                          replyComment: widget.replyComment,
-                          cancelReplying: widget.cancelReplying,
-                          contentController: widget.contentController,
-                          focusNode: widget.focusNode,
-                          isVisible: _isVisible,
-                          changeChildrenVisibility: changeChildrenVisibility,
-                        ),
-                      )
-                    ),
-                    if(!pagination.isEmpty)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left:50, top:20),
-                            child: HideRepliesButton(
-                              comment: widget.comment,
-                              onPressed: changeChildrenVisibility,
-                            ),
+              Padding(
+                padding: const EdgeInsets.only(left: 53,top: 20),
+                child: StoreConnector<AppState, Pagination<int,CommentState>>(
+                  onInit: (store){
+                    getNextEntitiesIfNoPage(
+                      store,
+                      selectChildren(store, widget.comment.id),
+                      NextCommentChildrenAction(parentId: widget.comment.id)
+                    );
+                  },
+                  converter: (store) => selectChildren(store, widget.comment.id),
+                  builder: (context,pagination) => Column(
+                    children: [
+                      ...pagination.values.map(
+                        (child) => Container(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: CommentHeaderWidget(
+                            comment: child,
+                            replyComment: widget.replyComment,
+                            cancelReplying: widget.cancelReplying,
+                            contentController: widget.contentController,
+                            focusNode: widget.focusNode,
+                            isVisible: _isVisible,
+                            changeChildrenVisibility: changeChildrenVisibility,
+                            isParent: false,
                           ),
-                        ],
+                        ),
                       ),
-                  ]
+                      if(pagination.loadingNext)
+                        const LoadingCircleWidget(strokeWidth: 2),
+                      Container(
+                        margin: const EdgeInsets.only(top: 15),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: HideRepliesButton(
+                                comment: widget.comment,
+                                onPressed: changeChildrenVisibility,
+                              ),
+                            ),
+                            StoreConnector<AppState,int>(
+                              converter: (store) => selectNumberOfNotDisplayedChildren(store, _isVisible, widget.comment),
+                              builder: (context, numberOfNotDisplayedChildren) => Column(
+                                children: [
+                                  if(numberOfNotDisplayedChildren > 0)
+                                    DisplayRemainRepliesButton(
+                                      comment: widget.comment,
+                                      isVisible: _isVisible
+                                    ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ]
+                  ),
                 ),
               ),
           ],

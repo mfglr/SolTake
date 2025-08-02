@@ -40,6 +40,6 @@ class UserMessageState extends Entity<int>{
   UserMessageState removeMany(Iterable<int> messageIds) =>
     UserMessageState(
       id: id,
-      messageIds: this.messageIds.removeMany(messageIds)
+      messageIds: this.messageIds.removeByKeys(messageIds)
     );
 }

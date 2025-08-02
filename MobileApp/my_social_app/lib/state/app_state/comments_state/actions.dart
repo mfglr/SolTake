@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 

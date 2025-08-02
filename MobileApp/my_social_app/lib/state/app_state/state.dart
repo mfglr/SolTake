@@ -9,7 +9,7 @@ import 'package:my_social_app/state/app_state/comments_state/comments_state.dart
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
@@ -146,7 +146,6 @@ class AppState{
       questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
       questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
       questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
-      // savedSolutions: Pagination<int, SolutionUserSaveState>.init(solutionsPerPage, true)
     ),
 
     comments: const CommentsState(
@@ -223,16 +222,6 @@ class AppState{
 
   //select users
   UserState? get currentUser => users.usersById[login.login!.id].entity;
-
-  //Select questions
-
-  //Select comments
-  Iterable<CommentState> getSolutionComments(int solutionId)
-    => solutionEntityState.getValue(solutionId)!.comments.values.map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> getFormatedSolutionComments(int id,int solutionId)
-    => solutionEntityState.getValue(solutionId)!.comments.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
-  Iterable<CommentState> selectFormattedCommentReplies(int id,int commentId)
-    => commentEntityState.getValue(commentId)!.children.merge(Id(id: id)).map((e) => commentEntityState.getValue(e.id)!);
 
   //select privacy policy
   String? get selectPrivacyPolicy => policyState.privacyPolicies[login.login?.language];

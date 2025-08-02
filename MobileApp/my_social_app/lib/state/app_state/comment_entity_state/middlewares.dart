@@ -1,7 +1,7 @@
 import 'package:my_social_app/services/comment_service.dart';
 import 'package:my_social_app/services/comment_user_like_service.dart';
 import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 
