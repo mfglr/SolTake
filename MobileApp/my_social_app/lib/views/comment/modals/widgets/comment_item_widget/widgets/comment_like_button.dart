@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 
@@ -14,10 +14,10 @@ class CommentLikeButton extends StatelessWidget {
       onPressed: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(comment.isLiked){
-          store.dispatch(DislikeCommentAction(commentId: comment.id));
+          store.dispatch(DislikeCommentAction(comment: comment));
         }
         else{
-          store.dispatch(LikeCommentAction(commentId: comment.id));
+          store.dispatch(LikeCommentAction(comment: comment));
         }
       },
       style: ButtonStyle(

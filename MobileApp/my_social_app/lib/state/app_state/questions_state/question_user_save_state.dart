@@ -159,6 +159,7 @@ class QuestionUserSaveState extends Entity<int>{
   QuestionUserSaveState dislike() => _optional(newIsLiked: false, newNumberOfLikes: numberOfLikes - 1); 
   QuestionUserSaveState save() => _optional(newIsSaved: true);
   QuestionUserSaveState increaseNumberOfComments() => _optional(newNumberOfComments: numberOfComments + 1);
+  QuestionUserSaveState decreaseNumberOfComments() => _optional(newNumberOfComments: numberOfComments - 1);
   QuestionUserSaveState createSolution(SolutionState solution) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,

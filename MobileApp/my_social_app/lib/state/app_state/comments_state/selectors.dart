@@ -1,5 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
@@ -26,3 +27,10 @@ Pagination<int, CommentState> selectChildren(Store<AppState> store, int parentId
 
 int selectNumberOfNotDisplayedChildren(Store<AppState> store, bool isVisible, CommentState comment) =>
   comment.numberOfChildren - (isVisible ? store.state.comments.children[comment.id]?.values.length ?? 0 : 0);
+
+Pagination<int, CommentUserLikeState> selectCommentUserLikesFromState(CommentsState state, int commentId) =>
+  state.commentUserLikes[commentId] ?? Pagination.init(usersPerPage, true);
+Pagination<int, CommentUserLikeState> selectCommentUserLikes(Store<AppState> store, int commentId) =>
+  selectCommentUserLikesFromState(store.state.comments, commentId);
+Future<bool> onCommentUserLikesLoaded(Store<AppState> store, int commentId) =>
+  store.onChange.map((state) => !selectChildrenFromCommentsState(store.state.comments, commentId).loadingNext).first;

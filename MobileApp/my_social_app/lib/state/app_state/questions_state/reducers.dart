@@ -14,16 +14,25 @@ QuestionsState loadQuestionFailedReducer(QuestionsState prev, LoadQuestionFailed
   prev.failed(action.questionId);
 QuestionsState loadQuestionNotFoundReducer(QuestionsState prev, LoadQuestionNotFoundAction action) =>
   prev.notFound(action.questionId);
-
 QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
   prev.create(action.question);
 QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action) =>
   prev.delete(action.question);
+//questions
+
+//solutions
 QuestionsState markSolutionAsCorrectSuccessReducer(QuestionsState prev, MarkSolutionAsCorrectSuccessAction action) =>
   prev.markSolutionAsCorrect(action.question, action.solution);
 QuestionsState markSolutionAsIncorrectSuccessReducer(QuestionsState prev, MarkSolutionAsIncorrectSuccessAction action) =>
   prev.markSolutionAsIncorrect(action.question, action.solution);
-//questions
+//solutions
+
+//comments
+QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action) =>
+  action.question == null ? prev : prev.increaseNumberOfComments(action.question!);
+QuestionsState deleteCommentSuccessReducer(QuestionsState prev, DeleteCommentSuccessAction action) =>
+  action.comment.questionId == null ? prev : prev.decreaseNumberOfComments(action.comment);
+//coments
 
 //search page state
 QuestionsState nextSearchPageQuestionsReducer(QuestionsState prev, NextSearchPageQuestionsAction action) =>
@@ -48,10 +57,7 @@ QuestionsState changeTopicReducer(QuestionsState prev, ChangeTopicAction action)
   prev.startLoadingNextSearchPageQuestions();
 //search page state
 
-//comments action
-QuestionsState createCommentSuccessReducer(QuestionsState prev, CreateCommentsSuccessAction action)
-  => action.question == null ? prev : prev.increaseNumberOfComments(action.question!);
-//coments action
+
 
 //solutions action
 QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action)

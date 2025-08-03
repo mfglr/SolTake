@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
@@ -39,7 +39,7 @@ class CommentPopupMenu extends StatelessWidget {
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(RemoveCommentAction(comment: comment));
+              store.dispatch(DeleteCommentAction(comment: comment));
             }
             return;
         }

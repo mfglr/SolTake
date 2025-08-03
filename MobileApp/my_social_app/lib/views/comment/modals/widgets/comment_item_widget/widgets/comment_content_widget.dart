@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/comment_tag_widget.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_tag_widget.dart';
 
 @immutable
 class FormatedContent{

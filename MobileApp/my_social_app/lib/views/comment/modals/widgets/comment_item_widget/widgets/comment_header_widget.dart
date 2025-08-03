@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/comment_content_widget.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/comment_like_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_comment_likes_button/display_comment_likes_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/display_replies_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_item_widget/widgets/reply_comment_button/reply_comment_button.dart';
-import 'package:my_social_app/views/comment/widgets/comment_popup_menu/comment_popup_menu.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_content_widget.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_like_button.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_popup_menu/comment_popup_menu.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/display_comment_likes_button/display_comment_likes_button.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/display_replies_button.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';
+import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/reply_comment_button/reply_comment_button.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class CommentHeaderWidget extends StatelessWidget {
+  final QuestionState? question;
+  final SolutionState? solution;
+  final CommentState? parent;
   final CommentState comment;
   final TextEditingController contentController;
   final FocusNode focusNode;
@@ -33,6 +39,9 @@ class CommentHeaderWidget extends StatelessWidget {
     required this.changeChildrenVisibility,
     required this.isVisible,
     required this.isParent,
+    required this.question,
+    required this.solution,
+    required this.parent,
     this.diameter = 35,
     this.color,
   });
@@ -140,7 +149,7 @@ class CommentHeaderWidget extends StatelessWidget {
                   cancelReplying: cancelReplying,
                   replyComment: replyComment,
                 ),
-                if(isParent && comment.numberOfChildren > 0)
+                if(parent != null && comment.numberOfChildren > 0)
                   Container(
                     margin: const EdgeInsets.only(left: 20),
                     child: isVisible

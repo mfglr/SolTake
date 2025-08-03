@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
@@ -13,7 +14,6 @@ import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/comment_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
@@ -89,7 +89,8 @@ final store = Store(
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
       solutionComments: <int, Pagination<int, CommentState>>{},
-      children: <int, Pagination<int, CommentState>>{}
+      children: <int, Pagination<int, CommentState>>{},
+      commentUserLikes: <int, Pagination<int, CommentUserLikeState>>{}
     ),
 
     searchPageState: const SearchPageState(
@@ -122,7 +123,6 @@ final store = Store(
 
     login: Login.loading(),
     solutionEntityState: EntityState(),
-    commentEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
@@ -200,10 +200,18 @@ final store = Store(
 
     //comments
     createCommentMiddleware,
+    deleteCommentMiddleware,
     nextQuestionCommentsMiddleware,
     refreshQuestionCommentsMiddleware,
     nextSolutionCommentsMiddleware,
     refreshSolutionCommentsMiddleware,
+    refreshCommentChildrenMiddleware,
+    nextCommentChildrenMiddleware,
+
+    likeCommentMiddleware,
+    dislikeCommentMiddleware,
+    nextCommentLikesMiddleware,
+    refreshCommentLikesMiddleware,
     //comments
 
     //exams middlewares
@@ -257,14 +265,7 @@ final store = Store(
     nextTransactionsMiddleware,
     firstTransactionsMiddleware,
     //transactions state
-
-    //Comment entity state middleware
-    getNextPageCommentLikesMiddleware,
-    likeCommentMiddleware,
-    dislikeCommentMiddleware,
     
-    nextCommentChildrenMiddleware,
-
     
     //account start
     loginByRefreshTokenMiddleware,
@@ -314,10 +315,6 @@ final store = Store(
     removeSolutionDownvoteMiddleware,
     nextSolutionUpvotesMiddleware,
     nextSolutionDownvotesMiddleware,
-
-    //comments entity state
-    loadCommentMiddleware,
-    loadCommentsMiddleware,
 
     //notifications start
     markNotificationsAsViewedMiddleware,

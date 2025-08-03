@@ -5,6 +5,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
+import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
@@ -74,7 +75,6 @@ class AppState{
   final Pagination<int,NotificationState> notifications;
   final Login login;
   final EntityState<int,SolutionState> solutionEntityState;
-  final EntityState<int,CommentState> commentEntityState;
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
   final PolicyState policyState;
@@ -110,7 +110,6 @@ class AppState{
     required this.conversations,
     required this.login,
     required this.solutionEntityState,
-    required this.commentEntityState,
     required this.notifications,
     required this.messageEntityState,
     required this.policyState,
@@ -151,7 +150,8 @@ class AppState{
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
       solutionComments: <int, Pagination<int, CommentState>>{},
-      children: <int, Pagination<int, CommentState>>{}
+      children: <int, Pagination<int, CommentState>>{},
+      commentUserLikes: <int, Pagination<int,CommentUserLikeState>>{}
     ),
 
     searchPageState: const SearchPageState(
@@ -185,7 +185,6 @@ class AppState{
     login: Login.init(),
     
     solutionEntityState: EntityState(),
-    commentEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),

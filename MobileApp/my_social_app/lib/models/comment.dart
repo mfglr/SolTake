@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
 part 'comment.g.dart';
 
 
@@ -60,8 +58,6 @@ class Comment{
       content: content,
       numberOfLikes: numberOfLikes,
       isLiked: isLiked,
-      likes: Pagination.init(usersPerPage,true),
-      children: Pagination.init(commentsPerPage,true),
       numberOfChildren: numberOfChildren,
       parentId: parentId,
       solutionId: solutionId,

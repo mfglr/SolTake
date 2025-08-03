@@ -2,8 +2,10 @@ import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:redux/redux.dart';
 
-CommentsState createCommentReducer(CommentsState prev, CreateCommentsSuccessAction action) =>
+CommentsState createCommentSuccessReducer(CommentsState prev, CreateCommentsSuccessAction action) =>
   prev.create(action.parent, action.comment);
+CommentsState deleteCommentSuccessReducer(CommentsState prev, DeleteCommentSuccessAction action) =>
+  prev.delete(action.comment);
 
 //question comments
 CommentsState nextQuestionCommentsReducer(CommentsState prev, NextQuestionCommentsAction action) =>
@@ -53,8 +55,30 @@ CommentsState refreshCommentChildrenFailedReducer(CommentsState prev, RefreshCom
   prev.startLoadingNextChildren(action.parentId);
 //children
 
+//comment user likes
+CommentsState nextCommentUserLikesReducer(CommentsState prev, NextCommentUserLikesAction action) =>
+  prev.startLoadingNextCommentUserLikes(action.commentId);
+CommentsState nextCommentUserLikesSuccessReducer(CommentsState prev, NextCommentUserLikesSuccessAction action) =>
+  prev.addNextCommentUserLikes(action.commentId,action.commentUserLikes);
+CommentsState nextCommentUserLikesFailedReducer(CommentsState prev, NextCommentUserLikesFailedAction action) =>
+  prev.stopLoadingNextCommentUserLikes(action.commentId);
+
+CommentsState refreshCommentUserLikesReducer(CommentsState prev, RefreshCommentUserLikesAction action) =>
+  prev.startLoadingNextCommentUserLikes(action.commentId);
+CommentsState refreshCommentUserLikesSuccessReducer(CommentsState prev, RefreshCommentUserLikesSuccessAction action) =>
+  prev.refreshCommentUserLikes(action.commentId,action.commentUserLikes);
+CommentsState refreshCommentUserLikesFailedReducer(CommentsState prev, RefreshCommentUserLikesFailedAction action) =>
+  prev.stopLoadingNextCommentUserLikes(action.commentId);
+
+CommentsState likeCommentSuccessReducer(CommentsState prev, LikeCommentSuccessAction action) =>
+  prev.like(action.comment, action.commentUserLike);
+CommentsState dislikeCommentSuccessReducer(CommentsState prev, DislikeCommentSuccessAction action) =>
+  prev.dislike(action.comment, action.userId);
+//comment user likes
+
 Reducer<CommentsState> commentsReducer = combineReducers<CommentsState>([
-  TypedReducer<CommentsState, CreateCommentsSuccessAction>(createCommentReducer).call,
+  TypedReducer<CommentsState, CreateCommentsSuccessAction>(createCommentSuccessReducer).call,
+  TypedReducer<CommentsState, DeleteCommentSuccessAction>(deleteCommentSuccessReducer).call,
 
   //question comments
   TypedReducer<CommentsState, NextQuestionCommentsAction>(nextQuestionCommentsReducer).call,
@@ -85,5 +109,18 @@ Reducer<CommentsState> commentsReducer = combineReducers<CommentsState>([
   TypedReducer<CommentsState, RefreshCommentChildrenSuccessAction>(refreshCommentChildrenSuccessReducer).call,
   TypedReducer<CommentsState, RefreshCommentChildrenFailedAction>(refreshCommentChildrenFailedReducer).call,
   //children
+
+  //comment user likes
+  TypedReducer<CommentsState, NextCommentUserLikesAction>(nextCommentUserLikesReducer).call,
+  TypedReducer<CommentsState, NextCommentUserLikesSuccessAction>(nextCommentUserLikesSuccessReducer).call,
+  TypedReducer<CommentsState, NextCommentUserLikesFailedAction>(nextCommentUserLikesFailedReducer).call,
+  
+  TypedReducer<CommentsState, RefreshCommentUserLikesAction>(refreshCommentUserLikesReducer).call,
+  TypedReducer<CommentsState, RefreshCommentUserLikesSuccessAction>(refreshCommentUserLikesSuccessReducer).call,
+  TypedReducer<CommentsState, NextCommentUserLikesFailedAction>(nextCommentUserLikesFailedReducer).call,
+
+  TypedReducer<CommentsState, LikeCommentSuccessAction>(likeCommentSuccessReducer).call,
+  TypedReducer<CommentsState, DislikeCommentSuccessAction>(dislikeCommentSuccessReducer).call,
+  //comment user likes
 ]);
 

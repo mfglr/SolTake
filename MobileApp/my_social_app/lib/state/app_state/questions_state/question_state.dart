@@ -180,5 +180,6 @@ class QuestionState extends Entity<int> implements Avatar{
   QuestionState unsave() => _optional(newIsSaved: false);
 
   QuestionState increaseNumberOfComments() => _optional(newNumberOfComments: numberOfComments + 1);
+  QuestionState decreaseNumberOfComments() => _optional(newNumberOfComments: numberOfComments - 1);
 
 }

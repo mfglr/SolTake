@@ -763,5 +763,53 @@ class QuestionsState{
       questionUserLikes: questionUserLikes
     );
   }
-  
+  QuestionsState decreaseNumberOfComments(QuestionState question){
+    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
+    return QuestionsState(
+      questions: questions.setOne(question.id, question.decreaseNumberOfComments()),
+      examQuestions:
+        examQuestions.setOne(
+          question.exam.id,
+          examQuestions[question.exam.id]?.updateOne(question.decreaseNumberOfComments())
+        ),
+      subjectQuestions: 
+        subjectQuestions.setOne(
+          question.subject.id,
+          subjectQuestions[question.subject.id]?.updateOne(question.decreaseNumberOfComments())
+        ),
+      topicQuestions: 
+        question.topic?.id != null
+          ? topicQuestions.setOne(
+              question.topic!.id,
+              topicQuestions[question.topic!.id]?.updateOne(question.decreaseNumberOfComments())
+            )
+          : topicQuestions,
+      userQuestions: 
+        userQuestions.setOne(
+          question.userId,
+          userQuestions[question.userId]?.updateOne(question.decreaseNumberOfComments())
+        ),
+      userSolvedQuestions: 
+        userSolvedQuestions.setOne(
+          question.userId,
+          userSolvedQuestions[question.userId]?.updateOne(question.decreaseNumberOfComments())
+        ),
+      userUnsolvedQuestions:
+        userUnsolvedQuestions.setOne(
+          question.userId,
+          userUnsolvedQuestions[question.userId]?.updateOne(question.decreaseNumberOfComments()) 
+        ),
+
+      homePageQuestions: homePageQuestions.updateOne(question.decreaseNumberOfComments()),
+      searchPageQuestions: searchPageQuestions.updateOne(question.decreaseNumberOfComments()),
+      videoQuestions: videoQuestions.updateOne(question.decreaseNumberOfComments()),
+      
+      questionUserSaves:
+        questionUserSave != null
+          ? questionUserSaves.updateOne(questionUserSave.decreaseNumberOfComments())
+          : questionUserSaves,
+
+      questionUserLikes: questionUserLikes
+    );
+  }
 }
