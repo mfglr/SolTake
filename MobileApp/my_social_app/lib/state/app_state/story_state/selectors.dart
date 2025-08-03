@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 int _selectCurrentUserId(Store<AppState> store) => store.state.login.login!.id;

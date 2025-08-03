@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_item/question_item_widget.dart';
@@ -8,7 +8,7 @@ import 'package:my_social_app/views/question/widgets/question_item/question_item
 class QuestionItemsWidget extends StatefulWidget {
   final Pagination<int, QuestionState> pagination;
   final Function onScrollBottom;
-  final num? firstDisplayedQuestionId;
+  final int? firstDisplayedQuestionId;
   final String noQuestionContent;
   
   const QuestionItemsWidget({

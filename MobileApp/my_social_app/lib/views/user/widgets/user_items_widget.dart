@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/user/widgets/user_item_widget.dart';

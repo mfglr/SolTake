@@ -7,7 +7,7 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/topics_state/actions.dart';
 import 'package:my_social_app/state/app_state/topics_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page/widgets/create_topic_request_button/create_topic_request_button.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page/widgets/no_topics_widget/no_topics_widget.dart';
 import 'package:my_social_app/views/create_question/widgets/create_question_button/create_question_button.dart';

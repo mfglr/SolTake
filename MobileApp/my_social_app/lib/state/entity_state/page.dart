@@ -12,5 +12,5 @@ class Page<K extends Comparable>{
     required this.isDescending
   });
 
-  factory Page.init(int take,bool isDescending) => Page(offset: null, take: take, isDescending: isDescending);
+  factory Page.init(int take, bool isDescending) => Page(offset: null, take: take, isDescending: isDescending);
 }

@@ -3,8 +3,8 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/entity_container.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 EntityContainer<UserState> selectUserById(Store<AppState> store, int id) =>

@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';
 import 'package:my_social_app/views/home_page/widgets/uploadings_button.dart';
+import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/story/widgets/story_circles_widget.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,11 +32,10 @@ class _HomePageState extends State<HomePage> {
     _scrollController,
     (){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      getNextEntitiesIfReady(
-        store,
-        selectHomePageQuestionPagination(store),
-        const NextHomePageQuestionsAction()
-      );
+      var pagination = selectHomeQuestionPagination(store);
+      if(pagination.isReadyForNextPage){
+        store.dispatch(const NextHomeQuestionsAction());
+      }
     }
   );
 
@@ -59,9 +57,12 @@ class _HomePageState extends State<HomePage> {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        refreshEntities(store, selectHomePageQuestionPagination(store), const RefreshHomePageQuestionsAction());
+        var pagination = selectHomeQuestionPagination(store);
+        if(!pagination.loadingNext){
+          store.dispatch(const RefreshHomeQuestionsAction());
+        }
         store.dispatch(const GetStoriesAction());
-        return store.onChange.map((state) => state.questions.homePageQuestions).firstWhere((x) => !x.loadingNext);
+        return onHomeQuestionsLoaded(store);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -96,18 +97,21 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              StoreConnector<AppState, Pagination<int, QuestionState>>(
-                onInit: (store) => 
-                  getNextEntitiesIfNoPage(
-                    store,
-                    selectHomePageQuestionPagination(store),
-                    const NextHomePageQuestionsAction()
-                  ),
-                converter: (store) => selectHomePageQuestionPagination(store),
-                builder:(context, pagination) => Column(
+              StoreConnector<AppState, (KeyPagination<int>, Iterable<QuestionState>)>(
+                onInit: (store){
+                  final pagination = selectHomeQuestionPagination(store);
+                  if(pagination.noPage){
+                    store.dispatch(const NextHomeQuestionsAction());
+                  }
+                },
+                converter: (store) => selectHomePaginationAndQuestions(store),
+                builder:(context, x) => Column(
                   children: [
-                    QuestionListWidget(questions: pagination.values),
-                    if(pagination.loadingNext)
+                    if(x.$1.isEmpty)
+                      const NoQuestionsWidget(content: "")
+                    else
+                      QuestionListWidget(questions: x.$2),
+                    if(x.$1.loadingNext)
                       const LoadingCircleWidget()
                   ],
                 ),

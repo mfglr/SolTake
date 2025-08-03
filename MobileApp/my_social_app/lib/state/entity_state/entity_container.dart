@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_status.dart';
+import 'package:my_social_app/state/entity_state/entity_status.dart';
 
 @immutable
 class EntityContainer<V> {

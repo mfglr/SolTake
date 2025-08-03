@@ -7,7 +7,7 @@ import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class SolutionService{
   final AppClient _appClient;

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 part 'story.g.dart';
 
 @immutable

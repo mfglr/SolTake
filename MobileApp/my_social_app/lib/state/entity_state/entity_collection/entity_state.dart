@@ -23,7 +23,7 @@ class EntityState<K extends Comparable, V extends Entity<K>>{
   EntityState<K,V> appendMany(Iterable<V> values) => EntityState<K,V>._(map: _map.appendMany(values));
   EntityState<K,V> updateMany(Iterable<V> values) => EntityState<K,V>._(map: _map.updateMany(values));
   EntityState<K,V> appendList(Iterable<Iterable<V>> list) =>
-    EntityState<K,V>._(map: _map.appendLists(list.map((e) => e.where((e) => _map[e.id] == null))));
+  EntityState<K,V>._(map: _map.appendLists(list.map((e) => e.where((e) => _map[e.id] == null))));
   EntityState<K,V> where(bool Function(V) test) => EntityState<K,V>._(map: _map.where(test));
   
   Iterable<V> select(bool Function(V) test) => _map.values.where(test);

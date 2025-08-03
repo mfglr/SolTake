@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart' as pagination;
+import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
 class Pagination<K extends Comparable, V extends Entity<K>>{

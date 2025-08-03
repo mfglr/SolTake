@@ -7,7 +7,7 @@ import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/pages/select_subject_page/widgets/create_subject_button/create_subject_button.dart';
 import 'package:my_social_app/views/create_question/widgets/subject_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';

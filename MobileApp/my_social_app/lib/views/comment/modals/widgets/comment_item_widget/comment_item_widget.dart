@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_header_widget.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/display_remain_replies_button.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';

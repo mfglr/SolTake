@@ -3,9 +3,9 @@ import 'package:my_social_app/state/app_state/questions_state/question_state.dar
 import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/selectors.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class UsersState {

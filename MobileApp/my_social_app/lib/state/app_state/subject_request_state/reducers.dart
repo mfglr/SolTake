@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/subject_request_state/actions.dart';
 import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,SubjectRequestState> createSubjectRequestsSuccessReducers(Pagination<int, SubjectRequestState> prev, CreateSubjectRequestSuccessAction action)

@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_question_likes_page/display_question_likes_page_constants.dart';
 import 'package:my_social_app/views/question/widgets/question_user_like/question_user_likes_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -51,10 +51,10 @@ class _DisplayQuestionLikesPageState extends State<DisplayQuestionLikesPage> {
         final store = StoreProvider.of<AppState>(context, listen: false);
         refreshEntities(
           store,
-          selectHomePageQuestionPagination(store),
+          selectQuestionUserLikes(store,widget.questionId),
           RefreshQuestionUserLikesAction(questionId: widget.questionId)
         );
-        return store.onChange.map((state) => state.questions.homePageQuestions).firstWhere((e) => !e.loadingNext);
+        return onQuestionUserLikesLoaded(store, widget.questionId); 
       },
       child: Scaffold(
         appBar: AppBar(

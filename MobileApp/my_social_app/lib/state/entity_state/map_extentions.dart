@@ -1,4 +1,5 @@
 import 'package:my_social_app/state/entity_state/entity.dart';
+import 'package:my_social_app/state/entity_state/new_entity_container.dart';
 
 extension MapExtentions<K extends Comparable, V extends Entity<K>> on Map<K,V>{
   Map<K,V> prependOne(V value) => { value.id: value, ...this };
@@ -39,9 +40,16 @@ extension MapExtentions<K extends Comparable, V extends Entity<K>> on Map<K,V>{
 
 extension MapExtentions1<K, V> on Map<K,V>{
   Map<K,V> setOne(K key, V? value) => 
-    value != null
-      ? { for (var entry in [...entries, MapEntry(key, value)]) entry.key : entry.value }
-      : this;
+    value != null ? { ...this, key : value } : this;
+  Map<K,V> setMany(Map<K,V> map) => 
+    { ...this, ...map };
   Map<K,V> removeOne(K key) =>
     { for (var entry in [...entries.where((e) => e.key != key)]) entry.key : entry.value }; 
+}
+
+extension MapExtentions2<K extends Comparable, V extends Entity<K>> on Map<K, NewEntityContainer<K, V>>{
+  Map<K, NewEntityContainer<K, V>> setOne(V entity) => 
+    { ...this, entity.id : NewEntityContainer.success(entity) };
+  Map<K, NewEntityContainer<K, V>> setMany(Iterable<V> entities) =>
+    { ...this, for (var entity in entities) entity.id: NewEntityContainer.success(entity) };
 }

@@ -94,36 +94,6 @@ class RefreshSearchPageQuestionsFailedAction extends AppAction{
 }
 //search page questions
 
-//video questions
-@immutable
-class NextVideoQuestionsAction extends AppAction{
-  const NextVideoQuestionsAction();
-}
-@immutable
-class NextVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
-  const NextVideoQuestionsSuccessAction({required this.questions});
-}
-@immutable
-class NextVideoQuestionsFailedAction extends AppAction{
-  const NextVideoQuestionsFailedAction();
-}
-
-@immutable
-class RefreshVideoQuestionsAction extends AppAction{
-  const RefreshVideoQuestionsAction();
-}
-@immutable
-class RefreshVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
-  const RefreshVideoQuestionsSuccessAction({required this.questions});
-}
-@immutable
-class RefreshVideoQuestionsFailedAction extends AppAction{
-  const RefreshVideoQuestionsFailedAction();
-}
-//video questions
-
 //question user likes
 @immutable
 class NextQuestionUserLikesAction extends AppAction{
@@ -235,73 +205,6 @@ class UnsaveQuestionSuccessAction extends AppAction{
   const UnsaveQuestionSuccessAction({required this.question});
 } 
 //question user saves
-
-
-// home page questions
-@immutable
-class NextHomePageQuestionsAction extends AppAction{
-  const NextHomePageQuestionsAction();
-}
-@immutable
-class NextHomePageQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
-  const NextHomePageQuestionsSuccessAction({required this.questions});
-}
-@immutable
-class NextHomePageQuestionsFailedAction extends AppAction{
-  const NextHomePageQuestionsFailedAction();
-}
-
-@immutable
-class RefreshHomePageQuestionsAction extends AppAction{
-  const RefreshHomePageQuestionsAction();
-}
-@immutable
-class RefreshHomePageQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
-  const RefreshHomePageQuestionsSuccessAction({required this.questions});
-}
-@immutable
-class RefreshHomePageQuestionsFailedAction extends AppAction{
-  const RefreshHomePageQuestionsFailedAction();
-}
-// home page questions
-
-//user questions
-@immutable
-class NextUserQuestionsAction extends AppAction{
-  final int userId;
-  const NextUserQuestionsAction({required this.userId});
-}
-@immutable
-class NextUserQuestionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<QuestionState> questions;
-  const NextUserQuestionsSuccessAction({required this.userId, required this.questions});
-}
-@immutable
-class NextUserQuestionsFailedAction extends AppAction{
-  final int userId;
-  const NextUserQuestionsFailedAction({required this.userId});
-}
-
-@immutable
-class RefreshUserQuestionsAction extends AppAction{
-  final int userId;
-  const RefreshUserQuestionsAction({required this.userId});
-}
-@immutable
-class RefreshUserQuestionsSuccessAction extends AppAction{
-  final int userId;
-  final Iterable<QuestionState> questions;
-  const RefreshUserQuestionsSuccessAction({required this.userId, required this.questions});
-}
-@immutable
-class RefreshUserQuestionsFailedAction extends AppAction{
-  final int userId;
-  const RefreshUserQuestionsFailedAction({required this.userId});
-}
-//user questions
 
 //user solved questions
 @immutable

@@ -9,6 +9,7 @@ import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/questions_state/reducers.dart';
@@ -35,6 +36,8 @@ import 'package:redux/redux.dart';
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  newQuetions: newQuestionsReducer(prev.newQuetions, action),
+
   users: usersReducer(prev.users, action),
   questions: questionsReducers(prev.questions, action),
   solutions: solutionsReducer(prev.solutions, action),

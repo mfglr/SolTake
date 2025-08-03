@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/app_state/exams_state/actions.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int, ExamState> nextExamsReducer(Pagination<int,ExamState> prev, NextExamsAction action) =>

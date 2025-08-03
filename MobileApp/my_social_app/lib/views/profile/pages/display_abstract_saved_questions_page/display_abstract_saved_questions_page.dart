@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_save
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/profile/pages/display_abstract_saved_questions_page/display_abstract_saved_questions_page_constants.dart';
 import 'package:my_social_app/views/profile/pages/display_saved_question_page/display_saved_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_user_save_abstract_items_widget/question_user_save_abstract_items_widget.dart';

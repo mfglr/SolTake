@@ -14,6 +14,7 @@ import 'package:my_social_app/state/app_state/comments_state/comment_state.dart'
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
@@ -39,13 +40,17 @@ import 'package:my_social_app/state/app_state/user_message_state/user_message_st
 import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/entity_state/new_entity_collection.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class AppState{
+  final NewQuestionsState newQuetions;
+  
   final UsersState users;
   final QuestionsState questions;
   final SolutionsState solutions;
@@ -54,6 +59,7 @@ class AppState{
   final Pagination<int,ExamState> exams;
   final SubjectsState subjects;
   final TopicsState topics;
+
 
   final Pagination<int,SearchUserState> searchUsers;
   final Pagination<int,UserUserSearchState> userUserSearchs;
@@ -81,6 +87,8 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
+    required this.newQuetions,
+
     required this.users,
     required this.questions,
     required this.solutions,
@@ -89,6 +97,7 @@ class AppState{
     required this.exams,
     required this.subjects,
     required this.topics,
+
     
     required this.searchUsers,
     required this.userUserSearchs,
@@ -117,6 +126,16 @@ class AppState{
   });
 
   AppState clear() => AppState(
+    newQuetions: NewQuestionsState(
+      questions: NewEntityCollection(),
+      homeQuestions: KeyPagination.init(questionsPerPage, true),
+      searchQuestions: KeyPagination.init(questionsPerPage, true),
+      videoQuestions: KeyPagination.init(questionsPerPage, true),
+      userQuestions: const <int, KeyPagination<int>>{},
+      userSolvedQuestions: const <int, KeyPagination<int>>{},
+      userUnsolvedQuestions: const <int, KeyPagination<int>>{},
+    ),
+
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
       usersByUserName: EntityCollection<String, UserState>(),
@@ -126,13 +145,11 @@ class AppState{
 
     questions: QuestionsState(
       questions: EntityCollection(),
-      userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       examQuestions: const <int, Pagination<int, QuestionState>>{},
       subjectQuestions: const <int, Pagination<int, QuestionState>>{},
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
-      homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),

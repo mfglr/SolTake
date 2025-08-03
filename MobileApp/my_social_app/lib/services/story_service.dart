@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/models/story.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class StoryService {
   static const _controllerName = "Stories";

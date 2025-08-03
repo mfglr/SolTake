@@ -15,7 +15,7 @@ import 'package:my_social_app/state/app_state/topics_state/actions.dart';
 import 'package:my_social_app/state/app_state/topics_state/selectors.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/pages/display_search_questions_page/display_search_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstracts_item_widget/question_abstract_items_widget.dart';
 

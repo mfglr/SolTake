@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/solution/pages/display_question_incorrect_solutions_page/display_question_incorrect_solutions_page_constants.dart';

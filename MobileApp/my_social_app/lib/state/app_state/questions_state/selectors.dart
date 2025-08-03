@@ -4,29 +4,18 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_container.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/entity_container.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 EntityContainer<QuestionState> selectQuestion(Store<AppState> store, int questionId) =>
   store.state.questions.questions[questionId];
-
-Pagination<int, QuestionState> selectHomePageQuestionPagination(Store<AppState> store) =>
-  store.state.questions.homePageQuestions;
-
-Pagination<int, QuestionState> selectVideoQuestions(Store<AppState> store) =>
-  store.state.questions.videoQuestions;
 
 Pagination<int, QuestionUserSaveState> selectQuestionUserSaves(Store<AppState> store) =>
   store.state.questions.questionUserSaves;
 
 Pagination<int, QuestionState> selectSearchPageQuestion(Store<AppState> store) =>
   store.state.questions.searchPageQuestions;
-
-Pagination<int, QuestionState> selectUserQuestionsFromState(QuestionsState state, int userId) =>
-  state.userQuestions[userId] ?? Pagination.init(questionsPerPage, true);
-Pagination<int, QuestionState> selectUserQuestions(Store<AppState> store, int userId) =>
-  selectUserQuestionsFromState(store.state.questions, userId);
 
 Pagination<int, QuestionState> selectUserSolvedQuestionsFromState(QuestionsState state, int userId) =>
   state.userSolvedQuestions[userId] ?? Pagination.init(questionsPerPage, true);
@@ -57,3 +46,5 @@ Pagination<int, QuestionUserLikeState> selectQuestionUserLikesFromState(Question
   state.questionUserLikes[questionId] ?? Pagination.init(questionUserLikesPerPage, true);
 Pagination<int, QuestionUserLikeState> selectQuestionUserLikes(Store<AppState> store, int questionId) =>
   selectQuestionUserLikesFromState(store.state.questions, questionId);
+Future<bool> onQuestionUserLikesLoaded(Store<AppState> store, int questionId) =>
+  store.onChange.map((state) => !selectQuestionUserLikesFromState(store.state.questions, questionId).loadingNext).first;

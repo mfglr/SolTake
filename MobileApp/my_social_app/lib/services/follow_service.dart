@@ -1,7 +1,7 @@
 import 'package:my_social_app/models/follow.dart';
 import 'package:my_social_app/models/id_response.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/page.dart';
+import 'package:my_social_app/state/entity_state/page.dart';
 
 class FollowService {
   static const _controller = "Follows";

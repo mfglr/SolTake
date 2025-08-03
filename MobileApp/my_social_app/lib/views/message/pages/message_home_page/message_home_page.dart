@@ -7,7 +7,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/conversations_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 import 'package:my_social_app/views/message/pages/create_conversation_page/create_conversation_page.dart';

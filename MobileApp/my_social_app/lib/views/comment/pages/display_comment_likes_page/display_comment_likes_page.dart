@@ -6,7 +6,7 @@ import 'package:my_social_app/state/app_state/comments_state/comment_user_like_s
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/pages/display_comment_likes_page/widgets/no_comment_user_likes_widget.dart';
 import 'package:my_social_app/views/comment/pages/display_comment_likes_page/widgets/comment_user_likes_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';

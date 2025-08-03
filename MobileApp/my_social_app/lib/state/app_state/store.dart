@@ -14,6 +14,8 @@ import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/middleware.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
@@ -48,14 +50,26 @@ import 'package:my_social_app/state/app_state/user_message_state/middlewares.dar
 import 'package:my_social_app/state/app_state/user_user_block_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/middlewares.dart';
-import 'package:my_social_app/state/entity_state/entity_collection/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/entity_state/new_entity_collection.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
   reducers,
   initialState: AppState(
+    newQuetions: NewQuestionsState(
+      questions: NewEntityCollection(),
+      homeQuestions: KeyPagination.init(questionsPerPage, true),
+      searchQuestions: KeyPagination.init(questionsPerPage, true),
+      videoQuestions: KeyPagination.init(questionsPerPage, true),
+      userQuestions: const <int, KeyPagination<int>>{},
+      userSolvedQuestions: const <int, KeyPagination<int>>{},
+      userUnsolvedQuestions: const <int, KeyPagination<int>>{},
+    ),
+
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
       usersByUserName: EntityCollection<String, UserState>(),
@@ -65,13 +79,11 @@ final store = Store(
     
     questions: QuestionsState(
       questions: EntityCollection(),
-      userQuestions: const <int, Pagination<int, QuestionState>>{},
       userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
       examQuestions: const <int, Pagination<int, QuestionState>>{},
       subjectQuestions: const <int, Pagination<int, QuestionState>>{},
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
-      homePageQuestions: Pagination.init(questionsPerPage, true),
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),
@@ -130,6 +142,19 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
+    //new questions
+    nexHomeQuestionsMiddleware,
+    refreshHomeQuestionsMiddleware,
+
+    nextVideoQuestionsMiddleware,
+    refreshVideoQuestionsMiddleware,
+
+    nextUserQuestionsMiddleware,
+    refreshUserQuestionsMiddleware,
+
+    createQuestionMiddleware,
+    //new questions
+
     //users
     loadUserByIdMiddleware,
     loadUserByUserNameMiddleware,
@@ -144,7 +169,6 @@ final store = Store(
     //questions
     loadQuestionMiddleware,
 
-    createQuestionMiddleware,
     deleteQuestionMiddleware,
 
     changeExamMiddleware,
@@ -160,11 +184,7 @@ final store = Store(
     refreshQuestionUserSavesMiddleware,
     saveQuestionMiddleware,
     unsaveQuestionMiddleware,
-
-    nextHomePageQuestionsMiddleware,
-    refreshHomePageQuestionsMiddleware,
-    nextUserQuestionsMiddleware,
-    refreshUserQuestionsMiddleware,
+    
     nextUserSolvedQuestionsMiddleware,
     refreshUserSolvedQuestionsMiddleware,
     nextUserUnsolvedQuestionsMiddleware,
@@ -175,8 +195,6 @@ final store = Store(
     refreshSubjectQuestionsMiddleware,
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
-    nextVideoQuestionsMiddleware,
-    refreshVideoQuestionsMiddleware,
     //questions
 
     //solutions

@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
-import 'package:my_social_app/state/entity_state/pagination_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,UserUserSearchState> createUserUserSearchSuccessReducer(Pagination<int,UserUserSearchState> prev, CreateUserUserSearchSuccessAction action)
