@@ -62,12 +62,18 @@ final store = Store(
   initialState: AppState(
     newQuetions: NewQuestionsState(
       questions: NewEntityCollection(),
+      
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),
       videoQuestions: KeyPagination.init(questionsPerPage, true),
+
       userQuestions: const <int, KeyPagination<int>>{},
       userSolvedQuestions: const <int, KeyPagination<int>>{},
       userUnsolvedQuestions: const <int, KeyPagination<int>>{},
+
+      examQuestions: const <int, KeyPagination<int>>{},
+      subjectQuestions: const <int, KeyPagination<int>>{},
+      topicQuestions: const <int, KeyPagination<int>>{},
     ),
 
     users: UsersState(
@@ -79,9 +85,6 @@ final store = Store(
     
     questions: QuestionsState(
       questions: EntityCollection(),
-      userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
-      userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
-      examQuestions: const <int, Pagination<int, QuestionState>>{},
       subjectQuestions: const <int, Pagination<int, QuestionState>>{},
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       searchPageQuestions: Pagination.init(questionsPerPage, true),
@@ -143,16 +146,22 @@ final store = Store(
   ),
   middleware: [
     //new questions
+    createQuestionMiddleware,
+
     nexHomeQuestionsMiddleware,
     refreshHomeQuestionsMiddleware,
-
     nextVideoQuestionsMiddleware,
     refreshVideoQuestionsMiddleware,
 
     nextUserQuestionsMiddleware,
     refreshUserQuestionsMiddleware,
+    nextUserSolvedQuestionsMiddleware,
+    refreshUserSolvedQuestionsMiddleware,
+    nextUserUnsolvedQuestionsMiddleware,
+    refreshUserUnsolvedQuestionsMiddleware,
 
-    createQuestionMiddleware,
+    nextExamQuestionsMiddleware,
+    refreshExamQuestionsMiddleware,
     //new questions
 
     //users
@@ -184,13 +193,9 @@ final store = Store(
     refreshQuestionUserSavesMiddleware,
     saveQuestionMiddleware,
     unsaveQuestionMiddleware,
+
     
-    nextUserSolvedQuestionsMiddleware,
-    refreshUserSolvedQuestionsMiddleware,
-    nextUserUnsolvedQuestionsMiddleware,
-    refreshUserUnsolvedQuestionsMiddleware,
-    nextExamQuestionsMiddleware,
-    refreshExamQuestionsMiddleware,
+    
     nextSubjectQuestionsMiddleware,
     refreshSubjectQuestionsMiddleware,
     nextTopicQuestionsMiddleware,

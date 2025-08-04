@@ -131,9 +131,14 @@ class AppState{
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),
       videoQuestions: KeyPagination.init(questionsPerPage, true),
+
       userQuestions: const <int, KeyPagination<int>>{},
       userSolvedQuestions: const <int, KeyPagination<int>>{},
       userUnsolvedQuestions: const <int, KeyPagination<int>>{},
+
+      examQuestions: const <int, KeyPagination<int>>{},
+      subjectQuestions: const <int, KeyPagination<int>>{},
+      topicQuestions: const <int, KeyPagination<int>>{},
     ),
 
     users: UsersState(
@@ -145,9 +150,6 @@ class AppState{
 
     questions: QuestionsState(
       questions: EntityCollection(),
-      userSolvedQuestions: const <int, Pagination<int, QuestionState>>{},
-      userUnsolvedQuestions: const <int, Pagination<int, QuestionState>>{},
-      examQuestions: const <int, Pagination<int, QuestionState>>{},
       subjectQuestions: const <int, Pagination<int, QuestionState>>{},
       topicQuestions: const <int, Pagination<int, QuestionState>>{},
       searchPageQuestions: Pagination.init(questionsPerPage, true),

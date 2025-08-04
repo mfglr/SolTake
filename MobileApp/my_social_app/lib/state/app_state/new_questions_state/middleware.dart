@@ -128,3 +128,96 @@ void refreshUserQuestionsMiddleware(Store<AppState> store, action, NextDispatche
   next(action);
 }
 //user questions
+
+//user solved questions
+void nextUserSolvedQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextUserSolvedQuestionsAction){
+    QuestionService()
+      .getSolvedQuestionsByUserId(action.userId, selectUserSolvedQuestionPagination(store, action.userId).next)
+      .then((questions) => store.dispatch(NextUserSolvedQuestionsSuccessAction(
+        userId: action.userId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
+      .catchError((e){
+        store.dispatch(NextUserSolvedQuestionsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshUserSolvedQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshUserSolvedQuestionsAction){
+    QuestionService()
+      .getSolvedQuestionsByUserId(action.userId, selectUserSolvedQuestionPagination(store, action.userId).first)
+      .then((questions) => store.dispatch(RefreshUserSolvedQuestionsSuccessAction(
+        userId: action.userId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
+      .catchError((e){
+        store.dispatch(RefreshUserSolvedQuestionsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//user solved questions
+
+//user unsolved questions
+void nextUserUnsolvedQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextUserUnsolvedQuestionsAction){
+    QuestionService()
+      .getUnsolvedQuestionsByUserId(action.userId, selectUserUnsolvedQuestionPagination(store, action.userId).next)
+      .then((questions) => store.dispatch(NextUserUnsolvedQuestionsSuccessAction(userId: action.userId, questions: questions.map((e) => e.toQuestionState()))))
+      .catchError((e){
+        store.dispatch(NextUserUnsolvedQuestionsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshUserUnsolvedQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshUserUnsolvedQuestionsAction){
+    QuestionService()
+      .getUnsolvedQuestionsByUserId(action.userId, selectUserUnsolvedQuestionPagination(store, action.userId).first)
+      .then((questions) => store.dispatch(RefreshUserUnsolvedQuestionsSuccessAction(userId: action.userId, questions: questions.map((e) => e.toQuestionState()))))
+      .catchError((e){
+        store.dispatch(RefreshUserUnsolvedQuestionsFailedAction(userId: action.userId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//user unsolved questions
+
+//exam questions
+void nextExamQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextExamQuestionsAction){
+    QuestionService()
+      .getByExamId(action.examId, selectExamQuestionPagination(store, action.examId).next)
+      .then((questions) => store.dispatch(NextExamQuestionsSuccessAction(
+        examId: action.examId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
+      .catchError((e){
+        store.dispatch(NextExamQuestionsFailedAction(examId: action.examId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshExamQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshExamQuestionsAction){
+    QuestionService()
+      .getByExamId(action.examId, selectExamQuestionPagination(store, action.examId).first)
+      .then((questions) => store.dispatch(RefreshExamQuestionsSuccessAction(
+        examId: action.examId,
+        questions: questions.map((e) => e.toQuestionState())
+      )))
+      .catchError((e){
+        store.dispatch(RefreshExamQuestionsFailedAction(examId: action.examId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//exam questions

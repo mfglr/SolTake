@@ -13,23 +13,27 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                     context.Stories,
                     user => user.Id,
                     story => story.UserId,
-                    (user,stories) => new { user, stories }
-                )
-                .Select(
-                    join => new UserResponseDto(
-                        join.user.Id,
-                        join.user.CreatedAt,
-                        join.user.UpdatedAt,
-                        join.user.UserName.Value,
-                        join.user.Name,
-                        join.user.Biography.Value,
-                        context.Questions.Count(question => question.UserId == join.user.Id && question.PublishingState == QuestionPublishingState.Published),
-                        context.UserUserFollows.Count(follow => follow.FollowedId == join.user.Id),
-                        context.UserUserFollows.Count(follow => follow.FollowerId == join.user.Id),
-                        context.UserUserFollows.Any(follow => follow.FollowerId == join.user.Id && follow.FollowedId == forUserId),
-                        context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == join.user.Id),
-                        join.user.Image,
-                        join.stories
+                    (user,stories) => new UserResponseDto(
+                        user.Id,
+                        user.CreatedAt,
+                        user.UpdatedAt,
+                        user.UserName.Value,
+                        user.Name,
+                        user.Biography.Value,
+                        context.Questions.Count(
+                            question =>
+                                question.UserId == user.Id &&
+                                (
+                                    question.PublishingState == QuestionPublishingState.Published ||
+                                    question.UserId == forUserId
+                                )
+                        ),
+                        context.UserUserFollows.Count(follow => follow.FollowedId == user.Id),
+                        context.UserUserFollows.Count(follow => follow.FollowerId == user.Id),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == forUserId),
+                        context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id),
+                        user.Image,
+                        stories
                             .Where(story => DateTime.UtcNow <= story.CreatedAt.AddDays(1))
                             .Select(
                                 (story) => new UserStoryResponseDto(

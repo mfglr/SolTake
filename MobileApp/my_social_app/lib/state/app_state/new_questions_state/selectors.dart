@@ -47,6 +47,10 @@ KeyPagination<int> selectUserSolvedQuestionPagination(Store<AppState> store, int
   selectUserSolvedQuestionPaginationFromState(store.state.newQuetions, userId);
 Iterable<QuestionState> selectUserSolvedQuestions(Store<AppState> store, int userId) =>
   selectUserSolvedQuestionPagination(store,userId).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectUserSolvedPaginationAndQuestions(Store<AppState> store, int userId) =>
+  (selectUserSolvedQuestionPagination(store, userId), selectUserSolvedQuestions(store, userId));
+Future<bool> onUserSolvedQuestionsLoaded(Store<AppState> store, int userId) =>
+  store.onChange.map((state) => !selectUserSolvedQuestionPaginationFromState(state.newQuetions, userId).loadingNext).first;
 //user solved questions
 
 //user unsolved questions
@@ -56,4 +60,21 @@ KeyPagination<int> selectUserUnsolvedQuestionPagination(Store<AppState> store, i
   selectUserUnsolvedQuestionPaginationFromState(store.state.newQuetions, userId);
 Iterable<QuestionState> selectUserUnsolvedQuestions(Store<AppState> store, int userId) =>
   selectUserUnsolvedQuestionPagination(store,userId).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectUserUnsolvedPaginationAndQuestions(Store<AppState> store, int userId) =>
+  (selectUserUnsolvedQuestionPagination(store, userId), selectUserUnsolvedQuestions(store, userId));
+Future<bool> onUserUnsolvedQuestionsLoaded(Store<AppState> store, int userId) =>
+  store.onChange.map((state) => !selectUserUnsolvedQuestionPaginationFromState(state.newQuetions, userId).loadingNext).first;
 //user unsolved questions
+
+//exam questions
+KeyPagination<int> selectExamQuestionPaginationFromState(NewQuestionsState state, int examId) =>
+  state.examQuestions[examId] ?? KeyPagination.init(questionsPerPage, true);
+KeyPagination<int> selectExamQuestionPagination(Store<AppState> store, int examId) =>
+  selectExamQuestionPaginationFromState(store.state.newQuetions, examId);
+Iterable<QuestionState> selectExamQuestions(Store<AppState> store, int examId) =>
+  selectExamQuestionPagination(store,examId).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectExamPaginationAndQuestions(Store<AppState> store, int examId) =>
+  (selectExamQuestionPagination(store, examId), selectExamQuestions(store, examId));
+Future<bool> onExamQuestionsLoaded(Store<AppState> store, int examId) =>
+  store.onChange.map((state) => !selectExamQuestionPaginationFromState(state.newQuetions, examId).loadingNext).first;
+//exam questions

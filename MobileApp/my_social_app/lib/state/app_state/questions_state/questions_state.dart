@@ -7,7 +7,6 @@ import 'package:my_social_app/state/app_state/questions_state/question_user_like
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
 import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -18,9 +17,6 @@ class QuestionsState{
   final Pagination<int,QuestionState> searchPageQuestions;
   final Pagination<int,QuestionState> videoQuestions;
   final Pagination<int,QuestionUserSaveState> questionUserSaves;
-  final Map<int,Pagination<int,QuestionState>> userSolvedQuestions;
-  final Map<int,Pagination<int,QuestionState>> userUnsolvedQuestions;
-  final Map<int,Pagination<int,QuestionState>> examQuestions;
   final Map<int,Pagination<int,QuestionState>> subjectQuestions;
   final Map<int,Pagination<int,QuestionState>> topicQuestions;
   final Map<int, Pagination<int, QuestionUserLikeState>> questionUserLikes;
@@ -28,11 +24,8 @@ class QuestionsState{
   const QuestionsState({
     required this.questions,
     required this.videoQuestions,
-    required this.userUnsolvedQuestions,
-    required this.examQuestions,
     required this.subjectQuestions,
     required this.topicQuestions,
-    required this.userSolvedQuestions,
     required this.searchPageQuestions,
     required this.questionUserSaves,
     required this.questionUserLikes
@@ -43,9 +36,6 @@ class QuestionsState{
     Pagination<int, QuestionState>? newSearchPageQuestions,
     Pagination<int, QuestionState>? newVideoQuestions,
     Pagination<int, QuestionUserSaveState>? newQuestionUserSaves,
-    Map<int,Pagination<int, QuestionState>>? newUserSolvedQuestions,
-    Map<int,Pagination<int, QuestionState>>? newUserUnsolvedQuestions,
-    Map<int,Pagination<int, QuestionState>>? newExamQuestions,
     Map<int,Pagination<int, QuestionState>>? newSubjectQuestions,
     Map<int,Pagination<int, QuestionState>>? newTopicQuestions,
     Map<int, Pagination<int, QuestionUserLikeState>>? newQuestionUserLikes,
@@ -56,9 +46,6 @@ class QuestionsState{
       searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
       videoQuestions: newVideoQuestions ?? videoQuestions,
       questionUserSaves: newQuestionUserSaves ?? questionUserSaves,
-      userSolvedQuestions: newUserSolvedQuestions ?? userSolvedQuestions,
-      userUnsolvedQuestions:  newUserUnsolvedQuestions ?? userUnsolvedQuestions,
-      examQuestions: newExamQuestions ?? examQuestions,
       subjectQuestions: newSubjectQuestions ?? subjectQuestions,
       topicQuestions: newTopicQuestions ?? topicQuestions,
       questionUserLikes: newQuestionUserLikes ?? questionUserLikes,
@@ -70,23 +57,10 @@ class QuestionsState{
   QuestionsState notFound(int questionId) => _optional(newQuestions: questions.notFound(questionId));
 
   QuestionsState create(QuestionState question) =>
-    _optional(
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        selectUserUnsolvedQuestionsFromState(this, question.userId).prependOne(question),
-      )
-    );
+    _optional();
   QuestionsState delete(QuestionState question){
     var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
     return _optional(
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        question.userId,
-        userSolvedQuestions[question.userId]?.removeOne(question.id)
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
-      ),
       newQuestionUserSaves: questionUserSave != null
         ? questionUserSaves.removeOne(questionUserSave.id)
         : questionUserSaves,
@@ -98,11 +72,7 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       questions: questions.setOne(solution.questionId, question.createSolution(solution)),
-      examQuestions:
-        examQuestions.setOne(
-            question.exam.id,
-            examQuestions[question.exam.id]?.updateOne(question.createSolution(solution))
-          ),
+      
       subjectQuestions:
         subjectQuestions.setOne(
           question.subject.id,
@@ -115,17 +85,6 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.createSolution(solution))
             )
           : topicQuestions,
-      userSolvedQuestions: 
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.createSolution(solution))
-        ),
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.createSolution(solution)) 
-        ),
-
       searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
       videoQuestions: videoQuestions.updateOne(question.createSolution(solution)),
 
@@ -141,27 +100,6 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       questions: questions.setOne(solution.questionId, question.deleteSolution(solution)),
-      userSolvedQuestions: 
-        userSolvedQuestions.setOne(
-          question.userId,
-          question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
-            ? userSolvedQuestions[question.userId]?.removeOne(question.id)
-            : userSolvedQuestions[question.userId]?.updateOne(question.deleteSolution(solution))
-        ),
-
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          question.numberOfCorrectSolutions == 1 && solution.state == SolutionStatus.correct
-            ? userUnsolvedQuestions[question.userId]?.addInOrder(question.deleteSolution(solution))
-            : userUnsolvedQuestions[question.userId]?.updateOne(question.deleteSolution(solution))
-        ),
-
-      examQuestions: 
-        examQuestions.setOne(
-          question.exam.id,
-          examQuestions[question.exam.id]?.updateOne(question.deleteSolution(solution))
-        ),
 
       subjectQuestions:
         subjectQuestions.setOne(
@@ -192,14 +130,6 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return _optional(
       newQuestions: questions.setOne(solution.questionId, question.markSolutionAsCorrect(solution)),
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        question.userId,
-        userSolvedQuestions[question.userId]?.addInOrder(question.markSolutionAsCorrect(solution))
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
-      ),
       newQuestionUserSaves: questionUserSave != null
         ? questionUserSaves.updateOne(questionUserSave.markSolutionAsCorrect(solution))
         : questionUserSaves,
@@ -210,14 +140,6 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return _optional(
       newQuestions: questions.setOne(solution.questionId, question.markSolutionAsIncorrect(solution)),
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        question.userId,
-        userSolvedQuestions[question.userId]?.addInOrder(question.markSolutionAsIncorrect(solution))
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        userUnsolvedQuestions[question.userId]?.removeOne(question.id)
-      ),
       newQuestionUserSaves: questionUserSave != null
         ? questionUserSaves.updateOne(questionUserSave.markSolutionAsIncorrect(solution))
         : questionUserSaves,
@@ -258,13 +180,7 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       questions: questions.setOne(question.id, question.like()),
-
-      examQuestions:
-        examQuestions.setOne(
-          question.exam.id,
-          examQuestions[question.exam.id]?.updateOne(question.like())
-        ),
-
+     
       subjectQuestions:
         subjectQuestions.setOne(
           question.subject.id,
@@ -278,18 +194,6 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.like())
             )
           : topicQuestions,
-
-      userSolvedQuestions:
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.like())
-        ),
-
-      userUnsolvedQuestions: 
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.like()) 
-        ),
 
       searchPageQuestions: searchPageQuestions.updateOne(question.like()),
       videoQuestions: videoQuestions.updateOne(question.like()),
@@ -311,12 +215,6 @@ class QuestionsState{
     return QuestionsState(
       questions: questions.setOne(question.id, question.dislike()),
 
-      examQuestions:
-        examQuestions.setOne(
-          question.exam.id,
-          examQuestions[question.exam.id]?.updateOne(question.dislike())
-        ),
-
       subjectQuestions:
         subjectQuestions.setOne(
           question.subject.id,
@@ -330,18 +228,6 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.dislike())
             )
           : topicQuestions,
-
-      userSolvedQuestions:
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.dislike())
-        ),
-
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.dislike()) 
-        ),
 
       searchPageQuestions: searchPageQuestions.updateOne(question.dislike()),
       videoQuestions: videoQuestions.updateOne(question.dislike()),
@@ -364,10 +250,6 @@ class QuestionsState{
   QuestionsState save(QuestionUserSaveState questionUserSave){
     var question = questionUserSave.toQuestionState();
     return _optional(
-      newExamQuestions: examQuestions.setOne(
-        question.exam.id,
-        examQuestions[question.exam.id]?.updateOne(question.save())
-      ),
       newSubjectQuestions: subjectQuestions.setOne(
         question.subject.id,
         subjectQuestions[question.subject.id]?.updateOne(question.save())
@@ -378,14 +260,7 @@ class QuestionsState{
             topicQuestions[question.topic!.id]?.updateOne(question.save())
           )
         : topicQuestions,
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        question.userId,
-        userSolvedQuestions[question.userId]?.updateOne(question.save())
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        userUnsolvedQuestions[question.userId]?.updateOne(question.save())
-      ),
+      
       newSearchPageQuestions: searchPageQuestions.updateOne(question.save()),
       newVideoQuestions: videoQuestions.updateOne(question.save()),
 
@@ -395,10 +270,6 @@ class QuestionsState{
   QuestionsState unsave(QuestionState question){
     var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
     return _optional(
-      newExamQuestions: examQuestions.setOne(
-        question.exam.id,
-        examQuestions[question.exam.id]?.updateOne(question.unsave())
-      ),
       newSubjectQuestions: subjectQuestions.setOne(
         question.subject.id,
         subjectQuestions[question.subject.id]?.updateOne(question.unsave())
@@ -409,14 +280,7 @@ class QuestionsState{
             topicQuestions[question.topic!.id]?.updateOne(question.unsave())
           )
         : topicQuestions,
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        question.userId,
-        userSolvedQuestions[question.userId]?.updateOne(question.unsave())
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        userUnsolvedQuestions[question.userId]?.updateOne(question.unsave())
-      ),
+      
       newSearchPageQuestions: searchPageQuestions.updateOne(question.unsave()),
       newVideoQuestions: videoQuestions.updateOne(question.unsave()),
 
@@ -444,98 +308,6 @@ class QuestionsState{
     _optional(newVideoQuestions: videoQuestions.stopLoadingNext());
   //video questions
 
-  // user solved questions
-  QuestionsState startLoadingNextUserSolvedQuestions(int userId) =>
-    _optional(
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        userId,
-        selectUserSolvedQuestionsFromState(this, userId).startLoadingNext()
-      )
-    );
-  QuestionsState addNextPageUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    _optional(
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        userId,
-        userSolvedQuestions[userId]?.addNextPage(questions)
-      )
-    );
-  QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    _optional(
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        userId,
-        userSolvedQuestions[userId]?.refreshPage(questions)
-      )
-    );
-  QuestionsState stopLoadingNextUserSolvedQuestions(int userId) =>
-    _optional(
-      newUserSolvedQuestions: userSolvedQuestions.setOne(
-        userId,
-        userSolvedQuestions[userId]?.stopLoadingNext()
-      )
-    );
-  // user solved questions
-
-  // user unsolved questions
-  QuestionsState startLoadingNextUserUnsolvedQuestions(int userId) =>
-    _optional(
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        userId,
-        selectUserUnsolvedQuestionsFromState(this, userId).startLoadingNext()
-      )
-    );
-  QuestionsState addNextPageUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    _optional(
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        userId,
-        userUnsolvedQuestions[userId]?.addNextPage(questions)
-      )
-    );
-  QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
-    _optional(
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        userId,
-        userUnsolvedQuestions[userId]?.refreshPage(questions)
-      )
-    );
-  QuestionsState stopLoadingNextUserUnsolvedQuestions(int userId) =>
-    _optional(
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        userId,
-        userUnsolvedQuestions[userId]?.stopLoadingNext()
-      )
-    );
-  // user unsolved questions
-
-  //exams questions
-  QuestionsState startLoadingNextExamQuestions(int examId) =>
-    _optional(
-      newExamQuestions: examQuestions.setOne(
-        examId,
-        selectExamQuestionsFromState(this,examId).startLoadingNext()
-      )
-    );
-  QuestionsState addNextPageExamQustions(int examId, Iterable<QuestionState> questions) =>
-    _optional(
-      newExamQuestions: examQuestions.setOne(
-        examId,
-        selectExamQuestionsFromState(this,examId).addNextPage(questions)
-      )
-    );
-  QuestionsState refreshExamQuestions(int examId, Iterable<QuestionState> questions) =>
-    _optional(
-      newExamQuestions: examQuestions.setOne(
-        examId,
-        selectExamQuestionsFromState(this,examId).refreshPage(questions)
-      )
-    );
-  QuestionsState stopLoadingNextExamQuestions(int examId) =>
-    _optional(
-      newExamQuestions: examQuestions.setOne(
-        examId,
-        selectExamQuestionsFromState(this,examId).stopLoadingNext()
-      )
-    );
-  //exams questions
 
   //subject questions
   QuestionsState startLoadingNextSubjectQuestions(int subjectId) =>
@@ -614,11 +386,6 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       questions: questions.setOne(question.id, question.increaseNumberOfComments()),
-      examQuestions:
-        examQuestions.setOne(
-          question.exam.id,
-          examQuestions[question.exam.id]?.updateOne(question.increaseNumberOfComments())
-        ),
       subjectQuestions: 
         subjectQuestions.setOne(
           question.subject.id,
@@ -631,16 +398,6 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.increaseNumberOfComments())
             )
           : topicQuestions,
-      userSolvedQuestions: 
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.increaseNumberOfComments())
-        ),
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.increaseNumberOfComments()) 
-        ),
 
       searchPageQuestions: searchPageQuestions.updateOne(question.increaseNumberOfComments()),
       videoQuestions: videoQuestions.updateOne(question.increaseNumberOfComments()),
@@ -657,11 +414,6 @@ class QuestionsState{
     var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
     return QuestionsState(
       questions: questions.setOne(question.id, question.decreaseNumberOfComments()),
-      examQuestions:
-        examQuestions.setOne(
-          question.exam.id,
-          examQuestions[question.exam.id]?.updateOne(question.decreaseNumberOfComments())
-        ),
       subjectQuestions: 
         subjectQuestions.setOne(
           question.subject.id,
@@ -674,17 +426,6 @@ class QuestionsState{
               topicQuestions[question.topic!.id]?.updateOne(question.decreaseNumberOfComments())
             )
           : topicQuestions,
-      userSolvedQuestions: 
-        userSolvedQuestions.setOne(
-          question.userId,
-          userSolvedQuestions[question.userId]?.updateOne(question.decreaseNumberOfComments())
-        ),
-      userUnsolvedQuestions:
-        userUnsolvedQuestions.setOne(
-          question.userId,
-          userUnsolvedQuestions[question.userId]?.updateOne(question.decreaseNumberOfComments()) 
-        ),
-
       searchPageQuestions: searchPageQuestions.updateOne(question.decreaseNumberOfComments()),
       videoQuestions: videoQuestions.updateOne(question.decreaseNumberOfComments()),
       

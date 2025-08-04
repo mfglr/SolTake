@@ -14,8 +14,6 @@ QuestionsState loadQuestionFailedReducer(QuestionsState prev, LoadQuestionFailed
   prev.failed(action.questionId);
 QuestionsState loadQuestionNotFoundReducer(QuestionsState prev, LoadQuestionNotFoundAction action) =>
   prev.notFound(action.questionId);
-QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action) =>
-  prev.create(action.question);
 QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action) =>
   prev.delete(action.question);
 //questions
@@ -108,54 +106,6 @@ QuestionsState unsaveQuestionReducer(QuestionsState prev, UnsaveQuestionSuccessA
   => prev.unsave(action.question);
 //question user saves
 
-// user solved questions
-QuestionsState nextUserSolvedQuestionsReducer(QuestionsState prev, NextUserSolvedQuestionsAction action)
-  => prev.startLoadingNextUserSolvedQuestions(action.userId);
-QuestionsState nextUserSolvedQuestionsSuccessReducer(QuestionsState prev, NextUserSolvedQuestionsSuccessAction action)
-  => prev.addNextPageUserSolvedQuestions(action.userId, action.questions);
-QuestionsState nextUserSolvedQuestionsFailedReducer(QuestionsState prev, NextUserSolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextUserSolvedQuestions(action.userId);
-
-QuestionsState refreshUserSolvedQuestionsReducer(QuestionsState prev, RefreshUserSolvedQuestionsAction action)
-  => prev.startLoadingNextUserSolvedQuestions(action.userId);
-QuestionsState refreshUserSolvedQuestionsSuccessReducer(QuestionsState prev, RefreshUserSolvedQuestionsSuccessAction action)
-  => prev.refreshUserSolvedQuestions(action.userId, action.questions);
-QuestionsState refreshUserSolvedQuestionsFailedReducer(QuestionsState prev, RefreshUserSolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextUserSolvedQuestions(action.userId);
-// user solved questions
-
-// user unsolved questions
-QuestionsState nextUserUnsolvedQuestionsReducer(QuestionsState prev, NextUserUnsolvedQuestionsAction action)
-  => prev.startLoadingNextUserUnsolvedQuestions(action.userId);
-QuestionsState nextUserUnsolvedQuestionsSuccessReducer(QuestionsState prev, NextUserUnsolvedQuestionsSuccessAction action)
-  => prev.addNextPageUserUnsolvedQuestions(action.userId, action.questions);
-QuestionsState nextUserUnsolvedQuestionsFailedReducer(QuestionsState prev, NextUserUnsolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextUserUnsolvedQuestions(action.userId);
-
-QuestionsState refreshUserUnsolvedQuestionsReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsAction action)
-  => prev.startLoadingNextUserUnsolvedQuestions(action.userId);
-QuestionsState refreshUserUnsolvedQuestionsSuccessReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsSuccessAction action)
-  => prev.refreshUserUnsolvedQuestions(action.userId, action.questions);
-QuestionsState refreshUserUnsolvedQuestionsFailedReducer(QuestionsState prev, RefreshUserUnsolvedQuestionsFailedAction action)
-  => prev.stopLoadingNextUserUnsolvedQuestions(action.userId);
-// user unsolved questions
-
-// exam questions
-QuestionsState nextExamQuestionsReducer(QuestionsState prev, NextExamQuestionsAction action)
-  => prev.startLoadingNextExamQuestions(action.examId);
-QuestionsState nextExamQuestionsSuccessReducer(QuestionsState prev, NextExamQuestionsSuccessAction action)
-  => prev.addNextPageExamQustions(action.examId, action.questions);
-QuestionsState nextExamQuestionsFailedReducer(QuestionsState prev, NextExamQuestionsFailedAction action)
-  => prev.stopLoadingNextExamQuestions(action.examId);
-
-QuestionsState refreshExamQuestionsReducer(QuestionsState prev, RefreshExamQuestionsAction action)
-  => prev.startLoadingNextExamQuestions(action.examId);
-QuestionsState refreshExamQuestionsSuccessReducer(QuestionsState prev, RefreshExamQuestionsSuccessAction action)
-  => prev.refreshExamQuestions(action.examId, action.questions);
-QuestionsState refreshExamQuestionsFailedReducer(QuestionsState prev, RefreshExamQuestionsFailedAction action)
-  => prev.stopLoadingNextExamQuestions(action.examId);
-// exam questions
-
 // subject questions
 QuestionsState nextSubjectQuestionsReducer(QuestionsState prev, NextSubjectQuestionsAction action)
   => prev.startLoadingNextSubjectQuestions(action.subjectId);
@@ -195,7 +145,6 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,LoadQuestionFailedAction>(loadQuestionFailedReducer).call,
   TypedReducer<QuestionsState,LoadQuestionNotFoundAction>(loadQuestionNotFoundReducer).call,
 
-  TypedReducer<QuestionsState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
   TypedReducer<QuestionsState,MarkSolutionAsCorrectSuccessAction>(markSolutionAsCorrectSuccessReducer).call,
   TypedReducer<QuestionsState,MarkSolutionAsIncorrectSuccessAction>(markSolutionAsIncorrectSuccessReducer).call,
@@ -249,36 +198,6 @@ Reducer<QuestionsState> questionsReducers = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState,ChangeSubjectAction>(changeSubjectReducer).call,
   TypedReducer<QuestionsState,ChangeTopicAction>(changeTopicReducer).call,
   // search page questions
-
-  //user solved questions
-  TypedReducer<QuestionsState,NextUserSolvedQuestionsAction>(nextUserSolvedQuestionsReducer).call,
-  TypedReducer<QuestionsState,NextUserSolvedQuestionsSuccessAction>(nextUserSolvedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,NextUserSolvedQuestionsFailedAction>(nextUserSolvedQuestionsFailedReducer).call,
-
-  TypedReducer<QuestionsState,RefreshUserSolvedQuestionsAction>(refreshUserSolvedQuestionsReducer).call,
-  TypedReducer<QuestionsState,RefreshUserSolvedQuestionsSuccessAction>(refreshUserSolvedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,RefreshUserSolvedQuestionsFailedAction>(refreshUserSolvedQuestionsFailedReducer).call,
-  //user solved questions
-
-  //user unsolved questions
-  TypedReducer<QuestionsState,NextUserUnsolvedQuestionsAction>(nextUserUnsolvedQuestionsReducer).call,
-  TypedReducer<QuestionsState,NextUserUnsolvedQuestionsSuccessAction>(nextUserUnsolvedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,NextUserUnsolvedQuestionsFailedAction>(nextUserUnsolvedQuestionsFailedReducer).call,
-
-  TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsAction>(refreshUserUnsolvedQuestionsReducer).call,
-  TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsSuccessAction>(refreshUserUnsolvedQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,RefreshUserUnsolvedQuestionsFailedAction>(refreshUserUnsolvedQuestionsFailedReducer).call,
-  //user unsolved questions
-
-  //exam questions
-  TypedReducer<QuestionsState,NextExamQuestionsAction>(nextExamQuestionsReducer).call,
-  TypedReducer<QuestionsState,NextExamQuestionsSuccessAction>(nextExamQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,NextExamQuestionsFailedAction>(nextExamQuestionsFailedReducer).call,
-
-  TypedReducer<QuestionsState,RefreshExamQuestionsAction>(refreshExamQuestionsReducer).call,
-  TypedReducer<QuestionsState,RefreshExamQuestionsSuccessAction>(refreshExamQuestionsSuccessReducer).call,
-  TypedReducer<QuestionsState,RefreshExamQuestionsFailedAction>(refreshExamQuestionsFailedReducer).call,
-  //exam questions
 
   //subject questions
   TypedReducer<QuestionsState,NextSubjectQuestionsAction>(nextSubjectQuestionsReducer).call,

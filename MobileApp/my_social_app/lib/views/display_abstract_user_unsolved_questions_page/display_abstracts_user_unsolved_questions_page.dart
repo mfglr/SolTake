@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/services/get_language.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/new_questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page_constants.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page/display_user_unsolved_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_abstract_item_widget.dart';
@@ -33,11 +32,10 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
       _scrollController,
       (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        getNextEntitiesIfReady(
-          store,
-          selectUserUnsolvedQuestions(store, widget.user.id),
-          NextUserUnsolvedQuestionsAction(userId: widget.user.id)
-        );
+        final paginatin = selectUserUnsolvedQuestionPagination(store, widget.user.id);
+        if(paginatin.isReadyForNextPage){
+          store.dispatch(NextUserUnsolvedQuestionsAction(userId: widget.user.id));
+        }
       }
     );
 
@@ -56,17 +54,18 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,Pagination<int, QuestionState>>(
-      onInit: (store) => getNextEntitiesIfNoPage(
-        store,
-        selectUserUnsolvedQuestions(store, widget.user.id),
-        NextUserUnsolvedQuestionsAction(userId: widget.user.id)
-      ),
-      converter: (store) => selectUserUnsolvedQuestions(store, widget.user.id),
-      builder: (context, pagination) => Column(
+    return StoreConnector<AppState,(KeyPagination<int>, Iterable<QuestionState>)>(
+      onInit: (store){
+        final paginatin = selectUserUnsolvedQuestionPagination(store, widget.user.id);
+        if(paginatin.noPage){
+          store.dispatch(NextUserUnsolvedQuestionsAction(userId: widget.user.id));
+        }
+      },
+      converter: (store) => selectUserUnsolvedPaginationAndQuestions(store, widget.user.id),
+      builder: (context, data) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if(pagination.isEmpty)
+          if(data.$1.isEmpty)
             Container(
               margin: const EdgeInsets.only(top: 50),
               child: Text(
@@ -85,10 +84,10 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
-                itemCount: pagination.values.length,
+                itemCount: data.$2.length,
                 itemBuilder: (context,index) => QuestionAbstractItemWidget(
-                  key: ValueKey(pagination.values.elementAt(index).id),
-                  question: pagination.values.elementAt(index),
+                  key: ValueKey(data.$2.elementAt(index).id),
+                  question: data.$2.elementAt(index),
                   onTap: (id) =>
                     Navigator
                       .of(context)
@@ -99,7 +98,7 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
                 )
               ),
             ),
-          if(pagination.loadingNext)
+          if(data.$1.loadingNext)
             const LoadingCircleWidget()
         ],
       )
