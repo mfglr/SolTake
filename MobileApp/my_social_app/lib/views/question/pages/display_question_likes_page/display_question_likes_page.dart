@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/actions.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';

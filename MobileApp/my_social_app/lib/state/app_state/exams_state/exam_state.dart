@@ -13,7 +13,5 @@ class ExamState extends Entity<int>{
   });
 
   @override
-  String toString() {
-    return name;
-  }
+  String toString() => initialism;
 }

@@ -27,6 +27,17 @@ Future<bool> onVideoQuestionsLoaded(Store<AppState> store) =>
   store.onChange.map((state) => !store.state.newQuetions.videoQuestions.loadingNext).first;
 //video questions
 
+//search page questions
+KeyPagination<int> selectSearchPageQuestionPagination(Store<AppState> store) => 
+  store.state.newQuetions.searchQuestions;
+Iterable<QuestionState> selectSearchPageQuestions(Store<AppState> store) =>
+  selectSearchPageQuestionPagination(store).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectSearchPagePaginationAndQuestions(Store<AppState> store) =>
+  (selectSearchPageQuestionPagination(store), selectSearchPageQuestions(store));
+Future<bool> onSearchPageQuestionsLoaded(Store<AppState> store) =>
+  store.onChange.map((state) => !store.state.newQuetions.searchQuestions.loadingNext).first;
+//search page questions
+
 //user questions
 KeyPagination<int> selectUserQuestionPaginationFromState(NewQuestionsState state, int userId) =>
   state.userQuestions[userId] ?? KeyPagination.init(questionsPerPage, true);
@@ -78,3 +89,30 @@ Iterable<QuestionState> selectExamQuestions(Store<AppState> store, int examId) =
 Future<bool> onExamQuestionsLoaded(Store<AppState> store, int examId) =>
   store.onChange.map((state) => !selectExamQuestionPaginationFromState(state.newQuetions, examId).loadingNext).first;
 //exam questions
+
+//subject questions
+KeyPagination<int> selectSubjectQuestionPaginationFromState(NewQuestionsState state, int subjectId) =>
+  state.subjectQuestions[subjectId] ?? KeyPagination.init(questionsPerPage, true);
+KeyPagination<int> selectSubjectQuestionPagination(Store<AppState> store, int subjectId) =>
+  selectSubjectQuestionPaginationFromState(store.state.newQuetions, subjectId);
+Iterable<QuestionState> selectSubjectQuestions(Store<AppState> store, int subjectId) =>
+  selectSubjectQuestionPagination(store,subjectId).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectSubjectPaginationAndQuestions(Store<AppState> store, int subjectId) =>
+  (selectSubjectQuestionPagination(store, subjectId), selectSubjectQuestions(store, subjectId));
+Future<bool> onSubjectQuestionsLoaded(Store<AppState> store, int subjectId) =>
+  store.onChange.map((state) => !selectSubjectQuestionPaginationFromState(state.newQuetions, subjectId).loadingNext).first;
+//subject questions
+
+//topic questions
+KeyPagination<int> selectTopicQuestionPaginationFromState(NewQuestionsState state, int topicId) =>
+  state.topicQuestions[topicId] ?? KeyPagination.init(questionsPerPage, true);
+KeyPagination<int> selectTopicQuestionPagination(Store<AppState> store, int topicId) =>
+  selectTopicQuestionPaginationFromState(store.state.newQuetions, topicId);
+Iterable<QuestionState> selectTopicQuestions(Store<AppState> store, int topicId) =>
+  selectTopicQuestionPagination(store,topicId).keys.map((key) => store.state.newQuetions.questions[key]!.entity!);
+(KeyPagination<int>, Iterable<QuestionState>) selectTopicPaginationAndQuestions(Store<AppState> store, int topicId) =>
+  (selectTopicQuestionPagination(store, topicId), selectTopicQuestions(store, topicId));
+Future<bool> onTopicQuestionsLoaded(Store<AppState> store, int topicId) =>
+  store.onChange.map((state) => !selectTopicQuestionPaginationFromState(state.newQuetions, topicId).loadingNext).first;
+//topic questions
+

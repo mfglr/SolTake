@@ -3,7 +3,7 @@ import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';

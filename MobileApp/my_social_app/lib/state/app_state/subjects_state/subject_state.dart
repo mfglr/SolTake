@@ -9,4 +9,7 @@ class SubjectState extends Entity<int>{
     required super.id,
     required this.name,
   });
+
+  @override
+  String toString() => name;
 }

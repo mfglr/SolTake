@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:my_social_app/models/languages.dart';
 
 const title = {
@@ -15,6 +16,7 @@ const labelUser = {
   Languages.tr: "kullanıcılar"
 };
 
+const icons = [Icons.question_mark, Icons.person];
 
 const textFieldHintText = {
   Languages.en: "Search Users",

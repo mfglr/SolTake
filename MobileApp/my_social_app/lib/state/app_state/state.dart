@@ -17,8 +17,8 @@ import 'package:my_social_app/state/app_state/message_entity_state/message_state
 import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
@@ -50,6 +50,7 @@ import 'package:my_social_app/state/entity_state/pagination.dart';
 @immutable
 class AppState{
   final NewQuestionsState newQuetions;
+  final QuestionUserLikesState questionUserLikes;
   
   final UsersState users;
   final QuestionsState questions;
@@ -88,6 +89,7 @@ class AppState{
 
   const AppState({
     required this.newQuetions,
+    required this.questionUserLikes,
 
     required this.users,
     required this.questions,
@@ -141,6 +143,10 @@ class AppState{
       topicQuestions: const <int, KeyPagination<int>>{},
     ),
 
+    questionUserLikes: const QuestionUserLikesState(
+      likes: <int, Pagination<int, QuestionUserLikeState>>{}
+    ),
+
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
       usersByUserName: EntityCollection<String, UserState>(),
@@ -150,12 +156,9 @@ class AppState{
 
     questions: QuestionsState(
       questions: EntityCollection(),
-      subjectQuestions: const <int, Pagination<int, QuestionState>>{},
-      topicQuestions: const <int, Pagination<int, QuestionState>>{},
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),
-      questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
 
     solutions: const SolutionsState(

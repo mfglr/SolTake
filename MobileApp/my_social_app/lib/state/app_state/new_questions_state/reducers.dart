@@ -1,9 +1,16 @@
 import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/actions.dart';
 import 'package:redux/redux.dart';
 
+//questions
 NewQuestionsState createQuestionSuccessReducer(NewQuestionsState prev, CreateQuestionSuccessAction action)
   => prev.create(action.question);
+NewQuestionsState likeQuestionSuccessReducer(NewQuestionsState prev, LikeQuestionSuccessAction action)
+  => prev.like(action.question);
+NewQuestionsState dislikeQuestionSuccessReducer(NewQuestionsState prev, DislikeQuestionSuccessAction action)
+  => prev.dislike(action.question);
+//questions
 
 //home questions
 NewQuestionsState nextHomeQuestionsReducer(NewQuestionsState prev, NextHomeQuestionsAction action) =>
@@ -20,6 +27,22 @@ NewQuestionsState refreshHomeQuestionsSuccessReducer(NewQuestionsState prev, Ref
 NewQuestionsState refreshHomeQuestionsFailedReducer(NewQuestionsState prev, RefreshHomeQuestionsFailedAction action) =>
   prev.stopNextHomeQuestions();
 //home questions
+
+//search questions
+NewQuestionsState nextSearchPageQuestionsReducer(NewQuestionsState prev, NextSearchPageQuestionsAction action) =>
+  prev.startNextSearchQuestions();
+NewQuestionsState nextSearchPageQuestionsSuccessReducer(NewQuestionsState prev, NextSearchPageQuestionsSuccessAction action) =>
+  prev.addNextSearchQuestions(action.questions);
+NewQuestionsState nextSearchPageQuestionsFailedReducer(NewQuestionsState prev, NextSearchPageQuestionsFailedAction action) =>
+  prev.stopNextSearchQuestions();
+
+NewQuestionsState refreshSearchPageQuestionsReducer(NewQuestionsState prev, RefreshSearchPageQuestionsAction action) =>
+  prev.startNextSearchQuestions();
+NewQuestionsState refreshSearchPageQuestionsSuccessReducer(NewQuestionsState prev, RefreshSearchPageQuestionsSuccessAction action) =>
+  prev.refreshSearchQuestions(action.questions);
+NewQuestionsState refreshSearchPageQuestionsFailedReducer(NewQuestionsState prev, RefreshSearchPageQuestionsFailedAction action) =>
+  prev.stopNextSearchQuestions();
+//search questions
 
 //video questions
 NewQuestionsState nextVideoQuestionsReducer(NewQuestionsState prev, NextVideoQuestionsAction action) =>
@@ -101,10 +124,44 @@ NewQuestionsState refreshExamQuestionsFailedReducer(NewQuestionsState prev, Refr
   prev.stopNextExamQuestions(action.examId);
 //exam questions
 
+//subject questions
+NewQuestionsState nextSubjectQuestionsReducer(NewQuestionsState prev, NextSubjectQuestionsAction action) =>
+  prev.startNextSubjectQuestions(action.subjectId);
+NewQuestionsState nextSubjectQuestionsSuccessReducer(NewQuestionsState prev, NextSubjectQuestionsSuccessAction action) =>
+  prev.addNextSubjectQuestions(action.subjectId, action.questions);
+NewQuestionsState nextSubjectQuestionsFailedReducer(NewQuestionsState prev, NextSubjectQuestionsFailedAction action) =>
+  prev.stopNextSubjectQuestions(action.subjectId);
 
+NewQuestionsState refreshSubjectQuestionsReducer(NewQuestionsState prev, RefreshSubjectQuestionsAction action) =>
+  prev.startNextSubjectQuestions(action.subjectId);
+NewQuestionsState refreshSubjectQuestionsSuccessReducer(NewQuestionsState prev, RefreshSubjectQuestionsSuccessAction action) =>
+  prev.refreshSubjectQuestions(action.subjectId, action.questions);
+NewQuestionsState refreshSubjectQuestionsFailedReducer(NewQuestionsState prev, RefreshSubjectQuestionsFailedAction action) =>
+  prev.stopNextSubjectQuestions(action.subjectId);
+//subject questions
+
+//topic questions
+NewQuestionsState nextTopicQuestionsReducer(NewQuestionsState prev, NextTopicQuestionsAction action) =>
+  prev.startNextTopicQuestions(action.topicId);
+NewQuestionsState nextTopicQuestionsSuccessReducer(NewQuestionsState prev, NextTopicQuestionsSuccessAction action) =>
+  prev.addNextTopicQuestions(action.topicId, action.questions);
+NewQuestionsState nextTopicQuestionsFailedReducer(NewQuestionsState prev, NextTopicQuestionsFailedAction action) =>
+  prev.stopNextTopicQuestions(action.topicId);
+
+NewQuestionsState refreshTopicQuestionsReducer(NewQuestionsState prev, RefreshTopicQuestionsAction action) =>
+  prev.startNextTopicQuestions(action.topicId);
+NewQuestionsState refreshTopicQuestionsSuccessReducer(NewQuestionsState prev, RefreshTopicQuestionsSuccessAction action) =>
+  prev.refreshTopicQuestions(action.topicId, action.questions);
+NewQuestionsState refreshTopicQuestionsFailedReducer(NewQuestionsState prev, RefreshTopicQuestionsFailedAction action) =>
+  prev.stopNextTopicQuestions(action.topicId);
+//topic questions
 
 Reducer<NewQuestionsState> newQuestionsReducer = combineReducers<NewQuestionsState>([
+  //questions
   TypedReducer<NewQuestionsState, CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
+  TypedReducer<NewQuestionsState, LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
+  TypedReducer<NewQuestionsState, DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
+  //questions
 
   //home questions
   TypedReducer<NewQuestionsState, NextHomeQuestionsAction>(nextHomeQuestionsReducer).call,
@@ -115,6 +172,16 @@ Reducer<NewQuestionsState> newQuestionsReducer = combineReducers<NewQuestionsSta
   TypedReducer<NewQuestionsState, RefreshHomeQuestionsSuccessAction>(refreshHomeQuestionsSuccessReducer).call,
   TypedReducer<NewQuestionsState, RefreshHomeQuestionsFailedAction>(refreshHomeQuestionsFailedReducer).call,
   //home questions
+
+  //search questions
+  TypedReducer<NewQuestionsState, NextSearchPageQuestionsAction>(nextSearchPageQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, NextSearchPageQuestionsSuccessAction>(nextSearchPageQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, NextSearchPageQuestionsFailedAction>(nextSearchPageQuestionsFailedReducer).call,
+
+  TypedReducer<NewQuestionsState, RefreshSearchPageQuestionsAction>(refreshSearchPageQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, RefreshSearchPageQuestionsSuccessAction>(refreshSearchPageQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, RefreshSearchPageQuestionsFailedAction>(refreshSearchPageQuestionsFailedReducer).call,
+  //search questions
 
   //video questions
   TypedReducer<NewQuestionsState, NextVideoQuestionsAction>(nextVideoQuestionsReducer).call,
@@ -156,7 +223,7 @@ Reducer<NewQuestionsState> newQuestionsReducer = combineReducers<NewQuestionsSta
   TypedReducer<NewQuestionsState, RefreshUserUnsolvedQuestionsFailedAction>(refreshUserUnsolvedQuestionsFailedReducer).call,
   //user unsolved questions
 
-  //home questions
+  //exam questions
   TypedReducer<NewQuestionsState, NextExamQuestionsAction>(nextExamQuestionsReducer).call,
   TypedReducer<NewQuestionsState, NextExamQuestionsSuccessAction>(nextExamQuestionsSuccessReducer).call,
   TypedReducer<NewQuestionsState, NextExamQuestionsFailedAction>(nextExamQuestionsFailedReducer).call,
@@ -164,5 +231,35 @@ Reducer<NewQuestionsState> newQuestionsReducer = combineReducers<NewQuestionsSta
   TypedReducer<NewQuestionsState, RefreshExamQuestionsAction>(refreshExamQuestionsReducer).call,
   TypedReducer<NewQuestionsState, RefreshExamQuestionsSuccessAction>(refreshExamQuestionsSuccessReducer).call,
   TypedReducer<NewQuestionsState, RefreshExamQuestionsFailedAction>(refreshExamQuestionsFailedReducer).call,
-  //home questions
+  //exam questions
+
+  //exam questions
+  TypedReducer<NewQuestionsState, NextExamQuestionsAction>(nextExamQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, NextExamQuestionsSuccessAction>(nextExamQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, NextExamQuestionsFailedAction>(nextExamQuestionsFailedReducer).call,
+
+  TypedReducer<NewQuestionsState, RefreshExamQuestionsAction>(refreshExamQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, RefreshExamQuestionsSuccessAction>(refreshExamQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, RefreshExamQuestionsFailedAction>(refreshExamQuestionsFailedReducer).call,
+  //exam questions
+
+  //subject questions
+  TypedReducer<NewQuestionsState, NextSubjectQuestionsAction>(nextSubjectQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, NextSubjectQuestionsSuccessAction>(nextSubjectQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, NextSubjectQuestionsFailedAction>(nextSubjectQuestionsFailedReducer).call,
+
+  TypedReducer<NewQuestionsState, RefreshSubjectQuestionsAction>(refreshSubjectQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, RefreshSubjectQuestionsSuccessAction>(refreshSubjectQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, RefreshSubjectQuestionsFailedAction>(refreshSubjectQuestionsFailedReducer).call,
+  //subject questions
+
+  //topic questions
+  TypedReducer<NewQuestionsState, NextTopicQuestionsAction>(nextTopicQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, NextTopicQuestionsSuccessAction>(nextTopicQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, NextTopicQuestionsFailedAction>(nextTopicQuestionsFailedReducer).call,
+
+  TypedReducer<NewQuestionsState, RefreshTopicQuestionsAction>(refreshTopicQuestionsReducer).call,
+  TypedReducer<NewQuestionsState, RefreshTopicQuestionsSuccessAction>(refreshTopicQuestionsSuccessReducer).call,
+  TypedReducer<NewQuestionsState, RefreshTopicQuestionsFailedAction>(refreshTopicQuestionsFailedReducer).call,
+  //topic questions
 ]);

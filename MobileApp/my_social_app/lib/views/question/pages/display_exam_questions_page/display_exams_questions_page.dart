@@ -37,7 +37,7 @@ class DisplayExamsQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: StoreConnector<AppState,(KeyPagination<int>, Iterable<QuestionState>)>(
+        body: StoreConnector<AppState, (KeyPagination<int>, Iterable<QuestionState>)>(
           onInit: (store){
             final paginantion = selectExamQuestionPagination(store, exam.id);
             if(paginantion.noPage){

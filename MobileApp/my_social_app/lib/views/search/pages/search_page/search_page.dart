@@ -9,8 +9,8 @@ import 'package:my_social_app/state/app_state/user_user_search_state/actions.dar
 import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/views/search/pages/search_page/search_page_texts.dart';
-import 'package:my_social_app/views/search/widgets/search_question_widget.dart';
+import 'package:my_social_app/views/search/pages/search_page/search_page_constants.dart';
+import 'package:my_social_app/views/search/pages/search_questions_page/search_questions_page.dart';
 import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/search/widgets/user_user_searchs_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
@@ -18,7 +18,6 @@ import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
-const _icons = [Icons.question_mark, Icons.person];
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -113,7 +112,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      _icons[index],
+                      icons[index],
                       color: isActive ? Colors.black : Colors.grey
                     ),
                     Text(
@@ -134,7 +133,7 @@ class _SearchPageState extends State<SearchPage> {
             child: PageView(
               controller: _pageController,
               children: [
-                const SearchQuestionWidget(),
+                const SearchQuestionsPage(),
                 Column(
                   children: [
                     Container(

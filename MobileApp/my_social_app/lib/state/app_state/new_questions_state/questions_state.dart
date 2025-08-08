@@ -69,6 +69,7 @@ class NewQuestionsState {
       topicQuestions: newTopicQuestions ?? topicQuestions,
     );
 
+  //questions
   NewQuestionsState create(QuestionState question) =>
     _optional(
       newQuestions: questions.setOne(question),
@@ -81,6 +82,16 @@ class NewQuestionsState {
         selectUserUnsolvedQuestionPaginationFromState(this, question.userId).addOne(question.id)
       ),
     );
+  NewQuestionsState like(QuestionState question) =>
+    _optional(
+      newQuestions: questions.setOne(question.like())
+    );
+  NewQuestionsState dislike(QuestionState question) =>
+    _optional(
+      newQuestions: questions.setOne(question.dislike())
+    );
+  //questions
+
 
   //home questions
   NewQuestionsState startNextHomeQuestions() => 
@@ -102,6 +113,27 @@ class NewQuestionsState {
       newHomeQuestions: homeQuestions.stopNext(),
     );
   //home questions
+
+  //search questions
+  NewQuestionsState startNextSearchQuestions() => 
+    _optional(
+      newSearchQuestions: searchQuestions.startNext(),
+    );
+  NewQuestionsState addNextSearchQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newSearchQuestions: searchQuestions.addNext(questions.map((e) => e.id))
+    );
+  NewQuestionsState refreshSearchQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newSearchQuestions: searchQuestions.refresh(questions.map((e) => e.id))
+    );
+  NewQuestionsState stopNextSearchQuestions() => 
+    _optional(
+      newSearchQuestions: searchQuestions.stopNext(),
+    );
+  //search questions
 
   //video questions
   NewQuestionsState startNextVideoQuestions() => 
@@ -254,5 +286,72 @@ class NewQuestionsState {
         selectExamQuestionPaginationFromState(this, userId).stopNext()
       ),
     );
-  //exam questions 
+  //exam questions
+
+  //subject questions
+  NewQuestionsState startNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).startNext()
+      ),
+    );
+  NewQuestionsState addNextSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  NewQuestionsState refreshSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  NewQuestionsState stopNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).stopNext()
+      ),
+    );
+  //subject questions
+
+  //subject questions
+  NewQuestionsState startNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).startNext()
+      ),
+    );
+  NewQuestionsState addNextTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  NewQuestionsState refreshTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.setMany(questions),
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  NewQuestionsState stopNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).stopNext()
+      ),
+    );
+  //subject questions
+  
 }

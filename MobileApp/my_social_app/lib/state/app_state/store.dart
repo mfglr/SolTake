@@ -19,8 +19,9 @@ import 'package:my_social_app/state/app_state/new_questions_state/questions_stat
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_like_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
+import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
@@ -76,6 +77,10 @@ final store = Store(
       topicQuestions: const <int, KeyPagination<int>>{},
     ),
 
+    questionUserLikes: const QuestionUserLikesState(
+      likes: <int, Pagination<int, QuestionUserLikeState>>{}
+    ),
+    
     users: UsersState(
       usersById: EntityCollection<int, UserState>(),
       usersByUserName: EntityCollection<String, UserState>(),
@@ -85,12 +90,9 @@ final store = Store(
     
     questions: QuestionsState(
       questions: EntityCollection(),
-      subjectQuestions: const <int, Pagination<int, QuestionState>>{},
-      topicQuestions: const <int, Pagination<int, QuestionState>>{},
       searchPageQuestions: Pagination.init(questionsPerPage, true),
       videoQuestions: Pagination.init(questionsPerPage, true),
       questionUserSaves: Pagination.init(questionsPerPage, true),
-      questionUserLikes: const <int, Pagination<int, QuestionUserLikeState>>{},
     ),
     
     solutions: const SolutionsState(
@@ -150,6 +152,11 @@ final store = Store(
 
     nexHomeQuestionsMiddleware,
     refreshHomeQuestionsMiddleware,
+
+    nextSearchPageQuestionsMiddleware,
+    refreshSearchPageQuestionsMiddleware,
+   
+
     nextVideoQuestionsMiddleware,
     refreshVideoQuestionsMiddleware,
 
@@ -162,7 +169,20 @@ final store = Store(
 
     nextExamQuestionsMiddleware,
     refreshExamQuestionsMiddleware,
+    nextSubjectQuestionsMiddleware,
+    refreshSubjectQuestionsMiddleware,
+    nextTopicQuestionsMiddleware,
+    refreshTopicQuestionsMiddleware,
+
+   
     //new questions
+
+    //question user likes
+    nextQuestionUserLikesMiddleware,
+    refreshQuestionUserLikesMiddleware,
+    likeQuestionMiddleware,
+    dislikeQuestionMiddleware,
+    //question user likes
 
     //users
     loadUserByIdMiddleware,
@@ -177,29 +197,12 @@ final store = Store(
 
     //questions
     loadQuestionMiddleware,
-
     deleteQuestionMiddleware,
-
-    changeExamMiddleware,
-    changeSubjectMiddleware,
-    changeTopicMiddleware,
-
-    likeQuestionMiddleware,
-    dislikeQuestionMiddleware,
-    nextQuestionUserLikesMiddleware,
-    refreshQuestionUserLikesMiddleware,
 
     nextQuestionUserSavesMiddleware,
     refreshQuestionUserSavesMiddleware,
     saveQuestionMiddleware,
     unsaveQuestionMiddleware,
-
-    
-    
-    nextSubjectQuestionsMiddleware,
-    refreshSubjectQuestionsMiddleware,
-    nextTopicQuestionsMiddleware,
-    refreshTopicQuestionsMiddleware,
     //questions
 
     //solutions

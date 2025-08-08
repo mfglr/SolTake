@@ -3,6 +3,7 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/new_questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/search_page_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
@@ -64,6 +65,49 @@ void refreshHomeQuestionsMiddleware(Store<AppState> store, action, NextDispatche
   next(action);
 }
 //home questions
+
+//search page questions
+void nextSearchPageQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextSearchPageQuestionsAction){
+    final searchPageState = selectSearchPageState(store);
+    QuestionService()
+      .searchQuestions(
+        searchPageState.exam?.id,
+        searchPageState.subject?.id,
+        searchPageState.topic?.id,
+        selectSearchPageQuestionPagination(store).next
+      )
+      .then((questions) => store.dispatch(NextSearchPageQuestionsSuccessAction(
+        questions: questions.map(((e) => e.toQuestionState()))
+      )))
+      .catchError((e){
+        store.dispatch(const NextSearchPageQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshSearchPageQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshSearchPageQuestionsAction){
+    final searchPageState = selectSearchPageState(store);
+    QuestionService()
+      .searchQuestions(
+        searchPageState.exam?.id,
+        searchPageState.subject?.id,
+        searchPageState.topic?.id,
+        selectSearchPageQuestionPagination(store).first
+      )
+      .then((questions) => store.dispatch(RefreshSearchPageQuestionsSuccessAction(
+        questions: questions.map(((e) => e.toQuestionState()))
+      )))
+      .catchError((e){
+        store.dispatch(const RefreshSearchPageQuestionsFailedAction());
+        throw e;
+      });
+  }
+  next(action);
+}
+//search page questions
 
 //video questions
 void nextVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
@@ -221,3 +265,70 @@ void refreshExamQuestionsMiddleware(Store<AppState> store, action, NextDispatche
   next(action);
 }
 //exam questions
+
+//subject questions
+void nextSubjectQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextSubjectQuestionsAction){
+    QuestionService()
+      .getBySubjectId(action.subjectId, selectSubjectQuestionPagination(store, action.subjectId).next)
+      .then((questions) => store.dispatch(NextSubjectQuestionsSuccessAction(
+        subjectId: action.subjectId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(NextSubjectQuestionsFailedAction(subjectId: action.subjectId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshSubjectQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshSubjectQuestionsAction){
+    QuestionService()
+      .getBySubjectId(action.subjectId, selectSubjectQuestionPagination(store,action.subjectId).first)
+      .then((questions) => store.dispatch(RefreshSubjectQuestionsSuccessAction(
+        subjectId: action.subjectId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(RefreshSubjectQuestionsFailedAction(subjectId: action.subjectId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//subject questions
+
+//topic questions
+void nextTopicQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is NextTopicQuestionsAction){
+    QuestionService()
+      .getByTopicId(action.topicId, selectTopicQuestionPagination(store, action.topicId).next)
+      .then((questions) => store.dispatch(NextTopicQuestionsSuccessAction(
+        topicId: action.topicId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(NextTopicQuestionsFailedAction(topicId: action.topicId));
+        throw e;
+      });
+  }
+  next(action);
+}
+void refreshTopicQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is RefreshTopicQuestionsAction){
+    QuestionService()
+      .getByTopicId(action.topicId, selectTopicQuestionPagination(store, action.topicId).first)
+      .then((questions) => store.dispatch(RefreshTopicQuestionsSuccessAction(
+        topicId: action.topicId,
+        questions: questions.map((e) => e.toQuestionState()))
+      ))
+      .catchError((e){
+        store.dispatch(RefreshTopicQuestionsFailedAction(topicId: action.topicId));
+        throw e;
+      });
+  }
+  next(action);
+}
+//topic questions
+

@@ -13,7 +13,7 @@ namespace SolTake.Application
             var assembly = Assembly.GetExecutingAssembly();
 
             return services
-                .AddAutoMapper(assembly)
+                .AddAutoMapper(c => c.AddMaps(assembly))
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(AppPipelineBehaviour<,>))
                 .AddScoped<ChatGPT_Service>();
