@@ -10,8 +10,23 @@ class NewEntityCollection<K extends Comparable, V extends Entity<K>> {
 
   const NewEntityCollection._(Map<K, NewEntityContainer<K, V>> map) : _map = map;
 
-  NewEntityCollection<K,V> setOne(V entity) => NewEntityCollection._(_map.setOne(entity));
-  NewEntityCollection<K,V> setMany(Iterable<V> entities) => NewEntityCollection._(_map.setMany(entities));
+  NewEntityCollection<K,V> loading(K key) =>
+    NewEntityCollection<K,V>._(_map.setOne(key, NewEntityContainer.loading(key)));
+  NewEntityCollection<K,V> success(V entity) =>
+    NewEntityCollection<K,V>._(_map.setOne(entity.id, _map[entity.id]?.success(entity)));
+  NewEntityCollection<K,V> failed(K key) =>
+    NewEntityCollection<K,V>._(_map.setOne(key, _map[key]?.failed()));
+  NewEntityCollection<K,V> notFound(K key) =>
+    NewEntityCollection<K,V>._(_map.setOne(key, _map[key]?.notFound()));
+  NewEntityCollection<K,V> removeOne(V entity) =>
+    NewEntityCollection<K,V>._(_map.removeOne(entity.id));
+  NewEntityCollection<K,V> removeOneByKey(K key) =>
+    NewEntityCollection<K,V>._(_map.removeOne(key));
 
-  NewEntityContainer<K,V>? operator[](K key) => _map[key];
+  NewEntityCollection<K,V> successOne(V entity) =>
+    NewEntityCollection<K,V>._(_map.successOne(entity));
+  NewEntityCollection<K,V> successMany(Iterable<V> entities) =>
+    NewEntityCollection<K,V>._(_map.successMany(entities));
+
+  NewEntityContainer<K,V> operator[](K key) => _map[key] ?? NewEntityContainer.notLoading(key);
 }

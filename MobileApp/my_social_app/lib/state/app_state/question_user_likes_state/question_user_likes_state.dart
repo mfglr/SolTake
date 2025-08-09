@@ -1,3 +1,4 @@
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
@@ -7,6 +8,13 @@ class QuestionUserLikesState {
   final Map<int,Pagination<int, QuestionUserLikeState>> likes;
 
   const QuestionUserLikesState({required this.likes});
+
+  //questions
+  QuestionUserLikesState deleteQuestion(QuestionState question) =>
+    QuestionUserLikesState(
+      likes: likes.removeOne(question.id)
+    );
+  //questions
 
   QuestionUserLikesState like(int questionId, QuestionUserLikeState questionUserLike) =>
     QuestionUserLikesState(

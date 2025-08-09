@@ -14,12 +14,11 @@ import 'package:my_social_app/state/app_state/comments_state/comment_state.dart'
 import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
@@ -44,16 +43,14 @@ import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/id.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:my_social_app/state/entity_state/key_pagination.dart';
-import 'package:my_social_app/state/entity_state/new_entity_collection.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class AppState{
-  final NewQuestionsState newQuetions;
+  final QuestionsState questions;
   final QuestionUserLikesState questionUserLikes;
   
   final UsersState users;
-  final QuestionsState questions;
   final SolutionsState solutions;
   final CommentsState comments;
   final SearchPageState searchPageState;
@@ -88,11 +85,10 @@ class AppState{
   final UploadEntityState uploadEntityState;
 
   const AppState({
-    required this.newQuetions,
+    required this.questions,
     required this.questionUserLikes,
 
     required this.users,
-    required this.questions,
     required this.solutions,
     required this.comments,
     required this.searchPageState,
@@ -128,8 +124,8 @@ class AppState{
   });
 
   AppState clear() => AppState(
-    newQuetions: NewQuestionsState(
-      questions: NewEntityCollection(),
+    questions: QuestionsState(
+      questions: EntityCollection(),
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),
       videoQuestions: KeyPagination.init(questionsPerPage, true),
@@ -152,13 +148,6 @@ class AppState{
       usersByUserName: EntityCollection<String, UserState>(),
       followeds: const <int, Pagination<int, FollowState>>{},
       followers: const <int, Pagination<int, FollowState>>{}
-    ),
-
-    questions: QuestionsState(
-      questions: EntityCollection(),
-      searchPageQuestions: Pagination.init(questionsPerPage, true),
-      videoQuestions: Pagination.init(questionsPerPage, true),
-      questionUserSaves: Pagination.init(questionsPerPage, true),
     ),
 
     solutions: const SolutionsState(

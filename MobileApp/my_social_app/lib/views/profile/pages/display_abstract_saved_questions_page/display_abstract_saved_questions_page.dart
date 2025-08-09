@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -24,27 +22,27 @@ class DisplayAbstractSavedQuestionsPage extends StatelessWidget {
         leading: const AppBackButtonWidget(),
         title: AppTitle(title: AppLocalizations.of(context)!.display_abstract_saved_questions_page_title),
       ),
-      body: StoreConnector<AppState, Pagination<int, QuestionUserSaveState>>(
-        onInit: (store) => 
-          getNextEntitiesIfNoPage(
-            store,
-            selectQuestionUserSaves(store),
-            const NextQuestionUserSavesAction()
-          ),
-        converter: (store) => selectQuestionUserSaves(store),
-        builder: (context, pagination) => QuestionUserSaveAbstractItemsWidget(
-          pagination: pagination,
-          noQuestionsContent: noQuestionsContent[getLanguage(context)],
-          onTap: (questionId) =>
-            Navigator
-              .of(context)
-              .push(MaterialPageRoute(builder: (context) => DisplaySavedQuestionsPage(questionId: questionId))),
-          onScrollBottom: (){
-            final store = StoreProvider.of<AppState>(context, listen: false);
-            getNextPageIfReady(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction());
-          },
-        ),
-      )
+      // body: StoreConnector<AppState, Pagination<int, QuestionUserSaveState>>(
+      //   // onInit: (store) => 
+      //   //   getNextEntitiesIfNoPage(
+      //   //     store,
+      //   //     selectQuestionUserSaves(store),
+      //   //     const NextQuestionUserSavesAction()
+      //   //   ),
+      //   converter: (store) => selectQuestionUserSaves(store),
+      //   builder: (context, pagination) => QuestionUserSaveAbstractItemsWidget(
+      //     pagination: pagination,
+      //     noQuestionsContent: noQuestionsContent[getLanguage(context)],
+      //     onTap: (questionId) =>
+      //       Navigator
+      //         .of(context)
+      //         .push(MaterialPageRoute(builder: (context) => DisplaySavedQuestionsPage(questionId: questionId))),
+      //     onScrollBottom: (){
+      //       final store = StoreProvider.of<AppState>(context, listen: false);
+      //       // getNextPageIfReady(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction());
+      //     },
+      //   ),
+      // )
     );
   }
 }

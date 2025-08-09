@@ -1,185 +1,373 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_status.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/entity_state/entity_collection.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/entity_state/map_extentions.dart';
 
 @immutable
-class QuestionsState{
-  final EntityCollection<int,QuestionState> questions;
-  final Pagination<int,QuestionState> searchPageQuestions;
-  final Pagination<int,QuestionState> videoQuestions;
-  final Pagination<int,QuestionUserSaveState> questionUserSaves;
+class QuestionsState {
+  final EntityCollection<int, QuestionState> questions;
+  
+  final KeyPagination<int> homeQuestions;
+  final KeyPagination<int> searchQuestions;
+  final KeyPagination<int> videoQuestions;
+  
+  final Map<int, KeyPagination<int>> userQuestions;
+  final Map<int, KeyPagination<int>> userSolvedQuestions;
+  final Map<int, KeyPagination<int>> userUnsolvedQuestions;
+
+  final Map<int, KeyPagination<int>> examQuestions;
+  final Map<int, KeyPagination<int>> subjectQuestions;
+  final Map<int, KeyPagination<int>> topicQuestions;
 
   const QuestionsState({
     required this.questions,
+
+    required this.homeQuestions,
+    required this.searchQuestions,
     required this.videoQuestions,
-    required this.searchPageQuestions,
-    required this.questionUserSaves,
+    
+    required this.userQuestions,
+    required this.userSolvedQuestions,
+    required this.userUnsolvedQuestions,
+    
+    required this.examQuestions,
+    required this.subjectQuestions,
+    required this.topicQuestions,
   });
 
   QuestionsState _optional({
     EntityCollection<int, QuestionState>? newQuestions,
-    Pagination<int, QuestionState>? newSearchPageQuestions,
-    Pagination<int, QuestionState>? newVideoQuestions,
-    Pagination<int, QuestionUserSaveState>? newQuestionUserSaves,
-  })
-    =>
+    
+    KeyPagination<int>? newHomeQuestions,
+    KeyPagination<int>? newSearchQuestions,
+    KeyPagination<int>? newVideoQuestions,
+
+    Map<int, KeyPagination<int>>? newUserQuestions,
+    Map<int, KeyPagination<int>>? newUserSolvedQuestions,
+    Map<int, KeyPagination<int>>? newUserUnsolvedQuestions,
+
+    Map<int, KeyPagination<int>>? newExamQuestions,
+    Map<int, KeyPagination<int>>? newSubjectQuestions,
+    Map<int, KeyPagination<int>>? newTopicQuestions,
+
+  }) => 
     QuestionsState(
       questions: newQuestions ?? questions,
-      searchPageQuestions: newSearchPageQuestions ?? searchPageQuestions,
+
+      homeQuestions: newHomeQuestions ?? homeQuestions,
+      searchQuestions: newSearchQuestions ?? searchQuestions,
       videoQuestions: newVideoQuestions ?? videoQuestions,
-      questionUserSaves: newQuestionUserSaves ?? questionUserSaves,
+      
+      userQuestions: newUserQuestions ?? userQuestions,
+      userSolvedQuestions: newUserSolvedQuestions ?? userSolvedQuestions,
+      userUnsolvedQuestions: newUserUnsolvedQuestions ?? userUnsolvedQuestions,
+
+      examQuestions: newExamQuestions ?? examQuestions,
+      subjectQuestions: newSubjectQuestions ?? subjectQuestions,
+      topicQuestions: newTopicQuestions ?? topicQuestions,
     );
 
-  QuestionsState load(int questionId) => _optional(newQuestions: questions.loading(questionId));
+  //questions
+  QuestionsState loading(int id) => _optional(newQuestions: questions.loading(id));
   QuestionsState success(QuestionState question) => _optional(newQuestions: questions.success(question.id, question));
-  QuestionsState failed(int questionId) => _optional(newQuestions: questions.failed(questionId));
-  QuestionsState notFound(int questionId) => _optional(newQuestions: questions.notFound(questionId));
-
+  QuestionsState failed(int id) => _optional(newQuestions: questions.failed(id));
+  QuestionsState notFound(int id) => _optional(newQuestions: questions.notFound(id));
   QuestionsState create(QuestionState question) =>
-    _optional();
-  QuestionsState delete(QuestionState question){
-    var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
-    return _optional(
-      newQuestionUserSaves: questionUserSave != null
-        ? questionUserSaves.removeOne(questionUserSave.id)
-        : questionUserSaves,
+    _optional(
+      newQuestions: questions.successOne(question.id, question),
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        selectUserQuestionPaginationFromState(this,question.userId).addOne(question.id)
+      ),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        question.userId,
+        selectUserUnsolvedQuestionPaginationFromState(this, question.userId).addOne(question.id)
+      ),
     );
-  }
-  
-  //solutions
-  QuestionsState createSolution(QuestionState question, SolutionState solution){
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return QuestionsState(
-      questions: questions.setOne(solution.questionId, question.createSolution(solution)),
-      searchPageQuestions: searchPageQuestions.updateOne(question.createSolution(solution)),
-      videoQuestions: videoQuestions.updateOne(question.createSolution(solution)),
+  QuestionsState delete(QuestionState question) =>
+    _optional(
+      newQuestions:
+        questions.notFound(question.id),
+      newUserQuestions:
+        userQuestions.setOne(question.userId,  userQuestions[question.userId]?.removeOne(question.id)),
+      newUserSolvedQuestions:
+        userSolvedQuestions.setOne(question.userId,  userSolvedQuestions[question.userId]?.removeOne(question.id)),
+      newUserUnsolvedQuestions:
+        userUnsolvedQuestions.setOne(question.userId,  userUnsolvedQuestions[question.userId]?.removeOne(question.id)),
+    );
 
-      questionUserSaves:
-        questionUserSave != null
-          ? questionUserSaves.updateOne(questionUserSave.createSolution(solution))
-          : questionUserSaves,
+  QuestionsState like(QuestionState question) =>
+    _optional(
+      newQuestions: questions.successOne(question.id, question.like())
     );
-  }
-  QuestionsState deleteSolution(QuestionState question, SolutionState solution){
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return QuestionsState(
-      questions: questions.setOne(solution.questionId, question.deleteSolution(solution)),
-      
-      searchPageQuestions: searchPageQuestions.updateOne(question.deleteSolution(solution)),
-      videoQuestions: videoQuestions.updateOne(question.deleteSolution(solution)),
-      
-      questionUserSaves:
-        questionUserSave != null
-          ? questionUserSaves.updateOne(questionUserSave.deleteSolution(solution))
-          : questionUserSaves,
+  QuestionsState dislike(QuestionState question) =>
+    _optional(
+      newQuestions: questions.successOne(question.id, question.dislike())
     );
-  }
-  QuestionsState markSolutionAsCorrect(QuestionState question, SolutionState solution){
-    if(question.state == QuestionStatus.solved) return this;
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return _optional(
-      newQuestions: questions.setOne(solution.questionId, question.markSolutionAsCorrect(solution)),
-      newQuestionUserSaves: questionUserSave != null
-        ? questionUserSaves.updateOne(questionUserSave.markSolutionAsCorrect(solution))
-        : questionUserSaves,
-    );
-  }
-  QuestionsState markSolutionAsIncorrect(QuestionState question, SolutionState solution){
-    if(question.state == QuestionStatus.unsolved) return this;
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return _optional(
-      newQuestions: questions.setOne(solution.questionId, question.markSolutionAsIncorrect(solution)),
-      newQuestionUserSaves: questionUserSave != null
-        ? questionUserSaves.updateOne(questionUserSave.markSolutionAsIncorrect(solution))
-        : questionUserSaves,
-    );
-  }
-  //solutions
+  //questions
 
-  // question user saves
-  QuestionsState save(QuestionUserSaveState questionUserSave){
-    var question = questionUserSave.toQuestionState();
-    return _optional(
-      
-      newSearchPageQuestions: searchPageQuestions.updateOne(question.save()),
-      newVideoQuestions: videoQuestions.updateOne(question.save()),
 
-      newQuestionUserSaves: questionUserSaves.prependOne(questionUserSave.save()),
+  //home questions
+  QuestionsState startNextHomeQuestions() => 
+    _optional(
+      newHomeQuestions: homeQuestions.startNext(),
     );
-  }
-  QuestionsState unsave(QuestionState question){
-    var questionUserSave = questionUserSaves.get((e) => e.questionId == question.id);
-    return _optional(
-      
-      newSearchPageQuestions: searchPageQuestions.updateOne(question.unsave()),
-      newVideoQuestions: videoQuestions.updateOne(question.unsave()),
-
-      newQuestionUserSaves: questionUserSave != null ? questionUserSaves.removeOne(questionUserSave.id) : questionUserSaves,
+  QuestionsState addNextHomeQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newHomeQuestions: homeQuestions.addNext(questions.map((e) => e.id))
     );
-  }
-  QuestionsState startLoadingQuestionUserSaves() => 
-    _optional(newQuestionUserSaves: questionUserSaves.startLoadingNext());
-  QuestionsState addNextPageQuestionUserSaves(Iterable<QuestionUserSaveState> questionUserSaves) =>
-    _optional(newQuestionUserSaves: this.questionUserSaves.addNextPage(questionUserSaves));
-  QuestionsState refreshQuesitonUserSaves(Iterable<QuestionUserSaveState> questionUserSaves) =>
-    _optional(newQuestionUserSaves: this.questionUserSaves.refreshPage(questionUserSaves));
-  QuestionsState stopLoadingNextQuestionUserSaves() =>
-    _optional(newQuestionUserSaves: questionUserSaves.stopLoadingNext());
-  // question user saves
+  QuestionsState refreshHomeQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newHomeQuestions: homeQuestions.refresh(questions.map((e) => e.id))
+    );
+  QuestionsState stopNextHomeQuestions() => 
+    _optional(
+      newHomeQuestions: homeQuestions.stopNext(),
+    );
+  //home questions
 
-  //video questions
-  QuestionsState startLoadingNextVideoQuestions() =>
-    _optional(newVideoQuestions: videoQuestions.startLoadingNext());
-  QuestionsState addNextVideoQuestions(Iterable<QuestionState> questions) =>
-    _optional(newVideoQuestions: videoQuestions.addNextPage(questions));
-  QuestionsState refreshVideoQuestions(Iterable<QuestionState> questions) =>
-    _optional(newVideoQuestions: videoQuestions.refreshPage(questions));
-  QuestionsState stopLoadingNextVideoQuestions() =>
-    _optional(newVideoQuestions: videoQuestions.stopLoadingNext());
-  //video questions
-  
   //search questions
-  QuestionsState startLoadingNextSearchPageQuestions() =>
-    _optional(newSearchPageQuestions: searchPageQuestions.startLoadingNext());
-  QuestionsState addNextPageSearchPageQuestions(Iterable<QuestionState> questions) =>
-    _optional(newSearchPageQuestions: searchPageQuestions.addNextPage(questions));
-  QuestionsState refreshSearchPageQuestions(Iterable<QuestionState> questions) =>
-    _optional(newSearchPageQuestions: searchPageQuestions.refreshPage(questions));
-  QuestionsState stopLoadingNextSearchPageQuestions() =>
-    _optional(newSearchPageQuestions: searchPageQuestions.stopLoadingNext());
-  //search quesitons
-
-  QuestionsState increaseNumberOfComments(QuestionState question){
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return QuestionsState(
-      questions: questions.setOne(question.id, question.increaseNumberOfComments()),
-
-      searchPageQuestions: searchPageQuestions.updateOne(question.increaseNumberOfComments()),
-      videoQuestions: videoQuestions.updateOne(question.increaseNumberOfComments()),
-      
-      questionUserSaves:
-        questionUserSave != null
-          ? questionUserSaves.updateOne(questionUserSave.increaseNumberOfComments())
-          : questionUserSaves,
+  QuestionsState startNextSearchQuestions() => 
+    _optional(
+      newSearchQuestions: searchQuestions.startNext(),
     );
-  }
-  QuestionsState decreaseNumberOfComments(QuestionState question){
-    var questionUserSave = questionUserSaves.values.firstWhereOrNull((e) => e.questionId == question.id);
-    return QuestionsState(
-      questions: questions.setOne(question.id, question.decreaseNumberOfComments()),
-      
-      searchPageQuestions: searchPageQuestions.updateOne(question.decreaseNumberOfComments()),
-      videoQuestions: videoQuestions.updateOne(question.decreaseNumberOfComments()),
-      
-      questionUserSaves:
-        questionUserSave != null
-          ? questionUserSaves.updateOne(questionUserSave.decreaseNumberOfComments())
-          : questionUserSaves,
+  QuestionsState addNextSearchQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newSearchQuestions: searchQuestions.addNext(questions.map((e) => e.id))
     );
-  }
+  QuestionsState refreshSearchQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newSearchQuestions: searchQuestions.refresh(questions.map((e) => e.id))
+    );
+  QuestionsState stopNextSearchQuestions() => 
+    _optional(
+      newSearchQuestions: searchQuestions.stopNext(),
+    );
+  //search questions
+
+  //video questions
+  QuestionsState startNextVideoQuestions() => 
+    _optional(
+      newVideoQuestions: videoQuestions.startNext(),
+    );
+  QuestionsState addNextVideoQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newVideoQuestions: videoQuestions.addNext(questions.map((e) => e.id))
+    );
+  QuestionsState refreshVideoQuestions(Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newVideoQuestions: videoQuestions.refresh(questions.map((e) => e.id))
+    );
+  QuestionsState stopNextVideoQuestions() => 
+    _optional(
+      newVideoQuestions: videoQuestions.stopNext(),
+    );
+  //video questions
+
+  //user questions
+  QuestionsState startNextUserQuestions(int userId) =>
+    _optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        selectUserQuestionPaginationFromState(this, userId).startNext()
+      ),
+    );
+  QuestionsState addNextUserQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        selectUserQuestionPaginationFromState(this, userId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshUserQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        selectUserQuestionPaginationFromState(this, userId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextUserQuestions(int userId) =>
+    _optional(
+      newUserQuestions: userQuestions.setOne(
+        userId,
+        selectUserQuestionPaginationFromState(this, userId).stopNext()
+      ),
+    );
+  //user questions  
+  
+  //user solved questions
+  QuestionsState startNextUserSolvedQuestions(int userId) =>
+    _optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        selectUserSolvedQuestionPaginationFromState(this, userId).startNext()
+      ),
+    );
+  QuestionsState addNextUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        selectUserSolvedQuestionPaginationFromState(this, userId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        selectUserSolvedQuestionPaginationFromState(this, userId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextUserSolvedQuestions(int userId) =>
+    _optional(
+      newUserSolvedQuestions: userSolvedQuestions.setOne(
+        userId,
+        selectUserSolvedQuestionPaginationFromState(this, userId).stopNext()
+      ),
+    );
+  //user solved questions
+
+  //user unsolved questions
+  QuestionsState startNextUserUnsolvedQuestions(int userId) =>
+    _optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        selectUserUnsolvedQuestionPaginationFromState(this, userId).startNext()
+      ),
+    );
+  QuestionsState addNextUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        selectUserUnsolvedQuestionPaginationFromState(this, userId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        selectUserUnsolvedQuestionPaginationFromState(this, userId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextUserUnsolvedQuestions(int userId) =>
+    _optional(
+      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
+        userId,
+        selectUserUnsolvedQuestionPaginationFromState(this, userId).stopNext()
+      ),
+    );
+  //user unsolved questions
+
+  //exam questions
+  QuestionsState startNextExamQuestions(int userId) =>
+    _optional(
+      newExamQuestions: examQuestions.setOne(
+        userId,
+        selectExamQuestionPaginationFromState(this, userId).startNext()
+      ),
+    );
+  QuestionsState addNextExamQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newExamQuestions: examQuestions.setOne(
+        userId,
+        selectExamQuestionPaginationFromState(this, userId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshExamQuestions(int userId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newExamQuestions: examQuestions.setOne(
+        userId,
+        selectExamQuestionPaginationFromState(this, userId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextExamQuestions(int userId) =>
+    _optional(
+      newExamQuestions: examQuestions.setOne(
+        userId,
+        selectExamQuestionPaginationFromState(this, userId).stopNext()
+      ),
+    );
+  //exam questions
+
+  //subject questions
+  QuestionsState startNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).startNext()
+      ),
+    );
+  QuestionsState addNextSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextSubjectQuestions(int subjectId) =>
+    _optional(
+      newSubjectQuestions: subjectQuestions.setOne(
+        subjectId,
+        selectSubjectQuestionPaginationFromState(this, subjectId).stopNext()
+      ),
+    );
+  //subject questions
+
+  //subject questions
+  QuestionsState startNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).startNext()
+      ),
+    );
+  QuestionsState addNextTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).addNext(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState refreshTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+    _optional(
+      newQuestions: this.questions.successMany({ for (var e in questions) e.id : e }),
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).refresh(questions.map((e) => e.id))
+      ),
+    );
+  QuestionsState stopNextTopicQuestions(int topicId) =>
+    _optional(
+      newTopicQuestions: topicQuestions.setOne(
+        topicId,
+        selectTopicQuestionPaginationFromState(this, topicId).stopNext()
+      ),
+    );
+  //subject questions
+  
 }

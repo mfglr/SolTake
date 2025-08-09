@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/actions.dart';
 import 'package:my_social_app/state/app_state/story_state/selectors.dart';
 import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';

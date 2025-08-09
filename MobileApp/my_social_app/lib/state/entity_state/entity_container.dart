@@ -19,11 +19,35 @@ class EntityContainer<V> {
       status: EntityStatus.notLoading,
       entity: null
     );
-
   factory EntityContainer.loading() => 
     EntityContainer<V>._(
       status: EntityStatus.loading,
       entity: null
+    );
+  EntityContainer<V> success(V entity) =>
+    EntityContainer._(
+      status: EntityStatus.success,
+      entity: entity
+    );
+  EntityContainer<V> failed() =>
+    EntityContainer._(
+      status: EntityStatus.failed,
+      entity: entity
+    );
+  EntityContainer<V> notFound() =>
+    EntityContainer._(
+      status: EntityStatus.notFound,
+      entity: entity
+    );
+  EntityContainer<V> update(V? entity) =>
+    EntityContainer._(
+      status: status,
+      entity: entity
+    );
+  EntityContainer<V> remove() =>
+    EntityContainer<V>._(
+      status: EntityStatus.notFound,
+      entity: null,
     );
 
   factory EntityContainer.success(V entity) =>
@@ -31,28 +55,16 @@ class EntityContainer<V> {
       status: EntityStatus.success,
       entity: entity
     );
-  
   factory EntityContainer.failed() =>
     const EntityContainer._(
       status: EntityStatus.failed,
       entity: null
     );
-  
   factory EntityContainer.notFound() =>
     EntityContainer<V>._(
       status: EntityStatus.notFound,
       entity: null
     );
 
-  EntityContainer<V> updateOne(V? entity) =>
-    EntityContainer<V>._(
-      status: status,
-      entity: entity,
-    );
-
-  EntityContainer<V> removeOne() =>
-    EntityContainer<V>._(
-      status: EntityStatus.notFound,
-      entity: null,
-    );
+  
 }

@@ -14,16 +14,14 @@ import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/middleware.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/questions_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/middleware.dart';
+import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
@@ -54,15 +52,14 @@ import 'package:my_social_app/state/app_state/user_user_search_state/middlewares
 import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:my_social_app/state/entity_state/key_pagination.dart';
-import 'package:my_social_app/state/entity_state/new_entity_collection.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(
   reducers,
   initialState: AppState(
-    newQuetions: NewQuestionsState(
-      questions: NewEntityCollection(),
+    questions: QuestionsState(
+      questions: EntityCollection(),
       
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),
@@ -86,13 +83,6 @@ final store = Store(
       usersByUserName: EntityCollection<String, UserState>(),
       followeds: const <int, Pagination<int, FollowState>>{},
       followers: const <int, Pagination<int, FollowState>>{}
-    ),
-    
-    questions: QuestionsState(
-      questions: EntityCollection(),
-      searchPageQuestions: Pagination.init(questionsPerPage, true),
-      videoQuestions: Pagination.init(questionsPerPage, true),
-      questionUserSaves: Pagination.init(questionsPerPage, true),
     ),
     
     solutions: const SolutionsState(
@@ -148,7 +138,9 @@ final store = Store(
   ),
   middleware: [
     //new questions
+    loadQuestionMiddleware,
     createQuestionMiddleware,
+    deleteQuestionMiddleware,
 
     nexHomeQuestionsMiddleware,
     refreshHomeQuestionsMiddleware,
@@ -156,7 +148,6 @@ final store = Store(
     nextSearchPageQuestionsMiddleware,
     refreshSearchPageQuestionsMiddleware,
    
-
     nextVideoQuestionsMiddleware,
     refreshVideoQuestionsMiddleware,
 
@@ -173,8 +164,6 @@ final store = Store(
     refreshSubjectQuestionsMiddleware,
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
-
-   
     //new questions
 
     //question user likes
@@ -194,16 +183,6 @@ final store = Store(
     nextFollowedsMiddleware,
     refreshFollowedsMiddleware,
     //users
-
-    //questions
-    loadQuestionMiddleware,
-    deleteQuestionMiddleware,
-
-    nextQuestionUserSavesMiddleware,
-    refreshQuestionUserSavesMiddleware,
-    saveQuestionMiddleware,
-    unsaveQuestionMiddleware,
-    //questions
 
     //solutions
     createSolutionMiddleware,

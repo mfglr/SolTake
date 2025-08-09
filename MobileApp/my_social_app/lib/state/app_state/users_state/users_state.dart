@@ -38,22 +38,22 @@ class UsersState {
     _optional(
       newUsersById:
         usersById
-          .setOne(question.userId, usersById[question.userId].entity?.createQuestion()),
+          .updateOne(question.userId, usersById[question.userId].entity?.createQuestion()),
       newUsersByUserName:
         usersByUserName
-          .setOne(question.userName, usersByUserName[question.userName].entity?.createQuestion())
+          .updateOne(question.userName, usersByUserName[question.userName].entity?.createQuestion())
     );
 
   UsersState follow(UserState follower, UserState followed, int followId) =>
     _optional(
       newUsersById:
         usersById
-          .setOne(followed.id, followed.follow())
-          .setOne(follower.id, follower.increaseNumberFolloweds()),
+          .updateOne(followed.id, followed.follow())
+          .updateOne(follower.id, follower.increaseNumberFolloweds()),
       newUsersByUserName:
         usersByUserName
-          .setOne(followed.userName, followed.follow())
-          .setOne(follower.userName, follower.increaseNumberFolloweds()),
+          .updateOne(followed.userName, followed.follow())
+          .updateOne(follower.userName, follower.increaseNumberFolloweds()),
       newFolloweds:
         followeds
           .setOne(follower.id, followeds[follower.id]?.addOne(followed.toFollowed(followId))),
@@ -65,12 +65,12 @@ class UsersState {
     _optional(
       newUsersById:
         usersById
-          .setOne(followed.id, followed.unfollow())
-          .setOne(follower.id, follower.decreaseNumberFolloweds()),
+          .updateOne(followed.id, followed.unfollow())
+          .updateOne(follower.id, follower.decreaseNumberFolloweds()),
       newUsersByUserName:
         usersByUserName
-          .setOne(followed.userName, followed.unfollow())
-          .setOne(follower.userName, follower.decreaseNumberFolloweds()),
+          .updateOne(followed.userName, followed.unfollow())
+          .updateOne(follower.userName, follower.decreaseNumberFolloweds()),
       newFolloweds:
         followeds
           .setOne(follower.id, followeds[follower.id]?.where((e) => e.userId != followed.id)),

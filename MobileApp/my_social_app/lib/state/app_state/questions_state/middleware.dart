@@ -1,8 +1,9 @@
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/new_questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_page_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
@@ -11,7 +12,26 @@ import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
-
+//questions middleware
+void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+  if(action is LoadQuestionAction){
+    QuestionService()
+      .getById(action.questionId)
+      .then((question) => store.dispatch(LoadQuestionSuccessAction(question: question.toQuestionState())))
+      .catchError((e){
+        if(e is BackendException){
+          if(e.statusCode == 404){
+            store.dispatch(QuestionNotFoundAction(questionId: action.questionId));
+          }
+          else{
+            store.dispatch(LoadQuestionFailedAction(questionId: action.questionId));
+          }
+        }
+        throw e;
+      });
+  }
+  next(action);
+}
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
@@ -34,6 +54,15 @@ void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is DeleteQuestionAction){
+    QuestionService()
+      .delete(action.question.id)
+      .then((_) => store.dispatch(DeleteQuestionSuccessAction(question: action.question)));
+  }
+  next(action);
+}
+//questions middleware
 
 //home questions
 void nexHomeQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){

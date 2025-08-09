@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
+// import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -28,19 +27,19 @@ class DisplaySavedQuestionsPage extends StatelessWidget {
           title: title[getLanguage(context)]!,
         ),
       ),
-      body: StoreConnector<AppState,Pagination<int, QuestionUserSaveState>>(
-        onInit: (store) => getNextEntitiesIfNoPage(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction()),
-        converter: (store) => selectQuestionUserSaves(store),
-        builder: (context, pagination) => QuestionUserSaveItemsWidget(
-          pagination: pagination,
-          noQuestionsContent: noQuestionsContent[getLanguage(context)],
-          firstDisplayedQuestionId: questionId,
-          onScrollBottom: (){
-            final store = StoreProvider.of<AppState>(context,listen: false);
-            getNextPageIfReady(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction());
-          }
-        ),
-      )
+      // body: StoreConnector<AppState,Pagination<int, QuestionUserSaveState>>(
+      //   // onInit: (store) => getNextEntitiesIfNoPage(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction()),
+      //   converter: (store) => selectQuestionUserSaves(store),
+      //   builder: (context, pagination) => QuestionUserSaveItemsWidget(
+      //     pagination: pagination,
+      //     noQuestionsContent: noQuestionsContent[getLanguage(context)],
+      //     firstDisplayedQuestionId: questionId,
+      //     onScrollBottom: (){
+      //       final store = StoreProvider.of<AppState>(context,listen: false);
+      //       // getNextPageIfReady(store, selectQuestionUserSaves(store), const NextQuestionUserSavesAction());
+      //     }
+      //   ),
+      // )
     );
   }
 }

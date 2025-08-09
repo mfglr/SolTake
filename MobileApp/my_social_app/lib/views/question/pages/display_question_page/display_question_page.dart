@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
+import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/entity_container.dart';
+import 'package:my_social_app/state/entity_state/new_entity_container.dart';
 // import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 import 'package:my_social_app/views/question/pages/display_question_page/pages/question_success_page.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
@@ -46,7 +47,7 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState,EntityContainer<QuestionState>>(
+    return StoreConnector<AppState, EntityContainer<QuestionState>>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
       converter: (store) => selectQuestion(store, widget.questionId),
       builder: (context, container){

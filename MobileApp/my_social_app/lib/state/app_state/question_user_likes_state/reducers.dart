@@ -1,6 +1,12 @@
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/actions.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
 import 'package:redux/redux.dart';
+
+//questions
+QuestionUserLikesState deleteQuestionSuccessReducer(QuestionUserLikesState prev, DeleteQuestionSuccessAction action) =>
+  prev.deleteQuestion(action.question);
+//questions
 
 QuestionUserLikesState likeSuccessReducer(QuestionUserLikesState prev, LikeQuestionSuccessAction action) =>
   prev.like(action.question.id, action.questionUserLike);
@@ -22,6 +28,10 @@ QuestionUserLikesState refreshQuestionUserLikesFailedReducer(QuestionUserLikesSt
   prev.stopNext(action.questionId);
 
 Reducer<QuestionUserLikesState> questionUserLikes = combineReducers<QuestionUserLikesState>([
+  //questions
+  TypedReducer<QuestionUserLikesState, DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
+  //questions
+
   TypedReducer<QuestionUserLikesState,LikeQuestionSuccessAction>(likeSuccessReducer).call,
   TypedReducer<QuestionUserLikesState,DislikeQuestionSuccessAction>(dislikeSuccessReducer).call,
 

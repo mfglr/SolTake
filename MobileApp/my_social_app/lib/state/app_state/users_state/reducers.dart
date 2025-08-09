@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/app_state/new_questions_state/actions.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
 import 'package:redux/redux.dart';

@@ -48,8 +48,8 @@ extension MapExtentions1<K, V> on Map<K,V>{
 }
 
 extension MapExtentions2<K extends Comparable, V extends Entity<K>> on Map<K, NewEntityContainer<K, V>>{
-  Map<K, NewEntityContainer<K, V>> setOne(V entity) => 
+  Map<K, NewEntityContainer<K, V>> successOne(V entity) =>
     { ...this, entity.id : NewEntityContainer.success(entity) };
-  Map<K, NewEntityContainer<K, V>> setMany(Iterable<V> entities) =>
+  Map<K, NewEntityContainer<K, V>> successMany(Iterable<V> entities) =>
     { ...this, for (var entity in entities) entity.id: NewEntityContainer.success(entity) };
 }

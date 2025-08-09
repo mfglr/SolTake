@@ -9,7 +9,7 @@ import 'package:my_social_app/state/app_state/topics_state/selectors.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/views/search/widgets/topic_dropdown_search_widget/topic_dropdown_searhc_widget_constans.dart';
+import 'package:my_social_app/views/search/pages/search_questions_page/widgets/topic_dropdown_search_widget/topic_dropdown_searhc_widget_constans.dart';
 
 class TopicDropdownSearchWidget extends StatelessWidget {
   final SubjectState? subject;
