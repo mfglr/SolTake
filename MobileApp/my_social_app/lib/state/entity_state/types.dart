@@ -1,1 +1,0 @@
-typedef ValueToIndex<I, V> = I Function(V value);
