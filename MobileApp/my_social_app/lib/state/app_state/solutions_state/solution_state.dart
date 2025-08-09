@@ -1,10 +1,7 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/entity_state/id.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_status.dart';
 
 class SolutionState extends Entity<int> implements Avatar{
@@ -19,13 +16,10 @@ class SolutionState extends Entity<int> implements Avatar{
   final bool isUpvoted;
   final int numberOfUpvotes;
   final bool isDownvoted;
-  final Pagination<int,SolutionUserVoteState> upvotes;
-  final Pagination<int,SolutionUserVoteState> downvotes;
   final int numberOfDownvotes;
   final int state;
   final Iterable<Multimedia> medias;
   final int numberOfComments;
-  final Pagination<int,Id<int>> comments;
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
   final bool isCreatedByAI;
@@ -54,10 +48,7 @@ class SolutionState extends Entity<int> implements Avatar{
     required this.numberOfDownvotes,
     required this.medias,
     required this.numberOfComments,
-    required this.comments,
     required this.state,
-    required this.upvotes,
-    required this.downvotes,
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
     required this.isCreatedByAI,
@@ -69,7 +60,7 @@ class SolutionState extends Entity<int> implements Avatar{
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   bool get hasVideo => medias.any((e) => e.multimediaType == MultimediaType.video);
 
-  SolutionState optinal({
+  SolutionState _optional({
     String? newUserName,
     String? newContent,
     bool? newIsSaved,
@@ -77,12 +68,9 @@ class SolutionState extends Entity<int> implements Avatar{
     int? newNumberOfUpvotes,
     bool? newIsDownvoted,
     int? newNumberOfDownvotes,
-    Pagination<int,Id<int>>? newComments,
     Iterable<Multimedia>? newMedias,
     int? newNumberOfComments,
     int? newState,
-    Pagination<int,SolutionUserVoteState>? newUpvotes,
-    Pagination<int,SolutionUserVoteState>? newDownvotes,
     Multimedia? newImage,
   })
     => SolutionState(
@@ -101,10 +89,7 @@ class SolutionState extends Entity<int> implements Avatar{
         numberOfDownvotes: newNumberOfDownvotes ?? numberOfDownvotes,
         medias: newMedias ?? medias,
         numberOfComments: newNumberOfComments ?? numberOfComments,
-        comments: newComments ?? comments,
         state: newState ?? state,
-        upvotes: newUpvotes ?? upvotes,
-        downvotes: newDownvotes ?? downvotes,
         doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
         image: newImage ?? image,
         isCreatedByAI: isCreatedByAI,
@@ -112,90 +97,37 @@ class SolutionState extends Entity<int> implements Avatar{
         aiImage: aiImage
       );
 
-  SolutionState startLoadingNextUpvotes()
-    => optinal(newUpvotes: upvotes.startLoadingNext());
-  SolutionState stopLoadingNextUpvotes()
-    => optinal(newUpvotes: upvotes.stopLoadingNext());
-  SolutionState addNextUpvotes(Iterable<SolutionUserVoteState> votes)
-    => optinal(newUpvotes: upvotes.addNextPage(votes));
-  
-  SolutionState makeUpvote(SolutionUserVoteState vote)
-    => optinal(
+  SolutionState makeUpvote() =>
+    _optional(
       newIsUpvoted: true,
-      newNumberOfUpvotes: numberOfUpvotes + 1,
-      newUpvotes: upvotes.prependOne(vote),
       newIsDownvoted: false,
-      newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes,
-      newDownvotes: downvotes.where((e) => e.userId != vote.userId)
-    ); 
-  SolutionState removeUpvote(int userId)
-    => optinal(
-      newIsUpvoted: false,
-      newNumberOfUpvotes: numberOfUpvotes - 1,
-      newUpvotes: upvotes.where((e) => e.userId != userId)
-    );
-  SolutionState addNewUpvote(SolutionUserVoteState vote)
-    => optinal(
       newNumberOfUpvotes: numberOfUpvotes + 1,
-      newUpvotes: upvotes.addInOrder(vote),
+      newNumberOfDownvotes: isDownvoted ? numberOfDownvotes - 1 : numberOfDownvotes
     );
-
-  SolutionState startLoadingNextDownvotes()
-    => optinal(newDownvotes: downvotes.startLoadingNext());
-  SolutionState addNextDownvotes(Iterable<SolutionUserVoteState> votes)
-    => optinal(newDownvotes: downvotes.addNextPage(votes));
-  SolutionState stopLoadingNextDownvotes()
-    => optinal(newDownvotes: downvotes.stopLoadingNext());
-    
-  SolutionState makeDownvote(SolutionUserVoteState vote)
-    => optinal(
+  SolutionState removeUpvote() =>
+    _optional(
       newIsUpvoted: false,
-      newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
-      newUpvotes: upvotes.where((e) => e.userId != vote.userId),
-      newIsDownvoted: true,
-      newNumberOfDownvotes: numberOfDownvotes + 1,
-      newDownvotes: downvotes.prependOne(vote),
-    );
-  SolutionState removeDownvote(int userId)
-    => optinal(
-      newIsDownvoted: false,
-      newNumberOfDownvotes: numberOfDownvotes - 1,
-      newDownvotes: downvotes.where((e) => e.userId != userId)
-    );
-  SolutionState addNewDownvote(SolutionUserVoteState vote)
-    => optinal(
-      newNumberOfDownvotes: numberOfDownvotes + 1,
-      newDownvotes: downvotes.addInOrder(vote)
+      newNumberOfUpvotes: numberOfUpvotes - 1
     );
   
-  SolutionState startLoadingNextComments()
-    => optinal(newComments: comments.startLoadingNext());
-  SolutionState addNextComments(Iterable<int> commentIds)
-    => optinal(newComments: comments.addNextPage(commentIds.map((commentId) => Id(id: commentId))));
-  SolutionState stopLoadingNextComments()
-    => optinal(newComments: comments.stopLoadingNext());
-    
-  SolutionState addComment(int commentId) =>
-    optinal(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.prependOne(Id(id: commentId)),
+  SolutionState makeDownvote() =>
+    _optional(
+      newIsUpvoted: false,
+      newIsDownvoted: true,
+      newNumberOfUpvotes: isUpvoted ? numberOfUpvotes - 1 : numberOfUpvotes,
+      newNumberOfDownvotes: numberOfDownvotes + 1
     );
-  SolutionState removeComment(int commentId) =>
-    optinal(
-      newNumberOfComments: numberOfComments - 1,
-      newComments: comments.removeOne(commentId),
-    );
-  SolutionState addNewComment(int commentId) =>
-    optinal(
-      newNumberOfComments: numberOfComments + 1,
-      newComments: comments.addInOrder(Id(id: commentId))
+  SolutionState removeDownvote() =>
+    _optional(
+      newIsDownvoted: false,
+      newNumberOfDownvotes: numberOfDownvotes - 1
     );
 
   SolutionState markAsCorrect()
-    => optinal(newState: SolutionStatus.correct);
+    => _optional(newState: SolutionStatus.correct);
   SolutionState markAsIncorrect()
-    => optinal(newState: SolutionStatus.incorrect);  
+    => _optional(newState: SolutionStatus.incorrect);  
 
-  SolutionState save() => optinal(newIsSaved: true);
-  SolutionState unsave() => optinal(newIsSaved: false);
+  SolutionState save() => _optional(newIsSaved: true);
+  SolutionState unsave() => _optional(newIsSaved: false);
 }

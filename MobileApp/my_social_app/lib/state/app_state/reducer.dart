@@ -11,12 +11,12 @@ import 'package:my_social_app/state/app_state/message_connection_entity_state/re
 import 'package:my_social_app/state/app_state/message_entity_state/reducer.dart';
 import 'package:my_social_app/state/app_state/conversations_state/reducers.dart';
 import 'package:my_social_app/state/app_state/questions_state/reducers.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/reducers.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/reducers.dart';
 import 'package:my_social_app/state/app_state/policy_state/reducers.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_page_state/reducers.dart';
 import 'package:my_social_app/state/app_state/search_users_state/reducers.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/reducers.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/reducers.dart';
 import 'package:my_social_app/state/app_state/solutions_state/reducers.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/story_state/reducers.dart';
@@ -44,6 +44,8 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   questionUserLikes: questionUserLikes(prev.questionUserLikes, action),
   
   solutions: solutionsReducer(prev.solutions, action),
+  solutionVotes: solutionUserVotesReducers(prev.solutionVotes, action),
+
   comments: commentsReducer(prev.comments, action),
   searchPageState: searchPageReducers(prev.searchPageState, action),
   exams: examsReducer(prev.exams, action),
@@ -67,7 +69,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   subjectRequests: subjectRequestsReducers(prev.subjectRequests, action),
   topicRequests: topicRequestsReducers(prev.topicRequests, action),
 
-  solutionEntityState: solutionEntityStateReducers(prev.solutionEntityState,action),
   notifications: notificationEntityStateReducers(prev.notifications,action),
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
   conversations: conversationsReducer(prev.conversations,action),

@@ -16,13 +16,14 @@ import 'package:my_social_app/state/app_state/message_connection_entity_state/me
 import 'package:my_social_app/state/app_state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_likes_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/solution_user_vote_state.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/solution_votes_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
@@ -55,6 +56,8 @@ class AppState{
   final QuestionUserLikesState questionUserLikes;
   
   final SolutionsState solutions;
+  final SolutionVotesState solutionVotes;
+
   final CommentsState comments;
   final SearchPageState searchPageState;
   final Pagination<int,ExamState> exams;
@@ -81,7 +84,6 @@ class AppState{
 
   final Pagination<int,NotificationState> notifications;
   final Login login;
-  final EntityState<int,SolutionState> solutionEntityState;
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
   final PolicyState policyState;
@@ -95,6 +97,8 @@ class AppState{
     required this.questionUserLikes,
 
     required this.solutions,
+    required this.solutionVotes,
+
     required this.comments,
     required this.searchPageState,
     required this.exams,
@@ -121,7 +125,6 @@ class AppState{
 
     required this.conversations,
     required this.login,
-    required this.solutionEntityState,
     required this.notifications,
     required this.messageEntityState,
     required this.policyState,
@@ -165,6 +168,11 @@ class AppState{
       questionVideoSolutions: const <int, KeyPagination<int>>{},
     ),
 
+    solutionVotes: const SolutionVotesState(
+      upvotes: <int, Pagination<int, SolutionUserVoteState>>{},
+      downvotes: <int, Pagination<int, SolutionUserVoteState>>{}
+    ),
+
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
       solutionComments: <int, Pagination<int, CommentState>>{},
@@ -202,7 +210,6 @@ class AppState{
     conversations: Pagination.init(conversationsPerPage,true),
     login: Login.init(),
     
-    solutionEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),

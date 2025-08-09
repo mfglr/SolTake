@@ -18,7 +18,7 @@ import 'package:my_social_app/state/app_state/message_entity_state/middlewares.d
 import 'package:my_social_app/state/app_state/conversations_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/questions_state/middleware.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/middlewares.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/policy_state/policy_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/middlewares.dart';
@@ -27,7 +27,9 @@ import 'package:my_social_app/state/app_state/question_user_likes_state/question
 import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/solution_user_vote_state.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/solution_votes_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -95,6 +97,10 @@ final store = Store(
       questionIncorrectSolutions: const <int, KeyPagination<int>>{},
       questionVideoSolutions: const <int, KeyPagination<int>>{},
     ),
+    solutionVotes: const SolutionVotesState(
+      upvotes: <int, Pagination<int, SolutionUserVoteState>>{},
+      downvotes: <int, Pagination<int, SolutionUserVoteState>>{}
+    ),
 
     comments: const CommentsState(
       questionComments: <int, Pagination<int, CommentState>>{},
@@ -132,7 +138,6 @@ final store = Store(
     userMessageState: EntityState(),
 
     login: Login.loading(),
-    solutionEntityState: EntityState(),
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
@@ -207,6 +212,18 @@ final store = Store(
     nextQuestionVideoSolutionsMiddleware,
     refreshQuestionVideoSolutionsMiddleware,
     //solutions
+
+    //solution user votes
+    makeSolutionUpvoteMiddleware,
+    removeSolutionUpvoteMiddleware,
+    nextSolutionUpvotesMiddleware,
+    refreshSolutionUpvotesMiddleware,
+
+    makeSolutionDownvoteMiddleware,
+    removeSolutionDownvoteMiddleware,
+    nextSolutionDownvotesMiddleware,
+    refreshSolutionDownvotesMiddleware,
+    //solution user votes
 
     //comments
     createCommentMiddleware,
@@ -315,14 +332,7 @@ final store = Store(
 
     // Questions entity state
 
-    //solution entity state
-    makeSolutionUpvoteMiddleware,
-    removeSolutionUpvoteMiddleware,
-    makeSolutionDownvoteMiddleware,
-    removeSolutionDownvoteMiddleware,
-    nextSolutionUpvotesMiddleware,
-    nextSolutionDownvotesMiddleware,
-
+  
     //notifications start
     markNotificationsAsViewedMiddleware,
     getUnviewedNotificationMiddleware,

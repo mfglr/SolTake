@@ -1,4 +1,4 @@
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 

@@ -1,3 +1,4 @@
+import 'package:my_social_app/state/app_state/solution_votes_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:redux/redux.dart';
@@ -16,6 +17,17 @@ SolutionsState createSolutionSuccessReducer(SolutionsState prev, CreateSolutionS
   => prev.create(action.solution);
 SolutionsState deleteSolutionSuccessReducer(SolutionsState prev, DeleteSolutionSuccessAction action)
   => prev.delete(action.solution);
+
+SolutionsState makeSolutionUpvoteSuccessReducer(SolutionsState prev, MakeSolutionUpvoteSuccessAction action) =>
+  prev.makeUpvote(action.solution);
+SolutionsState removeUpvoteSuccessReducer(SolutionsState prev, RemoveSolutionUpvoteSuccessAction action) =>
+  prev.removeUpvote(action.solution);
+
+SolutionsState makeSolutionDownvoteSuccessReducer(SolutionsState prev, MakeSolutionDownvoteSuccessAction action) =>
+  prev.makeDownvote(action.solution);
+SolutionsState removeDownvoteSuccessReducer(SolutionsState prev, RemoveSolutionDownvoteSuccessAction action) =>
+  prev.removeDownvote(action.solution);
+
 SolutionsState markAsCorrectSuccessReducer(SolutionsState prev, MarkSolutionAsCorrectSuccessAction action)
   => prev.markAsCorrect(action.solution);
 SolutionsState markAsIncorrectSuccessReducer(SolutionsState prev, MarkSolutionAsIncorrectSuccessAction action)
@@ -112,6 +124,13 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
 
   TypedReducer<SolutionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
   TypedReducer<SolutionsState,DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
+
+  TypedReducer<SolutionsState,MakeSolutionUpvoteSuccessAction>(makeSolutionUpvoteSuccessReducer).call,
+  TypedReducer<SolutionsState,RemoveSolutionUpvoteSuccessAction>(removeUpvoteSuccessReducer).call,
+
+  TypedReducer<SolutionsState,MakeSolutionDownvoteSuccessAction>(makeSolutionDownvoteSuccessReducer).call,
+  TypedReducer<SolutionsState,RemoveSolutionDownvoteSuccessAction>(removeDownvoteSuccessReducer).call,
+
   TypedReducer<SolutionsState,MarkSolutionAsCorrectSuccessAction>(markAsCorrectSuccessReducer).call,
   TypedReducer<SolutionsState,MarkSolutionAsIncorrectSuccessAction>(markAsIncorrectSuccessReducer).call,
   //solutions

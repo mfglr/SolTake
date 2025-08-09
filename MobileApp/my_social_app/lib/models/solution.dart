@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 part 'solution.g.dart';
 
@@ -73,15 +71,12 @@ class Solution{
       medias: medias,
       numberOfComments: numberOfComments,
       doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
-      comments: Pagination.init(commentsPerPage,true),
       isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,
       image: image,
       isCreatedByAI: isCreatedByAI,
-      upvotes: Pagination.init(usersPerPage, true),
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
-      downvotes: Pagination.init(usersPerPage,true),
       aiModelName: aiModelName,
       aiImage: aiImage
     );

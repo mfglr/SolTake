@@ -113,6 +113,16 @@ class SolutionsState {
             )
         : questionVideoSolutions,
     );
+  SolutionsState makeUpvote(SolutionState solution) =>
+    _optional(newSolutions: solutions.updateOne(solution.id, solution.makeUpvote()));
+  SolutionsState removeUpvote(SolutionState solution) =>
+    _optional(newSolutions: solutions.updateOne(solution.id, solution.removeUpvote()));
+
+  SolutionsState makeDownvote(SolutionState solution) =>
+    _optional(newSolutions: solutions.updateOne(solution.id, solution.makeDownvote()));
+  SolutionsState removeDownvote(SolutionState solution) =>
+    _optional(newSolutions: solutions.updateOne(solution.id, solution.removeDownvote()));
+
   SolutionsState markAsCorrect(SolutionState solution) =>
     _optional(
       newSolutions: solutions.updateOne(solution.id, solution.markAsCorrect()),

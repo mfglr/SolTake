@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/store.dart';
 
@@ -12,10 +12,10 @@ class UpvoteButton extends StatelessWidget {
     return IconButton(
       onPressed: (){
         if(solution.isUpvoted){
-          store.dispatch(RemoveSolutionUpvoteAction(solutionId: solution.id));
+          store.dispatch(RemoveSolutionUpvoteAction(solution: solution));
           return;
         }
-        store.dispatch(MakeSolutionUpvoteAction(solutionId: solution.id));
+        store.dispatch(MakeSolutionUpvoteAction(solution: solution));
       },
       color: Colors.green,
       style: ButtonStyle(

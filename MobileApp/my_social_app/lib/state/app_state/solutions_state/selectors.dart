@@ -2,8 +2,12 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/entity_state/entity_container.dart';
 import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:redux/redux.dart';
+
+EntityContainer<SolutionState> selectSolution(Store<AppState> store, int solutionId) =>
+  store.state.solutions.solutions[solutionId];
 
 KeyPagination<int> selectQuestionSolutionsPaginationFromState(SolutionsState state, int questionId) =>
   (state.questionSolutions[questionId] ?? KeyPagination.init(solutionsPerPage, true));

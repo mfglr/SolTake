@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solution_votes_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/shared/count_text.dart';
@@ -20,8 +20,8 @@ class UpvoteButton extends StatelessWidget {
           onPressed: (){
             final store = StoreProvider.of<AppState>(context,listen: false);
             solution.isUpvoted 
-              ? store.dispatch(RemoveSolutionUpvoteAction(solutionId: solution.id))
-              : store.dispatch(MakeSolutionUpvoteAction(solutionId: solution.id));
+              ? store.dispatch(RemoveSolutionUpvoteAction(solution: solution))
+              : store.dispatch(MakeSolutionUpvoteAction(solution: solution));
           },
           style: ButtonStyle(
             padding: WidgetStateProperty.all(EdgeInsets.zero),

@@ -4,7 +4,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/notification_state.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
 import 'solution_marked_as_correct_notification_item_texts.dart';

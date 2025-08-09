@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_social_app/models/notification.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notification_entity_state.dart/selectors.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/actions.dart';
+import 'package:my_social_app/state/app_state/notifications_state.dart/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
