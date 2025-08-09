@@ -1,40 +1,8 @@
-import 'package:my_social_app/constants/notifications_content.dart';
-import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/services/solution_user_vote_service.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
-
-
-void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateSolutionByAIAction){
-    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
-    SolutionService()
-      .createByAI(action.modelId,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
-      .then((solution){
-        store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
-      });
-  }
-  
-  next(action);
-}
-
-void loadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is LoadSolutionAction){
-    if(store.state.solutionEntityState.getValue(action.solutionId) == null){
-      SolutionService()
-        .getSolutionById(action.solutionId)
-        .then((solution){
-          store.dispatch(AddSolutionAction(solution: solution.toSolutionState()));
-        });
-    }
-  }
-  next(action);
-}
 
 //solutoin votes;
 void makeSolutionUpvoteMiddleware(Store<AppState> store, action,NextDispatcher next){

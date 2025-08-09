@@ -22,7 +22,7 @@ import 'package:my_social_app/state/app_state/question_user_likes_state/question
 import 'package:my_social_app/state/app_state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/search_user_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/story_state/story_state.dart';
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
@@ -156,12 +156,13 @@ class AppState{
       likes: <int, Pagination<int, QuestionUserLikeState>>{}
     ),
 
-    solutions: const SolutionsState(
-      questionSolutions: <int, Pagination<int, SolutionState>>{},
-      questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
-      questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
-      questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
-      questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
+    solutions: SolutionsState(
+      solutions: EntityCollection(),
+      questionSolutions: const <int, KeyPagination<int>>{},
+      questionCorrectSolutions: const  <int, KeyPagination<int>>{},
+      questionPendingSolutions: const <int, KeyPagination<int>>{},
+      questionIncorrectSolutions: const <int, KeyPagination<int>>{},
+      questionVideoSolutions: const <int, KeyPagination<int>>{},
     ),
 
     comments: const CommentsState(

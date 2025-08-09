@@ -8,8 +8,8 @@ import 'package:my_social_app/state/app_state/question_user_likes_state/question
 import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_status.dart';
 
 @immutable
 class QuestionState extends Entity<int> implements Avatar{
@@ -101,7 +101,6 @@ class QuestionState extends Entity<int> implements Avatar{
     if(content == null) return null;
     return content!.length <= count ? content : "${content!.substring(0,count - 3)}...";
   }
-
 
   //solutions
   QuestionState createSolution(SolutionState solution) =>

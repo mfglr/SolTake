@@ -1,98 +1,118 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
 
 //solutions
+
+@immutable
+class LoadSolutionAction extends AppAction{
+  final int solutionId;
+  const LoadSolutionAction({required this.solutionId});
+}
+@immutable
+class LoadSolutionSuccessAction extends AppAction{
+  final SolutionState solution;
+  const LoadSolutionSuccessAction({required this.solution});
+}
+@immutable
+class LoadSolutionFailedAction extends AppAction{
+  final int solutionId;
+  const LoadSolutionFailedAction({required this.solutionId});
+}
+@immutable
+class SolutionNotFoundAction extends AppAction{
+  final int solutionId;
+  const SolutionNotFoundAction({required this.solutionId});
+}
+
 @immutable
 class CreateSolutionAction extends AppAction{
+  final int questionId;
   final String id;
-  final QuestionState question;
   final String? content;
   final Iterable<AppFile> medias;
   
   const CreateSolutionAction({
     required this.id,
-    required this.question,
+    required this.questionId,
     required this.content,
     required this.medias
   });
 }
 @immutable
+class CreateSolutionByAIAction extends AppAction{
+  final int modelId;
+  final int questionId;
+  final String? blobName;
+  final double? position;
+  final String? prompt;
+  final bool isHighResulation;
+
+  const CreateSolutionByAIAction({
+    required this.modelId,
+    required this.questionId,
+    required this.blobName,
+    required this.position,
+    required this.prompt,
+    required this.isHighResulation
+  });
+}
+@immutable
 class CreateSolutionSuccessAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
   const CreateSolutionSuccessAction({
-    required this.question,
     required this.solution
   });
 }
-
 @immutable
 class DeleteSolutionAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
   const DeleteSolutionAction({
-    required this.question,
     required this.solution
   });
 }
 @immutable
 class DeleteSolutionSuccessAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
   const DeleteSolutionSuccessAction({
-    required this.question,
     required this.solution,
   });
 }
-
 @immutable
 class MarkSolutionAsCorrectAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
 
   const MarkSolutionAsCorrectAction({
-    required this.question,
     required this.solution
   });
 }
 @immutable
 class MarkSolutionAsCorrectSuccessAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
 
   const MarkSolutionAsCorrectSuccessAction({
-    required this.question,
     required this.solution
   });
 }
-
 @immutable
 class MarkSolutionAsIncorrectAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
 
   const MarkSolutionAsIncorrectAction({
-    required this.question,
     required this.solution
   });
 }
 @immutable
 class MarkSolutionAsIncorrectSuccessAction extends AppAction{
-  final QuestionState question;
   final SolutionState solution;
 
   const MarkSolutionAsIncorrectSuccessAction({
-    required this.question,
     required this.solution
   });
 }
 //solutions
-
-
 
 //question solutions
 @immutable

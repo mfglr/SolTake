@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
@@ -12,11 +11,9 @@ enum SolutionActions{
 }
 
 class SolutionPopupMenu extends StatelessWidget {
-  final QuestionState question;
   final SolutionState solution;
   const SolutionPopupMenu({
     super.key,
-    required this.question,
     required this.solution
   });
 
@@ -39,7 +36,7 @@ class SolutionPopupMenu extends StatelessWidget {
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(DeleteSolutionAction(question: question, solution: solution));
+              store.dispatch(DeleteSolutionAction(solution: solution));
             }
             return;
         }

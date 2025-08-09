@@ -91,12 +91,12 @@ class UploadStatusWidget extends StatelessWidget {
         final store = StoreProvider.of<AppState>(context,listen: false);
         if(state is UploadSolutionState){
           final uploadSolutionState = state as UploadSolutionState;
-          store.dispatch(CreateSolutionAction(
-            id: uploadSolutionState.id,
-            question: uploadSolutionState.question,
-            content: uploadSolutionState.content,
-            medias: uploadSolutionState.medias
-          ));
+          // store.dispatch(CreateSolutionAction(
+          //   id: uploadSolutionState.id,
+          //   question: uploadSolutionState.question,
+          //   content: uploadSolutionState.content,
+          //   medias: uploadSolutionState.medias
+          // ));
         }
         else if(state is UploadQuestionState){
           final uploadSolutionState = state as UploadQuestionState;

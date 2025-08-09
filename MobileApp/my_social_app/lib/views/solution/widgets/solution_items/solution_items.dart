@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
 
-class SolutionItemsWidget extends StatefulWidget {
+class SolutionItems extends StatefulWidget {
   final void Function() onScrollBottom;
-  final Pagination<int,SolutionState> pagination;
+  final (KeyPagination<int>, Iterable<SolutionState>) data;
   final int? solutionId;
   final Widget noItems;
 
-  const SolutionItemsWidget({
+  const SolutionItems({
     super.key,
-    required this.pagination,
+    required this.data,
     required this.onScrollBottom,
     required this.noItems,
     this.solutionId,
   });
 
   @override
-  State<SolutionItemsWidget> createState() => _SolutionItemsWidgetState();
+  State<SolutionItems> createState() => _SolutionItemsState();
 }
 
-class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
+class _SolutionItemsState extends State<SolutionItems> {
   final GlobalKey _solutionKey = GlobalKey(); 
   final ScrollController _scrollController = ScrollController();
   void _onScrollBottom() => onScrollBottom(_scrollController,widget.onScrollBottom);
@@ -54,7 +54,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if(widget.pagination.isEmpty)
+          if(widget.data.$1.isEmpty)
             Container(
               margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
               child: Row(
@@ -68,9 +68,9 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
             )
           else
             ...List.generate(
-              widget.pagination.values.length,
+              widget.data.$2.length,
               (index){
-                final solution = widget.pagination.values.elementAt(index);
+                final solution = widget.data.$2.elementAt(index);
                 return Container(
                   key: widget.solutionId == solution.id ? _solutionKey : null,
                   margin: const EdgeInsets.only(bottom: 15),
@@ -80,7 +80,7 @@ class _SolutionItemsWidgetState extends State<SolutionItemsWidget> {
                 );
               }
             ),
-          if(widget.pagination.loadingNext)
+          if(widget.data.$1.loadingNext)
             const LoadingCircleWidget(strokeWidth: 3)
         ]
       ),

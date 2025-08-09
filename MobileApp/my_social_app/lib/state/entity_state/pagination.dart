@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/base_pagination.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
-class Pagination<K extends Comparable, V extends Entity<K>>{
-  final bool isLast;
-  final bool loadingNext;
-  final bool loadingPrev;
-  final int recordsPerPage;
-  final bool isDescending;
+class Pagination<K extends Comparable, V extends Entity<K>> extends BasePagination{
   final Map<K, V> _map;
 
   const Pagination._({
-    required this.isLast,
-    required this.loadingNext,
-    required this.loadingPrev,
-    required this.isDescending,
-    required this.recordsPerPage,
+    required super.isLast,
+    required super.loadingNext,
+    required super.loadingPrev,
+    required super.isDescending,
+    required super.recordsPerPage,
     required Map<K,V> map,
   }): _map = map;
 
+  @override
+  int get length => _map.length;
+  @override
+  bool get isItemsEmpty => _map.isEmpty;
+  
   factory Pagination.init(int recordsPerPage, bool isDescending)
     => Pagination<K,V>._(
         isLast: false,
@@ -52,11 +53,6 @@ class Pagination<K extends Comparable, V extends Entity<K>>{
       isDescending: isDescending
     );
 
-  bool get hasAtLeastOnePage => _map.values.length >= recordsPerPage;
-  bool get isReadyForNextPage => !isLast && !loadingNext;
-  bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
-  bool get isReadyForPrevPage => !loadingPrev;
-  bool get isEmpty => isLast && _map.values.isEmpty;
   K? get firstId => _map.values.firstOrNull?.id;
   K? get lastId => _map.values.lastOrNull?.id;
 

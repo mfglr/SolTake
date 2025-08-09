@@ -1,44 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/solution_user_vote_state.dart';
 
-
-@immutable
-class CreateSolutionByAIAction extends AppAction{
-  final int modelId;
-  final int questionId;
-  final String? blobName;
-  final double? position;
-  final String? prompt;
-  final bool isHighResulation;
-
-  const CreateSolutionByAIAction({
-    required this.modelId,
-    required this.questionId,
-    required this.blobName,
-    required this.position,
-    required this.prompt,
-    required this.isHighResulation
-  });
-}
-
-@immutable
-class LoadSolutionAction extends AppAction{
-  final int solutionId;
-  const LoadSolutionAction({required this.solutionId});
-}
-@immutable
-class AddSolutionAction extends AppAction{
-  final SolutionState solution;
-  const AddSolutionAction({required this.solution});
-}
-@immutable
-class AddSolutionsAction extends AppAction{
-  final Iterable<SolutionState> solutions;
-  const AddSolutionsAction({required this.solutions});
-}
 @immutable
 class MakeSolutionUpvoteAction extends AppAction{
   final int solutionId;

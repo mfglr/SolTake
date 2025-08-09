@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
-import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_correct_solutions_page.dart';
@@ -16,10 +11,10 @@ import 'package:my_social_app/views/solution/pages/display_question_abstract_sol
 import 'display_question_abstract_solutions_page_constants.dart';
 
 class DisplayQuestionAbstractSolutionsPage extends StatefulWidget {
-  final QuestionState question;
+  final int questionId;
   const DisplayQuestionAbstractSolutionsPage({
     super.key,
-    required this.question
+    required this.questionId
   });
 
   @override
@@ -48,15 +43,8 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
     _pageController.dispose();
     super.dispose();
   }
- 
-  Widget _displayUploads(QuestionState question){
-    return StoreConnector<AppState,Iterable<UploadState>>(
-      converter: (store) => store.state.uploadEntityState.getUploadSolutions(question.id),
-      builder: (context,items) => UploadItems(items: items),
-    );
-  }
 
-  Widget _labelBuilder(QuestionState question,bool isActive, index){
+  Widget _labelBuilder(bool isActive, index){
     return Icon(
       icons[index],
       color: isActive ? Colors.black : Colors.grey,
@@ -83,15 +71,15 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 8),
-              child: CreateSolutionByAiButton(question: widget.question)
+              child: CreateSolutionByAiButton(questionId: widget.questionId)
             ),
-            CreateSolutionButton(question: widget.question, pageController: _pageController),
+            CreateSolutionButton(questionId: widget.questionId),
           ],
         ),
       body: Column(
         children: [
           LabelPaginationWidget(
-            labelBuilder: (isActive,index) => _labelBuilder(widget.question,isActive,index),
+            labelBuilder: (isActive,index) => _labelBuilder(isActive,index),
             page: _page,
             labelCount: icons.length,
             width: MediaQuery.of(context).size.width,
@@ -102,16 +90,10 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
             child: PageView(
               controller: _pageController,
               children: [
-                Container(
-                  constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height
-                  ),
-                  child: DisplaySolutionsPage(question: widget.question)
-                ),
-                DisplayCorrectSolutionsPage(question: widget.question),
-                DisplayPendingSolutionsPage(question: widget.question),
-                DisplayIncorrectSolutionsPage(question: widget.question),
-                _displayUploads(widget.question)
+                DisplaySolutionsPage(questionId: widget.questionId),
+                DisplayCorrectSolutionsPage(questionId: widget.questionId),
+                DisplayPendingSolutionsPage(questionId: widget.questionId),
+                DisplayIncorrectSolutionsPage(questionId: widget.questionId),
               ],
             ),
           )

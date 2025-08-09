@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
@@ -14,14 +13,12 @@ import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class SolutionVideoPageSlider extends StatefulWidget {
-  final QuestionState question;
   final Iterable<SolutionState> solutions;
   final void Function() onNext;
   
   const SolutionVideoPageSlider({
     super.key,
     required this.solutions,
-    required this.question,
     required this.onNext
   });
 
@@ -115,7 +112,7 @@ class _SolutionVideoPageSliderState extends State<SolutionVideoPageSlider> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            SolutionStateWidget(question: widget.question, solution: solution),
+                            SolutionStateWidget(solution: solution),
                           ],
                         ),
                       ),

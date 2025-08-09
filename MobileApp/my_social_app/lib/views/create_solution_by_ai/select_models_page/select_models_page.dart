@@ -4,9 +4,13 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/actions.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/selectors.dart';
+import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/state/entity_state/entity_container.dart';
+import 'package:my_social_app/state/entity_state/entity_status.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page_texts.dart';
 // import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sorting_menu_widget/sorting_button_widget.dart';
@@ -17,10 +21,10 @@ import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class SelectModelsPage extends StatefulWidget {
-  final QuestionState question;
+  final int questionId;
   const SelectModelsPage({
     super.key,
-    required this.question
+    required this.questionId
   });
 
   @override
@@ -58,9 +62,26 @@ class _SelectModelsPageState extends State<SelectModelsPage> {
               //     fontWeight: FontWeight.bold
               //   ),
               // ),
-              AiModelsWidget(
-                aiModels: aiModels,
-                question: widget.question
+              StoreConnector<AppState, EntityContainer<QuestionState>>(
+                onInit: (store) => 
+                  loadIfNotLoading(
+                    store,
+                    selectQuestion(store, widget.questionId),
+                    LoadQuestionAction(questionId: widget.questionId)
+                  ),
+                converter: (store) => selectQuestion(store, widget.questionId),
+                builder: (context, container){
+                  if(container.status == EntityStatus.success){
+                    return AiModelsWidget(
+                      aiModels: aiModels,
+                      question: container.entity!
+                    );
+                  }
+                  else{
+                    return const LoadingCircleWidget();
+                  }
+                }
+                
               ),
               StoreConnector<AppState,Pagination>(
                 converter: (store) => store.state.aiModels,

@@ -1,24 +1,26 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/state/entity_state/base_pagination.dart';
 import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
 @immutable
-class KeyPagination<K extends Comparable>{
-  final bool isLast;
-  final bool loadingNext;
-  final bool loadingPrev;
-  final int recordsPerPage;
-  final bool isDescending;
+class KeyPagination<K extends Comparable> extends BasePagination{
   final Iterable<K> _keys;
 
   const KeyPagination._({
-    required this.isLast,
-    required this.loadingNext,
-    required this.loadingPrev,
-    required this.isDescending,
-    required this.recordsPerPage,
+    required super.isLast,
+    required super.loadingNext,
+    required super.loadingPrev,
+    required super.isDescending,
+    required super.recordsPerPage,
     required Iterable<K> keys,
   }): _keys = keys;
+
+  @override
+  int get length => _keys.length;
+  @override
+  bool get isItemsEmpty => _keys.isEmpty;
+  
 
   factory KeyPagination.init(int recordsPerPage, bool isDescending)
     => KeyPagination<K>._(
@@ -51,11 +53,6 @@ class KeyPagination<K extends Comparable>{
       isDescending: isDescending
     );
 
-  bool get hasAtLeastOnePage => _keys.length >= recordsPerPage;
-  bool get isReadyForNextPage => !isLast && !loadingNext;
-  bool get noPage => isReadyForNextPage && !hasAtLeastOnePage;
-  bool get isReadyForPrevPage => !loadingPrev;
-  bool get isEmpty => isLast && _keys.isEmpty;
   K? get firstId => _keys.firstOrNull;
   K? get lastId => _keys.lastOrNull;
   UnmodifiableListView<K> get keys => UnmodifiableListView(_keys);
@@ -211,4 +208,6 @@ class KeyPagination<K extends Comparable>{
         ? key.compareTo(lastId) < 0
         : key.compareTo(lastId) > 0
     );
+    
+      
 }

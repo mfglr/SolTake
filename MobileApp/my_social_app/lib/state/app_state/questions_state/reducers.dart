@@ -1,6 +1,7 @@
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/app_state/question_user_likes_state/actions.dart';
+import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:redux/redux.dart';
 
 //questions
@@ -12,19 +13,22 @@ QuestionsState loadQuestionFailedReducer(QuestionsState prev, LoadQuestionFailed
   prev.failed(action.questionId);
 QuestionsState questionNotFoundReducer(QuestionsState prev, QuestionNotFoundAction action) =>
   prev.notFound(action.questionId);
-
 QuestionsState createQuestionSuccessReducer(QuestionsState prev, CreateQuestionSuccessAction action)
   => prev.create(action.question);
-
 QuestionsState deleteQuestionSuccessReducer(QuestionsState prev, DeleteQuestionSuccessAction action)
   => prev.delete(action.question);
-
 QuestionsState likeQuestionSuccessReducer(QuestionsState prev, LikeQuestionSuccessAction action)
   => prev.like(action.question);
-
 QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestionSuccessAction action)
   => prev.dislike(action.question);
 //questions
+
+//solutions
+QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action) =>
+  prev.createSolution(action.solution);
+QuestionsState deleteSolutionSuccessReducer(QuestionsState prev, DeleteSolutionSuccessAction action) =>
+  prev.deleteSolution(action.solution);
+//solutions
 
 //home questions
 QuestionsState nextHomeQuestionsReducer(QuestionsState prev, NextHomeQuestionsAction action) =>
@@ -176,12 +180,16 @@ Reducer<QuestionsState> newQuestionsReducer = combineReducers<QuestionsState>([
   TypedReducer<QuestionsState, LoadQuestionSuccessAction>(loadQuestionSuccessReducer).call,
   TypedReducer<QuestionsState, LoadQuestionFailedAction>(loadQuestionFailedReducer).call,
   TypedReducer<QuestionsState, QuestionNotFoundAction>(questionNotFoundReducer).call,
-
   TypedReducer<QuestionsState, CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
   TypedReducer<QuestionsState, DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
   TypedReducer<QuestionsState, LikeQuestionSuccessAction>(likeQuestionSuccessReducer).call,
   TypedReducer<QuestionsState, DislikeQuestionSuccessAction>(dislikeQuestionSuccessReducer).call,
   //questions
+
+  //solutions
+  TypedReducer<QuestionsState, CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  TypedReducer<QuestionsState, DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
+  //solutions
 
   //home questions
   TypedReducer<QuestionsState, NextHomeQuestionsAction>(nextHomeQuestionsReducer).call,

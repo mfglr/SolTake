@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/entity_state/entity_collection.dart';
 import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
@@ -97,7 +98,6 @@ class QuestionsState {
       newUserUnsolvedQuestions:
         userUnsolvedQuestions.setOne(question.userId,  userUnsolvedQuestions[question.userId]?.removeOne(question.id)),
     );
-
   QuestionsState like(QuestionState question) =>
     _optional(
       newQuestions: questions.successOne(question.id, question.like())
@@ -107,6 +107,23 @@ class QuestionsState {
       newQuestions: questions.successOne(question.id, question.dislike())
     );
   //questions
+
+  //solutions
+  QuestionsState createSolution(SolutionState solution) =>
+    _optional(
+      newQuestions: questions.updateOne(
+        solution.questionId,
+        questions[solution.questionId].entity?.createSolution(solution)
+      )
+    );
+  QuestionsState deleteSolution(SolutionState solution) =>
+    _optional(
+      newQuestions: questions.updateOne(
+        solution.questionId,
+        questions[solution.questionId].entity?.deleteSolution(solution)
+      )
+    );
+  //solutions
 
 
   //home questions

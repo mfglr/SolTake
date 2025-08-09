@@ -28,7 +28,6 @@ import 'package:my_social_app/state/app_state/reducer.dart';
 import 'package:my_social_app/state/app_state/search_page_state/search_page_state.dart';
 import 'package:my_social_app/state/app_state/search_users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solution_entity_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
 import 'package:my_social_app/state/app_state/solutions_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -88,12 +87,13 @@ final store = Store(
       likes: <int, Pagination<int, QuestionUserLikeState>>{}
     ),
     
-    solutions: const SolutionsState(
-      questionSolutions: <int, Pagination<int, SolutionState>>{},
-      questionCorrectSolutions: <int, Pagination<int, SolutionState>>{},
-      questionPendingSolutions: <int, Pagination<int, SolutionState>>{},
-      questionIncorrectSolutions: <int, Pagination<int, SolutionState>>{},
-      questionVideoSolutions: <int, Pagination<int, SolutionState>>{},
+    solutions: SolutionsState(
+      solutions: EntityCollection(),
+      questionSolutions: const <int, KeyPagination<int>>{},
+      questionCorrectSolutions: const  <int, KeyPagination<int>>{},
+      questionPendingSolutions: const <int, KeyPagination<int>>{},
+      questionIncorrectSolutions: const <int, KeyPagination<int>>{},
+      questionVideoSolutions: const <int, KeyPagination<int>>{},
     ),
 
     comments: const CommentsState(
@@ -189,10 +189,10 @@ final store = Store(
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
     //question user likes
-   
 
     //solutions
     createSolutionMiddleware,
+    createSolutionByAiMiddleware,
     deleteSolutionMiddleware,
     markSolutionAsCorrectMiddleware,
     markSolutionAsIncorrectMiddleware,
@@ -206,8 +206,6 @@ final store = Store(
     refreshQuestionIncorrectSolutionsMiddleware,
     nextQuestionVideoSolutionsMiddleware,
     refreshQuestionVideoSolutionsMiddleware,
-    saveSolutionMiddeleware,
-    unsaveSolutionMiddeleware,
     //solutions
 
     //comments
@@ -318,9 +316,6 @@ final store = Store(
     // Questions entity state
 
     //solution entity state
-    createSolutionByAiMiddleware,
-    loadSolutionMiddleware,
-
     makeSolutionUpvoteMiddleware,
     removeSolutionUpvoteMiddleware,
     makeSolutionDownvoteMiddleware,

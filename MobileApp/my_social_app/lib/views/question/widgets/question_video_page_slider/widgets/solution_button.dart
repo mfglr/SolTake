@@ -15,7 +15,7 @@ class SolutionButton extends StatelessWidget {
           .push(
             MaterialPageRoute(
               builder: (context) => DisplayQuestionAbstractSolutionsPage(
-                question: question
+                questionId: question.id
               )
             )
           );

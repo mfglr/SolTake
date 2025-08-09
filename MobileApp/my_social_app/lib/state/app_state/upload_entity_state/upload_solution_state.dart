@@ -38,12 +38,12 @@ class UploadSolutionState extends UploadState{
     content: content
   );
 
-  factory UploadSolutionState(CreateSolutionAction action) => UploadSolutionState._(
-    id: action.id,
-    medias: action.medias, 
-    rate: 0,
-    status: UploadStatus.loading,
-    question: action.question,
-    content: action.content
-  );
+  // factory UploadSolutionState(CreateSolutionAction action) => UploadSolutionState._(
+  //   id: action.id,
+  //   medias: action.medias, 
+  //   rate: 0,
+  //   status: UploadStatus.loading,
+  //   question: action.question,
+  //   content: action.content
+  // );
 }

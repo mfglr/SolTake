@@ -1,12 +1,7 @@
 import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:redux/redux.dart';
-
-EntityState<int,SolutionState> addSolutionReducer(EntityState<int,SolutionState> prev, AddSolutionAction action)
-  => prev.appendOne(action.solution);
-EntityState<int,SolutionState> addSolutionsReducer(EntityState<int,SolutionState> prev, AddSolutionsAction action)
-  => prev.appendMany(action.solutions);
 
 EntityState<int,SolutionState> nextUpvotesReducer(EntityState<int,SolutionState> prev,NextSolutionUpvotesAction action)
   =>  prev.updateOne(prev.getValue(action.solutionId)!.startLoadingNextUpvotes());
@@ -42,8 +37,6 @@ EntityState<int,SolutionState> unsaveSolutionReducer(EntityState<int,SolutionSta
   => prev.updateOne(prev.getValue(action.solutionId)!.unsave());
 
 Reducer<EntityState<int,SolutionState>> solutionEntityStateReducers = combineReducers<EntityState<int,SolutionState>>([
-  TypedReducer<EntityState<int,SolutionState>,AddSolutionAction>(addSolutionReducer).call,
-  TypedReducer<EntityState<int,SolutionState>,AddSolutionsAction>(addSolutionsReducer).call,
   TypedReducer<EntityState<int,SolutionState>,MakeSolutionUpvoteSuccessAction>(makeUpvoteReducer).call,
   TypedReducer<EntityState<int,SolutionState>,RemoveSolutionUpvoteSuccessAction>(removeUpvoteReducer).call,
   TypedReducer<EntityState<int,SolutionState>,AddNewSolutionUpvoteAction>(addNewSolutionUpvoteReducer).call,

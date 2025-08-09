@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page.dart';
 
 class CreateSolutionByAiButton extends StatelessWidget {
-  final QuestionState question;
+  final int questionId;
   const CreateSolutionByAiButton({
     super.key,
-    required this.question
+    required this.questionId
   });
 
   Future<bool> createDialog(BuildContext context) =>
@@ -80,13 +79,13 @@ class CreateSolutionByAiButton extends StatelessWidget {
                 if(value && context.mounted){
                   Navigator
                     .of(context)
-                    .push(MaterialPageRoute(builder: (context) => SelectModelsPage(question: question)))
+                    .push(MaterialPageRoute(builder: (context) => SelectModelsPage(questionId: questionId)))
                     .then((value){
                       if(value != null && context.mounted){
                         final store = StoreProvider.of<AppState>(context,listen: false);
                         store.dispatch(CreateSolutionByAIAction(
                           modelId: value.modelId,
-                          questionId: question.id,
+                          questionId: questionId,
                           blobName: value.blobName,
                           position: value.position,
                           prompt: value.prompt,

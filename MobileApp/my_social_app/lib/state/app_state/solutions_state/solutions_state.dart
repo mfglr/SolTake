@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_status.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_status.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class SolutionsState {
-  final Map<int, Pagination<int, SolutionState>> questionSolutions;
-  final Map<int, Pagination<int, SolutionState>> questionCorrectSolutions;
-  final Map<int, Pagination<int, SolutionState>> questionPendingSolutions;
-  final Map<int, Pagination<int, SolutionState>> questionIncorrectSolutions;
-  final Map<int, Pagination<int, SolutionState>> questionVideoSolutions;
+  final EntityCollection<int, SolutionState> solutions;
+  final Map<int, KeyPagination<int>> questionSolutions;
+  final Map<int, KeyPagination<int>> questionCorrectSolutions;
+  final Map<int, KeyPagination<int>> questionPendingSolutions;
+  final Map<int, KeyPagination<int>> questionIncorrectSolutions;
+  final Map<int, KeyPagination<int>> questionVideoSolutions;
 
   const SolutionsState({
+    required this.solutions,
     required this.questionSolutions,
     required this.questionCorrectSolutions,
     required this.questionPendingSolutions,
@@ -22,13 +25,15 @@ class SolutionsState {
   });
 
   SolutionsState _optional({
-    Map<int, Pagination<int,SolutionState>>? newQuestionSolutions,
-    Map<int, Pagination<int,SolutionState>>? newQuestionCorrectSolutions,
-    Map<int, Pagination<int,SolutionState>>? newQuestionPendingSolutions,
-    Map<int, Pagination<int,SolutionState>>? newQuestionIncorrectSolutions,
-    Map<int, Pagination<int,SolutionState>>? newQuestionVideoSolutions,
+    EntityCollection<int, SolutionState>? newSolutions,
+    Map<int, KeyPagination<int>>? newQuestionSolutions,
+    Map<int, KeyPagination<int>>? newQuestionCorrectSolutions,
+    Map<int, KeyPagination<int>>? newQuestionPendingSolutions,
+    Map<int, KeyPagination<int>>? newQuestionIncorrectSolutions,
+    Map<int, KeyPagination<int>>? newQuestionVideoSolutions,
   }) => 
     SolutionsState(
+      solutions: newSolutions ?? solutions,
       questionSolutions: newQuestionSolutions ?? questionSolutions,
       questionCorrectSolutions: newQuestionCorrectSolutions ?? questionCorrectSolutions,
       questionPendingSolutions: newQuestionPendingSolutions ?? questionPendingSolutions,
@@ -37,31 +42,48 @@ class SolutionsState {
     );
 
   //solutions
+  SolutionsState loading(int solutionId) =>
+    _optional(
+      newSolutions: solutions.loading(solutionId)
+    );
+  SolutionsState success(SolutionState solution) =>
+    _optional(
+      newSolutions: solutions.success(solution.id, solution)
+    );
+  SolutionsState failed(int solutionId) =>
+    _optional(
+      newSolutions: solutions.failed(solutionId)
+    );
+  SolutionsState notFound(int solutionId) =>
+    _optional(
+      newSolutions: solutions.notFound(solutionId)
+    );
+
   SolutionsState create(SolutionState solution) => 
     _optional(
+      newSolutions: solutions.successOne(solution.id, solution),
       newQuestionSolutions: questionSolutions.setOne(
         solution.questionId,
-        selectQuestionSolutionsFromState(this, solution.questionId).prependOne(solution)
+        selectQuestionSolutionsPaginationFromState(this, solution.questionId).addOne(solution.id)
       ),
       newQuestionPendingSolutions: questionPendingSolutions.setOne(
         solution.questionId,
-        selectQuestionPendingSolutionsFromState(this, solution.questionId).prependOne(solution)
+        selectQuestionPendingSolutionsPaginationFromState(this, solution.questionId).addOne(solution.id)
       ),
       newQuestionVideoSolutions: solution.hasVideo
         ? questionVideoSolutions.setOne(
             solution.questionId,
-            selectQuestionVideoSolutionsFromState(this, solution.questionId).prependOne(solution)
+            selectQuestionVideoSolutionsPaginationFromState(this, solution.questionId).addOne(solution.id)
           )
         : questionVideoSolutions
     );
   SolutionsState delete(SolutionState solution) =>
     _optional(
-      
+      newSolutions: solutions.removeOne(solution.id),
       newQuestionSolutions: questionSolutions.setOne(
         solution.questionId,
         questionSolutions[solution.questionId]?.removeOne(solution.id)
       ),
-
       newQuestionCorrectSolutions: 
         solution.state == SolutionStatus.correct
           ? questionCorrectSolutions.setOne(
@@ -69,7 +91,6 @@ class SolutionsState {
               questionCorrectSolutions[solution.questionId]?.removeOne(solution.id)
             )
           : questionCorrectSolutions,
-
       newQuestionPendingSolutions:
         solution.state == SolutionStatus.pending
           ? questionPendingSolutions.setOne(
@@ -77,7 +98,6 @@ class SolutionsState {
               questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
             )
           : questionPendingSolutions,
-
       newQuestionIncorrectSolutions:
         solution.state == SolutionStatus.incorrect
           ? questionIncorrectSolutions.setOne(
@@ -85,7 +105,6 @@ class SolutionsState {
               questionIncorrectSolutions[solution.questionId]?.removeOne(solution.questionId)
             )
           : questionIncorrectSolutions,
-
       newQuestionVideoSolutions:
         solution.hasVideo
           ? questionVideoSolutions.setOne(
@@ -96,41 +115,11 @@ class SolutionsState {
     );
   SolutionsState markAsCorrect(SolutionState solution) =>
     _optional(
-      newQuestionSolutions: questionSolutions.setOne(
-        solution.questionId,
-        questionSolutions[solution.questionId]?.updateOne(solution.markAsCorrect())
-      ),
-      newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
-        solution.questionId,
-        questionCorrectSolutions[solution.questionId]?.addInOrder(solution.markAsCorrect())
-      ),
-      newQuestionPendingSolutions: questionPendingSolutions.setOne(
-        solution.questionId,
-        questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
-      ),
-      newQuestionVideoSolutions: questionVideoSolutions.setOne(
-        solution.questionId,
-        questionVideoSolutions[solution.questionId]?.updateOne(solution.markAsCorrect())
-      )
+      newSolutions: solutions.updateOne(solution.id, solution.markAsCorrect()),
     );
   SolutionsState markAsIncorrect(SolutionState solution) =>
     _optional(
-      newQuestionSolutions: questionSolutions.setOne(
-        solution.questionId,
-        questionSolutions[solution.questionId]?.updateOne(solution.markAsIncorrect())
-      ),
-      newQuestionPendingSolutions: questionPendingSolutions.setOne(
-        solution.questionId,
-        questionPendingSolutions[solution.questionId]?.removeOne(solution.id)
-      ),
-      newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
-        solution.questionId,
-        questionIncorrectSolutions[solution.questionId]?.addInOrder(solution.markAsIncorrect())
-      ),
-      newQuestionVideoSolutions: questionVideoSolutions.setOne(
-        solution.questionId,
-        questionVideoSolutions[solution.questionId]?.updateOne(solution.markAsIncorrect())
-      )
+      newSolutions: solutions.updateOne(solution.id, solution.markAsIncorrect()),
     );
   //solutions
 
@@ -139,28 +128,30 @@ class SolutionsState {
     _optional(
       newQuestionSolutions: questionSolutions.setOne(
         questionId,
-        selectQuestionSolutionsFromState(this, questionId).startLoadingNext()
+        selectQuestionSolutionsPaginationFromState(this, questionId).startNext()
       )
     );
   SolutionsState addNextPageQuestionSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionSolutions: questionSolutions.setOne(
         questionId,
-        selectQuestionSolutionsFromState(this, questionId).addNextPage(solutions)
+        selectQuestionSolutionsPaginationFromState(this, questionId).addNext(solutions.map((e) => e.id))
       )
     );
   SolutionsState refreshQuestionSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionSolutions: questionSolutions.setOne(
         questionId,
-        selectQuestionSolutionsFromState(this, questionId).refreshPage(solutions)
+        selectQuestionSolutionsPaginationFromState(this, questionId).refresh(solutions.map((e) => e.id))
       )
     );
   SolutionsState stopLoadingNextQuestionSolutions(int questionId) => 
     _optional(
       newQuestionSolutions: questionSolutions.setOne(
         questionId,
-        selectQuestionSolutionsFromState(this, questionId).stopLoadingNext()
+        selectQuestionSolutionsPaginationFromState(this, questionId).stopNext()
       )
     );
   // question solutions;
@@ -170,28 +161,30 @@ class SolutionsState {
     _optional(
       newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
-        selectQuestionCorrectSolutionsFromState(this, questionId).startLoadingNext()
+        selectQuestionCorrectSolutionsPaginationFromState(this, questionId).startNext()
       )
     );
   SolutionsState addNextPageQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
-        selectQuestionCorrectSolutionsFromState(this, questionId).addNextPage(solutions)
+        selectQuestionCorrectSolutionsPaginationFromState(this, questionId).addNext(solutions.map((e) => e.id))
       )
     );
   SolutionsState refreshQuestionCorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
-        selectQuestionCorrectSolutionsFromState(this, questionId).refreshPage(solutions)
+        selectQuestionCorrectSolutionsPaginationFromState(this, questionId).refresh(solutions.map((e) => e.id))
       )
     );
   SolutionsState stopLoadingNextQuestionCorrectSolutions(int questionId) => 
     _optional(
       newQuestionCorrectSolutions: questionCorrectSolutions.setOne(
         questionId,
-        selectQuestionCorrectSolutionsFromState(this, questionId).stopLoadingNext()
+        selectQuestionCorrectSolutionsPaginationFromState(this, questionId).stopNext()
       )
     );
   // question correct solutions
@@ -201,28 +194,30 @@ class SolutionsState {
     _optional(
       newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
-        selectQuestionPendingSolutionsFromState(this, questionId).startLoadingNext()
+        selectQuestionPendingSolutionsPaginationFromState(this, questionId).startNext()
       )
     );
   SolutionsState addNextPageQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
-        selectQuestionPendingSolutionsFromState(this, questionId).addNextPage(solutions)
+        selectQuestionPendingSolutionsPaginationFromState(this, questionId).addNext(solutions.map((e) => e.id))
       )
     );
   SolutionsState refreshQuestionPendingSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
-        selectQuestionPendingSolutionsFromState(this, questionId).refreshPage(solutions)
+        selectQuestionPendingSolutionsPaginationFromState(this, questionId).refresh(solutions.map((e) => e.id))
       )
     );
   SolutionsState stopLoadingNextQuestionPendingSolutions(int questionId) => 
     _optional(
       newQuestionPendingSolutions: questionPendingSolutions.setOne(
         questionId,
-        selectQuestionPendingSolutionsFromState(this, questionId).stopLoadingNext()
+        selectQuestionPendingSolutionsPaginationFromState(this, questionId).stopNext()
       )
     );
   // question pending solutions
@@ -232,28 +227,30 @@ class SolutionsState {
     _optional(
       newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
-        selectQuestionIncorrectSolutionsFromState(this, questionId).startLoadingNext()
+        selectQuestionIncorrectSolutionsPaginationFromState(this, questionId).startNext()
       )
     );
   SolutionsState addNextPageQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
-        selectQuestionIncorrectSolutionsFromState(this, questionId).addNextPage(solutions)
+        selectQuestionIncorrectSolutionsPaginationFromState(this, questionId).addNext(solutions.map((e) => e.id))
       )
     );
   SolutionsState refreshQuestionIncorrectSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
-        selectQuestionIncorrectSolutionsFromState(this, questionId).refreshPage(solutions)
+        selectQuestionIncorrectSolutionsPaginationFromState(this, questionId).refresh(solutions.map((e) => e.id))
       )
     );
   SolutionsState stopLoadingNextQuestionIncorrectSolutions(int questionId) => 
     _optional(
       newQuestionIncorrectSolutions: questionIncorrectSolutions.setOne(
         questionId,
-        selectQuestionIncorrectSolutionsFromState(this, questionId).stopLoadingNext()
+        selectQuestionIncorrectSolutionsPaginationFromState(this, questionId).stopNext()
       )
     );
   // question incorrect solutions
@@ -263,28 +260,30 @@ class SolutionsState {
     _optional(
       newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
-        selectQuestionVideoSolutionsFromState(this, questionId).startLoadingNext()
+        selectQuestionVideoSolutionsPaginationFromState(this, questionId).startNext()
       )
     );
   SolutionsState addNextPageQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
-        selectQuestionVideoSolutionsFromState(this, questionId).addNextPage(solutions)
+        selectQuestionVideoSolutionsPaginationFromState(this, questionId).addNext(solutions.map((e) => e.id))
       )
     );
   SolutionsState refreshQuestionVideoSolutions(int questionId, Iterable<SolutionState> solutions) => 
     _optional(
+      newSolutions: this.solutions.successMany({for (var e in solutions) e.id: e }),
       newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
-        selectQuestionVideoSolutionsFromState(this, questionId).refreshPage(solutions)
+        selectQuestionVideoSolutionsPaginationFromState(this, questionId).refresh(solutions.map((e) => e.id))
       )
     );
   SolutionsState stopLoadingNextQuestionVideoSolutions(int questionId) => 
     _optional(
       newQuestionVideoSolutions: questionVideoSolutions.setOne(
         questionId,
-        selectQuestionVideoSolutionsFromState(this, questionId).stopLoadingNext()
+        selectQuestionVideoSolutionsPaginationFromState(this, questionId).stopNext()
       )
     );
   // question video solutions

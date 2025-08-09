@@ -6,8 +6,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/latex_sperator/latex.dart';
 import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
@@ -22,12 +21,10 @@ import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class SolutionItemWidget extends StatelessWidget {
-  final QuestionState question;
   final SolutionState solution;
 
   const SolutionItemWidget({
     super.key,
-    required this.question,
     required this.solution,
   });
 
@@ -70,14 +67,14 @@ class SolutionItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 5),
-                      child: SolutionStateWidget(question: question, solution: solution),
+                      child: SolutionStateWidget(solution: solution),
                     ),
                     AppDateWidget(
                       dateTime: solution.createdAt,
                       style: const TextStyle(fontSize: 11),
                     ),
                     if(solution.isOwner)
-                      SolutionPopupMenu(question: question, solution: solution)
+                      SolutionPopupMenu(solution: solution)
                   ],
                 )
               ],

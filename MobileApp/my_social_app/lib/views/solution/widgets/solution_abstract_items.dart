@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/solution_entity_state/solution_state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_item_widget.dart';
 
 class SolutionAbstractItems extends StatefulWidget {
-  final Pagination<int,SolutionState> pagination;
+  final (KeyPagination<int>, Iterable<SolutionState>) data;
   final void Function() onScrollBottom;
   final void Function(int solutionId) onTap;
   final Widget noItems;
 
   const SolutionAbstractItems({
     super.key,
-    required this.pagination,
+    required this.data,
     required this.onScrollBottom,
     required this.onTap,
     required this.noItems
@@ -49,7 +49,7 @@ class _SolutionAbstractItemsState extends State<SolutionAbstractItems> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if(widget.pagination.isEmpty)
+        if(widget.data.$1.isEmpty)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -63,15 +63,15 @@ class _SolutionAbstractItemsState extends State<SolutionAbstractItems> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
               ),
-              itemCount: widget.pagination.values.length,
+              itemCount: widget.data.$2.length,
               itemBuilder: (context,index) => SolutionAbstractItemWidget(
-                key: ValueKey(widget.pagination.values.elementAt(index).id),
-                solution: widget.pagination.values.elementAt(index),
+                key: ValueKey(widget.data.$2.elementAt(index).id),
+                solution: widget.data.$2.elementAt(index),
                 onTap: widget.onTap,
               )
             ),
           ),
-        if(widget.pagination.loadingNext)
+        if(widget.data.$1.loadingNext)
           const LoadingCircleWidget(strokeWidth: 3),
       ],
     );
