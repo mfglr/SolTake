@@ -1,3 +1,4 @@
+import 'package:my_social_app/state/app_state/follows_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
@@ -6,8 +7,11 @@ import 'package:redux/redux.dart';
 //questions
 UsersState createQuestionSuccessReducer(UsersState prev, CreateQuestionSuccessAction action) =>
   prev.createQuestion(action.question);
+UsersState deleteQuestionSuccessReducer(UsersState prev, DeleteQuestionSuccessAction action) =>
+  prev.deleteQuestion(action.question);
 //questions
 
+//users
 UsersState loadUserByIdReducer(UsersState prev, LoadUserByIdAction action) =>
   prev.loadUsersById(action.id);
 UsersState loadUserByIdSuccessReducer(UsersState prev, LoadUserByIdSuccessAction action) =>
@@ -25,46 +29,19 @@ UsersState loadUserByUserNameFailedReducer(UsersState prev, LoadUserByUserNameFa
   prev.failedUsersByUserName(action.userName);
 UsersState userNotFoundByUserNameReducer(UsersState prev, UserNotFoundByUserNameAction action) =>
   prev.notFoundUsersByUserName(action.userName);
+//users
 
 //follows
 UsersState followSuccessReducer(UsersState prev, FollowSuccessAction action) =>
   prev.follow(action.follower, action.followed, action.followId);
-
 UsersState unfollowSuccessReducer(UsersState prev, UnfollowSuccessAction action) =>
   prev.unfollow(action.follower, action.followed);
-
-UsersState nextFollewersReducer(UsersState prev, NextFollowersAction action) =>
-  prev.startLoadingNextFollowers(action.userId);
-UsersState nextFollewersSuccessReducer(UsersState prev, NextFollowersSuccessAction action) =>
-  prev.addNextFollowers(action.userId,action.followers);
-UsersState nextFollewersFailedReducer(UsersState prev, NextFollowersFailedAction action) =>
-  prev.stopLoadingNextFollowers(action.userId);
-
-UsersState refreshFollewersReducer(UsersState prev, RefreshFollowersAction action) =>
-  prev.startLoadingNextFollowers(action.userId);
-UsersState refreshFollewersSuccessReducer(UsersState prev, RefreshFollowersSuccessAction action) =>
-  prev.refreshFollowers(action.userId,action.followers);
-UsersState refreshFollewersFailedReducer(UsersState prev, RefreshFollowersFailedAction action) =>
-  prev.stopLoadingNextFollowers(action.userId);
-
-UsersState nextFollewedsReducer(UsersState prev, NextFollowedsAction action) =>
-  prev.startLoadingNextFolloweds(action.userId);
-UsersState nextFollewedsSuccessReducer(UsersState prev, NextFollowedsSuccessAction action) =>
-  prev.addNextFolloweds(action.userId,action.followeds);
-UsersState nextFollewedsFailedReducer(UsersState prev, NextFollowedsFailedAction action) =>
-  prev.stopLoadingNextFolloweds(action.userId);
-
-UsersState refreshFollewedsReducer(UsersState prev, RefreshFollowedsAction action) =>
-  prev.startLoadingNextFolloweds(action.userId);
-UsersState refreshFollewedsSuccessReducer(UsersState prev, RefreshFollowedsSuccessAction action) =>
-  prev.refreshFollowers(action.userId,action.followeds);
-UsersState refreshFollewedsFailedReducer(UsersState prev, RefreshFollowedsFailedAction action) =>
-  prev.stopLoadingNextFolloweds(action.userId);
 //follows
 
 Reducer<UsersState> usersReducer = combineReducers<UsersState>([
   //quesitons
   TypedReducer<UsersState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
+  TypedReducer<UsersState,DeleteQuestionSuccessAction>(deleteQuestionSuccessReducer).call,
   //quesitons
 
   TypedReducer<UsersState,LoadUserByIdAction>(loadUserByIdReducer).call,
@@ -80,21 +57,5 @@ Reducer<UsersState> usersReducer = combineReducers<UsersState>([
   //follows
   TypedReducer<UsersState,FollowSuccessAction>(followSuccessReducer).call,
   TypedReducer<UsersState,UnfollowSuccessAction>(unfollowSuccessReducer).call,
-  
-  TypedReducer<UsersState,NextFollowersAction>(nextFollewersReducer).call,
-  TypedReducer<UsersState,NextFollowersSuccessAction>(nextFollewersSuccessReducer).call,
-  TypedReducer<UsersState,NextFollowersFailedAction>(nextFollewersFailedReducer).call,
-
-  TypedReducer<UsersState,RefreshFollowersAction>(refreshFollewersReducer).call,
-  TypedReducer<UsersState,RefreshFollowersSuccessAction>(refreshFollewersSuccessReducer).call,
-  TypedReducer<UsersState,RefreshFollowersFailedAction>(refreshFollewersFailedReducer).call,
-
-  TypedReducer<UsersState,NextFollowedsAction>(nextFollewedsReducer).call,
-  TypedReducer<UsersState,NextFollowedsSuccessAction>(nextFollewedsSuccessReducer).call,
-  TypedReducer<UsersState,NextFollowedsFailedAction>(nextFollewedsFailedReducer).call,
-
-  TypedReducer<UsersState,RefreshFollowedsAction>(refreshFollewedsReducer).call,
-  TypedReducer<UsersState,RefreshFollowedsSuccessAction>(refreshFollewedsSuccessReducer).call,
-  TypedReducer<UsersState,RefreshFollowedsFailedAction>(refreshFollewedsFailedReducer).call,
   //follows
 ]);

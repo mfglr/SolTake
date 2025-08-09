@@ -4,6 +4,7 @@ import 'package:my_social_app/state/app_state/balance_state/reducers.dart';
 import 'package:my_social_app/state/app_state/comments_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/exams_state/reducers.dart';
+import 'package:my_social_app/state/app_state/follows_state/reducers.dart';
 import 'package:my_social_app/state/app_state/login_state/reducers.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/reducers.dart';
@@ -36,9 +37,12 @@ import 'package:redux/redux.dart';
 AppState clearStateReducer(AppState prev,ClearStateAction action) => prev.clear();
 
 AppState appReducer(AppState prev,AppAction action) => AppState(
+  users: usersReducer(prev.users, action),
+  follows: followsReducer(prev.follows, action),
+
   questions: newQuestionsReducer(prev.questions, action),
   questionUserLikes: questionUserLikes(prev.questionUserLikes, action),
-  users: usersReducer(prev.users, action),
+  
   solutions: solutionsReducer(prev.solutions, action),
   comments: commentsReducer(prev.comments, action),
   searchPageState: searchPageReducers(prev.searchPageState, action),

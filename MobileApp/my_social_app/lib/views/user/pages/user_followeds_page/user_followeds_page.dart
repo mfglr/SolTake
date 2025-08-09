@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/users_state/action.dart';
-import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
-import 'package:my_social_app/state/app_state/users_state/selectors.dart';
+import 'package:my_social_app/state/app_state/follows_state/actions.dart';
+import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/follows_state/selectors.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/state.dart';

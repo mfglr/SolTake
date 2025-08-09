@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
-import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
 import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
@@ -123,6 +123,7 @@ class UserState extends Entity<int> implements Avatar{
 
   //questions
   UserState createQuestion() => _optional(newNumberOfQuestions: numberOfQuestions + 1);
+  UserState deleteQuestion() => _optional(newNumberOfQuestions: numberOfQuestions - 1);
   //questions
 
   UserState updateUserName(String userName) => 

@@ -13,7 +13,11 @@ class EntityContainer<V> {
     required this.entity
   });
 
-
+  factory EntityContainer.success(V entity) =>
+    EntityContainer<V>._(
+      status: EntityStatus.success,
+      entity: entity
+    );
   factory EntityContainer.notLoading() => 
     EntityContainer<V>._(
       status: EntityStatus.notLoading,
@@ -24,6 +28,7 @@ class EntityContainer<V> {
       status: EntityStatus.loading,
       entity: null
     );
+
   EntityContainer<V> success(V entity) =>
     EntityContainer._(
       status: EntityStatus.success,
@@ -49,22 +54,4 @@ class EntityContainer<V> {
       status: EntityStatus.notFound,
       entity: null,
     );
-
-  factory EntityContainer.success(V entity) =>
-    EntityContainer<V>._(
-      status: EntityStatus.success,
-      entity: entity
-    );
-  factory EntityContainer.failed() =>
-    const EntityContainer._(
-      status: EntityStatus.failed,
-      entity: null
-    );
-  factory EntityContainer.notFound() =>
-    EntityContainer<V>._(
-      status: EntityStatus.notFound,
-      entity: null
-    );
-
-  
 }

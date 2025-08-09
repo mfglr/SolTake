@@ -39,10 +39,8 @@ extension MapExtentions<K extends Comparable, V extends Entity<K>> on Map<K,V>{
 }
 
 extension MapExtentions1<K, V> on Map<K,V>{
-  Map<K,V> setOne(K key, V? value) => 
-    value != null ? { ...this, key : value } : this;
-  Map<K,V> setMany(Map<K,V> map) => 
-    { ...this, ...map };
+  Map<K,V> setOne(K key, V? value) => value != null ? { ...this, key : value } : this;
+  Map<K,V> setMany(Map<K,V> map) => { ...this, ...map };
   Map<K,V> removeOne(K key) =>
     { for (var entry in [...entries.where((e) => e.key != key)]) entry.key : entry.value }; 
 }

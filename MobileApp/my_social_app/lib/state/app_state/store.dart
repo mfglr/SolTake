@@ -9,6 +9,8 @@ import 'package:my_social_app/state/app_state/comments_state/comments_state.dart
 import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exams_state/middleware.dart';
+import 'package:my_social_app/state/app_state/follows_state/follows_state.dart';
+import 'package:my_social_app/state/app_state/follows_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/login_state/login.dart';
 import 'package:my_social_app/state/app_state/login_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/message_connection_entity_state/middlewares.dart';
@@ -41,7 +43,7 @@ import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
-import 'package:my_social_app/state/app_state/users_state/follow_state.dart';
+import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
@@ -58,6 +60,15 @@ import 'package:redux/redux.dart';
 final store = Store(
   reducers,
   initialState: AppState(
+    users: UsersState(
+      usersById: EntityCollection<int, UserState>(),
+      usersByUserName: EntityCollection<String, UserState>(),
+    ),
+    follows: const FollowsState(
+      followeds: <int, Pagination<int, FollowState>>{},
+      followers: <int, Pagination<int, FollowState>>{}
+    ),
+
     questions: QuestionsState(
       questions: EntityCollection(),
       
@@ -73,16 +84,8 @@ final store = Store(
       subjectQuestions: const <int, KeyPagination<int>>{},
       topicQuestions: const <int, KeyPagination<int>>{},
     ),
-
     questionUserLikes: const QuestionUserLikesState(
       likes: <int, Pagination<int, QuestionUserLikeState>>{}
-    ),
-    
-    users: UsersState(
-      usersById: EntityCollection<int, UserState>(),
-      usersByUserName: EntityCollection<String, UserState>(),
-      followeds: const <int, Pagination<int, FollowState>>{},
-      followers: const <int, Pagination<int, FollowState>>{}
     ),
     
     solutions: const SolutionsState(
@@ -137,7 +140,21 @@ final store = Store(
     uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
-    //new questions
+     //users
+    loadUserByIdMiddleware,
+    loadUserByUserNameMiddleware,
+    //users
+
+    //follows
+    followMiddleware,
+    unfollowMiddleware,
+    nextFollowersMiddleware,
+    refreshFollowersMiddleware,
+    nextFollowedsMiddleware,
+    refreshFollowedsMiddleware,
+    //follows
+
+    //questions
     loadQuestionMiddleware,
     createQuestionMiddleware,
     deleteQuestionMiddleware,
@@ -164,7 +181,7 @@ final store = Store(
     refreshSubjectQuestionsMiddleware,
     nextTopicQuestionsMiddleware,
     refreshTopicQuestionsMiddleware,
-    //new questions
+    //questions
 
     //question user likes
     nextQuestionUserLikesMiddleware,
@@ -172,17 +189,7 @@ final store = Store(
     likeQuestionMiddleware,
     dislikeQuestionMiddleware,
     //question user likes
-
-    //users
-    loadUserByIdMiddleware,
-    loadUserByUserNameMiddleware,
-    followMiddleware,
-    unfollowMiddleware,
-    nextFollowersMiddleware,
-    refreshFollowersMiddleware,
-    nextFollowedsMiddleware,
-    refreshFollowedsMiddleware,
-    //users
+   
 
     //solutions
     createSolutionMiddleware,

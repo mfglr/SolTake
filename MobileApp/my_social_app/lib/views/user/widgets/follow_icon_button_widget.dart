@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/state/app_state/follows_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 
 class FollowIconButtonWidget extends StatelessWidget {
