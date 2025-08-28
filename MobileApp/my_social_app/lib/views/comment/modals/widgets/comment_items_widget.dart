@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/comment_item_widget.dart';
@@ -37,11 +38,7 @@ class CommentItemsWidget extends StatefulWidget {
 }
 
 class _CommentItemsWidgetState extends State<CommentItemsWidget> {
-  void _onScrollBottom(){
-    if(widget.scrollController.hasClients && widget.scrollController.position.pixels == widget.scrollController.position.maxScrollExtent){
-      widget.onScrollBottom();
-    }
-  }
+  void _onScrollBottom() => onScrollBottom(widget.scrollController,widget.onScrollBottom);
 
   @override
   void initState() {
@@ -67,7 +64,7 @@ class _CommentItemsWidgetState extends State<CommentItemsWidget> {
               if(widget.pagination.loadingPrev)
                 const LoadingCircleWidget(),
               ...List.generate(
-                widget.pagination.values.length,
+                widget.pagination.length,
                 (index) => Container(
                   margin: const EdgeInsets.only(bottom: 15),
                   child: CommentItemWidget(

@@ -1,9 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SolTake.Domain.RoleAggregate.Abstracts;
 using SolTake.Domain.RoleAggregate.Entities;
 using SolTake.Domain.UserAggregate.Configurations;
 using SolTake.Domain.UserAggregate.Entities;
-using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

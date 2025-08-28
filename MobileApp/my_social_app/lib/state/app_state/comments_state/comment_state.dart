@@ -1,6 +1,5 @@
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 
 class CommentState extends Entity<int> implements Avatar{
@@ -71,11 +70,11 @@ class CommentState extends Entity<int> implements Avatar{
     );
   
   CommentState increaseNumberOfChildren() =>
-    _optional(
-      newNumberOfChildren: numberOfChildren + 1
-    );
-
-  CommentState like(CommentUserLikeState commentUserLike) =>
+    _optional(newNumberOfChildren: numberOfChildren + 1);
+  CommentState decreaseNumberOfChildren() =>
+    _optional(newNumberOfChildren: numberOfChildren - 1);
+  
+  CommentState like() =>
     _optional(
       newNumberOfLikes: numberOfLikes + 1,
       newIsLiked: true,

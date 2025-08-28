@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
+import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
@@ -104,11 +104,11 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                   onInit: (store){
                     getNextEntitiesIfNoPage(
                       store,
-                      selectChildren(store, widget.comment.id),
-                      NextCommentChildrenAction(parentId: widget.comment.id)
+                      selectCommentComments(store, widget.comment.id),
+                      NextCommentCommentsAction(commentId: widget.comment.id)
                     );
                   },
-                  converter: (store) => selectChildren(store, widget.comment.id),
+                  converter: (store) => selectCommentComments(store, widget.comment.id),
                   builder: (context,pagination) => Column(
                     children: [
                       ...pagination.values.map(
@@ -140,7 +140,7 @@ class _CommentItemWidgetState extends State<CommentItemWidget> {
                               ),
                             ),
                             StoreConnector<AppState,int>(
-                              converter: (store) => selectNumberOfNotDisplayedChildren(store, _isVisible, widget.comment),
+                              converter: (store) => selectNumberOfNotDisplayedCommentComments(store, _isVisible, widget.comment),
                               builder: (context, numberOfNotDisplayedChildren) => Column(
                                 children: [
                                   if(numberOfNotDisplayedChildren > 0)

@@ -20,7 +20,13 @@ class EntityCollection<K,V> {
   EntityCollection<K,V> successMany(Map<K,V> map) =>
     EntityCollection._(_map.setMany(map.map((k,v) => MapEntry(k, EntityContainer.success(v)))));
 
+  EntityCollection<K,V> where(bool Function(K,V) test) =>  EntityCollection._(_map.where((k,v) => v.status ==  test(k, v.entity!)));
+
+
+  int get length => _map.length;
   EntityContainer<V> operator[](K key) => _map[key] ?? EntityContainer.notLoading();
   EntityContainer<V> get(bool Function(V) test) => 
     _map.values.where((c) => c.isSuccess ? test(c.entity as V) : false).firstOrNull ?? EntityContainer.notLoading();
+
+  
 }

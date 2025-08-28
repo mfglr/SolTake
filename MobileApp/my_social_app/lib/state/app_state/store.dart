@@ -3,8 +3,10 @@ import 'package:my_social_app/state/app_state/active_login_page_state/active_log
 import 'package:my_social_app/state/app_state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/middlewares.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/comment_user_likes_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/middlewares.dart';
@@ -102,11 +104,14 @@ final store = Store(
       downvotes: <int, Pagination<int, SolutionUserVoteState>>{}
     ),
 
-    comments: const CommentsState(
-      questionComments: <int, Pagination<int, CommentState>>{},
-      solutionComments: <int, Pagination<int, CommentState>>{},
-      children: <int, Pagination<int, CommentState>>{},
-      commentUserLikes: <int, Pagination<int, CommentUserLikeState>>{}
+    comments: CommentsState(
+      comments: EntityCollection<int, CommentState>(),
+      questionComments: const <int, KeyPagination<int>>{},
+      solutionComments: const <int, KeyPagination<int>>{},
+      commentComments: const <int, KeyPagination<int>>{},
+    ),
+    commentUserLikes: const CommentUserLikesState(
+      commentUserLikes: <int, Pagination<int,CommentUserLikeState>>{}
     ),
 
     searchPageState: const SearchPageState(
@@ -225,21 +230,27 @@ final store = Store(
     refreshSolutionDownvotesMiddleware,
     //solution user votes
 
+
     //comments
     createCommentMiddleware,
     deleteCommentMiddleware,
+    
     nextQuestionCommentsMiddleware,
     refreshQuestionCommentsMiddleware,
+    
     nextSolutionCommentsMiddleware,
     refreshSolutionCommentsMiddleware,
-    refreshCommentChildrenMiddleware,
-    nextCommentChildrenMiddleware,
 
+    nextCommentCommentsMiddleware,
+    refreshCommentCommentsMiddleware,
+    //comments
+
+    //comment user likes
     likeCommentMiddleware,
     dislikeCommentMiddleware,
     nextCommentLikesMiddleware,
     refreshCommentLikesMiddleware,
-    //comments
+    //comment user likes
 
     //exams middlewares
     nextExamsMiddleware,

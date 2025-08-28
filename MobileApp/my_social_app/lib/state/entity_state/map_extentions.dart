@@ -41,5 +41,9 @@ extension MapExtentions1<K, V> on Map<K,V>{
   Map<K,V> setOne(K key, V? value) => value != null ? { ...this, key : value } : this;
   Map<K,V> setMany(Map<K,V> map) => { ...this, ...map };
   Map<K,V> removeOne(K key) =>
-    { for (var entry in [...entries.where((e) => e.key != key)]) entry.key : entry.value }; 
+    { for (var entry in [...entries.where((e) => e.key != key)]) entry.key : entry.value };
+
+  Map<K,V> where(bool Function(K,V) test) =>
+    { for (var entry in [...entries.where((entry) => test(entry.key,entry.value))]) entry.key : entry.value };
+
 }

@@ -1,73 +1,96 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
-import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/pagination.dart';
 
 @immutable
 class CommentsState {
-  final Map<int, Pagination<int, CommentState>> questionComments;
-  final Map<int, Pagination<int, CommentState>> solutionComments;
-  final Map<int, Pagination<int, CommentState>> children;
-  final Map<int, Pagination<int, CommentUserLikeState>> commentUserLikes;
+  final EntityCollection<int, CommentState> comments;
+  final Map<int, KeyPagination<int>> questionComments;
+  final Map<int, KeyPagination<int>> solutionComments;
+  final Map<int, KeyPagination<int>> commentComments;
   
   const CommentsState({
+    required this.comments,
     required this.questionComments,
     required this.solutionComments,
-    required this.children,
-    required this.commentUserLikes
+    required this.commentComments
   });
 
   CommentsState _optional({
-    Map<int, Pagination<int, CommentState>>? newQuestionComments,
-    Map<int, Pagination<int, CommentState>>? newSolutionComments,
-    Map<int, Pagination<int, CommentState>>? newChildren,
-    Map<int, Pagination<int, CommentUserLikeState>>? newCommentUserLikes
-  }) => 
+    final EntityCollection<int, CommentState>? newComments,
+    final Map<int, KeyPagination<int>>? newQuestionComments,
+    final Map<int, KeyPagination<int>>? newSolutionComments,
+    final Map<int, KeyPagination<int>>? newCommentComments 
+  }) =>
     CommentsState(
+      comments: newComments ?? comments,
       questionComments: newQuestionComments ?? questionComments,
       solutionComments: newSolutionComments ?? solutionComments,
-      children: newChildren ?? children,
-      commentUserLikes: newCommentUserLikes ?? commentUserLikes
+      commentComments: newCommentComments ?? commentComments
     );
 
-  CommentsState create(CommentState? parent, CommentState comment) =>
+  //selectors
+  KeyPagination<int> _selectQuestionCommentsKeyPagination(int questionId) =>
+    questionComments[questionId] ?? KeyPagination<int>.init(commentsPerPage, true);
+  KeyPagination<int> _selectSolutionCommentsKeyPagination(int solutionId) =>
+    solutionComments[solutionId] ?? KeyPagination<int>.init(commentsPerPage, true);
+  KeyPagination<int> _selectCommentCommentsKeyPagination(int commentId) =>
+    commentComments[commentId] ?? KeyPagination<int>.init(commentsPerPage, true);
+  
+  Pagination<int, CommentState> selectQuestionComments(int questionId) =>
+    Pagination.fromCollection(comments, _selectQuestionCommentsKeyPagination(questionId));
+  Pagination<int, CommentState> selectSolutionComments(int solutionId) =>
+    Pagination.fromCollection(comments, _selectSolutionCommentsKeyPagination(solutionId));
+  Pagination<int, CommentState> selectCommentComments(int commentId) =>
+    Pagination.fromCollection(comments, _selectCommentCommentsKeyPagination(commentId));
+
+  int selectNumberOfNotDisplayedCommentComments(bool isVisible, CommentState comment) =>
+    comment.numberOfChildren - (isVisible ? commentComments[comment.id]?.keys.length ?? 0 : 0);
+  //selectors
+
+  CommentsState create(CommentState comment) =>
     _optional(
-      newQuestionComments:
+      newComments: 
+        comment.parentId == null 
+          ? comments.successOne(comment.id, comment)
+          : comments
+              .successOne(comment.id, comment)
+              .updateOne(comment.parentId!, comments[comment.parentId!].entity?.increaseNumberOfChildren()),
+      newQuestionComments: 
         comment.questionId != null
           ? questionComments.setOne(
               comment.questionId!,
-              selectQuestionCommentsFromState(this,comment.questionId!).addOne(comment)
-            )
-          : parent?.questionId != null
-            ? questionComments.setOne(
-                parent!.questionId!,
-                selectQuestionCommentsFromState(this,parent.questionId!).updateOne(parent.increaseNumberOfChildren())
-              )
-            : questionComments,
+              _selectQuestionCommentsKeyPagination(comment.questionId!).addOne(comment.id)
+            ) 
+          : questionComments,
       newSolutionComments:
         comment.solutionId != null
           ? solutionComments.setOne(
               comment.solutionId!,
-              selectSolutionCommentsFromState(this,comment.solutionId!).addOne(comment)
+              _selectSolutionCommentsKeyPagination(comment.solutionId!).addOne(comment.id)
             )
-          : parent?.solutionId != null
-            ? solutionComments.setOne(
-                parent!.solutionId!,
-                selectSolutionCommentsFromState(this,parent.solutionId!).updateOne(parent.increaseNumberOfChildren())
+          : solutionComments,
+        newCommentComments:
+          comment.parentId != null
+            ? commentComments.setOne(
+                comment.parentId!,
+                _selectCommentCommentsKeyPagination(comment.parentId!).addOne(comment.id)
               )
-            : solutionComments,
-      newChildren:
-        comment.parentId == null
-          ? children
-          : children.setOne(
-              comment.parentId!,
-              selectChildrenFromCommentsState(this, comment.parentId!).addOne(comment)
-            ),
+            : commentComments
     );
+
   CommentsState delete(CommentState comment) =>
     _optional(
+      newComments:
+        comment.parentId == null
+          ? comments.removeOne(comment.id)
+          : comments
+              .removeOne(comment.id)
+              .updateOne(comment.parentId!, comments[comment.parentId!].entity?.decreaseNumberOfChildren()),
       newQuestionComments: comment.questionId != null
         ? questionComments.setOne(
             comment.questionId!,
@@ -80,193 +103,117 @@ class CommentsState {
             solutionComments[comment.solutionId]?.removeOne(comment.id)
           )
         : solutionComments,
-      newChildren: comment.parentId != null
-        ? children.setOne(
+      newCommentComments: comment.parentId != null
+        ? commentComments.setOne(
             comment.parentId!,
-            children[comment.parentId]?.removeOne(comment.id)
+            commentComments[comment.parentId]?.removeOne(comment.id)
           )
-        : children,
-      newCommentUserLikes: commentUserLikes.removeOne(comment.id)
+        : commentComments,
     );
 
-  //question comments
-  CommentsState startLoadingNextQuestionComments(int questionId) =>
-    _optional(
-      newQuestionComments: questionComments.setOne(
-        questionId,
-        selectQuestionCommentsFromState(this,questionId).startLoadingNext()
-      )
-    );
-  CommentsState addNextPageQuestionComments(int questionId, Iterable<CommentState> comments) =>
-    _optional(
-      newQuestionComments: questionComments.setOne(
-        questionId,
-        selectQuestionCommentsFromState(this,questionId).addNextPage(comments)
-      )
-    );
-  CommentsState refreshPageQuestionComments(int questionId, Iterable<CommentState> comments) =>
-    _optional(
-      newQuestionComments: questionComments.setOne(
-        questionId,
-        selectQuestionCommentsFromState(this,questionId).refreshPage(comments)
-      )
-    );
-  CommentsState stopLoadingNextQuestionComments(int questionId) =>
-    _optional(
-      newQuestionComments: questionComments.setOne(
-        questionId,
-        selectQuestionCommentsFromState(this,questionId).startLoadingNext()
-      )
-    );
-  //question comments
-
-  //solution comments
-  CommentsState startNextLoadingSolutionComments(int solutionId) =>
-    _optional(
-      newSolutionComments: solutionComments.setOne(
-        solutionId,
-        selectSolutionCommentsFromState(this,solutionId).startLoadingNext()
-      )
-    );
-  CommentsState addNextPageSolutionComments(int solutionId, Iterable<CommentState> comments) =>
-    _optional(
-      newSolutionComments: solutionComments.setOne(
-        solutionId,
-        selectSolutionCommentsFromState(this,solutionId).addNextPage(comments)
-      )
-    );
-  CommentsState refreshPageSolutionComments(int solutionId, Iterable<CommentState> comments) =>
-    _optional(
-      newSolutionComments: solutionComments.setOne(
-        solutionId,
-        selectSolutionCommentsFromState(this,solutionId).refreshPage(comments)
-      )
-    );
-  CommentsState stopLoadingNextSolutionComments(int solutionId) =>
-    _optional(
-      newSolutionComments: solutionComments.setOne(
-        solutionId,
-        selectSolutionCommentsFromState(this,solutionId).startLoadingNext()
-      )
-    );
-  //solution comments
-
-  //children
-  CommentsState startLoadingNextChildren(int parentId) =>
-    _optional(
-      newChildren: children.setOne(
-        parentId,
-        selectChildrenFromCommentsState(this, parentId).startLoadingNext()
-      )
-    );
-  CommentsState addNextPageChildren(int parentId, Iterable<CommentState> comments) =>
-    _optional(
-      newChildren: children.setOne(
-        parentId,
-        selectChildrenFromCommentsState(this, parentId).addNextPage(comments)
-      )
-    );
-  CommentsState refreshPageChildren(int parentId, Iterable<CommentState> comments) =>
-    _optional(
-      newChildren: children.setOne(
-        parentId,
-        selectChildrenFromCommentsState(this, parentId).refreshPage(comments)
-      )
-    );
-  CommentsState stopLoadingNextChildren(int parentId) =>
-    _optional(
-      newChildren: children.setOne(
-        parentId,
-        selectChildrenFromCommentsState(this, parentId).startLoadingNext()
-      )
-    );
-    //children
-
-  //comment user likes
-  CommentsState startLoadingNextCommentUserLikes(int commentId) =>
-    _optional(
-      newCommentUserLikes: commentUserLikes.setOne(
-        commentId,
-        selectCommentUserLikesFromState(this, commentId).startLoadingNext()
-      )
-    );
-  CommentsState addNextCommentUserLikes(int commentId, Iterable<CommentUserLikeState> likes) =>
-    _optional(
-      newCommentUserLikes: commentUserLikes.setOne(
-        commentId,
-        selectCommentUserLikesFromState(this, commentId).addNextPage(likes)
-      )
-    );
-  CommentsState refreshCommentUserLikes(int commentId, Iterable<CommentUserLikeState> likes) =>
-    _optional(
-      newCommentUserLikes: commentUserLikes.setOne(
-        commentId,
-        selectCommentUserLikesFromState(this, commentId).refreshPage(likes)
-      )
-    );
-  CommentsState stopLoadingNextCommentUserLikes(int commentId) =>
-    _optional(
-      newCommentUserLikes: commentUserLikes.setOne(
-        commentId,
-        selectCommentUserLikesFromState(this, commentId).stopLoadingNext()
-      )
-    );
+  CommentsState like(CommentState comment) =>
+    _optional(newComments: comments.updateOne(comment.id, comment.like()));
   
-  CommentsState like(CommentState comment, CommentUserLikeState commentUserLike) =>
+  CommentsState dislike(CommentState comment) =>
+    _optional(newComments: comments.updateOne(comment.id, comment.dislike()));
+
+  //question comments
+  CommentsState startNextQuestionComments(int questionId) =>
     _optional(
-      newQuestionComments:
-        comment.questionId != null
-          ? questionComments.setOne(
-              comment.questionId!,
-              questionComments[comment.questionId]?.updateOne(comment.like(commentUserLike))
-            )
-          : questionComments,
-      newSolutionComments:
-        comment.solutionId != null
-          ? solutionComments.setOne(
-              comment.solutionId!,
-              solutionComments[comment.solutionId]?.updateOne(comment.like(commentUserLike))
-            )
-          : solutionComments,
-      newChildren:
-        comment.parentId != null
-          ? children.setOne(
-              comment.parentId!,
-              children[comment.parentId]?.updateOne(comment.like(commentUserLike))
-            )
-          : children,
-        newCommentUserLikes: commentUserLikes.setOne(
-          comment.id,
-          commentUserLikes[comment.id]?.addOne(commentUserLike)
-        )
+      newQuestionComments: questionComments.setOne(
+        questionId,
+        _selectQuestionCommentsKeyPagination(questionId).startNext()
+      )
     );
-  CommentsState dislike(CommentState comment, int userId) =>
+  CommentsState addNextQuestionComments(int questionId, Iterable<CommentState> comments) =>
     _optional(
-      newQuestionComments:
-        comment.questionId != null
-          ? questionComments.setOne(
-              comment.questionId!,
-              questionComments[comment.questionId]?.updateOne(comment.dislike())
-            )
-          : questionComments,
-      newSolutionComments:
-        comment.solutionId != null
-          ? solutionComments.setOne(
-              comment.solutionId!,
-              solutionComments[comment.solutionId]?.updateOne(comment.dislike())
-            )
-          : solutionComments,
-      newChildren:
-        comment.parentId != null
-          ? children.setOne(
-              comment.parentId!,
-              children[comment.parentId]?.updateOne(comment.dislike())
-            )
-          : children,
-        newCommentUserLikes: commentUserLikes.setOne(
-          comment.id,
-          commentUserLikes[comment.id]?.where((e) => e.userId != userId)
-        )
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newQuestionComments: questionComments.setOne(
+        questionId,
+        _selectQuestionCommentsKeyPagination(questionId).addNext(comments.map((e) => e.id))
+      )
     );
-  //comment user likes
+  CommentsState refresQuestionComments(int questionId, Iterable<CommentState> comments) =>
+    _optional(
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newQuestionComments: questionComments.setOne(
+        questionId,
+        _selectQuestionCommentsKeyPagination(questionId).refresh(comments.map((e) => e.id))
+      )
+    );
+  CommentsState stopNextQuestionComments(int questionId) =>
+    _optional(
+      newQuestionComments: questionComments.setOne(
+        questionId,
+        _selectQuestionCommentsKeyPagination(questionId).stopNext()
+      )
+    );
+  //question comments;
+
+  //solution comments
+  CommentsState startNextSolutionComments(int solutionId) =>
+    _optional(
+      newSolutionComments: solutionComments.setOne(
+        solutionId,
+        _selectSolutionCommentsKeyPagination(solutionId).startNext()
+      )
+    );
+  CommentsState addNextSolutionComments(int solutionId, Iterable<CommentState> comments) =>
+    _optional(
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newSolutionComments: solutionComments.setOne(
+        solutionId,
+        _selectSolutionCommentsKeyPagination(solutionId).addNext(comments.map((e) => e.id))
+      )
+    );
+  CommentsState refresSolutionComments(int solutionId, Iterable<CommentState> comments) =>
+    _optional(
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newSolutionComments: solutionComments.setOne(
+        solutionId,
+        _selectSolutionCommentsKeyPagination(solutionId).refresh(comments.map((e) => e.id))
+      )
+    );
+  CommentsState stopNextSolutionComments(int solutionId) =>
+    _optional(
+      newSolutionComments: solutionComments.setOne(
+        solutionId,
+        _selectSolutionCommentsKeyPagination(solutionId).stopNext()
+      )
+    );
+  //solution comments
+
+  //comment comments
+  CommentsState startNextCommentComments(int commentId) =>
+    _optional(
+      newCommentComments: commentComments.setOne(
+        commentId,
+        _selectCommentCommentsKeyPagination(commentId).startNext()
+      )
+    );
+  CommentsState addNextCommentComments(int commentId, Iterable<CommentState> comments) =>
+    _optional(
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newCommentComments: commentComments.setOne(
+        commentId,
+        _selectCommentCommentsKeyPagination(commentId).addNext(comments.map((e) => e.id))
+      )
+    );
+  CommentsState refresCommentComments(int commentId, Iterable<CommentState> comments) =>
+    _optional(
+      newComments: this.comments.successMany({for (var comment in comments) comment.id : comment}),
+      newCommentComments: commentComments.setOne(
+        commentId,
+        _selectCommentCommentsKeyPagination(commentId).refresh(comments.map((e) => e.id))
+      )
+    );
+  CommentsState stopNextCommentComments(int commentId) =>
+    _optional(
+      newCommentComments: commentComments.setOne(
+        commentId,
+        _selectCommentCommentsKeyPagination(commentId).stopNext()
+      )
+    );
+  //comment comments
+
 }

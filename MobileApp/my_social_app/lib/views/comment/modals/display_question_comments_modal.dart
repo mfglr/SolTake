@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/selectors.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
@@ -13,12 +12,12 @@ import 'package:my_social_app/views/comment/modals/widgets/no_comments_widget/no
 import 'package:rxdart/rxdart.dart';
 
 class DisplayQuestionCommentsModal extends StatefulWidget {
-  final QuestionState question;
+  final int questionId;
   final int? parentId;
 
   const DisplayQuestionCommentsModal({
     super.key,
-    required this.question,
+    required this.questionId,
     this.parentId,
   });
 
@@ -30,23 +29,19 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
   final TextEditingController _contentController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
-  late QuestionState? _question;
-  CommentState? _parent;
+  late int? _questionId;
   CommentState? _replied;
   final _visibilitySubject = BehaviorSubject<int>();
 
   void replyComment(CommentState replied) => setState((){
-    final store = StoreProvider.of<AppState>(context,listen: false);
-    _parent = replied.parentId == null ? replied : selectQuestionComment(store, widget.question.id, replied.parentId!);
     _replied = replied;
     _contentController.text = "@${replied.userName} ";
-    _question = null;
+    _questionId = null;
   });
 
   void cancelReplying() => setState((){
     _contentController.text = _contentController.text.replaceFirst("@${_replied?.userName} ",'');
-    _question = widget.question;
-    _parent = null;
+    _questionId = widget.questionId;
     _replied = null;
   });
 
@@ -54,10 +49,9 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     final store = StoreProvider.of<AppState>(context,listen: false);
     store.dispatch(CreateCommentAction(
       content: _contentController.text,
-      question: _question,
-      solution: null,
-      parent: _parent,
-      replied: _replied
+      questionId: _questionId,
+      solutionId: null,
+      commentId: _replied?.id
     ));
     if(_replied != null){
       _visibilitySubject.add(_replied!.id);
@@ -67,9 +61,9 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
     _focusNode.unfocus();
   }
 
-  @override
+   @override
   void initState() {
-    _question = widget.question;
+    _questionId = widget.questionId;
     super.initState();
   }
 
@@ -83,14 +77,14 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Pagination<int, CommentState>>(
+    return StoreConnector<AppState, Pagination<int,CommentState>>(
       onInit: (store) => 
         getNextEntitiesIfNoPage(
           store,
-          selectQuestionComments(store, widget.question.id),
-          NextQuestionCommentsAction(questionId: widget.question.id)
+          selectQuestionComments(store, widget.questionId),
+          NextQuestionCommentsAction(questionId: widget.questionId)
         ),
-      converter: (store) => selectQuestionComments(store, widget.question.id),
+      converter: (store) => selectQuestionComments(store, widget.questionId),
       builder: (context, pagination) => SizedBox(
         height: MediaQuery.of(context).size.height * 3 / 4,
         child: Padding(
@@ -107,8 +101,8 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                       final store = StoreProvider.of<AppState>(context, listen: false);
                       refreshEntities(
                         store,
-                        selectQuestionComments(store, widget.question.id),
-                        RefreshQuestionCommentsAction(questionId: widget.question.id)
+                        selectQuestionComments(store, widget.questionId),
+                        RefreshQuestionCommentsAction(questionId: widget.questionId)
                       );
                     },
                     icon: const Icon(Icons.refresh)
@@ -134,8 +128,8 @@ class _DisplayQuestionCommentsModalState extends State<DisplayQuestionCommentsMo
                     final store = StoreProvider.of<AppState>(context,listen: false);
                     getNextPageIfReady(
                       store,
-                      selectQuestionComments(store, widget.question.id),
-                      NextQuestionCommentsAction(questionId: widget.question.id)
+                      selectQuestionComments(store, widget.questionId),
+                      NextQuestionCommentsAction(questionId: widget.questionId)
                     );
                   },
                 )

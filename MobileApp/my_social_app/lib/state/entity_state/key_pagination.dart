@@ -29,7 +29,7 @@ class KeyPagination<K extends Comparable> extends BasePagination{
         loadingPrev: false,
         isDescending: isDescending,
         recordsPerPage: recordsPerPage,
-        keys: const {}
+        keys: const []
       );
   
   pagination.Page<K> get prev =>

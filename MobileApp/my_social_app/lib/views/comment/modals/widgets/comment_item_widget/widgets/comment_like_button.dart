@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/comments_state/actions.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/entity_state/base_pagination.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
+import 'package:my_social_app/state/entity_state/entity_collection.dart';
+import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/state/entity_state/map_extentions.dart';
 import 'package:my_social_app/state/entity_state/page.dart' as pagination;
 
@@ -32,6 +34,16 @@ class Pagination<K extends Comparable, V extends Entity<K>> extends BasePaginati
         map: const {}
       );
   
+  factory Pagination.fromCollection(EntityCollection<K,V> collection, KeyPagination<K> keyPagination) =>
+    Pagination<K,V>._(
+      isLast: keyPagination.isLast,
+      isDescending: keyPagination.isDescending,
+      loadingNext: keyPagination.loadingNext,
+      loadingPrev: keyPagination.loadingPrev,
+      recordsPerPage: keyPagination.recordsPerPage,
+      map: { for (var e in [...keyPagination.keys.map((key) => collection[key].entity!)]) e.id : e }
+    );
+
   pagination.Page<K> get prev =>
     pagination.Page<K>(
       offset: firstId,

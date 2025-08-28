@@ -14,7 +14,7 @@ class SolutionCommentButton extends StatelessWidget {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (context) => DisplaySolutionCommentsModal(solution: solution),
+      builder: (context) => DisplaySolutionCommentsModal(solutionId: solution.id),
       isDismissible: true
     );
   }

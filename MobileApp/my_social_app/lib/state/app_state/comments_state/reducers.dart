@@ -1,126 +1,100 @@
+import 'package:my_social_app/state/app_state/comment_user_likes_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/actions.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:redux/redux.dart';
 
-CommentsState createCommentSuccessReducer(CommentsState prev, CreateCommentsSuccessAction action) =>
-  prev.create(action.parent, action.comment);
+CommentsState createCommentSuccessReducer(CommentsState prev, CreateCommentSuccessAction action) =>
+  prev.create(action.comment);
 CommentsState deleteCommentSuccessReducer(CommentsState prev, DeleteCommentSuccessAction action) =>
   prev.delete(action.comment);
+CommentsState likeCommentSuccessReducer(CommentsState prev, LikeCommentSuccessAction action) =>
+  prev.like(action.comment);
+CommentsState dislikeCommentSuccessReducer(CommentsState prev, DislikeCommentSuccessAction action) =>
+  prev.dislike(action.comment);
 
 //question comments
 CommentsState nextQuestionCommentsReducer(CommentsState prev, NextQuestionCommentsAction action) =>
-  prev.startLoadingNextQuestionComments(action.questionId);
+  prev.startNextQuestionComments(action.questionId);
 CommentsState nextQuestionCommentsSuccessReducer(CommentsState prev, NextQuestionCommentsSuccessAction action) =>
-  prev.addNextPageQuestionComments(action.questionId,action.comments);
+  prev.addNextQuestionComments(action.questionId,action.comments);
 CommentsState nextQuestionCommentsFailedReducer(CommentsState prev, NextQuestionCommentsFailedAction action) =>
-  prev.stopLoadingNextQuestionComments(action.questionId);
+  prev.stopNextQuestionComments(action.questionId);
 
 CommentsState refreshQuestionCommentsReducer(CommentsState prev, RefreshQuestionCommentsAction action) =>
-  prev.startLoadingNextQuestionComments(action.questionId);
+  prev.startNextQuestionComments(action.questionId);
 CommentsState refreshQuestionCommentsSuccessReducer(CommentsState prev, RefreshQuestionCommentsSuccessAction action) =>
-  prev.refreshPageQuestionComments(action.questionId,action.comments);
+  prev.refresQuestionComments(action.questionId,action.comments);
 CommentsState refreshQuestionCommentsFailedReducer(CommentsState prev, RefreshQuestionCommentsFailedAction action) =>
-  prev.stopLoadingNextQuestionComments(action.questionId);
+  prev.stopNextQuestionComments(action.questionId);
 //question comments
 
 //solution comments
 CommentsState nextSolutionCommentsReducer(CommentsState prev, NextSolutionCommentsAction action) =>
-  prev.startNextLoadingSolutionComments(action.solutionId);
+  prev.startNextSolutionComments(action.solutionId);
 CommentsState nextSolutionCommentsSuccessReducer(CommentsState prev, NextSolutionCommentsSuccessAction action) =>
-  prev.addNextPageSolutionComments(action.solutionId,action.comments);
+  prev.addNextSolutionComments(action.solutionId,action.comments);
 CommentsState nextSolutionCommentsFailedReducer(CommentsState prev, NextSolutionCommentsFailedAction action) =>
-  prev.stopLoadingNextSolutionComments(action.solutionId);
+  prev.stopNextSolutionComments(action.solutionId);
 
 CommentsState refreshSolutionCommentsReducer(CommentsState prev, RefreshSolutionCommentsAction action) =>
-  prev.startNextLoadingSolutionComments(action.solutionId);
+  prev.startNextSolutionComments(action.solutionId);
 CommentsState refreshSolutionCommentsSuccessReducer(CommentsState prev, RefreshSolutionCommentsSuccessAction action) =>
-  prev.refreshPageSolutionComments(action.solutionId,action.comments);
+  prev.refresSolutionComments(action.solutionId,action.comments);
 CommentsState refreshSolutionCommentsFailedReducer(CommentsState prev, RefreshSolutionCommentsFailedAction action) =>
-  prev.stopLoadingNextSolutionComments(action.solutionId);
+  prev.stopNextSolutionComments(action.solutionId);
 //solution comments
 
-//children
-CommentsState nextCommentChildrenReducer(CommentsState prev, NextCommentChildrenAction action) =>
-  prev.startLoadingNextChildren(action.parentId);
-CommentsState nextCommentChildrenSuccessReducer(CommentsState prev, NextCommentChildrenSuccessAction action) =>
-  prev.addNextPageChildren(action.parentId, action.comments);
-CommentsState nextCommentChildrenFailedReducer(CommentsState prev, NextCommentChildrenFailedAction action) =>
-  prev.startLoadingNextChildren(action.parentId);
+//comment comments
+CommentsState nextCommentCommentsReducer(CommentsState prev, NextCommentCommentsAction action) =>
+  prev.startNextCommentComments(action.commentId);
+CommentsState nextCommentCommentsSuccessReducer(CommentsState prev, NextCommentCommentsSuccessAction action) =>
+  prev.addNextCommentComments(action.commentId,action.comments);
+CommentsState nextCommentCommentsFailedReducer(CommentsState prev, NextCommentCommentsFailedAction action) =>
+  prev.stopNextCommentComments(action.commentId);
 
-CommentsState refreshCommentChildrenReducer(CommentsState prev, RefreshCommentChildrenAction action) =>
-  prev.startLoadingNextChildren(action.parentId);
-CommentsState refreshCommentChildrenSuccessReducer(CommentsState prev, RefreshCommentChildrenSuccessAction action) =>
-  prev.refreshPageChildren(action.parentId, action.comments);
-CommentsState refreshCommentChildrenFailedReducer(CommentsState prev, RefreshCommentChildrenFailedAction action) =>
-  prev.startLoadingNextChildren(action.parentId);
-//children
+CommentsState refreshCommentCommentsReducer(CommentsState prev, RefreshCommentCommentsAction action) =>
+  prev.startNextCommentComments(action.commentId);
+CommentsState refreshCommentCommentsSuccessReducer(CommentsState prev, RefreshCommentCommentsSuccessAction action) =>
+  prev.refresCommentComments(action.commentId,action.comments);
+CommentsState refreshCommentCommentsFailedReducer(CommentsState prev, RefreshCommentCommentsFailedAction action) =>
+  prev.stopNextCommentComments(action.commentId);
+//comment comments
 
-//comment user likes
-CommentsState nextCommentUserLikesReducer(CommentsState prev, NextCommentUserLikesAction action) =>
-  prev.startLoadingNextCommentUserLikes(action.commentId);
-CommentsState nextCommentUserLikesSuccessReducer(CommentsState prev, NextCommentUserLikesSuccessAction action) =>
-  prev.addNextCommentUserLikes(action.commentId,action.commentUserLikes);
-CommentsState nextCommentUserLikesFailedReducer(CommentsState prev, NextCommentUserLikesFailedAction action) =>
-  prev.stopLoadingNextCommentUserLikes(action.commentId);
-
-CommentsState refreshCommentUserLikesReducer(CommentsState prev, RefreshCommentUserLikesAction action) =>
-  prev.startLoadingNextCommentUserLikes(action.commentId);
-CommentsState refreshCommentUserLikesSuccessReducer(CommentsState prev, RefreshCommentUserLikesSuccessAction action) =>
-  prev.refreshCommentUserLikes(action.commentId,action.commentUserLikes);
-CommentsState refreshCommentUserLikesFailedReducer(CommentsState prev, RefreshCommentUserLikesFailedAction action) =>
-  prev.stopLoadingNextCommentUserLikes(action.commentId);
-
-CommentsState likeCommentSuccessReducer(CommentsState prev, LikeCommentSuccessAction action) =>
-  prev.like(action.comment, action.commentUserLike);
-CommentsState dislikeCommentSuccessReducer(CommentsState prev, DislikeCommentSuccessAction action) =>
-  prev.dislike(action.comment, action.userId);
-//comment user likes
 
 Reducer<CommentsState> commentsReducer = combineReducers<CommentsState>([
-  TypedReducer<CommentsState, CreateCommentsSuccessAction>(createCommentSuccessReducer).call,
+  TypedReducer<CommentsState, CreateCommentSuccessAction>(createCommentSuccessReducer).call,
   TypedReducer<CommentsState, DeleteCommentSuccessAction>(deleteCommentSuccessReducer).call,
-
-  //question comments
-  TypedReducer<CommentsState, NextQuestionCommentsAction>(nextQuestionCommentsReducer).call,
-  TypedReducer<CommentsState, NextQuestionCommentsSuccessAction>(nextQuestionCommentsSuccessReducer).call,
-  TypedReducer<CommentsState, NextQuestionCommentsFailedAction>(nextQuestionCommentsFailedReducer).call,
-
-  TypedReducer<CommentsState, RefreshQuestionCommentsAction>(refreshQuestionCommentsReducer).call,
-  TypedReducer<CommentsState, RefreshQuestionCommentsSuccessAction>(refreshQuestionCommentsSuccessReducer).call,
-  TypedReducer<CommentsState, RefreshQuestionCommentsFailedAction>(refreshQuestionCommentsFailedReducer).call,
-  //question comments
-
-  //solution comments
-  TypedReducer<CommentsState, NextSolutionCommentsAction>(nextSolutionCommentsReducer).call,
-  TypedReducer<CommentsState, NextSolutionCommentsSuccessAction>(nextSolutionCommentsSuccessReducer).call,
-  TypedReducer<CommentsState, NextSolutionCommentsFailedAction>(nextSolutionCommentsFailedReducer).call,
-
-  TypedReducer<CommentsState, RefreshSolutionCommentsAction>(refreshSolutionCommentsReducer).call,
-  TypedReducer<CommentsState, RefreshSolutionCommentsSuccessAction>(refreshSolutionCommentsSuccessReducer).call,
-  TypedReducer<CommentsState, RefreshSolutionCommentsFailedAction>(refreshSolutionCommentsFailedReducer).call,
-  //solution comments
-
-  //children
-  TypedReducer<CommentsState, NextCommentChildrenAction>(nextCommentChildrenReducer).call,
-  TypedReducer<CommentsState, NextCommentChildrenSuccessAction>(nextCommentChildrenSuccessReducer).call,
-  TypedReducer<CommentsState, NextCommentChildrenFailedAction>(nextCommentChildrenFailedReducer).call,
-
-  TypedReducer<CommentsState, RefreshCommentChildrenAction>(refreshCommentChildrenReducer).call,
-  TypedReducer<CommentsState, RefreshCommentChildrenSuccessAction>(refreshCommentChildrenSuccessReducer).call,
-  TypedReducer<CommentsState, RefreshCommentChildrenFailedAction>(refreshCommentChildrenFailedReducer).call,
-  //children
-
-  //comment user likes
-  TypedReducer<CommentsState, NextCommentUserLikesAction>(nextCommentUserLikesReducer).call,
-  TypedReducer<CommentsState, NextCommentUserLikesSuccessAction>(nextCommentUserLikesSuccessReducer).call,
-  TypedReducer<CommentsState, NextCommentUserLikesFailedAction>(nextCommentUserLikesFailedReducer).call,
-  
-  TypedReducer<CommentsState, RefreshCommentUserLikesAction>(refreshCommentUserLikesReducer).call,
-  TypedReducer<CommentsState, RefreshCommentUserLikesSuccessAction>(refreshCommentUserLikesSuccessReducer).call,
-  TypedReducer<CommentsState, NextCommentUserLikesFailedAction>(nextCommentUserLikesFailedReducer).call,
 
   TypedReducer<CommentsState, LikeCommentSuccessAction>(likeCommentSuccessReducer).call,
   TypedReducer<CommentsState, DislikeCommentSuccessAction>(dislikeCommentSuccessReducer).call,
-  //comment user likes
-]);
 
+  //question comments
+  TypedReducer<CommentsState,NextQuestionCommentsAction>(nextQuestionCommentsReducer).call,
+  TypedReducer<CommentsState,NextQuestionCommentsSuccessAction>(nextQuestionCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,NextQuestionCommentsFailedAction>(nextQuestionCommentsFailedReducer).call,
+
+  TypedReducer<CommentsState,RefreshQuestionCommentsAction>(refreshQuestionCommentsReducer).call,
+  TypedReducer<CommentsState,RefreshQuestionCommentsSuccessAction>(refreshQuestionCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,RefreshQuestionCommentsFailedAction>(refreshQuestionCommentsFailedReducer).call,
+  //question comments
+
+  //solution comments
+  TypedReducer<CommentsState,NextSolutionCommentsAction>(nextSolutionCommentsReducer).call,
+  TypedReducer<CommentsState,NextSolutionCommentsSuccessAction>(nextSolutionCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,NextSolutionCommentsFailedAction>(nextSolutionCommentsFailedReducer).call,
+
+  TypedReducer<CommentsState,RefreshSolutionCommentsAction>(refreshSolutionCommentsReducer).call,
+  TypedReducer<CommentsState,RefreshSolutionCommentsSuccessAction>(refreshSolutionCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,RefreshSolutionCommentsFailedAction>(refreshSolutionCommentsFailedReducer).call,
+  //solution comments
+
+  //comment comments
+  TypedReducer<CommentsState,NextCommentCommentsAction>(nextCommentCommentsReducer).call,
+  TypedReducer<CommentsState,NextCommentCommentsSuccessAction>(nextCommentCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,NextCommentCommentsFailedAction>(nextCommentCommentsFailedReducer).call,
+
+  TypedReducer<CommentsState,RefreshCommentCommentsAction>(refreshCommentCommentsReducer).call,
+  TypedReducer<CommentsState,RefreshCommentCommentsSuccessAction>(refreshCommentCommentsSuccessReducer).call,
+  TypedReducer<CommentsState,RefreshCommentCommentsFailedAction>(refreshCommentCommentsFailedReducer).call,
+  //comment comments
+]);

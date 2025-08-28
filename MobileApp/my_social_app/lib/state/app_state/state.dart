@@ -5,7 +5,8 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/app_state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/app_state/balance_state/balance_state.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/comment_user_like_state.dart';
+import 'package:my_social_app/state/app_state/comment_user_likes_state/comment_user_likes_state.dart';
 import 'package:my_social_app/state/app_state/comments_state/comments_state.dart';
 import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
 import 'package:my_social_app/state/app_state/follows_state/follows_state.dart';
@@ -59,6 +60,8 @@ class AppState{
   final SolutionVotesState solutionVotes;
 
   final CommentsState comments;
+  final CommentUserLikesState commentUserLikes;
+
   final SearchPageState searchPageState;
   final Pagination<int,ExamState> exams;
   final SubjectsState subjects;
@@ -100,6 +103,8 @@ class AppState{
     required this.solutionVotes,
 
     required this.comments,
+    required this.commentUserLikes,
+
     required this.searchPageState,
     required this.exams,
     required this.subjects,
@@ -167,16 +172,19 @@ class AppState{
       questionIncorrectSolutions: const <int, KeyPagination<int>>{},
       questionVideoSolutions: const <int, KeyPagination<int>>{},
     ),
-
     solutionVotes: const SolutionVotesState(
       upvotes: <int, Pagination<int, SolutionUserVoteState>>{},
       downvotes: <int, Pagination<int, SolutionUserVoteState>>{}
     ),
 
-    comments: const CommentsState(
-      questionComments: <int, Pagination<int, CommentState>>{},
-      solutionComments: <int, Pagination<int, CommentState>>{},
-      children: <int, Pagination<int, CommentState>>{},
+    comments: CommentsState(
+      comments: EntityCollection<int, CommentState>(),
+      questionComments: const <int, KeyPagination<int>>{},
+      solutionComments: const <int, KeyPagination<int>>{},
+      commentComments: const <int, KeyPagination<int>>{},
+    ),
+   
+    commentUserLikes: const CommentUserLikesState(
       commentUserLikes: <int, Pagination<int,CommentUserLikeState>>{}
     ),
 
