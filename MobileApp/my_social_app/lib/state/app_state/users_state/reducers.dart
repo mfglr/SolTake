@@ -38,6 +38,13 @@ UsersState unfollowSuccessReducer(UsersState prev, UnfollowSuccessAction action)
   prev.unfollow(action.follower, action.followed);
 //follows
 
+UsersState updateNameSuccessReducer(UsersState prev, UpdateNameSuccessAction action) =>
+  prev.updateName(action.userId, action.name);
+UsersState updateUserNameSuccessReducer(UsersState prev, UpdateUserNameSuccessAction action) =>
+  prev.updateUserName(action.userId, action.userName);
+UsersState updateUserBiographySuccessReducer(UsersState prev, UpdateUserBiographySuccessAction action) =>
+  prev.updateBiography(action.userId, action.biography);
+
 Reducer<UsersState> usersReducer = combineReducers<UsersState>([
   //quesitons
   TypedReducer<UsersState,CreateQuestionSuccessAction>(createQuestionSuccessReducer).call,
@@ -58,4 +65,8 @@ Reducer<UsersState> usersReducer = combineReducers<UsersState>([
   TypedReducer<UsersState,FollowSuccessAction>(followSuccessReducer).call,
   TypedReducer<UsersState,UnfollowSuccessAction>(unfollowSuccessReducer).call,
   //follows
+
+  TypedReducer<UsersState,UpdateNameSuccessAction>(updateNameSuccessReducer).call,
+  TypedReducer<UsersState,UpdateUserNameSuccessAction>(updateUserNameSuccessReducer).call,
+  TypedReducer<UsersState,UpdateUserBiographySuccessAction>(updateUserBiographySuccessReducer).call,
 ]);

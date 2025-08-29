@@ -44,3 +44,42 @@ class UserNotFoundByUserNameAction extends AppAction{
   const UserNotFoundByUserNameAction({required this.userName});
 }
 
+@immutable
+class UpdateNameAction extends AppAction{
+  final String name;
+  const UpdateNameAction({required this.name});
+}
+@immutable
+class UpdateNameSuccessAction extends AppAction{
+  final int userId;
+  final String name;
+  const UpdateNameSuccessAction({required this.userId, required this.name});
+}
+
+@immutable
+class UpdateUserNameAction extends AppAction{
+  final String userName;
+  const UpdateUserNameAction({required this.userName});
+}
+@immutable
+class UpdateUserNameSuccessAction extends AppAction{
+  final int userId;
+  final String userName;
+  const UpdateUserNameSuccessAction({required this.userId,required this.userName});
+}
+
+@immutable
+class UpdateUserBiographyAction extends AppAction{
+  final String biography;
+  const UpdateUserBiographyAction({required this.biography});
+}
+@immutable
+class UpdateUserBiographySuccessAction extends AppAction{
+  final int userId;
+  final String biography;
+  const UpdateUserBiographySuccessAction({required this.userId, required this.biography});
+}
+
+
+
+

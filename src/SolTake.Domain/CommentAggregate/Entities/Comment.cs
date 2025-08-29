@@ -1,8 +1,8 @@
 ﻿using MySocailApp.Domain.CommentAggregate.ValueObjects;
-using SolTake.Domain.QuestionAggregate.Entities;
-using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Core;
 using SolTake.Domain.CommentAggregate.DomainEvents;
+using SolTake.Domain.QuestionAggregate.Entities;
+using SolTake.Domain.SolutionAggregate.Entities;
 
 namespace SolTake.Domain.CommentAggregate.Entities
 {

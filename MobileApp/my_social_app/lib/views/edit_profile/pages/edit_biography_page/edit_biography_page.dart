@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/user.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/actions.dart';
+import 'package:my_social_app/state/app_state/users_state/action.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
@@ -53,7 +53,7 @@ class _EditBiographyPageState extends State<EditBiographyPage> {
           TextButton(
             onPressed: _newBiography != widget.user.biography ? (){
               final store = StoreProvider.of<AppState>(context,listen: false);
-              store.dispatch(UpdateBiographyAction(biography: _newBiography));
+              store.dispatch(UpdateUserBiographyAction(biography: _newBiography));
               Navigator.of(context).pop();
             } : null,
             child: const Icon(Icons.check)

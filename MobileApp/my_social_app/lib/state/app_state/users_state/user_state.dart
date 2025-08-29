@@ -127,11 +127,20 @@ class UserState extends Entity<int> implements Avatar{
   //questions
 
   UserState updateUserName(String userName) => 
-    _optional(newUserName: userName);
+    _optional(
+      newUserName: userName,
+      newUpdatedDate: DateTime.now()
+    );
   UserState updateName(String name) =>
-    _optional(newName: name);
+    _optional(
+      newName: name,
+      newUpdatedDate: DateTime.now()
+    );
   UserState updateBiography(String biography) =>
-    _optional(newBiography: biography);
+    _optional(
+      newBiography: biography,
+      newUpdatedDate: DateTime.now()
+    );
 
   UserState uploadImage(AppFile image) =>
     _optional(newUserImageState: UserImageState(image: image, rate: 0, status: UploadStatus.loading));

@@ -8,7 +8,6 @@ class UsersState {
   final EntityCollection<int, UserState> usersById;
   final EntityCollection<String, UserState> usersByUserName;
 
-
   const UsersState({
     required this.usersById,
     required this.usersByUserName,
@@ -24,14 +23,52 @@ class UsersState {
     );
 
   UsersState loadUsersById(int id) => _optional(newUsersById: usersById.loading(id));
-  UsersState successUsersById(UserState user) => _optional(newUsersById: usersById.success(user.id, user));
+  UsersState successUsersById(UserState user)
+    => _optional(
+        newUsersById: usersById.success(user.id, user),
+        newUsersByUserName: usersByUserName.success(user.userName, user)
+      );
   UsersState failedUsersById(int id) => _optional(newUsersById: usersById.failed(id));
   UsersState notFoundUsersById(int id) => _optional(newUsersById: usersById.notFound(id));
   
   UsersState loadUsersByUserName(String userName) => _optional(newUsersByUserName: usersByUserName.loading(userName));
-  UsersState successUsersByUserName(UserState user) => _optional(newUsersByUserName: usersByUserName.success(user.userName, user));
+  UsersState successUsersByUserName(UserState user)
+    => _optional(
+        newUsersById: usersById.success(user.id, user),
+        newUsersByUserName: usersByUserName.success(user.userName, user)
+      );
   UsersState failedUsersByUserName(String userName) => _optional(newUsersByUserName: usersByUserName.failed(userName));
   UsersState notFoundUsersByUserName(String userName) => _optional(newUsersByUserName: usersByUserName.notFound(userName));
+
+  UsersState updateName(int userId, String name){
+    if(usersById[userId].isNotSuccess) return this;
+    final user = usersById[userId].entity!;
+    return _optional(
+      newUsersById: usersById.successOne(userId, user.updateName(name)),
+      newUsersByUserName: usersByUserName.successOne(user.userName, user.updateName(name))
+    );
+  }
+   
+  UsersState updateUserName(int userId, String userName){
+    if(usersById[userId].isNotSuccess) return this;
+    final user = usersById[userId].entity!;
+    return _optional(
+      newUsersById: usersById.successOne(userId, user.updateUserName(userName)),
+      newUsersByUserName: 
+        usersByUserName
+          .removeOne(user.userName)
+          .successOne(user.userName, user.updateUserName(userName))
+    );
+  }
+
+  UsersState updateBiography(int userId, String biography){
+    if(usersById[userId].isNotSuccess) return this;
+    final user = usersById[userId].entity!;
+    return _optional(
+      newUsersById: usersById.successOne(userId, user.updateBiography(biography)),
+      newUsersByUserName: usersByUserName.successOne(user.userName, user.updateBiography(biography))
+    );
+  }
 
   //questions
   UsersState createQuestion(QuestionState question) =>

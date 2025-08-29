@@ -153,6 +153,9 @@ final store = Store(
      //users
     loadUserByIdMiddleware,
     loadUserByUserNameMiddleware,
+    updateNameMiddleware,
+    updateUserNameMiddleware,
+    updateUserBiographyMidleware,
     //users
 
     //follows

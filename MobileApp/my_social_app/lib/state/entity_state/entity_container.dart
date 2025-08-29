@@ -7,7 +7,8 @@ class EntityContainer<V> {
   final V? entity;
 
   bool get isSuccess => status == EntityStatus.success;
-
+  bool get isNotSuccess => status != EntityStatus.success;
+  
   const EntityContainer._({
     required this.status,
     required this.entity

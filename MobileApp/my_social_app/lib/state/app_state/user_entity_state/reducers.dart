@@ -3,16 +3,6 @@ import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/entity_state/entity_collection/entity_state.dart';
 import 'package:redux/redux.dart';
 
-
-//following ************************************* following//
-
-EntityState<int,UserState> updateUserNameReducer(EntityState<int,UserState> prev,UpdateUserNameSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.updateUserName(action.userName));
-EntityState<int,UserState> updateNameReducer(EntityState<int,UserState> prev, UpdateNameSuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.updateName(action.name));
-EntityState<int,UserState> updateBiographyReducer(EntityState<int,UserState> prev, UpdateBiographySuccessAction action)
-  => prev.updateOne(prev.getValue(action.userId)!.updateBiography(action.biography));
-
 EntityState<int,UserState> uploadUserImageReducer(EntityState<int,UserState> prev,UploadUserImageAction action)
   => prev.updateOne(prev.getValue(action.userId)!.uploadImage(action.image));
 EntityState<int,UserState> uploadUserImageSuccessReducer(EntityState<int,UserState> prev, UploadUserImageSuccessAction action)
@@ -26,12 +16,6 @@ EntityState<int,UserState> changeUserImageRateReducer(EntityState<int,UserState>
 
 
 Reducer<EntityState<int,UserState>> userEntityStateReducers = combineReducers<EntityState<int,UserState>>([
-
-  //followers
-  TypedReducer<EntityState<int,UserState>,UpdateUserNameSuccessAction>(updateUserNameReducer).call,
-  TypedReducer<EntityState<int,UserState>,UpdateNameSuccessAction>(updateNameReducer).call,
-  TypedReducer<EntityState<int,UserState>,UpdateBiographySuccessAction>(updateBiographyReducer).call,
-
   TypedReducer<EntityState<int,UserState>,UploadUserImageAction>(uploadUserImageReducer).call,
   TypedReducer<EntityState<int,UserState>,UploadUserImageSuccessAction>(uploadUserImageSuccessReducer).call,
   TypedReducer<EntityState<int,UserState>,UploadUserImageFailedAction>(uploadUserImageFailedReducer).call,

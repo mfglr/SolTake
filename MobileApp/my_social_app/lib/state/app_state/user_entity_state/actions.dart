@@ -6,42 +6,6 @@ import 'package:my_social_app/views/shared/uploading_circle/uploading_file_statu
 
 
 @immutable
-class UpdateUserNameAction extends AppAction{
-  final String userName;
-  const UpdateUserNameAction({required this.userName});
-}
-@immutable
-class UpdateUserNameSuccessAction extends AppAction{
-  final int userId;
-  final String userName;
-  const UpdateUserNameSuccessAction({required this.userId,required this.userName});
-}
-
-@immutable
-class UpdateNameAction extends AppAction{
-  final String name;
-  const UpdateNameAction({required this.name});
-}
-@immutable
-class UpdateNameSuccessAction extends AppAction{
-  final int userId;
-  final String name;
-  const UpdateNameSuccessAction({required this.userId, required this.name});
-}
-
-@immutable
-class UpdateBiographyAction extends AppAction{
-  final String biography;
-  const UpdateBiographyAction({required this.biography});
-}
-@immutable
-class UpdateBiographySuccessAction extends AppAction{
-  final int userId;
-  final String biography;
-  const UpdateBiographySuccessAction({required this.userId, required this.biography});
-}
-
-@immutable
 class ChangeUploadingUserImageStatusAction extends AppAction{
   final int userId;
   final UploadingFileStatus status;
