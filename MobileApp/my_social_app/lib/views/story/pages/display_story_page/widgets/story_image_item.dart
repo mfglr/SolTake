@@ -69,7 +69,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
       .then((file) => file.readAsBytes())
       .then((list) => setState(() {
         _image = list;
-        _status = MultimediaStatus.done;
+        _status = MultimediaStatus.completed;
       }))
       .catchError((_) => setState(() { _status = MultimediaStatus.notFound; }));
     super.initState();
@@ -97,7 +97,7 @@ class _StoryImageItemState extends State<StoryImageItem> {
                   Center(
                     child: Builder(
                       builder: (context){
-                        if(_status == MultimediaStatus.done){
+                        if(_status == MultimediaStatus.completed){
                           return Image.memory(
                             _image,
                             fit: BoxFit.contain,

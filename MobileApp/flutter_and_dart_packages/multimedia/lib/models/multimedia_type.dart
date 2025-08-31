@@ -1,4 +1,8 @@
-abstract class MultimediaType {
-  static const int image = 0;
-  static const int video = 1;
+import 'package:json_annotation/json_annotation.dart';
+
+enum MultimediaType {
+  @JsonValue(0)
+  image,
+  @JsonValue(1)
+  video
 }

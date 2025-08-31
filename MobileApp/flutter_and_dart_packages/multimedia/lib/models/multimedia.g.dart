@@ -14,7 +14,8 @@ Multimedia _$MultimediaFromJson(Map<String, dynamic> json) => Multimedia(
       height: (json['height'] as num).toDouble(),
       width: (json['width'] as num).toDouble(),
       duration: (json['duration'] as num).toDouble(),
-      multimediaType: (json['multimediaType'] as num).toInt(),
+      multimediaType:
+          $enumDecode(_$MultimediaTypeEnumMap, json['multimediaType']),
     );
 
 Map<String, dynamic> _$MultimediaToJson(Multimedia instance) =>
@@ -26,5 +27,10 @@ Map<String, dynamic> _$MultimediaToJson(Multimedia instance) =>
       'height': instance.height,
       'width': instance.width,
       'duration': instance.duration,
-      'multimediaType': instance.multimediaType,
+      'multimediaType': _$MultimediaTypeEnumMap[instance.multimediaType]!,
     };
+
+const _$MultimediaTypeEnumMap = {
+  MultimediaType.image: 0,
+  MultimediaType.video: 1,
+};

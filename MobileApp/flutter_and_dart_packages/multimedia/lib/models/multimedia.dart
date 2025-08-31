@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:multimedia/models/media.dart';
+import 'package:multimedia/models/multimedia_type.dart';
+import 'package:multimedia/models/remote_image.dart';
+import 'package:multimedia/models/remote_video.dart';
 part 'multimedia.g.dart';
 
-@immutable
 @JsonSerializable()
+@immutable
 class Multimedia{
   final String containerName;
   final String blobName;
@@ -12,7 +16,7 @@ class Multimedia{
   final double height;
   final double width;
   final double duration;
-  final int multimediaType;
+  final MultimediaType multimediaType;
 
   double get aspectRatio => width / height;
   
@@ -29,4 +33,23 @@ class Multimedia{
 
   factory Multimedia.fromJson(Map<String, dynamic> json) => _$MultimediaFromJson(json);
   Map<String, dynamic> toJson() => _$MultimediaToJson(this);
+
+  Media toMedia() => 
+    multimediaType == MultimediaType.image
+      ? RemoteImage(
+          blobName: blobName,
+          containerName: containerName,
+          height: height,
+          width: width,
+          size: size
+        )
+      : RemoteVideo(
+          blobName: blobName,
+          containerName: containerName,
+          height: height,
+          width: width,
+          size: size,
+          blobNameOfFrame: blobNameOfFrame,
+          duration: duration
+        );
 }

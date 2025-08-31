@@ -1,5 +1,8 @@
 enum MultimediaStatus{
+  created,
   started,
-  done,
+  processing,
+  completed,
+  failed,
   notFound
 }
