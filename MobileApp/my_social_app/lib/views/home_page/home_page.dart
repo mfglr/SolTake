@@ -12,7 +12,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';
-import 'package:my_social_app/views/home_page/widgets/uploadings_button.dart';
 import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
@@ -68,7 +67,6 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text("SolTake"),
           actions: const [
-            UploadingsButton(),
             NotificationButton(),
           ],
         ),
@@ -121,5 +119,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  
   }
 }

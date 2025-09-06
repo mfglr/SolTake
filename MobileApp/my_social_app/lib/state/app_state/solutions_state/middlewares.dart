@@ -4,8 +4,6 @@ import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
 import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -17,15 +15,11 @@ void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
         action.questionId,
         action.content,
         action.medias,
-        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id, rate: rate))
+        (rate){}
       )
       .then((solution){
         store.dispatch(CreateSolutionSuccessAction(solution: solution.toSolutionState()));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
-      })
-      .catchError((e){
-        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
-        throw e;
       });
   }
   next(action);

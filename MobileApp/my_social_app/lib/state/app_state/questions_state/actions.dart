@@ -1,5 +1,5 @@
-import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/media/models/local_media.dart';
 import 'package:my_social_app/state/app_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
 
@@ -32,7 +32,7 @@ class CreateQuestionAction extends AppAction{
   final int subjectId;
   final int? topicId;
   final String content;
-  final Iterable<AppFile> medias;
+  final Iterable<LocalMedia> medias;
 
   const CreateQuestionAction({
     required this.id,

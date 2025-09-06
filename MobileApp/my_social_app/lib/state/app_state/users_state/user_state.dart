@@ -1,11 +1,8 @@
-import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/state/app_state/avatar.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_image_state.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/user_story_state.dart';
+import 'package:my_social_app/state/app_state/users_state/user_story_state.dart';
 import 'package:my_social_app/state/entity_state/entity.dart';
 
 @immutable
@@ -22,7 +19,6 @@ class UserState extends Entity<int> implements Avatar{
   final bool isFollowed;
   final Multimedia? image;
   final Iterable<UserStoryState> stories;
-  final UserImageState? userImageState;
 
   @override
   Multimedia? get avatar => image;
@@ -51,7 +47,6 @@ class UserState extends Entity<int> implements Avatar{
     required this.isFollower,
     required this.isFollowed,
     required this.image,
-    required this.userImageState,
     required this.stories
   });
 
@@ -66,7 +61,6 @@ class UserState extends Entity<int> implements Avatar{
     bool? newIsFollower,
     bool? newIsFollowed,
     Multimedia? newImage,
-    UserImageState? newUserImageState
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -81,7 +75,6 @@ class UserState extends Entity<int> implements Avatar{
     isFollowed: newIsFollowed ?? isFollowed,
     image: newImage ?? image,
     stories: stories,
-    userImageState: newUserImageState ?? userImageState,
   );
 
   FollowState toFollower(int id) => 
@@ -141,15 +134,4 @@ class UserState extends Entity<int> implements Avatar{
       newBiography: biography,
       newUpdatedDate: DateTime.now()
     );
-
-  UserState uploadImage(AppFile image) =>
-    _optional(newUserImageState: UserImageState(image: image, rate: 0, status: UploadStatus.loading));
-  UserState uploadImageSuccess(Multimedia image) => 
-    _optional(newImage: image, newUserImageState: userImageState?.success());
-  UserState uploadImageFailed() =>
-    _optional(newUserImageState: userImageState?.failed());
-  UserState removeImage() => 
-    _optional(newImage: null);
-  UserState changeRate(rate)
-    => _optional(newUserImageState: userImageState?.changeRate(rate));
 }

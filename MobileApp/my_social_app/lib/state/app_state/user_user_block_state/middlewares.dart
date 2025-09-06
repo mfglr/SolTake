@@ -6,11 +6,12 @@ import 'package:my_social_app/state/app_state/user_user_block_state/selectors.da
 import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/actions.dart';
 import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
+import 'package:my_social_app/state/app_state/users_state/selectors.dart';
 import 'package:redux/redux.dart';
 
 void blockUserMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is BlockUserAction){
-    final user = store.state.userEntityState.getValue(action.userId)!;
+    final user = selectUserById(store, action.userId).entity!;
     UserUserBlockService()
       .create(action.userId)
       .then((response){

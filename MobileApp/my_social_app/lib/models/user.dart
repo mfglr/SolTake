@@ -59,7 +59,6 @@ class User{
         isFollower: isFollower,
         isFollowed: isFollowed,
         image: image,
-        userImageState: null,
         stories: stories.map((e) => e.toState())
       );
 }

@@ -9,8 +9,6 @@ import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_state.dart';
-import 'package:my_social_app/views/display_uploads_page/widgets/upload_items.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/enums/message_deletion_type.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/delete_messages_dialog/delete_messages_dialog.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_connection_widget/message_connection_widget.dart';
@@ -232,10 +230,6 @@ class _ConversationPageState extends State<ConversationPage>{
                               : const SpaceSavingWidget()
                           ),
                           ...messages.toList().reversed.map(_generateMessageItem),
-                          StoreConnector<AppState,Iterable<UploadState>>(
-                            converter: (store) => store.state.uploadEntityState.getUploadMessages(widget.userId),
-                            builder: (context,items) => UploadItems(items: items),
-                          )
                         ]
                       )
                     );

@@ -6,9 +6,6 @@ import 'package:my_social_app/state/app_state/questions_state/actions.dart';
 import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
 import 'package:my_social_app/state/app_state/search_page_state/selectors.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_question_state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
@@ -35,21 +32,18 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
 void createQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
-    if(action.medias.isNotEmpty){
-      store.dispatch(ChangeUploadStateAction(state: UploadQuestionState.init(action)));
-    }
     QuestionService()
       .createQuestion(
-        action.medias,action.examId,action.subjectId,action.topicId,action.content,
-        (rate) => store.dispatch(ChangeUploadRateAction(id: action.id,rate: rate))
+        action.medias,
+        action.examId,
+        action.subjectId,
+        action.topicId,
+        action.content,
+        (rate){}
       )
       .then((question) {
         store.dispatch(CreateQuestionSuccessAction(question: question.toQuestionState()));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
-      })
-      .catchError((e){
-        store.dispatch(ChangeUploadStatusAction(id: action.id,status: UploadStatus.failed));
-        throw e;
       });
   }
   next(action);

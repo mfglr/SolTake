@@ -45,7 +45,6 @@ import 'package:my_social_app/state/app_state/topics_state/middlewares.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/middlewares.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/middlewares.dart';
@@ -139,7 +138,6 @@ final store = Store(
 
     stories: EntityState(),
 
-    userEntityState: EntityState(),
     userMessageState: EntityState(),
 
     login: Login.loading(),
@@ -147,7 +145,6 @@ final store = Store(
     messageEntityState: EntityState(),
     conversations: Pagination.init(conversationsPerPage,true),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    uploadEntityState: UploadEntityState.init()
   ),
   middleware: [
      //users

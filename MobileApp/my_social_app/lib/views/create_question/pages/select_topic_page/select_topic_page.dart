@@ -3,6 +3,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/question.dart';
+import 'package:my_social_app/media/models/local_media.dart';
+import 'package:my_social_app/media/pages/select_directory_page/select_directory_page.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/app_state/topics_state/actions.dart';
 import 'package:my_social_app/state/app_state/topics_state/selectors.dart';
@@ -13,7 +15,6 @@ import 'package:my_social_app/views/create_question/pages/select_topic_page/widg
 import 'package:my_social_app/views/create_question/widgets/create_question_button/create_question_button.dart';
 import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
-import 'package:my_social_app/views/create_question/pages/add_question_medias_page/add_question_medias_page.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
@@ -37,7 +38,7 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
   void _createQuestion() =>
     Navigator
       .of(context)
-      .pop((content: _content,topicId: _topic?.id, medias: const Iterable<AppFile>.empty()));
+      .pop((content: _content, topicId: _topic?.id, medias: const Iterable<AppFile>.empty()));
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +98,16 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
               onPressed: () =>
                 Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (context) => const AddQuestionMediasPage()))
-                  .then((value){
-                    if(value == null) return;
-                    if(context.mounted){
-                      Navigator
-                        .of(context)
-                        .pop((content: _content, topicId: _topic?.id, medias: value));
-                    }
+                  .push<Iterable<LocalMedia>?>(MaterialPageRoute(
+                    builder: (context) => const SelectDirectoryPage(
+                      maxNumberOfMediax: 5
+                    )
+                  ))
+                  .then((medias){
+                    if(medias == null || !context.mounted) return;
+                    Navigator
+                      .of(context)
+                      .pop((content: _content, topicId: _topic?.id, medias: medias));
                   }),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

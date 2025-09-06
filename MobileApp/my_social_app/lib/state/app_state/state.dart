@@ -34,7 +34,6 @@ import 'package:my_social_app/state/app_state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/topic_request_state.dart';
 import 'package:my_social_app/state/app_state/topics_state/topics_state.dart';
 import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_entity_state.dart';
 import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/app_state/users_state/user_state.dart';
 import 'package:my_social_app/state/app_state/users_state/users_state.dart';
@@ -82,7 +81,6 @@ class AppState{
   final Pagination<int,SubjectRequestState> subjectRequests;
   final Pagination<int,TopicRequestState> topicRequests;
 
-  final EntityState<int,UserState> userEntityState;
   final EntityState<int,UserMessageState> userMessageState;
 
   final Pagination<int,NotificationState> notifications;
@@ -90,7 +88,6 @@ class AppState{
   final EntityState<int,MessageState> messageEntityState;
   final Pagination<int,Id<int>> conversations;
   final PolicyState policyState;
-  final UploadEntityState uploadEntityState;
 
   const AppState({
     required this.users,
@@ -125,7 +122,6 @@ class AppState{
     required this.stories,
     required this.topicRequests,
 
-    required this.userEntityState,
     required this.userMessageState,
 
     required this.conversations,
@@ -133,7 +129,6 @@ class AppState{
     required this.notifications,
     required this.messageEntityState,
     required this.policyState,
-    required this.uploadEntityState
   });
 
   AppState clear() => AppState(
@@ -212,7 +207,6 @@ class AppState{
     subjectRequests: Pagination.init(subjectRequestsPerPage, true),
     topicRequests: Pagination.init(topicRequestsPerPage, true),
     
-    userEntityState: EntityState(),
     userMessageState: EntityState(),
 
     conversations: Pagination.init(conversationsPerPage,true),
@@ -221,7 +215,6 @@ class AppState{
     notifications: Pagination.init(notificationsPerPage, true),
     messageEntityState: EntityState(),
     policyState: const PolicyState(privacyPolicies: {}, termOfUses: {}),
-    uploadEntityState: UploadEntityState.init()
   );
 
 

@@ -8,7 +8,6 @@ import 'package:my_social_app/state/app_state/state.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/create_message_medias_page.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:take_media/pages/take_media_page.dart';
-import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
@@ -104,25 +103,26 @@ class _MessageTextFieldState extends State<MessageTextField> {
                 onPressed: (){
                   _messageContentController.text = "";
                   _messageContentController.clear();
-                  TakeMediaFromGalleryService()
-                    .getMedias()
-                    .then(
-                      (medias){
-                        if(medias.isNotEmpty && context.mounted){
-                          Navigator
-                            .of(context)
-                            .push(
-                              MaterialPageRoute(
-                                builder: (context) => CreateMessageMediasPage(
-                                  medias: medias,
-                                  receiverId: widget.receiverId,
-                                  scrollController: widget.scrollController,
-                                )
-                              )
-                            );
-                        }
-                      }
-                    );
+                  
+                  // TakeMediaFromGalleryService()
+                  //   .getMedias()
+                  //   .then(
+                  //     (medias){
+                  //       if(medias.isNotEmpty && context.mounted){
+                  //         Navigator
+                  //           .of(context)
+                  //           .push(
+                  //             MaterialPageRoute(
+                  //               builder: (context) => CreateMessageMediasPage(
+                  //                 medias: medias,
+                  //                 receiverId: widget.receiverId,
+                  //                 scrollController: widget.scrollController,
+                  //               )
+                  //             )
+                  //           );
+                  //       }
+                  //     }
+                  //   );
                 },
 
                 icon: const Icon(

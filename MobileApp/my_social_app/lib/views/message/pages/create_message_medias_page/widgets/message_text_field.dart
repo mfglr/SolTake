@@ -1,7 +1,6 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:take_media/pages/take_media_page.dart';
-import 'package:take_media_from_gallery/take_media_from_gallery.dart';
 
 class MessageTextField extends StatefulWidget {
   final String hintText;
@@ -83,15 +82,17 @@ class _MessageTextFieldState extends State<MessageTextField> {
               suffixIcon: IconButton(
                 onPressed: (){
                   if(!widget.validateNumberOfMedias()) return;
-                  TakeMediaFromGalleryService()
-                    .getMedias()
-                    .then(
-                      (medias){
-                        if(medias.isNotEmpty && context.mounted){
-                          widget.addMedias(medias);
-                        }
-                      }
-                    );
+                  
+                  // TakeMediaFromGalleryService()
+                  //   .getMedias()
+                  //   .then(
+                  //     (medias){
+                  //       if(medias.isNotEmpty && context.mounted){
+                  //         widget.addMedias(medias);
+                  //       }
+                  //     }
+                  //   );
+
                 },
                 icon: const Icon(
                   Icons.photo_library_outlined,

@@ -1,9 +1,9 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/solution.dart';
+import 'package:my_social_app/media/pages/select_directory_page/select_directory_page.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page_texts.dart';
-import 'package:my_social_app/views/create_solution/pages/add_solution_medias_page/add_solution_medias_page.dart';
 import 'package:my_social_app/views/create_solution/widgets/create_solution_button/create_solution_button.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
@@ -68,7 +68,7 @@ class _AddSolutionContentPageState extends State<AddSolutionContentPage> {
               onPressed: () => 
                 Navigator
                   .of(context)
-                  .push(MaterialPageRoute(builder: (context) => const AddSolutionMediasPage()))
+                  .push(MaterialPageRoute(builder: (context) => const SelectDirectoryPage()))
                   .then((medias){
                     if(medias == null) return;
                     if(context.mounted){

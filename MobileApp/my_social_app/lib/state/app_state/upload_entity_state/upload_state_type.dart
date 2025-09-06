@@ -1,3 +1,0 @@
-enum UploadingStateType {
-  question,
-}

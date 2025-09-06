@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
+import 'package:my_social_app/media/models/local_media.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/entity_state/page.dart';
@@ -16,7 +16,7 @@ class QuestionService{
   static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future<MultipartRequest> _createQuestionRequest(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content) async{
+  Future<MultipartRequest> _createQuestionRequest(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
@@ -32,7 +32,7 @@ class QuestionService{
     return request;
   }
 
-  Future<Question> createQuestion(Iterable<AppFile> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
+  Future<Question> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
     var request = await _createQuestionRequest(medias,examId,subjectId,topicId,content);
     var data = await _appClient.postStream(request, callback);
     return Question.fromJson(jsonDecode(data));

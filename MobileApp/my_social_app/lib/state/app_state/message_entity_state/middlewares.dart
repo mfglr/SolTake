@@ -2,9 +2,6 @@ import 'package:my_social_app/services/message_hub.dart';
 import 'package:my_social_app/services/message_service.dart';
 import 'package:my_social_app/state/app_state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/actions.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_message_state.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/upload_status.dart';
 import 'package:my_social_app/state/app_state/user_message_state/actions.dart';
 import 'package:redux/redux.dart';
 
@@ -22,22 +19,16 @@ void createMessageMiddleware(Store<AppState> store,action,NextDispatcher next){
 
 void createMessageWithMediasMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateMessageWithMediasAction){
-    store.dispatch(ChangeUploadStateAction(state: UploadMessageState.init(action)));
     MessageService()
       .createMessage(
         action.receiverId,
         action.content,
         action.medias,
-        (rate) => store.dispatch(ChangeUploadRateAction(rate: rate, id: action.id))
+        (rate){}
       )
       .then((message){
         store.dispatch(AddMessageAction(message: message.toMessageState()));
         store.dispatch(AddUserMessageAction(userId: action.receiverId,messageId: message.id));
-        store.dispatch(RemoveUploadStateAction(id: action.id));
-      })
-      .catchError((e){
-        store.dispatch(ChangeUploadStatusAction(status: UploadStatus.failed, id: action.id));
-        throw e;
       });
   }
   next(action);

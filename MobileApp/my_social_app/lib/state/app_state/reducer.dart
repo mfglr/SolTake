@@ -26,8 +26,6 @@ import 'package:my_social_app/state/app_state/subjects_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topic_requests_state/reducers.dart';
 import 'package:my_social_app/state/app_state/topics_state/reducers.dart';
 import 'package:my_social_app/state/app_state/transaction_state/reducers.dart';
-import 'package:my_social_app/state/app_state/upload_entity_state/reducers.dart';
-import 'package:my_social_app/state/app_state/user_entity_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_message_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_block_state/reducers.dart';
 import 'package:my_social_app/state/app_state/user_user_conversation_state/reducers.dart';
@@ -63,7 +61,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   userUserConversations: userUserConversationReducers(prev.userUserConversations,action),
   balance: balanceReducers(prev.balance, action),
   aiModels: aiModelReducers(prev.aiModels, action),
-  userEntityState: userEntityStateReducers(prev.userEntityState, action),
   userMessageState: userMessageReducers(prev.userMessageState, action),
   transactions: transactionReducers(prev.transactions, action),
   login: loginReducers(prev.login,action),
@@ -76,7 +73,6 @@ AppState appReducer(AppState prev,AppAction action) => AppState(
   messageEntityState: messageEntityStateReducers(prev.messageEntityState,action),
   conversations: conversationsReducer(prev.conversations,action),
   policyState: policyReducers(prev.policyState,action),
-  uploadEntityState: uploadingEntityStateReducers(prev.uploadEntityState, action)
 );
 
 Reducer<AppState> reducers = combineReducers<AppState>([
