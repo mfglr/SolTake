@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/views/display_abstract_user_solved_questions_page/display_abstract_user_solved_questions_page.dart';
 import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page.dart';
 import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page.dart';

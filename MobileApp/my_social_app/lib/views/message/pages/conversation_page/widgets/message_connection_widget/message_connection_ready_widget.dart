@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_connection_entity_state/message_connection_state.dart';
+import 'package:my_social_app/state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_connection_widget/message_connection_status_widget/message_connection_status_widget.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';

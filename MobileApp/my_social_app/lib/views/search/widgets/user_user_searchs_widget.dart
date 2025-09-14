@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
+import 'package:my_social_app/state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/views/search/widgets/user_user_search_widget.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
 

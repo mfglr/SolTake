@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
+import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_bottom_text_content.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/question/pages/display_question_page/display_question_page.dart';

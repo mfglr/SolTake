@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
+import 'package:my_social_app/state/comments_state/comment_state.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_content_widget.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_like_button.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_popup_menu/comment_popup_menu.dart';

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/selectors.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/selectors.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 
 class DisplayUserImagePage extends StatefulWidget {
   final int userId;
@@ -27,39 +27,39 @@ class _DisplayUserImagePageState extends State<DisplayUserImagePage> {
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            Center(
-              child: GestureDetector(
-                onScaleStart: (details){
-                  setState(() {
-                    _initial = details.focalPoint;
-                  });
-                },
-                onScaleUpdate: (details){
-                  setState(() {
-                    _scale = details.scale;
-                    _offset = details.focalPoint - _initial;
-                  });
-                },
-                onScaleEnd: (details){
-                  setState(() {
-                    _scale = 1;
-                    _offset = Offset.zero;
-                  });
-                },
-                child: Transform.translate(
-                  offset: _offset,
-                  child: Transform.scale(
-                    scale: _scale,
-                    child: MultimediaImagePlayer(
-                      media: state.image,
-                      blobServiceUrl: AppClient.blobService,
-                      notFoundImagePath: "assets/images/no_profile_image.png",
-                      noImagePath: "assets/images/no_profile_image.png",
-                    ),
-                  ),
-                ),
-              )
-            ),
+            // Center(
+            //   child: GestureDetector(
+            //     onScaleStart: (details){
+            //       setState(() {
+            //         _initial = details.focalPoint;
+            //       });
+            //     },
+            //     onScaleUpdate: (details){
+            //       setState(() {
+            //         _scale = details.scale;
+            //         _offset = details.focalPoint - _initial;
+            //       });
+            //     },
+            //     onScaleEnd: (details){
+            //       setState(() {
+            //         _scale = 1;
+            //         _offset = Offset.zero;
+            //       });
+            //     },
+            //     child: Transform.translate(
+            //       offset: _offset,
+            //       child: Transform.scale(
+            //         scale: _scale,
+            //         child: MultimediaImagePlayer(
+            //           media: state.image,
+            //           blobServiceUrl: AppClient.blobService,
+            //           notFoundImagePath: "assets/images/no_profile_image.png",
+            //           noImagePath: "assets/images/no_profile_image.png",
+            //         ),
+            //       ),
+            //     ),
+            //   )
+            // ),
             Positioned(
               top: 15,
               right: 0,

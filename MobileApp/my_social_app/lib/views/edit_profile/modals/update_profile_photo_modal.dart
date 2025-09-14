@@ -1,11 +1,11 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/selectors.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/app_state/users_state/action.dart';
+import 'package:my_social_app/state/login_state/login_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/selectors.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/action.dart';
 import 'package:my_social_app/views/edit_profile/modals/update_profile_photot_modal_texts.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/shared/loading_view.dart';

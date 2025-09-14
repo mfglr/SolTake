@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/app_state/users_state/selectors.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/selectors.dart';
 import 'package:my_social_app/views/display_abstract_user_solved_questions_page/display_abstract_user_solved_questions_page.dart';
 import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page.dart';
 import 'package:my_social_app/views/display_abstracts_user_questions_page/display_abstracts_user_questions_page.dart';

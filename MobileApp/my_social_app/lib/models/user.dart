@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/packages/media/models/multimedia.dart';
 import 'package:my_social_app/models/user_story.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 part "user.g.dart";
 
 @immutable

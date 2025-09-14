@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/packages/media/models/multimedia.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 part 'question.g.dart';
 
 @immutable
@@ -67,7 +67,7 @@ class Question{
     exam: exam.toExamState(),
     subject: subject.toSubjectState(),
     topic: topic?.toTopicState(),
-    medias: medias,
+    medias: medias.map((e) => e.toMedia()),
     isLiked: isLiked,
     isSaved: isSaved,
     publishingState: publishingState,

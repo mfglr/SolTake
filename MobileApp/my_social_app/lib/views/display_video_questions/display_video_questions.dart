@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/question_video_page_slider.dart';
 
 class DisplayVideoQuestions extends StatelessWidget {

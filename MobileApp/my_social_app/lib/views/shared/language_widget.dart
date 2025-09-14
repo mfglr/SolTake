@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/models/languages.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/state.dart';
 
 class LanguageWidget extends StatelessWidget {
   final Widget Function(String) child;

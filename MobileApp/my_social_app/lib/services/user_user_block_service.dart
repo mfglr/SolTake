@@ -1,7 +1,7 @@
 import 'package:my_social_app/models/id_response.dart';
 import 'package:my_social_app/models/user_user_block.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 
 class UserUserBlockService {
   static const _controllerName = "UserUserBlocks";

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_user_search_state/actions.dart';
-import 'package:my_social_app/state/app_state/user_user_search_state/user_user_search_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_user_search_state/actions.dart';
+import 'package:my_social_app/state/user_user_search_state/user_user_search_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 

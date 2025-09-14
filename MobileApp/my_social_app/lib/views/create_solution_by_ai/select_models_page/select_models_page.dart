@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/ai_model_state/actions.dart';
-import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
-import 'package:my_social_app/state/app_state/ai_model_state/selectors.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/entity_container.dart';
-import 'package:my_social_app/state/entity_state/entity_status.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/ai_model_state/actions.dart';
+import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
+import 'package:my_social_app/state/ai_model_state/selectors.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/packages/entity_state/entity_status.dart';
+import 'package:my_social_app/packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page_texts.dart';
 // import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sorting_menu_widget/sorting_button_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
@@ -62,16 +62,16 @@ class _SelectModelsPageState extends State<SelectModelsPage> {
               //     fontWeight: FontWeight.bold
               //   ),
               // ),
-              StoreConnector<AppState, EntityContainer<QuestionState>>(
-                onInit: (store) => 
-                  loadIfNotLoading(
-                    store,
-                    selectQuestion(store, widget.questionId),
-                    LoadQuestionAction(questionId: widget.questionId)
-                  ),
+              StoreConnector<AppState, EntityContainer<int, QuestionState>>(
+                // onInit: (store) => 
+                //   loadIfNotLoading(
+                //     store,
+                //     selectQuestion(store, widget.questionId),
+                //     LoadQuestionAction(questionId: widget.questionId)
+                //   ),
                 converter: (store) => selectQuestion(store, widget.questionId),
                 builder: (context, container){
-                  if(container.status == EntityStatus.success){
+                  if(container.status == EntityStatus.loadSuccess){
                     return AiModelsWidget(
                       aiModels: aiModels,
                       question: container.entity!

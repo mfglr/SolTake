@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/login_state/actions.dart';
+import 'package:my_social_app/state/state.dart';
 
 GoogleSignIn googleSignIn = GoogleSignIn();
 

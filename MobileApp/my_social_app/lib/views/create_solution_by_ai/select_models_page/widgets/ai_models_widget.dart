@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/ai_model_widget.dart';
 
 class AiModelsWidget extends StatelessWidget {

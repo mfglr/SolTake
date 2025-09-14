@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
+import 'package:my_social_app/state/transaction_state/transaction_state.dart';
 import 'package:my_social_app/views/profile/pages/display_balance_page/widgets/transaction_widget/transaction_widget.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
 

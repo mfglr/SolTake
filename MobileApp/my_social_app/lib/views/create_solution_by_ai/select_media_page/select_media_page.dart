@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_grid/multimedias_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/packages/media/wigets/medias_grid/medias_grid.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page.dart';
 import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/extract_video_frame_page.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page_texts.dart';
@@ -27,48 +28,46 @@ class SelectMediaPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          MultimediasGrid(
+          MediasGrid(
             medias: question.medias,
-            blobServiceUrl: AppClient.blobService,
-            noMediaPath: noMediaAssetPath,
-            notFoundMediaPath: noMediaAssetPath,
-            onTap: (index){
-              var media = question.medias.elementAt(index);
-              if(media.multimediaType == MultimediaType.video){
-                Navigator
-                  .of(context)
-                  .push(MaterialPageRoute(builder: (context) => ExtractVideoFramePage(media: media)))
-                  .then((value){
-                    if(value != null && context.mounted){
-                      Navigator
-                        .of(context)
-                        .pop((
-                          position: value.position,
-                          blobName: media.blobName,
-                          prompt: value.prompt,
-                          isHighResulation: value.isHighResulation
-                        ));
-                    }
-                  });
-              }
-              else{
-                Navigator
-                  .of(context)
-                  .push(MaterialPageRoute(builder: (context) => CreatePromptPage(position: 0, media: media)))
-                  .then((value){
-                    if(value != null && context.mounted){
-                      Navigator
-                        .of(context)
-                        .pop((
-                          position: null,
-                          blobName: media.blobName,
-                          prompt: value.prompt,
-                          isHighResulation: value.isHighResulation
-                        ));
-                    }
-                  });
-              }
-            },
+            numberOfColumn: 2,
+            // onTap: (index){
+            //   var media = question.medias.elementAt(index);
+            //   if(media.multimediaType == MultimediaType.video){
+            //     Navigator
+            //       .of(context)
+            //       .push(MaterialPageRoute(builder: (context) => ExtractVideoFramePage(media: media)))
+            //       .then((value){
+            //         if(value != null && context.mounted){
+            //           Navigator
+            //             .of(context)
+            //             .pop((
+            //               position: value.position,
+            //               blobName: media.blobName,
+            //               prompt: value.prompt,
+            //               isHighResulation: value.isHighResulation
+            //             ));
+            //         }
+            //       });
+            //   }
+            //   else{
+            //     Navigator
+            //       .of(context)
+            //       .push(MaterialPageRoute(builder: (context) => CreatePromptPage(position: 0, media: media)))
+            //       .then((value){
+            //         if(value != null && context.mounted){
+            //           Navigator
+            //             .of(context)
+            //             .pop((
+            //               position: null,
+            //               blobName: media.blobName,
+            //               prompt: value.prompt,
+            //               isHighResulation: value.isHighResulation
+            //             ));
+            //         }
+            //       });
+              // }
+            // },
           )
         ],
       ),

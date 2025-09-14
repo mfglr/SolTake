@@ -1,6 +1,6 @@
 import 'package:my_social_app/models/user_user_conversation.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 
 class UserUserConversationService{
   static const _controllerName = "UserUserConversations";

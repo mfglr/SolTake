@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/solution_votes_state/actions.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/store.dart';
+import 'package:my_social_app/state/solution_votes_state/actions.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/store.dart';
 
 class DownvoteButton extends StatelessWidget {
   final SolutionState solution;

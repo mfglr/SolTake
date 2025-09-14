@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
+import 'package:my_social_app/state/story_state/story_circle_state.dart';
 import 'package:my_social_app/views/story/widgets/story_circle_widget.dart';
 
 class StoryCirclesWidget extends StatelessWidget {

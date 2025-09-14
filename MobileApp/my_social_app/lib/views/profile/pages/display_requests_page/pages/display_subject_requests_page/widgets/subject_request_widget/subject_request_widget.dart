@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/subject_request_state/subject_request_state.dart';
+import 'package:my_social_app/state/subject_request_state/subject_request_state.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/widgets/delete_subject_request_button/delete_subject_requests_button.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/request_date_widget.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/request_row.dart';

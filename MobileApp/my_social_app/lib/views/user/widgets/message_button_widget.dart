@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/conversation_page.dart';
 
 class MessageButtonWidget extends StatelessWidget {

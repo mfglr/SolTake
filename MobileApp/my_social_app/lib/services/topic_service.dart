@@ -1,6 +1,6 @@
 import 'package:my_social_app/models/topic.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 
 class TopicService{
   static const String _controller = "Topics";

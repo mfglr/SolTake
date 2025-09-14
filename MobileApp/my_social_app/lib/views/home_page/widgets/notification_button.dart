@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/notifications_state.dart/actions.dart';
-import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/notifications_state.dart/actions.dart';
+import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:badges/badges.dart' as badges;
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
-import 'package:my_social_app/state/app_state/solutions_state/actions.dart';
-import 'package:my_social_app/state/app_state/solutions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/solutions_state/actions.dart';
+import 'package:my_social_app/state/solutions_state/selectors.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/key_pagination.dart';
 import 'package:my_social_app/views/solution/pages/display_question_incorrect_solutions_page/display_question_incorrect_solutions_page.dart';
 import 'package:my_social_app/views/solution/widgets/no_incorrect_solutions_widget/no_incorrect_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_abstract_items.dart';

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/entity_state/key_pagination.dart';
-import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page/display_user_unsolved_questions_page_constants.dart';
-import 'package:my_social_app/views/question/widgets/question_items.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/container_pagination.dart';
+import 'package:my_social_app/views/question/widgets/question_container/question_containers_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 
-class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
+class DisplayUserUnsolvedQuestionsPage extends StatefulWidget {
   final UserState user;
   final int? firstDisplayedQuestionId;
 
@@ -23,46 +24,79 @@ class DisplayUserUnsolvedQuestionsPage extends StatelessWidget {
   });
 
   @override
+  State<DisplayUserUnsolvedQuestionsPage> createState() => _DisplayUserUnsolvedQuestionsPageState();
+}
+
+class _DisplayUserUnsolvedQuestionsPageState extends State<DisplayUserUnsolvedQuestionsPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _onScrollBottom() => onScrollBottom(
+    _scrollController,
+    (){
+      final store = StoreProvider.of<AppState>(context, listen: false);
+      getNextEntitiesIfReady(
+        store,
+        selectUserUnsolvedQuestions(store, widget.user.id),
+        NextUserUnsolvedQuestionsAction(userId: widget.user.id)
+      );
+    }
+  );
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onScrollBottom);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScrollBottom);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        final paginatin = selectUserUnsolvedQuestionPagination(store, user.id);
-        if(!paginatin.loadingNext){
-          store.dispatch(RefreshUserUnsolvedQuestionsAction(userId: user.id));
-        }
-        return onUserUnsolvedQuestionsLoaded(store, user.id);
+        refreshEntities(
+          store,
+          selectUserUnsolvedQuestions(store, widget.user.id),
+          RefreshUserUnsolvedQuestionsAction(userId: widget.user.id)
+        );
+        return onUserUnsolvedQuestionsLoaded(store, widget.user.id);
       },
       child: Scaffold(
         appBar: AppBar(
           leading: const AppBackButtonWidget(),
           title: Text(
-            "${user.userName}${AppLocalizations.of(context)!.display_user_unsolved_questions_page_title}",
+            "${widget.user.userName}${AppLocalizations.of(context)!.display_user_unsolved_questions_page_title}",
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold
             ),
           ),
         ),
-        body: StoreConnector<AppState,(KeyPagination<int>, Iterable<QuestionState>)>(
-          onInit: (store){
-            final paginatin = selectUserUnsolvedQuestionPagination(store, user.id);
-            if(paginatin.noPage){
-              store.dispatch(NextUserUnsolvedQuestionsAction(userId: user.id));
-            }
-          },
-          converter: (store) => selectUserUnsolvedPaginationAndQuestions(store, user.id),
-          builder: (context,data) => QuestionItems(
-            firstDisplayedQuestionId: firstDisplayedQuestionId,
-            noQuestionContent: noUnsolvedQuestions[getLanguage(context)]!,
-            data: data,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              final paginatin = selectUserUnsolvedQuestionPagination(store, user.id);
-              if(paginatin.isReadyForNextPage){
-                store.dispatch(NextUserUnsolvedQuestionsAction(userId: user.id));
-              }
-            },
+        body: StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+          onInit: (store) => getNextEntitiesIfNoPage(
+            store,
+            selectUserUnsolvedQuestions(store, widget.user.id),
+            NextUserUnsolvedQuestionsAction(userId: widget.user.id)
+          ),
+          converter: (store) => selectUserUnsolvedQuestions(store, widget.user.id),
+          builder: (context, pagination) => SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                QuestionContinersWidget(
+                  containers: pagination.containers,
+                  firstDisplayedQuestionId: widget.firstDisplayedQuestionId,
+                ),
+                if(pagination.loadingNext)
+                  const LoadingCircleWidget()
+              ],
+            ),
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/transaction_state/transaction_state.dart';
+import 'package:my_social_app/state/transaction_state/transaction_state.dart';
 part 'transaction.g.dart';
 
 @immutable

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/follows_state/actions.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/follows_state/actions.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/views/user/widgets/follow_button_widget/follow_button_widget_constants.dart';
 
 class FollowButtonWidget extends StatelessWidget {

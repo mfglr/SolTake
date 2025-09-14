@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 import 'package:my_social_app/services/package_version_service.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
 
 class AppClient{
   static final apiUrl = "${dotenv.env['API_URL']}/api";

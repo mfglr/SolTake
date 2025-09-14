@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/policy_state/actions.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/login_state/actions.dart';
+import 'package:my_social_app/state/policy_state/actions.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:my_social_app/views/login/pages/approve_privacy_policy_page/approve_privacy_policy_page_constants.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';

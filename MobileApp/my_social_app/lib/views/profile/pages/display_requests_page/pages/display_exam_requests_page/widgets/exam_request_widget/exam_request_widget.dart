@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_state.dart';
-import 'package:my_social_app/state/app_state/exam_requests_state/exam_request_status.dart';
+import 'package:my_social_app/state/exam_requests_state/exam_request_state.dart';
+import 'package:my_social_app/state/exam_requests_state/exam_request_status.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/delete_exam_request_button/delete_exam_requests.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/exam_request_widget/exam_request_widget_constants.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/widgets/request_date_widget.dart';

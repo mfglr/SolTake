@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/user_user_block_state/action.dart';
-import 'package:my_social_app/state/app_state/user_user_block_state/user_user_block_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/user_user_block_state/action.dart';
+import 'package:my_social_app/state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
 import 'unblock_button_texts.dart';

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/key_pagination.dart';
-import 'package:my_social_app/views/question/pages/display_search_questions_page/display_search_questions_page_constant.dart';
-import 'package:my_social_app/views/question/widgets/question_items.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/container_pagination.dart';
+import 'package:my_social_app/views/question/widgets/question_container/question_containers_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 
-class DisplaySearchQuestionsPage extends StatelessWidget {
+class DisplaySearchQuestionsPage extends StatefulWidget {
   final int? firstDisplayedQuestionId;
 
   const DisplaySearchQuestionsPage({
@@ -21,14 +21,47 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
   });
 
   @override
+  State<DisplaySearchQuestionsPage> createState() => _DisplaySearchQuestionsPageState();
+}
+
+class _DisplaySearchQuestionsPageState extends State<DisplaySearchQuestionsPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_onScrollBottom);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScrollBottom);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScrollBottom() => onScrollBottom(
+    _scrollController,
+    (){
+      final store = StoreProvider.of<AppState>(context,listen: false);
+      getNextEntitiesIfReady(
+        store,
+        selectSearchPageQuestions(store),
+        const NextSearchPageQuestionsAction()
+      );
+    }
+  );
+
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        final pagination = selectSearchPageQuestionPagination(store);
-        if(!pagination.loadingNext){
-          store.dispatch(const RefreshSearchPageQuestionsAction());
-        }
+        refreshEntities(
+          store,
+          selectSearchPageQuestions(store),
+          const RefreshSearchPageQuestionsAction()
+        );
         return onSearchPageQuestionsLoaded(store);
       },
       child: Scaffold(
@@ -42,25 +75,19 @@ class DisplaySearchQuestionsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: StoreConnector<AppState,(KeyPagination<int>, Iterable<QuestionState>)>(
-          onInit: (store){
-            final pagination = selectSearchPageQuestionPagination(store);
-            if(pagination.noPage){
-              store.dispatch(const NextSearchPageQuestionsAction());
-            }
-          },
-          converter: (store) => selectSearchPagePaginationAndQuestions(store),
-          builder: (context, data) => QuestionItems(
-            firstDisplayedQuestionId: firstDisplayedQuestionId,
-            data: data,
-            noQuestionContent: questionNotFound[getLanguage(context)]!,
-            onScrollBottom: (){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              final pagination = selectSearchPageQuestionPagination(store);
-              if(pagination.isReadyForNextPage){
-                store.dispatch(const NextSearchPageQuestionsAction());
-              }
-            },
+        body: StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+          onInit: (store) => 
+            getNextEntitiesIfNoPage(
+              store,
+              selectSearchPageQuestions(store),
+              const NextSearchPageQuestionsAction()
+            ),
+          converter: (store) => selectSearchPageQuestions(store),
+          builder: (context, pagination) => SingleChildScrollView(
+            controller: _scrollController,
+            child: QuestionContinersWidget(
+              containers: pagination.containers,
+            ),
           ),
         ),
       ),

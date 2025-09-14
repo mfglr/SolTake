@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/follows_state/follow_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/follows_state/follow_state.dart';
 import 'package:my_social_app/utilities/dialog_creator/dialog_creator.dart';
 
 class RemoveFollowerWidget extends StatelessWidget {

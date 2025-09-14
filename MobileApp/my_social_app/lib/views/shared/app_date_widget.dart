@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class AppDateWidget extends StatelessWidget {

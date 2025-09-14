@@ -6,7 +6,7 @@ import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/latex_sperator/latex.dart';
 import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
@@ -120,12 +120,12 @@ class SolutionItemWidget extends StatelessWidget {
               ),
             )
           else
-            MultimediaSlider(
-              medias: solution.medias,
-              blobServiceUrl: AppClient.blobService,
-              notFoundMediaPath: noMediaAssetPath,
-              noMediaPath: noMediaAssetPath,
-            ),
+            // MultimediaSlider(
+            //   medias: solution.medias,
+            //   blobServiceUrl: AppClient.blobService,
+            //   notFoundMediaPath: noMediaAssetPath,
+            //   noMediaPath: noMediaAssetPath,
+            // ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(

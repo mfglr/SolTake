@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:my_social_app/models/solution.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_user_save_state.dart';
+import 'package:my_social_app/state/solutions_state/solution_user_save_state.dart';
 part 'solution_user_save.g.dart';
 
 @JsonSerializable()

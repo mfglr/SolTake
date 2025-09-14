@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multimedia_grid/multimedia_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/ai_model_state/ai_model_state.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
+import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_media_page/select_media_page.dart';
 
 class AiModelWidget extends StatelessWidget {

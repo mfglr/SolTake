@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
+import 'package:my_social_app/state/subjects_state/subject_state.dart';
 part 'subject.g.dart';
 
 @immutable

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/notifications_state.dart/notification_state.dart';
-import 'package:my_social_app/state/app_state/notifications_state.dart/notification_type.dart';
+import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
+import 'package:my_social_app/state/notifications_state.dart/notification_type.dart';
 import 'package:my_social_app/views/notification/widgets/comment_replied_notification/comment_replied_notification.dart';
 import 'package:my_social_app/views/notification/widgets/question_comment_created_notification_item/question_comment_created_notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item/comment_liked_notification_item.dart';

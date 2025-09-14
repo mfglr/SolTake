@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
-import 'package:my_social_app/state/app_state/questions_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/selectors.dart';
-import 'package:my_social_app/state/app_state/story_state/actions.dart';
-import 'package:my_social_app/state/app_state/story_state/selectors.dart';
-import 'package:my_social_app/state/app_state/story_state/story_circle_state.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/story_state/actions.dart';
+import 'package:my_social_app/state/story_state/selectors.dart';
+import 'package:my_social_app/state/story_state/story_circle_state.dart';
 import 'package:my_social_app/helpers/start_creating_question.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/entity_state/key_pagination.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/container_pagination.dart';
 import 'package:my_social_app/views/home_page/widgets/create_story_widget.dart';
 import 'package:my_social_app/views/home_page/widgets/notification_button.dart';
 import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
-import 'package:my_social_app/views/question/widgets/question_list_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_container/question_containers_widget.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/story/widgets/story_circles_widget.dart';
 
@@ -31,10 +32,11 @@ class _HomePageState extends State<HomePage> {
     _scrollController,
     (){
       final store = StoreProvider.of<AppState>(context,listen: false);
-      var pagination = selectHomeQuestionPagination(store);
-      if(pagination.isReadyForNextPage){
-        store.dispatch(const NextHomeQuestionsAction());
-      }
+      getNextEntitiesIfReady(
+        store,
+        selectHomeQuestions(store),
+        const NextHomeQuestionsAction()
+      );
     }
   );
 
@@ -56,10 +58,11 @@ class _HomePageState extends State<HomePage> {
     return RefreshIndicator(
       onRefresh: (){
         final store = StoreProvider.of<AppState>(context,listen: false);
-        var pagination = selectHomeQuestionPagination(store);
-        if(!pagination.loadingNext){
-          store.dispatch(const RefreshHomeQuestionsAction());
-        }
+        refreshEntities(
+          store,
+          selectHomeQuestions(store),
+          const RefreshHomeQuestionsAction()
+        );
         store.dispatch(const GetStoriesAction());
         return onHomeQuestionsLoaded(store);
       },
@@ -95,21 +98,21 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              StoreConnector<AppState, (KeyPagination<int>, Iterable<QuestionState>)>(
-                onInit: (store){
-                  final pagination = selectHomeQuestionPagination(store);
-                  if(pagination.noPage){
-                    store.dispatch(const NextHomeQuestionsAction());
-                  }
-                },
-                converter: (store) => selectHomePaginationAndQuestions(store),
-                builder:(context, x) => Column(
+              StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+                onInit: (store) => 
+                  getNextEntitiesIfNoPage(
+                    store,
+                    selectHomeQuestions(store),
+                    const NextHomeQuestionsAction()
+                  ),
+                converter: (store) => selectHomeQuestions(store),
+                builder:(context, pagination) => Column(
                   children: [
-                    if(x.$1.isEmpty)
+                    if(pagination.isEmpty)
                       const NoQuestionsWidget(content: "")
                     else
-                      QuestionListWidget(questions: x.$2),
-                    if(x.$1.loadingNext)
+                      QuestionContinersWidget(containers: pagination.containers),
+                    if(pagination.loadingNext)
                       const LoadingCircleWidget()
                   ],
                 ),

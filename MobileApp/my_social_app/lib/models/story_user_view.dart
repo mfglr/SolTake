@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/state/app_state/story_state/story_user_view_state.dart';
+import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/state/story_state/story_user_view_state.dart';
 part 'story_user_view.g.dart';
 
 @immutable

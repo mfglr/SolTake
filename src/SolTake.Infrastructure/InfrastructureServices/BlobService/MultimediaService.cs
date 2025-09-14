@@ -43,7 +43,7 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 
             var profile = image.Metadata.ExifProfile;
             if (profile == null || !profile.TryGetValue(ExifTag.Orientation, out var orientation))
-                return new (0,0);
+                return new (image.Height, image.Width);
 
             switch (orientation.Value)
             {

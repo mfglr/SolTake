@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
 

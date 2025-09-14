@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:multimedia/models/multimedia_type.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
+import 'package:my_social_app/packages/media/models/multimedia_type.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/question_user_likes_state/actions.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/question_user_likes_state/actions.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/question/widgets/question_video_page_slider/widgets/comment_button.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/count_text.dart';
@@ -80,102 +80,103 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
         return Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            GestureDetector(
-              onDoubleTap: () => _handleDoubleTap(question),
-              child: SlideVideoPlayer(
-                baseBlobUrl: AppClient.blobService,
-                media: question.medias.firstWhere((e) => e.multimediaType == MultimediaType.video),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextButton(
-                            onPressed: () => 
-                              Navigator
-                                .of(context)
-                                .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
-                            style: ButtonStyle(
-                              padding: WidgetStateProperty.all(EdgeInsets.zero),
-                              minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(right: 8),
-                                  child: AppAvatar(
-                                    avatar: question,
-                                    diameter: 45
-                                  ),
-                                ),
-                                Text(
-                                  compressText(question.userName, 13),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 15
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if(question.content != null)
-                            Container(
-                              margin: const EdgeInsets.only(top: 8),
-                              child: ExtendableContent(
-                                content: question.content!,
-                                numberOfExtention: 15,
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 15,
-                                  color: Colors.white
-                                ),
-                              ),
-                            )                   
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                            children: [
-                              LikeButton(question: question),
-                              CountText(count: question.numberOfLikes)
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                            children: [
-                              CommentButton(question: question),
-                              CountText(count: question.numberOfComments)
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          child: Column(
-                            children: [
-                              SolutionButton(question: question),
-                              CountText(count: question.numberOfSolutions)
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                )
-              ),
-            ),
+            // GestureDetector(
+            //   onDoubleTap: () => _handleDoubleTap(question),
+            //   child: 
+            //   SlideVideoPlayer(
+            //     baseBlobUrl: AppClient.blobService,
+            //     media: question.medias.firstWhere((e) => e.type == MultimediaType.video),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       crossAxisAlignment: CrossAxisAlignment.end,
+            //       children: [
+            //         Expanded(
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               TextButton(
+            //                 onPressed: () => 
+            //                   Navigator
+            //                     .of(context)
+            //                     .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
+            //                 style: ButtonStyle(
+            //                   padding: WidgetStateProperty.all(EdgeInsets.zero),
+            //                   minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+            //                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //                 ),
+            //                 child: Row(
+            //                   crossAxisAlignment: CrossAxisAlignment.center,
+            //                   mainAxisSize: MainAxisSize.min,
+            //                   children: [
+            //                     Container(
+            //                       margin: const EdgeInsets.only(right: 8),
+            //                       child: AppAvatar(
+            //                         avatar: question,
+            //                         diameter: 45
+            //                       ),
+            //                     ),
+            //                     Text(
+            //                       compressText(question.userName, 13),
+            //                       style: const TextStyle(
+            //                         color: Colors.white,
+            //                         fontWeight: FontWeight.w900,
+            //                         fontSize: 15
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //               if(question.content != null)
+            //                 Container(
+            //                   margin: const EdgeInsets.only(top: 8),
+            //                   child: ExtendableContent(
+            //                     content: question.content!,
+            //                     numberOfExtention: 15,
+            //                     textStyle: const TextStyle(
+            //                       fontWeight: FontWeight.w900,
+            //                       fontSize: 15,
+            //                       color: Colors.white
+            //                     ),
+            //                   ),
+            //                 )                   
+            //             ],
+            //           ),
+            //         ),
+            //         Column(
+            //           children: [
+            //             Container(
+            //               margin: const EdgeInsets.only(bottom: 10),
+            //               child: Column(
+            //                 children: [
+            //                   LikeButton(question: question),
+            //                   CountText(count: question.numberOfLikes)
+            //                 ],
+            //               ),
+            //             ),
+            //             Container(
+            //               margin: const EdgeInsets.only(bottom: 10),
+            //               child: Column(
+            //                 children: [
+            //                   CommentButton(question: question),
+            //                   CountText(count: question.numberOfComments)
+            //                 ],
+            //               ),
+            //             ),
+            //             Container(
+            //               margin: const EdgeInsets.only(bottom: 10),
+            //               child: Column(
+            //                 children: [
+            //                   SolutionButton(question: question),
+            //                   CountText(count: question.numberOfSolutions)
+            //                 ],
+            //               ),
+            //             )
+            //           ],
+            //         )
+            //       ],
+            //     )
+            //   ),
+            // ),
             if(_isLiked)
               Positioned(
                 child: ScaleTransition(

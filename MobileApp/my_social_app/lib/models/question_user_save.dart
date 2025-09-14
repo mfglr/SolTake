@@ -1,11 +1,11 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/packages/media/models/multimedia.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';
-import 'package:my_social_app/state/app_state/questions_state/question_user_save_state.dart';
+import 'package:my_social_app/state/questions_state/question_user_save_state.dart';
 part 'question_user_save.g.dart';
 
 @JsonSerializable()
@@ -71,7 +71,7 @@ class QuestionUserSave{
       isLiked: isLiked,
       isOwner: isOwner,
       isSaved: isSaved,
-      medias: medias,
+      medias: medias.map((e) => e.toMedia()),
       numberOfComments: numberOfComments,
       numberOfCorrectSolutions: numberOfCorrectSolutions,
       numberOfLikes: numberOfLikes,

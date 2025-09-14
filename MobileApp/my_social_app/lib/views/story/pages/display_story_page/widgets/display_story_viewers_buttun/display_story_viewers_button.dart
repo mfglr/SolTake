@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_user_views_page/display_story_user_views_page.dart';
 
 class DisplayStoryViewersButton extends StatelessWidget {

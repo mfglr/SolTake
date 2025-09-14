@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/login_state/actions.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/login_state/actions.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/login/pages/generate_password_reset_token_page.dart';
 import 'package:my_social_app/views/login/widgets/email_form_field.dart';
 

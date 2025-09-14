@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/constants/comment_font_size.dart';
-import 'package:my_social_app/state/app_state/comments_state/comment_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
+import 'package:my_social_app/state/comments_state/comment_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'comment_field_widget_texts.dart';

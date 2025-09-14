@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
+import 'package:my_social_app/state/exams_state/exam_state.dart';
 part 'exam.g.dart';
 
 @JsonSerializable()

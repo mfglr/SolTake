@@ -3,11 +3,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:multimedia_slider/multimedia_slider.dart';
 import 'package:my_social_app/constants/assets.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/users_state/selectors.dart';
-import 'package:my_social_app/state/app_state/users_state/user_state.dart';
-import 'package:my_social_app/state/app_state/users_state/action.dart';
+import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/users_state/selectors.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
+import 'package:my_social_app/state/users_state/action.dart';
 import 'package:my_social_app/views/message/pages/display_message_images_page/widgets/message_content.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
@@ -43,13 +43,13 @@ class _DisplayMessageImagesPageState extends State<DisplayMessageImagesPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MultimediaSlider(
-                  medias: widget.message.medias,
-                  blobServiceUrl: AppClient.blobService,
-                  notFoundMediaPath: noMediaAssetPath,
-                  noMediaPath: noMediaAssetPath,
-                  activeIndex: widget.activeIndex,
-                ),
+                // MultimediaSlider(
+                //   medias: widget.message.medias,
+                //   blobServiceUrl: AppClient.blobService,
+                //   notFoundMediaPath: noMediaAssetPath,
+                //   noMediaPath: noMediaAssetPath,
+                //   activeIndex: widget.activeIndex,
+                // ),
               ],
             ),
             if(_contentVisibility)

@@ -14,7 +14,7 @@ import 'package:my_social_app/models/update_user_image_response.dart';
 import 'package:my_social_app/models/update_user_name_response.dart';
 import 'package:my_social_app/models/user.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 import 'package:my_social_app/views/login/widgets/google_login_button.dart';
 
 class UserService{

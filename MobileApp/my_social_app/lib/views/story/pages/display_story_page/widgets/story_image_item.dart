@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:multimedia/models/multimedia_status.dart';
 import 'package:my_social_app/helpers/stoppable_timer.dart';
-import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/state/story_state/story_state.dart';
 import 'package:my_social_app/views/shared/owner_widget/owner_widget.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/create_story_button.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/display_story_viewers_buttun/display_story_viewers_button.dart';

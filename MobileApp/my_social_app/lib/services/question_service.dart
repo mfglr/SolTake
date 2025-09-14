@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
-import 'package:my_social_app/media/models/local_media.dart';
+import 'package:my_social_app/packages/media/models/local_media.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/entity_state/page.dart';
+import 'package:my_social_app/packages/entity_state/page.dart';
 import 'package:http_parser/http_parser.dart';
 
 class QuestionService{
@@ -22,7 +21,14 @@ class QuestionService{
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")
     );
     for(final media in medias){
-      request.files.add(await MultipartFile.fromPath("medias", media.file.path, contentType: MediaType.parse(media.contentType)));
+      request.files
+        .add(
+          await MultipartFile.fromPath(
+            "medias",
+            media.file.path,
+            contentType: MediaType.parse(media.contentType),
+          )
+        );
     }
     if(topicId != null) request.fields["topicId"] = topicId.toString();
     request.fields["examId"] = examId.toString();
@@ -32,10 +38,9 @@ class QuestionService{
     return request;
   }
 
-  Future<Question> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
+  Future<void> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
     var request = await _createQuestionRequest(medias,examId,subjectId,topicId,content);
-    var data = await _appClient.postStream(request, callback);
-    return Question.fromJson(jsonDecode(data));
+    await _appClient.postStream(request, callback);
   }
 
   Future<void> delete(num questionId) =>

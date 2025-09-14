@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/topic_requests_state/actions.dart';
-import 'package:my_social_app/state/app_state/topic_requests_state/topic_request_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/topic_requests_state/actions.dart';
+import 'package:my_social_app/state/topic_requests_state/topic_request_state.dart';
 
 class DeleleteTopicRequestButton extends StatelessWidget {
   final TopicRequestState topicRequest;

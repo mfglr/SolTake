@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/models/languages.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:redux/redux.dart';
 
 String getLanguage(BuildContext context){

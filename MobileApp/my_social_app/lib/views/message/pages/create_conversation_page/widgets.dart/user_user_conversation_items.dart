@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/user_user_conversation_state/user_user_conversation_state.dart';
+import 'package:my_social_app/state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/views/message/pages/create_conversation_page/widgets.dart/user_user_conversation_item.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
 

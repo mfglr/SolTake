@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
-import 'package:my_social_app/state/app_state/solutions_state/solution_state.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_downvotes_page/display_solution_downvotes_page.dart';
 
 class DisplaySolutionDownvotesButton extends StatelessWidget {

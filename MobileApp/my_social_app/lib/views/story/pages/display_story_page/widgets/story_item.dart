@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia_type.dart';
-import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_image_item.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/story_video_item.dart';
 

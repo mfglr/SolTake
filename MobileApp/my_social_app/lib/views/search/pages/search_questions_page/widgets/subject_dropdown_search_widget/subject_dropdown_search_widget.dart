@@ -2,13 +2,13 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/state/app_state/exams_state/exam_state.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/subjects_state/actions.dart';
-import 'package:my_social_app/state/app_state/subjects_state/selectors.dart';
-import 'package:my_social_app/state/app_state/subjects_state/subject_state.dart';
-import 'package:my_social_app/state/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/state/entity_state/pagination.dart';
+import 'package:my_social_app/state/exams_state/exam_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/subjects_state/actions.dart';
+import 'package:my_social_app/state/subjects_state/selectors.dart';
+import 'package:my_social_app/state/subjects_state/subject_state.dart';
+import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/search/pages/search_questions_page/widgets/subject_dropdown_search_widget/subject_dropdown_search_widget_constants.dart';
 
 class SubjectDropdownSearchWidget extends StatelessWidget {

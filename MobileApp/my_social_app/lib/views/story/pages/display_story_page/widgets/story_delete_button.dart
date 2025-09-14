@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/state.dart';
-import 'package:my_social_app/state/app_state/story_state/actions.dart';
-import 'package:my_social_app/state/app_state/story_state/story_state.dart';
+import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/story_state/actions.dart';
+import 'package:my_social_app/state/story_state/story_state.dart';
 import 'package:my_social_app/views/story/pages/display_story_page/widgets/delete_story_modal/delete_story_modal.dart';
 
 class StoryDeleteButton extends StatelessWidget {

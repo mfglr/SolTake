@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/state/app_state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/message_entity_state/message_state.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/enums/message_deletion_type.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/delete_messages_dialog/delete_messages_dialog_texts.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';

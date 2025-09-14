@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:my_social_app/state/app_state/login_state/login_state.dart';
+import 'package:my_social_app/state/login_state/login_state.dart';
 import 'package:my_social_app/models/languages.dart';
-import 'package:my_social_app/state/app_state/state.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/profile/pages/change_language_page/widgets/language_item.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
