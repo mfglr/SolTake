@@ -2,8 +2,8 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/solutions_state/solutions_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
-import 'package:my_social_app/packages/entity_state/key_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
 import 'package:redux/redux.dart';
 
 EntityContainer<int, SolutionState> selectSolution(Store<AppState> store, int solutionId) =>

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/wigets/medias_grid/media_grid.dart';
+import 'package:my_social_app/custom_packages/media/wigets/medias_grid/media_grid.dart';
 import 'package:my_social_app/state/questions_state/question_user_save_state.dart';
 
 class QuestionUserSaveAbstractItem extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:my_social_app/models/comment_user_like.dart';
 import 'package:my_social_app/models/id_response.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 import 'package:my_social_app/services/app_client.dart';
 
 class CommentUserLikeService {

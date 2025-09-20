@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:my_social_app/state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/follows_state/selectors.dart';
 import 'package:my_social_app/state/users_state/user_state.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 @immutable
 class FollowsState {

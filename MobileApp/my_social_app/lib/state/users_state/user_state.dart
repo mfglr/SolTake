@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/users_state/user_story_state.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 @immutable
 class UserState extends Entity<int> implements Avatar{

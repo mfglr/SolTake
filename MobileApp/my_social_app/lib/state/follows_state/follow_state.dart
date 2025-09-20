@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/user_item.dart';
 
 @immutable

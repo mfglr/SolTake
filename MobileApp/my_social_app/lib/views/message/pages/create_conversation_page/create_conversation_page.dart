@@ -5,7 +5,7 @@ import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/state/user_user_conversation_state/actions.dart';
 import 'package:my_social_app/state/user_user_conversation_state/selectors.dart';
 import 'package:my_social_app/state/user_user_conversation_state/user_user_conversation_state.dart';
-import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/message/pages/create_conversation_page/widgets.dart/user_user_conversation_items.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';

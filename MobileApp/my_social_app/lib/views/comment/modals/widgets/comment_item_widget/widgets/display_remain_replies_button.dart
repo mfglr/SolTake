@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/comments_state/selectors.dart';
 import 'package:my_social_app/state/comments_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/state/comments_state/comment_state.dart';
 
 class DisplayRemainRepliesButton extends StatelessWidget {

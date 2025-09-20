@@ -4,7 +4,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/services/exam_service.dart';
 import 'package:my_social_app/state/exams_state/exam_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_subject/select_exam_page/widgets/exams_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';

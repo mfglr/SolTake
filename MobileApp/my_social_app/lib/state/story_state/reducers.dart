@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/story_state/actions.dart';
 import 'package:my_social_app/state/story_state/story_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection/entity_state.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection/entity_state.dart';
 import 'package:redux/redux.dart';
 
 EntityState<int,StoryState> createStorySuccessReducer(EntityState<int,StoryState> prev, CreateStorySuccessAction action)

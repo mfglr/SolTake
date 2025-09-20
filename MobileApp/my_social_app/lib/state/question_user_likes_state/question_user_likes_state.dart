@@ -1,8 +1,8 @@
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/question_user_likes_state/selectors.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 class QuestionUserLikesState {
   final Map<int,Pagination<int, QuestionUserLikeState>> likes;

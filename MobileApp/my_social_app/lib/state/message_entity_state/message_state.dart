@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/message_entity_state/message_status.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 @immutable
 class MessageState extends Entity<int> implements Avatar{

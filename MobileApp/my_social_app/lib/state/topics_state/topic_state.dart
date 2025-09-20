@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 @immutable
 class TopicState extends Entity<int>{

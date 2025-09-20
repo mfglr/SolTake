@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:my_social_app/state/comment_user_likes_state/comment_user_like_state.dart';
 import 'package:my_social_app/state/comment_user_likes_state/selectors.dart';
 import 'package:my_social_app/state/comments_state/comment_state.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 @immutable
 class CommentUserLikesState {

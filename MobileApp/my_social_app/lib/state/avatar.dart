@@ -1,4 +1,4 @@
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 
 abstract class Avatar {
   int get avatarId;

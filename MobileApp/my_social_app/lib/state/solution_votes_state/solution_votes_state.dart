@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/state/solution_votes_state/selectors.dart';
 import 'package:my_social_app/state/solution_votes_state/solution_user_vote_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 @immutable
 class SolutionVotesState {

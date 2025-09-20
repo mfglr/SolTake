@@ -1,7 +1,7 @@
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
-import 'package:my_social_app/packages/entity_state/id.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/id.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 class UserMessageState extends Entity<int>{
   final Pagination<int,Id<int>> messageIds;

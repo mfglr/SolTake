@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_grid/multimedias_grid.dart';
 import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/packages/media/wigets/medias_grid/medias_grid.dart';
+import 'package:my_social_app/custom_packages/media/wigets/medias_grid/medias_grid.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';

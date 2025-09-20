@@ -7,7 +7,7 @@ import 'package:my_social_app/state/message_connection_entity_state/actions.dart
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_message_state/actions.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 import 'package:redux/redux.dart';
 import 'package:signalr_netcore/http_connection_options.dart';
 import 'package:signalr_netcore/hub_connection.dart';

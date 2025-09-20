@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/models/exam.dart';
 import 'package:my_social_app/models/subject.dart';
 import 'package:my_social_app/models/topic.dart';

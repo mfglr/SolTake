@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
-import 'package:my_social_app/packages/media/models/multimedia_type.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/question_user_likes_state/actions.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';

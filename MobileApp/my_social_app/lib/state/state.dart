@@ -41,11 +41,11 @@ import 'package:my_social_app/state/user_message_state/user_message_state.dart';
 import 'package:my_social_app/state/user_user_block_state/user_user_block_state.dart';
 import 'package:my_social_app/state/user_user_conversation_state/user_user_conversation_state.dart';
 import 'package:my_social_app/state/user_user_search_state/user_user_search_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection.dart';
-import 'package:my_social_app/packages/entity_state/id.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection/entity_state.dart';
-import 'package:my_social_app/packages/entity_state/key_pagination.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/id.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection/entity_state.dart';
+import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 @immutable
 class AppState{

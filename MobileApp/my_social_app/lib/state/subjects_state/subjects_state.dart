@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/subjects_state/selectors.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 
 @immutable
 class SubjectsState {

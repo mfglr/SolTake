@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/notifications_state.dart/actions.dart';
 import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/notification/pages/notification_page.dart';
 import 'package:badges/badges.dart' as badges;
 

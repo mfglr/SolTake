@@ -1,4 +1,4 @@
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 class SubjectRequestState extends Entity<int>{
   final DateTime createdAt;

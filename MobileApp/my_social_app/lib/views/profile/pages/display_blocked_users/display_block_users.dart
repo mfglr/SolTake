@@ -5,7 +5,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_user_block_state/action.dart';
 import 'package:my_social_app/state/user_user_block_state/selectors.dart';
 import 'package:my_social_app/state/user_user_block_state/user_user_block_state.dart';
-import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/views/profile/pages/display_blocked_users/display_block_users_text.dart';
 import 'package:my_social_app/views/profile/pages/display_blocked_users/widgets/no_block_widget/no_block_widget.dart';
 import 'package:my_social_app/views/profile/pages/display_blocked_users/widgets/user_user_block_item.dart';

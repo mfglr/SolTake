@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
-import 'package:my_social_app/packages/entity_state/entity_status.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_status.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_load_success_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_loading_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_upload_widget.dart';

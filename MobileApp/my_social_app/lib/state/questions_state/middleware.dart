@@ -1,6 +1,6 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/packages/media/models/local_media.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_service.dart';
 import 'package:my_social_app/state/questions_state/actions.dart';

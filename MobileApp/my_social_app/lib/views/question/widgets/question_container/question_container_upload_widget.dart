@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/wigets/media_slider/media_slider.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/questions_state/question_publishing_state.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_widget_constants.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/linear_progress_bar.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/display_question_likes_button.dart';

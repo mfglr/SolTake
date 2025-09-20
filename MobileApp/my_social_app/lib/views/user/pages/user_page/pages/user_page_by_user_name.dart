@@ -4,8 +4,8 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/state/users_state/action.dart';
 import 'package:my_social_app/state/users_state/selectors.dart';
-import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_loading_page/user_loading_page.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_success_page/user_success_page.dart';
 

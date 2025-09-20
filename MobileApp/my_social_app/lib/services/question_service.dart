@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
-import 'package:my_social_app/packages/media/models/local_media.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 import 'package:http_parser/http_parser.dart';
 
 class QuestionService{

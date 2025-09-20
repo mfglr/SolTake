@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection.dart';
-import 'package:my_social_app/packages/entity_state/key_pagination.dart';
-import 'package:my_social_app/packages/entity_state/map_extentions.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/state/comments_state/comment_state.dart';
 
 @immutable

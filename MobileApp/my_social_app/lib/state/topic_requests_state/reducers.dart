@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/topic_requests_state/actions.dart';
 import 'package:my_social_app/state/topic_requests_state/topic_request_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 

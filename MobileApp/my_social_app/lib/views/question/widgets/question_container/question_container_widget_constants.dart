@@ -1,5 +1,5 @@
 import 'package:my_social_app/models/languages.dart';
-import 'package:my_social_app/packages/entity_state/entity_status.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_status.dart';
 const _uploading = {
   Languages.en: "Uploading",
   Languages.tr: "Yükleniyor"

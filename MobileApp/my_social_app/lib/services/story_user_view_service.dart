@@ -1,6 +1,6 @@
 import 'package:my_social_app/models/story_user_view.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 
 class StoryUserViewService {
   static const _controllerName = "StoryUserViews";

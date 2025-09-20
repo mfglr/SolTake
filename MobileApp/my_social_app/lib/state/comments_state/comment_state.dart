@@ -1,5 +1,5 @@
-import 'package:my_social_app/packages/entity_state/entity.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 
 class CommentState extends Entity<int> implements Avatar{

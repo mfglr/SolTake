@@ -3,7 +3,7 @@ import 'package:my_social_app/services/transaction_service.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/transaction_state/actions.dart';
 import 'package:my_social_app/state/transaction_state/selectors.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
 void nextTransactionsMiddleware(Store<AppState> store, action, NextDispatcher next){

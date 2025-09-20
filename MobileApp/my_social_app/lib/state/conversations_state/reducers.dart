@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/conversations_state/actions.dart';
-import 'package:my_social_app/packages/entity_state/id.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/id.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,Id<int>> nextConversationsReducer(Pagination<int,Id<int>> prev,NextConversationsAction action)

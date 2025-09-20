@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/ai_model_state/actions.dart';
 import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,AIModelState> getAllReducer(Pagination<int,AIModelState> prev, GetAllAIModelsAction action)

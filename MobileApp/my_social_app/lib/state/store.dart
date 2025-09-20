@@ -53,10 +53,10 @@ import 'package:my_social_app/state/user_message_state/middlewares.dart';
 import 'package:my_social_app/state/user_user_block_state/middlewares.dart';
 import 'package:my_social_app/state/user_user_conversation_state/middlewares.dart';
 import 'package:my_social_app/state/user_user_search_state/middlewares.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection/entity_state.dart';
-import 'package:my_social_app/packages/entity_state/key_pagination.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection/entity_state.dart';
+import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 final store = Store(

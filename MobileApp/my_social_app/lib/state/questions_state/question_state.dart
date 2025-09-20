@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/packages/media/models/media.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
-import 'package:my_social_app/packages/media/models/multimedia_type.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/questions_state/question_publishing_state.dart';
@@ -9,7 +9,7 @@ import 'package:my_social_app/state/questions_state/question_status.dart';
 import 'package:my_social_app/state/question_user_likes_state/question_user_like_state.dart';
 import 'package:my_social_app/state/subjects_state/subject_state.dart';
 import 'package:my_social_app/state/topics_state/topic_state.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_status.dart';
 

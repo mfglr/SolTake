@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia/models/multimedia.dart';
-import 'package:my_social_app/packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 @immutable
 class TransactionState extends Entity<int>{

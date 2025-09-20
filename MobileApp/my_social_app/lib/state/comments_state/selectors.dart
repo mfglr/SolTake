@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,CommentState> selectQuestionComments(Store<AppState> store, int solutionId) =>

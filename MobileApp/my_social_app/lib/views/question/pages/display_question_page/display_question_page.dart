@@ -4,7 +4,7 @@ import 'package:my_social_app/state/questions_state/actions.dart';
 import 'package:my_social_app/state/questions_state/selectors.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/question/pages/display_question_page/pages/question_success_page.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';
 

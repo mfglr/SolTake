@@ -7,8 +7,8 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subjects_state/actions.dart';
 import 'package:my_social_app/state/subjects_state/selectors.dart';
 import 'package:my_social_app/state/subjects_state/subject_state.dart';
-import 'package:my_social_app/packages/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/search/pages/search_questions_page/widgets/subject_dropdown_search_widget/subject_dropdown_search_widget_constants.dart';
 
 class SubjectDropdownSearchWidget extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:my_social_app/packages/media/wigets/medias_grid/media_grid.dart';
+import 'package:my_social_app/custom_packages/media/wigets/medias_grid/media_grid.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 
 class QuestionAbstractProcessingWidget extends StatelessWidget {
   final EntityContainer<int,QuestionState> container;

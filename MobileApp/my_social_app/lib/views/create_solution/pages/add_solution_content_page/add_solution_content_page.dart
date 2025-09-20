@@ -1,7 +1,7 @@
 import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/solution.dart';
-import 'package:my_social_app/packages/media/pages/select_directory_page/select_directory_page.dart';
+import 'package:my_social_app/custom_packages/media/pages/select_directory_page/select_directory_page.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution/pages/add_solution_content_page/add_solution_content_page_texts.dart';
 import 'package:my_social_app/views/create_solution/widgets/create_solution_button/create_solution_button.dart';

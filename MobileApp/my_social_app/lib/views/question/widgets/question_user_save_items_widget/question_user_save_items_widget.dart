@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/questions_state/question_user_save_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/widgets/no_questions_widget/no_questions_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_user_save_items_widget/question_user_save_items_widget_constants.dart';
 import 'package:my_social_app/views/shared/loading_circle_widget.dart';

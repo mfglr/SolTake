@@ -2,7 +2,7 @@ import 'package:my_social_app/constants/record_per_page.dart';
 import 'package:my_social_app/state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/follows_state/follows_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,FollowState> selectFollowersFromState(FollowsState state, int userId) =>

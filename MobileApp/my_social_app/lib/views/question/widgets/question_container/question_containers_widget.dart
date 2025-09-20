@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_widget.dart';
 import 'package:my_social_app/views/shared/app_column.dart';
 

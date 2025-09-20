@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multimedia_grid/circler_multimedia.dart';
-import 'package:my_social_app/packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 

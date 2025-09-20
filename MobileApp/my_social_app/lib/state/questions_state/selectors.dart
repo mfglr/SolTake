@@ -1,8 +1,8 @@
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/packages/entity_state/container_pagination.dart';
-import 'package:my_social_app/packages/entity_state/entity_container.dart';
-import 'package:my_social_app/packages/entity_state/key_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/container_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
 import 'package:redux/redux.dart';
 
 EntityContainer<int, QuestionState> selectQuestion(Store<AppState> store, int questionId) =>

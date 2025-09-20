@@ -1,7 +1,7 @@
 import 'package:my_social_app/models/id_response.dart';
 import 'package:my_social_app/models/question_user_save.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 
 class QuestionUserSaveService {
   static const _controllerName = "QuestionUserSaves";

@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/user_user_block_state/action.dart';
 import 'package:my_social_app/state/user_user_block_state/user_user_block_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,UserUserBlockState> blockUserSuccessReducer(Pagination<int,UserUserBlockState> prev, BlockUserSuccessAction action)

@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/message_entity_state/actions.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection/entity_state.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection/entity_state.dart';
 import 'package:redux/redux.dart';
 
 EntityState<int,MessageState> addMessageReducer(EntityState<int,MessageState> prev, AddMessageAction action)

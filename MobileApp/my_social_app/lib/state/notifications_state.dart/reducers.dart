@@ -1,6 +1,6 @@
 import 'package:my_social_app/state/notifications_state.dart/actions.dart';
 import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
-import 'package:my_social_app/packages/entity_state/pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:redux/redux.dart';
 
 Pagination<int,NotificationState> nextNotificationsReducer(Pagination<int,NotificationState> prev, NextNotificationsAction action)

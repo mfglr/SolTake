@@ -3,7 +3,7 @@ import 'package:my_social_app/services/user_user_conversation_service.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/user_user_conversation_state/actions.dart';
 import 'package:my_social_app/state/user_user_conversation_state/selectors.dart';
-import 'package:my_social_app/packages/entity_state/page.dart';
+import 'package:my_social_app/custom_packages/entity_state/page.dart';
 import 'package:redux/redux.dart';
 
 void nextUserUserConversationsMiddleware(Store<AppState> store,action,NextDispatcher next){

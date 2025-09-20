@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/users_state/user_state.dart';
-import 'package:my_social_app/packages/entity_state/entity_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
 
 @immutable
 class UsersState {
