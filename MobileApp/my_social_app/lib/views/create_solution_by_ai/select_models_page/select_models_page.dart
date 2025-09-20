@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/load_status.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_container.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/ai_model_state/actions.dart';
 import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/ai_model_state/selectors.dart';
-import 'package:my_social_app/state/questions_state/actions.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/questions_state/selectors.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_status.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page_texts.dart';
 // import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/sorting_menu_widget/sorting_button_widget.dart';
@@ -62,7 +61,7 @@ class _SelectModelsPageState extends State<SelectModelsPage> {
               //     fontWeight: FontWeight.bold
               //   ),
               // ),
-              StoreConnector<AppState, EntityContainer<int, QuestionState>>(
+              StoreConnector<AppState, LoadableContainer<int, QuestionState>>(
                 // onInit: (store) => 
                 //   loadIfNotLoading(
                 //     store,
@@ -71,7 +70,7 @@ class _SelectModelsPageState extends State<SelectModelsPage> {
                 //   ),
                 converter: (store) => selectQuestion(store, widget.questionId),
                 builder: (context, container){
-                  if(container.status == EntityStatus.loadSuccess){
+                  if(container.status == LoadStatus.success){
                     return AiModelsWidget(
                       aiModels: aiModels,
                       question: container.entity!

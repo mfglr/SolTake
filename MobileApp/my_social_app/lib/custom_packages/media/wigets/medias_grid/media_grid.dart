@@ -21,7 +21,9 @@ class MediaGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context){
       if(media is LocalImage){
-        return LocalImageGrid(media: media as LocalImage);
+        return LocalImageGrid(
+          media: media as LocalImage
+        );
       }
       else if(media is RemoteImage){
         return RemoteImageGrid(
@@ -30,7 +32,9 @@ class MediaGrid extends StatelessWidget {
         );
       }
       else if(media is LocalVideo){
-        return LocalVideoGrid(media: media as LocalVideo);
+        return LocalVideoGrid(
+          media: media as LocalVideo
+        );
       }
       else{
         return RemoteVideoGridWidget(

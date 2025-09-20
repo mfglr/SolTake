@@ -3,13 +3,12 @@ import 'package:my_social_app/custom_packages/entity_state/containers/base_conta
 import 'package:my_social_app/custom_packages/entity_state/containers/load_status.dart';
 
 @immutable
-class LoadableContainer<K, V> implements BaseContainer{
-  final K key;
+class LoadableContainer<K, V> extends BaseContainer<K>{
   final V? entity;
   final LoadStatus status;
 
   const LoadableContainer._({
-    required this.key,
+    required super.key,
     required this.entity,
     required this.status
   });
@@ -22,7 +21,7 @@ class LoadableContainer<K, V> implements BaseContainer{
       );
 
   const LoadableContainer({
-    required this.key
+    required super.key
   }) : 
     entity = null,
     status = LoadStatus.pending;
@@ -33,6 +32,7 @@ class LoadableContainer<K, V> implements BaseContainer{
       entity: entity,
       status: LoadStatus.loading
     );
+
 
   LoadableContainer<K, V> success(V entity) =>
     LoadableContainer<K,V>._(
@@ -53,5 +53,19 @@ class LoadableContainer<K, V> implements BaseContainer{
       key: key,
       entity: entity,
       status: LoadStatus.notFound
+    );
+
+  LoadableContainer<K, V> update(V? entity) =>
+    LoadableContainer<K,V>._(
+      key: key,
+      entity: entity,
+      status: status
+    );
+  
+  LoadableContainer<K, V> reload() =>
+    LoadableContainer<K,V>._(
+      key: key,
+      entity: entity,
+      status: LoadStatus.loading
     );
 }

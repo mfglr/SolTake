@@ -5,7 +5,7 @@ import 'package:my_social_app/views/question/widgets/question_container/question
 import 'package:my_social_app/views/shared/app_column.dart';
 
 class QuestionContinersWidget extends StatefulWidget {
-  final Iterable<EntityContainer<int,QuestionState>> containers;
+  final Iterable<EntityContainer<int,QuestionState<int>>> containers;
   final int? firstDisplayedQuestionId;
 
   const QuestionContinersWidget({

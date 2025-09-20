@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+              StoreConnector<AppState, ContainerPagination<int, QuestionState<int>>>(
                 onInit: (store) => 
                   getNextEntitiesIfNoPage(
                     store,

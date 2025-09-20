@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
+import 'package:my_social_app/models/id_response.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/custom_packages/entity_state/page.dart';
@@ -38,9 +40,10 @@ class QuestionService{
     return request;
   }
 
-  Future<void> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
+  Future<IdResponse> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
     var request = await _createQuestionRequest(medias,examId,subjectId,topicId,content);
-    await _appClient.postStream(request, callback);
+    var data = await _appClient.postStream(request, callback);
+    return IdResponse.fromJson(jsonDecode(data));
   }
 
   Future<void> delete(num questionId) =>

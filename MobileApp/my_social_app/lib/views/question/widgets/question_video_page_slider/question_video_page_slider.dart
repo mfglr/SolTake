@@ -42,7 +42,7 @@ class _QuestionVideoPageSliderState extends State<QuestionVideoPageSlider> with 
     curve: Curves.fastOutSlowIn,
   );
   late bool _isLiked = false;
-  void _handleDoubleTap(QuestionState question) {
+  void _handleDoubleTap(QuestionState<int> question) {
     final store = StoreProvider.of<AppState>(context,listen: false);
     if(!question.isLiked){
       store.dispatch(LikeQuestionAction(question: question));

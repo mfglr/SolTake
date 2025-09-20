@@ -41,7 +41,7 @@ class _LocalVideoGridState extends State<LocalVideoGrid> {
               Image.memory(
                 snapShot.data!,
                 fit: BoxFit.cover,
-                height: constraints.constrainHeight(),
+                height: constraints.constrainWidth(),
                 width: constraints.constrainWidth(),
               ),
               const PlayButton()

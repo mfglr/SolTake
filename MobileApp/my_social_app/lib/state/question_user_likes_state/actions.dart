@@ -40,24 +40,24 @@ class RefreshQuestionUserLikesFailedAction extends AppAction{
 
 @immutable
 class LikeQuestionAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   const LikeQuestionAction({required this.question});
 }
 @immutable
 class LikeQuestionSuccessAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   final QuestionUserLikeState questionUserLike;
   const LikeQuestionSuccessAction({required this.question, required this.questionUserLike});
 }
 
 @immutable
 class DislikeQuestionAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   const DislikeQuestionAction({required this.question});
 }
 @immutable
 class DislikeQuestionSuccessAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   final int userId;
   const DislikeQuestionSuccessAction({required this.question, required this.userId});
 }

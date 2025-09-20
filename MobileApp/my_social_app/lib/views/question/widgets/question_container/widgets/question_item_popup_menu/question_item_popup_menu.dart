@@ -18,7 +18,7 @@ enum QuestionActions{
 }
 
 class QuestionItemPopupMenu extends StatelessWidget {
-  final QuestionState question;
+  final QuestionState<int> question;
   const QuestionItemPopupMenu({
     super.key,
     required this.question

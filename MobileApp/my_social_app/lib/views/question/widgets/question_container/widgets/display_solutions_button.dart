@@ -3,7 +3,7 @@ import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/display_question_abstract_solutions_page.dart';
 
 class DisplaySolutionsButton extends StatelessWidget {
-  final QuestionState question;
+  final QuestionState<int> question;
   const DisplaySolutionsButton({super.key,required this.question});
 
   @override

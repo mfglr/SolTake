@@ -4,7 +4,7 @@ import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/question/pages/display_question_likes_page/display_question_likes_page.dart';
 
 class DisplayQuestionLikesButton extends StatelessWidget {
-  final QuestionState question;
+  final QuestionState<int> question;
   const DisplayQuestionLikesButton({
     super.key,
     required this.question

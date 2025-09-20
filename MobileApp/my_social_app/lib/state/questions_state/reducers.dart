@@ -23,7 +23,7 @@ QuestionsState changeQuestionRateReducer(QuestionsState prev, ChangeQuestionRate
 QuestionsState markQuestionStatusAsProcessingReducer(QuestionsState prev, MarkQuestionStatusAsProcessing action)
   => prev.processing(action.questionId);
 QuestionsState uploadQuestionSuccessReducer(QuestionsState prev, UploadQuestionSuccessAction action)
-  => prev.uploadSuccess(action.questionId);
+  => prev.uploadSuccess(action.question, action.serverId);
 QuestionsState uploadQuestionFailedReducer(QuestionsState prev, UploadQuestionFailedAction action)
   => prev.uploadFailed(action.questionId);
 //uploading

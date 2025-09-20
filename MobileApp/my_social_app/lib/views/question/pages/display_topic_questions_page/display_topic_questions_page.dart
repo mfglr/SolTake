@@ -72,7 +72,7 @@ class _DisplayTopicQuestionsPageState extends State<DisplayTopicQuestionsPage> {
             ),
           ),
         ),
-        body: StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+        body: StoreConnector<AppState, ContainerPagination<int, QuestionState<int>>>(
           onInit: (store) => getNextEntitiesIfNoPage(
             store,
             selectTopicQuestions(store, widget.topic.id),

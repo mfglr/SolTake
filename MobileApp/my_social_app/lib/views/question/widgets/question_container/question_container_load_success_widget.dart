@@ -21,7 +21,7 @@ import 'package:my_social_app/views/shared/extendable_content/extendable_content
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
 class QuestionContainerLoadSuccessWidget extends StatelessWidget {
-  final EntityContainer<int, QuestionState> container;
+  final EntityContainer<int, QuestionState<int>> container;
   const QuestionContainerLoadSuccessWidget({
     super.key,
     required this.container

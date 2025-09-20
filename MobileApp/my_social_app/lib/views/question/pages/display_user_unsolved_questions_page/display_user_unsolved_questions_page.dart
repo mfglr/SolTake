@@ -78,7 +78,7 @@ class _DisplayUserUnsolvedQuestionsPageState extends State<DisplayUserUnsolvedQu
             ),
           ),
         ),
-        body: StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+        body: StoreConnector<AppState, ContainerPagination<int, QuestionState<int>>>(
           onInit: (store) => getNextEntitiesIfNoPage(
             store,
             selectUserUnsolvedQuestions(store, widget.user.id),

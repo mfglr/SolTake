@@ -10,7 +10,7 @@ class LoadQuestionAction extends AppAction{
 }
 @immutable
 class LoadQuestionSuccessAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   const LoadQuestionSuccessAction({required this.question});
 }
 @immutable
@@ -26,14 +26,14 @@ class QuestionNotFoundAction extends AppAction{
 
 @immutable
 class UploadQuestionAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<String> question;
   const UploadQuestionAction({
     required this.question
   });
 }
 @immutable
 class ChangeQuestionRateAction extends AppAction{
-  final int questionId;
+  final String questionId;
   final double rate;
   const ChangeQuestionRateAction({
     required this.questionId,
@@ -42,29 +42,33 @@ class ChangeQuestionRateAction extends AppAction{
 }
 @immutable
 class MarkQuestionStatusAsProcessing extends AppAction{
-  final int questionId;
+  final String questionId;
   const MarkQuestionStatusAsProcessing({required this.questionId});
 }
 @immutable
 class UploadQuestionSuccessAction extends AppAction{
-  final int questionId;
-  const UploadQuestionSuccessAction({required this.questionId});
+  final QuestionState<String> question;
+  final int serverId;
+  const UploadQuestionSuccessAction({
+    required this.question,
+    required this.serverId
+  });
 }
 @immutable
 class UploadQuestionFailedAction extends AppAction{
-  final int questionId;
+  final String questionId;
   const UploadQuestionFailedAction({required this.questionId});
 }
 
 
 @immutable
 class DeleteQuestionAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   const DeleteQuestionAction({required this.question});
 }
 @immutable
 class DeleteQuestionSuccessAction extends AppAction{
-  final QuestionState question;
+  final QuestionState<int> question;
   const DeleteQuestionSuccessAction({required this.question});
 }
 //questions
@@ -76,7 +80,7 @@ class NextHomeQuestionsAction extends AppAction{
 }
 @immutable
 class NextHomeQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextHomeQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -89,7 +93,7 @@ class RefreshHomeQuestionsAction extends AppAction{
 }
 @immutable
 class RefreshHomeQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshHomeQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -105,7 +109,7 @@ class NextSearchPageQuestionsAction extends AppAction{
 }
 @immutable
 class NextSearchPageQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextSearchPageQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -119,7 +123,7 @@ class RefreshSearchPageQuestionsAction extends AppAction{
 }
 @immutable
 class RefreshSearchPageQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshSearchPageQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -135,7 +139,7 @@ class NextVideoQuestionsAction extends AppAction{
 }
 @immutable
 class NextVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextVideoQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -148,7 +152,7 @@ class RefreshVideoQuestionsAction extends AppAction{
 }
 @immutable
 class RefreshVideoQuestionsSuccessAction extends AppAction{
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshVideoQuestionsSuccessAction({required this.questions});
 }
 @immutable
@@ -166,7 +170,7 @@ class NextUserQuestionsAction extends AppAction{
 @immutable
 class NextUserQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextUserQuestionsSuccessAction({
     required this.userId,
     required this.questions
@@ -185,7 +189,7 @@ class RefreshUserQuestionsAction extends AppAction{
 @immutable
 class RefreshUserQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshUserQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
@@ -204,7 +208,7 @@ class NextUserSolvedQuestionsAction extends AppAction{
 @immutable
 class NextUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextUserSolvedQuestionsSuccessAction({
     required this.userId,
     required this.questions
@@ -223,7 +227,7 @@ class RefreshUserSolvedQuestionsAction extends AppAction{
 @immutable
 class RefreshUserSolvedQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshUserSolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
@@ -242,7 +246,7 @@ class NextUserUnsolvedQuestionsAction extends AppAction{
 @immutable
 class NextUserUnsolvedQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
@@ -259,7 +263,7 @@ class RefreshUserUnsolvedQuestionsAction extends AppAction{
 @immutable
 class RefreshUserUnsolvedQuestionsSuccessAction extends AppAction{
   final int userId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshUserUnsolvedQuestionsSuccessAction({required this.userId, required this.questions});
 }
 @immutable
@@ -278,7 +282,7 @@ class NextExamQuestionsAction extends AppAction{
 @immutable
 class NextExamQuestionsSuccessAction extends AppAction{
   final int examId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextExamQuestionsSuccessAction({required this.examId, required this.questions});
 }
 @immutable
@@ -295,7 +299,7 @@ class RefreshExamQuestionsAction extends AppAction{
 @immutable
 class RefreshExamQuestionsSuccessAction extends AppAction{
   final int examId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshExamQuestionsSuccessAction({required this.examId, required this.questions});
 }
 @immutable
@@ -314,7 +318,7 @@ class NextSubjectQuestionsAction extends AppAction{
 @immutable
 class NextSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
 @immutable
@@ -331,7 +335,7 @@ class RefreshSubjectQuestionsAction extends AppAction{
 @immutable
 class RefreshSubjectQuestionsSuccessAction extends AppAction{
   final int subjectId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshSubjectQuestionsSuccessAction({required this.subjectId, required this.questions});
 }
 @immutable
@@ -350,7 +354,7 @@ class NextTopicQuestionsAction extends AppAction{
 @immutable
 class NextTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const NextTopicQuestionsSuccessAction({required this.topicId, required this.questions});
 }
 @immutable
@@ -367,7 +371,7 @@ class RefreshTopicQuestionsAction extends AppAction{
 @immutable
 class RefreshTopicQuestionsSuccessAction extends AppAction{
   final int topicId;
-  final Iterable<QuestionState> questions;
+  final Iterable<QuestionState<int>> questions;
   const RefreshTopicQuestionsSuccessAction({required this.topicId, required this.questions});
 }
 @immutable

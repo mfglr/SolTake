@@ -10,7 +10,7 @@ class QuestionUserLikesState {
   const QuestionUserLikesState({required this.likes});
 
   //questions
-  QuestionUserLikesState deleteQuestion(QuestionState question) =>
+  QuestionUserLikesState deleteQuestion(QuestionState<int> question) =>
     QuestionUserLikesState(
       likes: likes.removeOne(question.id)
     );

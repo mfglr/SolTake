@@ -7,7 +7,7 @@ import 'package:my_social_app/views/question/widgets/question_container/question
 import 'package:my_social_app/views/question/widgets/question_container/question_container_upload_widget.dart';
 
 class QuestionContainerWidget extends StatelessWidget {
-  final EntityContainer<int, QuestionState> container;
+  final EntityContainer<int, QuestionState<int>> container;
   
   const QuestionContainerWidget({
     super.key,

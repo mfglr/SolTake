@@ -3,7 +3,7 @@ import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 
 class CommentButton extends StatelessWidget {
-  final QuestionState question;
+  final QuestionState<int> question;
   const CommentButton({
     super.key,
     required this.question

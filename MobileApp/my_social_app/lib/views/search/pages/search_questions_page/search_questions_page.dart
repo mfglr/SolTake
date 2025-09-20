@@ -131,7 +131,7 @@ class _SearchQuestionsPageState extends State<SearchQuestionsPage> {
                   }
                 )
               ),
-              StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+              StoreConnector<AppState, ContainerPagination<int, QuestionState<int>>>(
                 onInit: (store) => 
                   getNextEntitiesIfNoPage(
                     store,

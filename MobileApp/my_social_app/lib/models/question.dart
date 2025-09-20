@@ -57,7 +57,7 @@ class Question{
   factory Question.fromJson(Map<String, dynamic> json) => _$QuestionFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionToJson(this);
 
-  QuestionState toQuestionState() => QuestionState(
+  QuestionState<int> toQuestionState() => QuestionState<int>(
     id: id,
     createdAt: createdAt,
     updatedAt: updatedAt,

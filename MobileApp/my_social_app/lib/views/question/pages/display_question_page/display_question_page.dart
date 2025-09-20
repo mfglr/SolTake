@@ -45,7 +45,7 @@ class _DisplayQuestionPageState extends State<DisplayQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, EntityContainer<int, QuestionState>>(
+    return StoreConnector<AppState, EntityContainer<int, QuestionState<int>>>(
       onInit: (store) => store.dispatch(LoadQuestionAction(questionId: widget.questionId)),
       converter: (store) => selectQuestion(store, widget.questionId),
       builder: (context, container){

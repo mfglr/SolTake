@@ -68,7 +68,7 @@ class _DisplayUserSolvedQuestionsPageState extends State<DisplayUserSolvedQuesti
           ),
         ),
       ),
-      body: StoreConnector<AppState, ContainerPagination<int, QuestionState>>(
+      body: StoreConnector<AppState, ContainerPagination<int, QuestionState<int>>>(
         onInit: (store) =>
           getNextEntitiesIfNoPage(
             store,

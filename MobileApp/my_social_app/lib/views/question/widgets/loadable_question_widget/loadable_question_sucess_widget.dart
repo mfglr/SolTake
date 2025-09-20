@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_container.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
-import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/questions_state/question_publishing_state.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/views/question/widgets/question_container/question_container_widget_constants.dart';
-import 'package:my_social_app/views/question/widgets/question_container/widgets/linear_progress_bar.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/display_question_likes_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/display_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/display_video_solutions_button.dart';
@@ -23,9 +20,10 @@ import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
-class QuestionContainerUploadWidget extends StatelessWidget {
-  final EntityContainer<int, QuestionState<int>> container;
-  const QuestionContainerUploadWidget({
+class LoadableQuestionSucessWidget extends StatelessWidget {
+  final LoadableContainer<int, QuestionState<int>> container;
+
+  const LoadableQuestionSucessWidget({
     super.key,
     required this.container
   });
@@ -38,7 +36,7 @@ class QuestionContainerUploadWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
+            padding: const EdgeInsets.only(left:12, right: 12, top: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -128,24 +126,6 @@ class QuestionContainerUploadWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: QuestionPublishingStateWidget(question: question),
             ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: LinearProgressBar(
-                      rate: container.rate,
-                    )
-                  )
-                ),
-                Text(
-                  questionStatusToText[container.status]![getLanguage(context)]!
-                )
-              ],
-            ),
-          ),
           if(question.content != null)
             Padding(
               padding: const EdgeInsets.all(8.0),

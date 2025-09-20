@@ -4,7 +4,7 @@ import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/store.dart';
 
 class QuestionLikeButton extends StatelessWidget {
-  final QuestionState question;
+  final QuestionState<int> question;
   final double? size;
   const QuestionLikeButton({
     super.key,

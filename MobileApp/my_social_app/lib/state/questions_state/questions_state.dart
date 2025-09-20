@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/uploadable_collection.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/container_pagination.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
 import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
 import 'package:my_social_app/custom_packages/entity_state/map_extentions.dart';
 
 @immutable
 class QuestionsState {
-  final EntityCollection<int, QuestionState> questions;
+  final UploadableCollection<String, QuestionState<String>> uploadableCollection;
+  final LoadableCollection<int, QuestionState<int>> loadableCollection;
   
   final KeyPagination<int> homeQuestions;
   final KeyPagination<int> searchQuestions;
@@ -24,7 +26,8 @@ class QuestionsState {
   final Map<int, KeyPagination<int>> topicQuestions;
 
   const QuestionsState({
-    required this.questions,
+    required this.uploadableCollection,
+    required this.loadableCollection,
 
     required this.homeQuestions,
     required this.searchQuestions,
@@ -40,7 +43,8 @@ class QuestionsState {
   });
 
   QuestionsState _optional({
-    EntityCollection<int, QuestionState>? newQuestions,
+    UploadableCollection<String, QuestionState<String>>? newUploadableCollection,
+    LoadableCollection<int, QuestionState<int>>? newQuestions,
     
     KeyPagination<int>? newHomeQuestions,
     KeyPagination<int>? newSearchQuestions,
@@ -56,7 +60,8 @@ class QuestionsState {
 
   }) => 
     QuestionsState(
-      questions: newQuestions ?? questions,
+      uploadableCollection: newUploadableCollection ?? uploadableCollection,
+      loadableCollection: newQuestions ?? loadableCollection,
 
       homeQuestions: newHomeQuestions ?? homeQuestions,
       searchQuestions: newSearchQuestions ?? searchQuestions,
@@ -72,39 +77,34 @@ class QuestionsState {
     );
   //questions
   QuestionsState load(int id) => 
-    _optional(newQuestions: questions.load(id));
-  QuestionsState loadSuccess(QuestionState question) =>
-    _optional(newQuestions: questions.loadSuccess(question.id, question));
+    _optional(newQuestions: loadableCollection.loading(id));
+  QuestionsState loadSuccess(QuestionState<int> question) =>
+    _optional(newQuestions: loadableCollection.success(question.id, question));
   QuestionsState failed(int id) =>
-    _optional(newQuestions: questions.loadFailed(id));
+    _optional(newQuestions: loadableCollection.failed(id));
   QuestionsState notFound(int id) =>
-    _optional(newQuestions: questions.notFound(id));
+    _optional(newQuestions: loadableCollection.notFound(id));
   
-  QuestionsState upload(QuestionState question) =>
+  QuestionsState upload(QuestionState<String> question) =>
+    _optional(newUploadableCollection: uploadableCollection.uploading(question.id, question));
+  QuestionsState changeRate(String questionId, double rate) =>
+    _optional(newUploadableCollection: uploadableCollection.changeRate(questionId, rate));
+  QuestionsState processing(String questionId) =>
+    _optional(newUploadableCollection: uploadableCollection.processing(questionId));
+  QuestionsState uploadSuccess(QuestionState<String> question, int serverId) =>
     _optional(
-      newQuestions: questions.upload(question.id, question),
-      newUserQuestions: userQuestions.setOne(
-        question.userId,
-        _selectUserQuestionKeyPagination(question.userId).addOne(question.id)
-      ),
-      newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
-        question.userId,
-        _selectUserUnsolvedQuestionKeyPagination(question.userId).addOne(question.id)
-      ),
+      newQuestions: loadableCollection.success(serverId, question.changeId<int>(serverId)),
+      newUserQuestions: userQuestions.setOne(question.userId, _selectUserQuestionKeyPagination(question.userId).addOne(serverId)),
+      newUserUnsolvedQuestions: userQuestions.setOne(question.userId, _selectUserUnsolvedQuestionKeyPagination(question.userId).addOne(serverId)),
+      newUploadableCollection: uploadableCollection.remove(question.id),
     );
-  QuestionsState changeRate(int questionId, double rate) =>
-    _optional(newQuestions: questions.changeRate(questionId, rate));
-  QuestionsState processing(int questionId) =>
-    _optional(newQuestions: questions.processing(questionId));
-  QuestionsState uploadSuccess(int questionId) =>
-    _optional(newQuestions: questions.uploadSuccess(questionId));
-  QuestionsState uploadFailed(int questionId) =>
-    _optional(newQuestions: questions.uploadFailed(questionId));
+  QuestionsState uploadFailed(String questionId) =>
+    _optional(newUploadableCollection: uploadableCollection.failed(questionId));
 
-  QuestionsState delete(QuestionState question) =>
+  QuestionsState delete(QuestionState<int> question) =>
     _optional(
       newQuestions:
-        questions.delete(question.id),
+        loadableCollection.delete(question.id),
       newUserQuestions:
         userQuestions.setOne(question.userId,  userQuestions[question.userId]?.removeOne(question.id)),
       newUserSolvedQuestions:
@@ -112,25 +112,25 @@ class QuestionsState {
       newUserUnsolvedQuestions:
         userUnsolvedQuestions.setOne(question.userId,  userUnsolvedQuestions[question.userId]?.removeOne(question.id)),
     );
-  QuestionsState like(QuestionState question) =>
-    _optional(newQuestions: questions.update(question.id, question.like()));
-  QuestionsState dislike(QuestionState question) =>
-    _optional(newQuestions: questions.update(question.id, question.dislike()));
+  QuestionsState like(QuestionState<int> question) =>
+    _optional(newQuestions: loadableCollection.update(question.id, question.like()));
+  QuestionsState dislike(QuestionState<int> question) =>
+    _optional(newQuestions: loadableCollection.update(question.id, question.dislike()));
   //questions
 
   //solutions
   QuestionsState createSolution(SolutionState solution) =>
     _optional(
-      newQuestions: questions.update(
+      newQuestions: loadableCollection.update(
         solution.questionId,
-        questions[solution.questionId].entity?.createSolution(solution)
+        loadableCollection[solution.questionId].entity?.createSolution(solution)
       )
     );
   QuestionsState deleteSolution(SolutionState solution) =>
     _optional(
-      newQuestions: questions.update(
+      newQuestions: loadableCollection.update(
         solution.questionId,
-        questions[solution.questionId].entity?.deleteSolution(solution)
+        loadableCollection[solution.questionId].entity?.deleteSolution(solution)
       )
     );
   //solutions
@@ -138,52 +138,52 @@ class QuestionsState {
   //home questions
   QuestionsState startNextHomeQuestions() => 
     _optional(newHomeQuestions: homeQuestions.startNext());
-  QuestionsState addNextHomeQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState addNextHomeQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newHomeQuestions: homeQuestions.addNext(questions.map((e) => e.id))
     );
-  QuestionsState refreshHomeQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState refreshHomeQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newHomeQuestions: homeQuestions.refresh(questions.map((e) => e.id))
     );
   QuestionsState stopNextHomeQuestions() => 
     _optional(newHomeQuestions: homeQuestions.stopNext());
-  ContainerPagination<int, QuestionState> selectHomeQuestions() =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions, homeQuestions);
+  ContainerPagination<int, QuestionState<int>> selectHomeQuestions() =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(loadableCollection, homeQuestions);
   //home questions
 
   //search questions
   QuestionsState startNextSearchQuestions() => 
     _optional(newSearchQuestions: searchQuestions.startNext());
-  QuestionsState addNextSearchQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState addNextSearchQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newSearchQuestions: searchQuestions.addNext(questions.map((e) => e.id))
     );
-  QuestionsState refreshSearchQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState refreshSearchQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newSearchQuestions: searchQuestions.refresh(questions.map((e) => e.id))
     );
   QuestionsState stopNextSearchQuestions() => 
     _optional(newSearchQuestions: searchQuestions.stopNext());
-  ContainerPagination<int, QuestionState> selectSearchPageQuestions() =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions, searchQuestions);
+  ContainerPagination<int, QuestionState<int>> selectSearchPageQuestions() =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(loadableCollection, searchQuestions);
   //search questions
 
   //video questions
   QuestionsState startNextVideoQuestions() => 
     _optional(newVideoQuestions: videoQuestions.startNext());
-  QuestionsState addNextVideoQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState addNextVideoQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newVideoQuestions: videoQuestions.addNext(questions.map((e) => e.id))
     );
-  QuestionsState refreshVideoQuestions(Iterable<QuestionState> questions) =>
+  QuestionsState refreshVideoQuestions(Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newVideoQuestions: videoQuestions.refresh(questions.map((e) => e.id))
     );
   QuestionsState stopNextVideoQuestions() => 
@@ -200,17 +200,17 @@ class QuestionsState {
         _selectUserQuestionKeyPagination(userId).startNext()
       ),
     );
-  QuestionsState addNextUserQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextUserQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserQuestions: userQuestions.setOne(
         userId,
         _selectUserQuestionKeyPagination(userId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshUserQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshUserQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserQuestions: userQuestions.setOne(
         userId,
         _selectUserQuestionKeyPagination(userId).refresh(questions.map((e) => e.id))
@@ -223,8 +223,11 @@ class QuestionsState {
         _selectUserQuestionKeyPagination(userId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectUserQuestions(int userId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions,_selectUserQuestionKeyPagination(userId));
+  ContainerPagination<int, QuestionState<int>> selectUserQuestions(int userId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(
+      loadableCollection,
+      _selectUserQuestionKeyPagination(userId)
+    );
   //user questions  
   
   //user solved questions
@@ -237,17 +240,17 @@ class QuestionsState {
         _selectUserSolvedQuestionKeyPagination(userId).startNext()
       ),
     );
-  QuestionsState addNextUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextUserSolvedQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         _selectUserSolvedQuestionKeyPagination(userId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshUserSolvedQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserSolvedQuestions: userSolvedQuestions.setOne(
         userId,
         _selectUserSolvedQuestionKeyPagination(userId).refresh(questions.map((e) => e.id))
@@ -260,8 +263,8 @@ class QuestionsState {
         _selectUserSolvedQuestionKeyPagination(userId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectUserSolvedQuestions(int userId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions,_selectUserSolvedQuestionKeyPagination(userId));
+  ContainerPagination<int, QuestionState<int>> selectUserSolvedQuestions(int userId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(loadableCollection,_selectUserSolvedQuestionKeyPagination(userId));
   //user solved questions
 
   //user unsolved questions
@@ -274,17 +277,17 @@ class QuestionsState {
         _selectUserUnsolvedQuestionKeyPagination(userId).startNext()
       ),
     );
-  QuestionsState addNextUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextUserUnsolvedQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         _selectUserUnsolvedQuestionKeyPagination(userId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshUserUnsolvedQuestions(int userId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newUserUnsolvedQuestions: userUnsolvedQuestions.setOne(
         userId,
         _selectUserUnsolvedQuestionKeyPagination(userId).refresh(questions.map((e) => e.id))
@@ -297,8 +300,8 @@ class QuestionsState {
         _selectUserUnsolvedQuestionKeyPagination(userId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectUserUnsolvedQuestions(int userId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions,_selectUserUnsolvedQuestionKeyPagination(userId));
+  ContainerPagination<int, QuestionState<int>> selectUserUnsolvedQuestions(int userId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(loadableCollection,_selectUserUnsolvedQuestionKeyPagination(userId));
   //user unsolved questions
 
   //exam questions
@@ -311,17 +314,17 @@ class QuestionsState {
         _selectExamQuestionKeyPagination(examId).startNext()
       ),
     );
-  QuestionsState addNextExamQuestions(int examId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextExamQuestions(int examId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newExamQuestions: examQuestions.setOne(
         examId,
         _selectExamQuestionKeyPagination(examId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshExamQuestions(int examId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshExamQuestions(int examId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newExamQuestions: examQuestions.setOne(
         examId,
         _selectExamQuestionKeyPagination(examId).refresh(questions.map((e) => e.id))
@@ -334,8 +337,8 @@ class QuestionsState {
         _selectExamQuestionKeyPagination(examId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectExamQuestions(int examId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(questions, _selectExamQuestionKeyPagination(examId));
+  ContainerPagination<int, QuestionState<int>> selectExamQuestions(int examId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(loadableCollection, _selectExamQuestionKeyPagination(examId));
   //exam questions
 
   //subject questions
@@ -348,17 +351,17 @@ class QuestionsState {
         _selectSubjectQuestionKeyPagination(subjectId).startNext()
       ),
     );
-  QuestionsState addNextSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextSubjectQuestions(int subjectId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newSubjectQuestions: subjectQuestions.setOne(
         subjectId,
         _selectSubjectQuestionKeyPagination(subjectId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshSubjectQuestions(int subjectId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshSubjectQuestions(int subjectId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newSubjectQuestions: subjectQuestions.setOne(
         subjectId,
         _selectSubjectQuestionKeyPagination(subjectId).refresh(questions.map((e) => e.id))
@@ -371,9 +374,9 @@ class QuestionsState {
         _selectSubjectQuestionKeyPagination(subjectId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectSubjectQuestions(int subjectId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(
-      questions,
+  ContainerPagination<int, QuestionState<int>> selectSubjectQuestions(int subjectId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(
+      loadableCollection,
       _selectSubjectQuestionKeyPagination(subjectId)
     );
   //subject questions
@@ -388,17 +391,17 @@ class QuestionsState {
         _selectTopicQuestionKeyPagination(topicId).startNext()
       ),
     );
-  QuestionsState addNextTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+  QuestionsState addNextTopicQuestions(int topicId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newTopicQuestions: topicQuestions.setOne(
         topicId,
         _selectTopicQuestionKeyPagination(topicId).addNext(questions.map((e) => e.id))
       ),
     );
-  QuestionsState refreshTopicQuestions(int topicId, Iterable<QuestionState> questions) =>
+  QuestionsState refreshTopicQuestions(int topicId, Iterable<QuestionState<int>> questions) =>
     _optional(
-      newQuestions: this.questions.loadSuccessMany({ for (var e in questions) e.id : e }),
+      newQuestions: loadableCollection.loadSuccessMany({ for (var e in questions) e.id : e }),
       newTopicQuestions: topicQuestions.setOne(
         topicId,
         _selectTopicQuestionKeyPagination(topicId).refresh(questions.map((e) => e.id))
@@ -411,9 +414,9 @@ class QuestionsState {
         _selectTopicQuestionKeyPagination(topicId).stopNext()
       ),
     );
-  ContainerPagination<int, QuestionState> selectTopicQuestions(int topicId) =>
-    ContainerPagination<int, QuestionState>.fromCollection(
-      questions,
+  ContainerPagination<int, QuestionState<int>> selectTopicQuestions(int topicId) =>
+    ContainerPagination<int, QuestionState<int>>.fromCollection(
+      loadableCollection,
       _selectTopicQuestionKeyPagination(topicId)
     );
   //topic questions

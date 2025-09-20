@@ -60,28 +60,28 @@ class QuestionUserSave{
   factory QuestionUserSave.fromJson(Map<String, dynamic> json) => _$QuestionUserSaveFromJson(json);
   Map<String, dynamic> toJson() => _$QuestionUserSaveToJson(this);
 
-  QuestionUserSaveState toState() =>
-    QuestionUserSaveState(
-      id: id,
-      questionId: questionId,
-      content: content,
-      createdAt: createdAt,
-      exam: exam.toExamState(),
-      image: image,
-      isLiked: isLiked,
-      isOwner: isOwner,
-      isSaved: isSaved,
-      medias: medias.map((e) => e.toMedia()),
-      numberOfComments: numberOfComments,
-      numberOfCorrectSolutions: numberOfCorrectSolutions,
-      numberOfLikes: numberOfLikes,
-      numberOfSolutions: numberOfSolutions,
-      numberOfVideoSolutions: numberOfVideoSolutions,
-      publishingState: publishingState,
-      subject: subject.toSubjectState(),
-      topic: topic?.toTopicState(),
-      updatedAt: updatedAt,
-      userId: userId,
-      userName: userName
-    );
+  // QuestionUserSaveState toState() =>
+  //   QuestionUserSaveState(
+  //     id: id,
+  //     questionId: questionId,
+  //     content: content,
+  //     createdAt: createdAt,
+  //     exam: exam.toExamState(),
+  //     image: image,
+  //     isLiked: isLiked,
+  //     isOwner: isOwner,
+  //     isSaved: isSaved,
+  //     medias: medias.map((e) => e.toMedia()),
+  //     numberOfComments: numberOfComments,
+  //     numberOfCorrectSolutions: numberOfCorrectSolutions,
+  //     numberOfLikes: numberOfLikes,
+  //     numberOfSolutions: numberOfSolutions,
+  //     numberOfVideoSolutions: numberOfVideoSolutions,
+  //     publishingState: publishingState,
+  //     subject: subject.toSubjectState(),
+  //     topic: topic?.toTopicState(),
+  //     updatedAt: updatedAt,
+  //     userId: userId,
+  //     userName: userName
+  //   );
 }

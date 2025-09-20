@@ -20,6 +20,12 @@ class LoadableCollection<K, V> {
   LoadableCollection<K,V> notFound(K key) =>
     LoadableCollection<K,V>._(_map.setOne(key, this[key].notFound()));
   
+  LoadableCollection<K,V> delete(K key) =>
+    LoadableCollection<K,V>._(_map.setOne(key, this[key].notFound()));
+  
+  LoadableCollection<K,V> update(K key, V? entity) =>
+    LoadableCollection<K,V>._(_map.setOne(key, this[key].update(entity)));
+
   LoadableContainer<K,V> operator[](K key) =>
     _map[key] ?? LoadableContainer<K,V>(key: key);
 }

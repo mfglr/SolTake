@@ -11,11 +11,12 @@ class LocalImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: media.dimention.aspectRatio,
-      child: Image.file(
+    return LayoutBuilder(
+      builder: (context, constraints) => Image.file(
         media.file,
         fit: BoxFit.cover,
+        height: constraints.constrainWidth(),
+        width: constraints.constrainWidth(),
       ),
     );
   }

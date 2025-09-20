@@ -47,8 +47,8 @@ void uploadQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
           }
         }
       )
-      .then((_) {
-        store.dispatch(UploadQuestionSuccessAction(questionId: action.question.id));
+      .then((response) {
+        store.dispatch(UploadQuestionSuccessAction(question: action.question,serverId: response.id));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })
       .catchError((e){

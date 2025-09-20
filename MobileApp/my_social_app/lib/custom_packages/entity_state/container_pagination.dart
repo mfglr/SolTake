@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/entity_state/base_pagination.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_container.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_collection.dart';
-import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
 import 'package:my_social_app/custom_packages/entity_state/page.dart' as pagination;
 
 @immutable
 class ContainerPagination<K extends Comparable, E extends Entity<K>> extends BasePagination<K>{
-  final Iterable<EntityContainer<K, E>> containers;
+  final Iterable<LoadableContainer<K, E>> containers;
   @override
   bool get isItemsEmpty => containers.isEmpty;
   @override
@@ -30,7 +30,7 @@ class ContainerPagination<K extends Comparable, E extends Entity<K>> extends Bas
     required this.containers
   });
 
-  factory ContainerPagination.fromCollection(EntityCollection<K,E> collection, KeyPagination<K> keyPagination) =>
+  factory ContainerPagination.fromCollection(LoadableCollection<K,E> collection, KeyPagination<K> keyPagination) =>
     ContainerPagination<K,E>._(
       isLast: keyPagination.isLast,
       loadingNext: keyPagination.loadingNext,

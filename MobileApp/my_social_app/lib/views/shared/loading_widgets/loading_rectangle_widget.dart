@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LoaingRectangleWidget extends StatelessWidget {
+class LoadingRectangleWidget extends StatelessWidget {
   final Color baseColor;
   final Color highlightColor;
   
-  const LoaingRectangleWidget({
+  const LoadingRectangleWidget({
     super.key,
     this.baseColor = const Color(0xFFE0E0E0),
     this.highlightColor = const Color(0xFFF5F5F5)

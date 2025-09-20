@@ -1,4 +1,6 @@
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/uploadable_collection.dart';
 import 'package:my_social_app/state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/ai_model_state/middlewares.dart';
 import 'package:my_social_app/state/balance_state/balance_state.dart';
@@ -19,6 +21,7 @@ import 'package:my_social_app/state/message_connection_entity_state/middlewares.
 import 'package:my_social_app/state/message_entity_state/middlewares.dart';
 import 'package:my_social_app/state/conversations_state/middlewares.dart';
 import 'package:my_social_app/state/questions_state/middleware.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/notifications_state.dart/middlewares.dart';
 import 'package:my_social_app/state/policy_state/middlewares.dart';
@@ -72,7 +75,8 @@ final store = Store(
     ),
 
     questions: QuestionsState(
-      questions: EntityCollection(),
+      uploadableCollection: UploadableCollection<String, QuestionState<String>>(),
+      loadableCollection: LoadableCollection<int, QuestionState<int>>(),
       
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),

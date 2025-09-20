@@ -2,6 +2,8 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/loadable_collection.dart';
+import 'package:my_social_app/custom_packages/entity_state/containers/uploadable_collection.dart';
 import 'package:my_social_app/state/active_login_page_state/active_login_page.dart';
 import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/balance_state/balance_state.dart';
@@ -16,6 +18,7 @@ import 'package:my_social_app/state/comments_state/comment_state.dart';
 import 'package:my_social_app/state/message_connection_entity_state/message_connection_state.dart';
 import 'package:my_social_app/state/message_entity_state/message_status.dart';
 import 'package:my_social_app/state/message_entity_state/message_state.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/questions_state/questions_state.dart';
 import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/state/policy_state/policy_state.dart';
@@ -142,7 +145,9 @@ class AppState{
     ),
 
     questions: QuestionsState(
-      questions: EntityCollection(),
+      uploadableCollection: UploadableCollection<String, QuestionState<String>>(),
+      loadableCollection: LoadableCollection<int, QuestionState<int>>(),
+      
       homeQuestions: KeyPagination.init(questionsPerPage, true),
       searchQuestions: KeyPagination.init(questionsPerPage, true),
       videoQuestions: KeyPagination.init(questionsPerPage, true),

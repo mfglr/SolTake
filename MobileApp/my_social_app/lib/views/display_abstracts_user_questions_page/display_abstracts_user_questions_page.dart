@@ -56,7 +56,7 @@ class _DisplayAbstractsUserQuestionsPageState extends State<DisplayAbstractsUser
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ContainerPagination<int,QuestionState>>(
+    return StoreConnector<AppState, ContainerPagination<int,QuestionState<int>>>(
       onInit: (store) =>
         getNextEntitiesIfNoPage(
           store,

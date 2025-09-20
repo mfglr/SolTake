@@ -8,7 +8,7 @@ import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/question/pages/display_question_page/display_question_page_texts.dart';
 
 class QuestionSuccessPage extends StatelessWidget {
-  final EntityContainer<int,QuestionState> container;
+  final EntityContainer<int,QuestionState<int>> container;
   
   const QuestionSuccessPage({
     super.key,
