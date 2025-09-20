@@ -4,6 +4,7 @@ import 'package:my_social_app/services/client_id_generator.dart';
 import 'package:my_social_app/state/questions_state/actions.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
+import 'package:my_social_app/state/topics_state/topic_state.dart';
 import 'package:my_social_app/state/users_state/selectors.dart';
 import 'package:my_social_app/views/create_question/pages/select_exam_page/select_exam_page.dart';
 
@@ -19,7 +20,10 @@ void startCreatingQuestion(BuildContext context){
           var userId = store.state.login.login!.id;
           var exam = store.state.exams[value.examId]!;
           var subject = store.state.subjects.examSubjects[value.examId]![value.subjectId]!;
-          var topic = store.state.topics.subjectTopics[value.subjectId]![value.topicId];
+          TopicState? topic;
+          if(value.topicId != null){
+            topic = store.state.topics.subjectTopics[value.subjectId]![value.topicId];
+          }
           var user = selectUserById(store, userId).entity!;
           var id = ClientIdGenerator.generate();
 

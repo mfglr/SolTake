@@ -10,6 +10,7 @@ using SolTake.Core.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using Xabe.FFmpeg;
+using Xabe.FFmpeg.Downloader;
 
 namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
@@ -106,6 +107,7 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
             var manipulatedVideoBlobName = _uniqNameGenerator.Generate("mp4");
             var manipulatedVideoPath = _pathFinder.GetPath(_scopeContainerName, manipulatedVideoBlobName);
             FFmpeg.SetExecutablesPath("FFmpeg");
+            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
             var conversion =
                 FFmpeg.Conversions
                     .New()

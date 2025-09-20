@@ -70,9 +70,7 @@ class QuestionsState {
       subjectQuestions: newSubjectQuestions ?? subjectQuestions,
       topicQuestions: newTopicQuestions ?? topicQuestions,
     );
-
   //questions
-
   QuestionsState load(int id) => 
     _optional(newQuestions: questions.load(id));
   QuestionsState loadSuccess(QuestionState question) =>

@@ -85,8 +85,10 @@ class QuestionContainerLoadSuccessWidget extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height * 3 / 5
             ),
-            child: MediaSlider(
-              medias: question.medias
+            child: Center(
+              child: MediaSlider(
+                medias: question.medias
+              ),
             )
           ),
           Padding(

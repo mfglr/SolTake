@@ -131,6 +131,7 @@ class QuestionState extends Entity<int> implements Avatar{
       image: image,
     );
 
+
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   String? formatContent(int count){
     if(content == null) return null;
