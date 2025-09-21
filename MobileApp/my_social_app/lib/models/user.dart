@@ -61,7 +61,7 @@ class User{
         isFollower: isFollower,
         isFollowed: isFollowed,
         isCurrentUser: isCurrentUser,
-        image: image,
+        image: image?.toMedia(),
         stories: stories.map((e) => e.toState())
       );
 }

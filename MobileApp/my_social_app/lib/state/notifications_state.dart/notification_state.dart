@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
@@ -11,7 +12,7 @@ class NotificationState extends Entity<int> implements Avatar{
   final int type;
   final int userId;
   final String userName;
-  final Multimedia? image;
+  final Media? image;
 
   final int? questionId;
   final String? questionContent;
@@ -34,7 +35,7 @@ class NotificationState extends Entity<int> implements Avatar{
   int get avatarId => userId;
 
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
 
   NotificationState({
     required super.id,

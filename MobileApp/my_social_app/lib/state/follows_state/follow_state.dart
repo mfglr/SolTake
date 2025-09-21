@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/user_item.dart';
 
 @immutable
@@ -18,7 +18,7 @@ class FollowState extends UserItem{
   });
   
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
   @override
   int get avatarId => userId;
 }

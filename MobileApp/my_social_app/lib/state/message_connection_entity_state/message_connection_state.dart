@@ -1,11 +1,11 @@
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 class MessageConnectionState extends Entity<int> implements Avatar{
   final DateTime? lastSeenAt;
   final String userName;
-  final Multimedia? image;
+  final Media? image;
   final int state;
   final int? userId;
 
@@ -29,7 +29,7 @@ class MessageConnectionState extends Entity<int> implements Avatar{
     );
     
     @override
-    Multimedia? get avatar => image;
+    Media? get avatar => image;
   
     @override
     int get avatarId => id;

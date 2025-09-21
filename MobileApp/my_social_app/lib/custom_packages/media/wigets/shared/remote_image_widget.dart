@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:my_social_app/exceptions/backend_exception.dart';
-import 'package:my_social_app/custom_packages/media/wigets/failed_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/loading_widget.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia_status.dart';
 import 'package:my_social_app/custom_packages/media/models/remote_image.dart';
-import 'package:my_social_app/custom_packages/media/wigets/not_found_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/failed_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/loading_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/not_found_widget.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 
 class RemoteImageWidget extends StatefulWidget {
-  final RemoteImage media;
   final String blobService;
+  final RemoteImage media;
+  final BoxFit fit;
+
   const RemoteImageWidget({
     super.key,
+    required this.blobService,
     required this.media,
-    required this.blobService
+    this.fit = BoxFit.cover
   });
 
   @override
@@ -57,12 +60,13 @@ class _RemoteImageWidgetState extends State<RemoteImageWidget> {
     return switch (_media.status){
       MultimediaStatus.created => const LoadingWidget(),
       MultimediaStatus.started => const LoadingWidget(),
-      MultimediaStatus.completed => AspectRatio(
-        aspectRatio: widget.media.dimention.aspectRatio,
-        child: Image.memory(
-            _media.bytes!,
-            fit: BoxFit.contain,
-          ),
+      MultimediaStatus.completed => LayoutBuilder(
+        builder: (context, constraints) => Image.memory(
+          _media.bytes!,
+          fit: widget.fit,
+          height: constraints.constrainHeight(),
+          width: constraints.constrainWidth(),
+        ),
       ),
       MultimediaStatus.failed => const FailedWidget(),
       MultimediaStatus.notFound => const NotFoundWidget(),

@@ -33,7 +33,7 @@ class StoryUserView {
       userId: userId,
       userName: userName,
       name: name,
-      image: image,
+      image: image?.toMedia(),
       createdAt: createdAt
     );
 }

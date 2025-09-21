@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/medias_grid/media_grid.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_frame_widget/media_frame_widget.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 
@@ -16,9 +17,10 @@ class QuestionAbstractProcessingWidget extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.topEnd,
       children: [
-        MediaGrid(
+        MediaFrameWidget(
           key: ValueKey(container.key),
           media: container.entity!.medias.first,
+          blobService: AppClient.blobService,
         ),
         Container(
           padding: const EdgeInsets.all(8),

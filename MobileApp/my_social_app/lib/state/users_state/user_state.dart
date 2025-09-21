@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/follows_state/follow_state.dart';
 import 'package:my_social_app/state/users_state/user_story_state.dart';
@@ -18,13 +18,8 @@ class UserState extends Entity<int> implements Avatar{
   final bool isFollower;
   final bool isFollowed;
   final bool isCurrentUser;
-  final Multimedia? image;
+  final Media? image;
   final Iterable<UserStoryState> stories;
-
-  @override
-  Multimedia? get avatar => image;
-  @override
-  int get avatarId => id;
 
   String formatName(int count){
     final r = (name ?? userName);
@@ -62,7 +57,7 @@ class UserState extends Entity<int> implements Avatar{
     int? newNumberOfFolloweds,
     bool? newIsFollower,
     bool? newIsFollowed,
-    Multimedia? newImage,
+    Media? newImage,
   }) => UserState(
     id: id,
     createdAt: createdAt,
@@ -137,4 +132,10 @@ class UserState extends Entity<int> implements Avatar{
       newBiography: biography,
       newUpdatedDate: DateTime.now()
     );
+    
+    @override
+    Media? get avatar => image;
+  
+    @override
+    int get avatarId => id;
 }

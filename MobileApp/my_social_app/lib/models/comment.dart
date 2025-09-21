@@ -61,7 +61,7 @@ class Comment{
       numberOfChildren: numberOfChildren,
       parentId: parentId,
       solutionId: solutionId,
-      image: image
+      image: image?.toMedia()
     );
 
 }

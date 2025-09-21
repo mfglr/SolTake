@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/circles_pagination/circles_pagination.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_widget/media_widget.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
+import 'package:my_social_app/services/app_client.dart';
 
 class MediaSlider extends StatefulWidget {
   final Iterable<Media> medias;
@@ -47,6 +48,7 @@ class _MediaSliderState extends State<MediaSlider> {
               itemBuilder: (context, index) => Center(
                 child: MediaWidget(
                   media: widget.medias.elementAt(index),
+                  blobService: AppClient.blobService,
                 ),
               ),
               onPageChanged: (index) => setState(() => _index = index),

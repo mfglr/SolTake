@@ -27,6 +27,6 @@ class SearchUser{
         id: id,
         userName: userName,
         name: name,
-        image: image
+        image: image?.toMedia()
       );
 }

@@ -18,7 +18,7 @@ import 'package:my_social_app/views/question/widgets/question_container/widgets/
 import 'package:my_social_app/views/question/widgets/question_container/widgets/save_question_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/subject_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/topic_tag_item.dart';
-import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
+import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
@@ -56,9 +56,9 @@ class QuestionContainerUploadWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(right: 5),
-                        child: AppAvatar(
+                        child: UserImageWidget(
                           key: ValueKey(question.userId),
-                          avatar: question,
+                          image: question.image,
                           diameter: 45
                         ),
                       ),

@@ -30,6 +30,6 @@ class UserUserBlock {
       userId: userId,
       userName: userName,
       name: name,
-      image: image
+      image: image?.toMedia()
     );
 }

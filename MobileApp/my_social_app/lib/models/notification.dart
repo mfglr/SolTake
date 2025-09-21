@@ -71,7 +71,7 @@ class Notification{
         userName: userName,
         type: type,
         userId: userId,
-        image: image,
+        image: image?.toMedia(),
 
         questionId: questionId,
         questionContent: questionContent,

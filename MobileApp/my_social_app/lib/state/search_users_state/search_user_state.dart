@@ -1,11 +1,11 @@
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 
 class SearchUserState extends Entity<int> implements Avatar{
   final String userName;
   final String? name;
-  final Multimedia? image;
+  final Media? image;
 
   SearchUserState({
     required super.id,
@@ -15,7 +15,7 @@ class SearchUserState extends Entity<int> implements Avatar{
   });
   
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
   @override
   int get avatarId => id;
 }

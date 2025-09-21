@@ -55,6 +55,6 @@ class Message{
         content: content,
         state: state,
         medias: medias,
-        image: image
+        image: image?.toMedia()
       );
 }

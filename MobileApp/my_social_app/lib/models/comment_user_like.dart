@@ -31,7 +31,7 @@ class CommentUserLike{
         userId: userId,
         userName: userName,
         name: name,
-        image: image
+        image: image?.toMedia()
       );
 
 }

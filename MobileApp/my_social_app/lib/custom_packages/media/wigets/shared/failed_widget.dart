@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class FailedWidget extends StatelessWidget {
-  
   const FailedWidget({
     super.key,
   });

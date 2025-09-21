@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_image.dart';
 
-class LocalImageGrid extends StatelessWidget {
+class LocalImageWidget extends StatelessWidget {
   final LocalImage media;
-  
-  const LocalImageGrid({
+  final BoxFit fit;
+  const LocalImageWidget({
     super.key,
     required this.media,
+    this.fit = BoxFit.cover
   });
 
   @override
@@ -14,8 +15,8 @@ class LocalImageGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) => Image.file(
         media.file,
-        fit: BoxFit.cover,
-        height: constraints.constrainWidth(),
+        fit: fit,
+        height: constraints.constrainHeight(),
         width: constraints.constrainWidth(),
       ),
     );

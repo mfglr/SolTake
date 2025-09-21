@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
-import 'package:my_social_app/custom_packages/media/wigets/play_button.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_widget/volume_button.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_widget/video_duration_bar.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/video_duration_bar.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/volume_button.dart';
 import 'package:video_player/video_player.dart';
 
 class LocalVideoWidget extends StatefulWidget {
-  final bool autoPlay;
   final LocalVideo media;
+  final bool autoPlay;
+
   const LocalVideoWidget({
     super.key,
     required this.media,
-    this.autoPlay = false
+    this.autoPlay = false,
   });
 
   @override
@@ -28,7 +29,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
 
   @override
   void initState() {
-    _controller = 
+    _controller =
       VideoPlayerController
         .file(widget.media.file)
         ..setLooping(true)

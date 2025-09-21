@@ -2,22 +2,24 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:my_social_app/custom_packages/media/services/frame_catcher.dart';
-import 'package:my_social_app/custom_packages/media/wigets/failed_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/play_button.dart';
-import 'package:my_social_app/views/shared/loading_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/failed_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/loading_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
 
-class LocalVideoGrid extends StatefulWidget {
+class LocalVideoFrameWidget extends StatefulWidget {
   final LocalVideo media;
-  const LocalVideoGrid({
+  final BoxFit fit;
+  const LocalVideoFrameWidget({
     super.key,
     required this.media,
+    this.fit = BoxFit.cover
   });
 
   @override
-  State<LocalVideoGrid> createState() => _LocalVideoGridState();
+  State<LocalVideoFrameWidget> createState() => _LocalVideoFrameWidgetState();
 }
 
-class _LocalVideoGridState extends State<LocalVideoGrid> {
+class _LocalVideoFrameWidgetState extends State<LocalVideoFrameWidget> {
   late final Future<Uint8List> _bytes;
 
   @override
@@ -40,7 +42,7 @@ class _LocalVideoGridState extends State<LocalVideoGrid> {
             children: [
               Image.memory(
                 snapShot.data!,
-                fit: BoxFit.cover,
+                fit: widget.fit,
                 height: constraints.constrainHeight(),
                 width: constraints.constrainWidth(),
               ),

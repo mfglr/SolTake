@@ -1,4 +1,5 @@
 import 'package:multimedia/models/multimedia_type.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
@@ -21,7 +22,7 @@ class SolutionState extends Entity<int> implements Avatar{
   final Iterable<Multimedia> medias;
   final int numberOfComments;
   final bool doesBelongToQuestionOfCurrentUser;
-  final Multimedia? image;
+  final Media? image;
   final bool isCreatedByAI;
   final String? aiModelName;
   final Multimedia? aiImage;
@@ -30,7 +31,7 @@ class SolutionState extends Entity<int> implements Avatar{
   int get avatarId => userId;
 
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
 
   SolutionState({
     required super.id,
@@ -71,7 +72,7 @@ class SolutionState extends Entity<int> implements Avatar{
     Iterable<Multimedia>? newMedias,
     int? newNumberOfComments,
     int? newState,
-    Multimedia? newImage,
+    Media? newImage,
   })
     => SolutionState(
         id: id,

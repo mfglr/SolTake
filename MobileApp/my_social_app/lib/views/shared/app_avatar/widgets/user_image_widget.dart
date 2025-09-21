@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia_grid/circler_multimedia.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_frame_widget/media_frame_widget.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/not_found_widget.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class UserImageWidget extends StatelessWidget {
-  final Multimedia? image;
+  final Media? image;
   final double diameter;
   final void Function()? onPressed;
   
@@ -18,17 +18,21 @@ class UserImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpaceSavingWidget();
-    // return GestureDetector(
-    //   onTap: onPressed,
-    //   child: CirclerMultimedia(
-    //     blobServiceUrl: AppClient.blobService,
-    //     diameter: diameter,
-    //     noMediaPath: "assets/images/no_profile_image.png",
-    //     notFoundMediaPath: "assets/images/no_profile_image.png",
-    //     state: image,
-    //   )
-    // );
+    return GestureDetector(
+      onTap: onPressed,
+      child: ClipOval(
+        child: SizedBox(
+          height: diameter,
+          width: diameter,
+          child: image != null
+            ? MediaFrameWidget(
+                blobService: AppClient.blobService,
+                media: image!,
+              )
+            : const NotFoundWidget()
+        ),
+      )
+    );
   }
 }
 

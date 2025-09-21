@@ -31,7 +31,7 @@ class MessageConnection{
       id: id,
       lastSeenAt: lastSeenAt,
       userName: userName,
-      image: image,
+      image: image?.toMedia(),
       state: state,
       userId: userId
     );

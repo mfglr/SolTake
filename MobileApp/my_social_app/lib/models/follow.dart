@@ -34,7 +34,7 @@ class Follow {
         userId: userId,
         userName: userName,
         name: name,
-        image: image,
+        image: image?.toMedia(),
         isFollower: isFollower,
         isFollowed: isFollowed
       );

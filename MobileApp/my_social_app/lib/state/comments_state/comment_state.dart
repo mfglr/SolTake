@@ -1,5 +1,5 @@
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/avatar.dart';
 
 class CommentState extends Entity<int> implements Avatar{
@@ -16,12 +16,12 @@ class CommentState extends Entity<int> implements Avatar{
   final int? questionId;
   final int? solutionId;
   final int? parentId;
-  final Multimedia? image;
+  final Media? image;
 
   @override
   int get avatarId => userId;
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
 
   CommentState({
     required super.id,
@@ -50,7 +50,7 @@ class CommentState extends Entity<int> implements Avatar{
     bool? newIsLiked,
     int? newNumberOfLikes,
     int? newNumberOfChildren,
-    Multimedia? newImage,
+    Media? newImage,
   }) => CommentState(
       id: id,
       createdAt: createdAt,

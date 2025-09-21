@@ -67,7 +67,7 @@ class QuestionUserSave{
       content: content,
       createdAt: createdAt,
       exam: exam.toExamState(),
-      image: image,
+      image: image?.toMedia(),
       isLiked: isLiked,
       isOwner: isOwner,
       isSaved: isSaved,

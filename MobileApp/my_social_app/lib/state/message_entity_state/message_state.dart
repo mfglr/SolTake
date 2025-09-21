@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/message_entity_state/message_status.dart';
@@ -17,13 +18,13 @@ class MessageState extends Entity<int> implements Avatar{
   final String? content; 
   final int state;
   final Iterable<Multimedia> medias;
-  final Multimedia? image;
+  final Media? image;
 
   @override
   int get avatarId => conversationId;
 
   @override
-  Multimedia? get avatar => image;
+  Media? get avatar => image;
 
   MessageState({
     required super.id,
@@ -46,7 +47,7 @@ class MessageState extends Entity<int> implements Avatar{
     bool? newIsEdited,
     String? newContent,
     int? newState,
-    Multimedia? newImage
+    Media? newImage
   })
     => MessageState(
         id: id,

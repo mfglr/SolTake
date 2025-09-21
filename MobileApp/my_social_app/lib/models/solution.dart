@@ -73,7 +73,7 @@ class Solution{
       doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
       isUpvoted: isUpvoted,
       numberOfUpvotes: numberOfUpvotes,
-      image: image,
+      image: image?.toMedia(),
       isCreatedByAI: isCreatedByAI,
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,

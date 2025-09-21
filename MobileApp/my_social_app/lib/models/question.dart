@@ -77,6 +77,6 @@ class Question{
     numberOfSolutions: numberOfSolutions,
     numberOfCorrectSolutions: numberOfCorrectSolutions,
     numberOfVideoSolutions: numberOfVideoSolutions,
-    image: image,
+    image: image?.toMedia(),
   );
 }

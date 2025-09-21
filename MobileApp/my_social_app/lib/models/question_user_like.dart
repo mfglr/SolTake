@@ -30,6 +30,6 @@ class QuestionUserLike{
         userId: userId,
         name: name,
         userName: userName,
-        image: image
+        image: image?.toMedia()
       );
 }

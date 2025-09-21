@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
-import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/questions_state/question_publishing_state.dart';
 import 'package:my_social_app/state/questions_state/question_status.dart';
@@ -14,7 +12,7 @@ import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_status.dart';
 
 @immutable
-class QuestionState extends Entity<int> implements Avatar{
+class QuestionState extends Entity<int>{
   final DateTime createdAt;
   final DateTime? updatedAt;
   final int userId;
@@ -33,13 +31,9 @@ class QuestionState extends Entity<int> implements Avatar{
   final int numberOfSolutions;
   final int numberOfCorrectSolutions;
   final int numberOfVideoSolutions;
-  final Multimedia? image;
+  final Media? image;
 
   int get state => numberOfCorrectSolutions >= 1 ? QuestionStatus.solved : QuestionStatus.unsolved;
-  @override
-  int get avatarId => userId;
-  @override
-  Multimedia? get avatar => image;
 
   QuestionState({
     required super.id,
@@ -73,7 +67,7 @@ class QuestionState extends Entity<int> implements Avatar{
     required SubjectState subject,
     required TopicState? topic,
     required Iterable<Media> medias,
-    required Multimedia? image
+    required Media? image
   }) =>
     QuestionState(
       id: id,

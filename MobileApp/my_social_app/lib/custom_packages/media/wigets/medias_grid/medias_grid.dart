@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
-import 'package:my_social_app/custom_packages/media/wigets/medias_grid/media_grid.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
+import 'package:my_social_app/services/app_client.dart';
 
 class MediasGrid extends StatelessWidget {
   final Iterable<Media> medias;
@@ -24,7 +25,10 @@ class MediasGrid extends StatelessWidget {
                 width: constraints.constrainWidth() / numberOfColumn,
                 child: Container(
                   margin: const EdgeInsets.all(1),
-                  child: MediaGrid(media: media),
+                  child: MediaWidget(
+                    media: media,
+                    blobService: AppClient.blobService,
+                  ),
                 ),
               )
             )

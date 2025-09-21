@@ -81,5 +81,4 @@ class RemoteVideo extends RemoteMedia{
       bytesOfFrame: bytesOfFrame,
       statusOfFrame: MultimediaStatus.notFound,
     );
-  
 }

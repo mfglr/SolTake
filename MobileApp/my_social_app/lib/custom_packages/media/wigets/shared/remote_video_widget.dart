@@ -1,14 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/remote_video.dart';
-import 'package:my_social_app/custom_packages/media/wigets/play_button.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_widget/video_duration_bar.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_widget/volume_button.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/video_duration_bar.dart';
+import 'package:my_social_app/custom_packages/media/wigets/shared/volume_button.dart';
 import 'package:video_player/video_player.dart';
 
 class RemoteVideoWidget extends StatefulWidget {
-  final bool autoPlay;
-  final RemoteVideo media;
   final String blobService;
+  final RemoteVideo media;
+  final bool autoPlay;
+  
   const RemoteVideoWidget({
     super.key,
     required this.media,
@@ -76,8 +77,10 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
               },
               child: AspectRatio(
                 aspectRatio: widget.media.dimention.aspectRatio,
-                child: VideoPlayer(
-                  _controller
+                child: SizedBox(
+                  child: VideoPlayer(
+                    _controller,
+                  ),
                 ),
               ),
             ),
@@ -104,7 +107,9 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
               )
           ],
         ),
-        VideoDurationBar(rate: _rate)
+        VideoDurationBar(
+          rate: _rate
+        )
       ],
     ); 
   }

@@ -16,6 +16,7 @@ import 'package:my_social_app/views/search/pages/search_page/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/profile_image_widget.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 
 class RootView extends StatefulWidget {
   const RootView({super.key});
@@ -94,12 +95,12 @@ class _RootViewState extends State<RootView> {
               ),
         
               NavigationDestination(
-                selectedIcon: ProfileImageWidget(
-                  user: user,
+                selectedIcon: UserImageWidget(
+                  image: user.image,
                   diameter: 30
                 ),
-                icon: ProfileImageWidget(
-                  user: user,
+                icon: UserImageWidget(
+                  image: user.image,
                   diameter: 30
                 ),
                 label: '',
