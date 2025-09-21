@@ -131,6 +131,29 @@ class QuestionState extends Entity<int> implements Avatar{
       image: image,
     );
 
+  QuestionState changeId(int id) =>
+    QuestionState(
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      userId: userId,
+      userName: userName,
+      content: content,
+      exam: exam,
+      subject: subject,
+      topic: topic,
+      medias: medias,
+      isLiked: isLiked,
+      isSaved: isSaved,
+      publishingState: publishingState,
+      isOwner: isOwner,
+      numberOfLikes: numberOfLikes,
+      numberOfComments: numberOfComments,
+      numberOfSolutions: numberOfSolutions,
+      numberOfCorrectSolutions: numberOfCorrectSolutions,
+      numberOfVideoSolutions: numberOfVideoSolutions,
+      image: image
+    );
 
   String formatUserName(int count) => userName.length <= count ? userName : "${userName.substring(0,10)}...";
   String? formatContent(int count){
@@ -185,18 +208,15 @@ class QuestionState extends Entity<int> implements Avatar{
   QuestionState createNewSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
-      // newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId))
     );
   QuestionState createNewVideoSolution(int solutionId) => 
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
       newNumberOfVideoSolutions: numberOfVideoSolutions + 1,
-      // newPendingSolutions: pendingSolutions.prependOne(Id(id: solutionId)),
     );
   QuestionState addNewSolution(int solutionId) =>
     _optional(
       newNumberOfSolutions: numberOfSolutions + 1,
-      // newPendingSolutions: pendingSolutions.addInOrder(Id(id: solutionId))
     );
   QuestionState removeSolution(SolutionState solution) =>
     _optional(

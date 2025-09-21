@@ -53,7 +53,7 @@ class _UserSuccessPageState extends State<UserSuccessPage> {
         title: AppTitle(title: widget.user.userName),
         leading: const AppBackButtonWidget(),
         actions: [
-          UserPopupMenu(userId: widget.user.id),
+          UserPopupMenu(user: widget.user),
         ],
       ),
       body: Column(

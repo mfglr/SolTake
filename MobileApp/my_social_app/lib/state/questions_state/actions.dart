@@ -47,8 +47,12 @@ class MarkQuestionStatusAsProcessing extends AppAction{
 }
 @immutable
 class UploadQuestionSuccessAction extends AppAction{
-  final int questionId;
-  const UploadQuestionSuccessAction({required this.questionId});
+  final QuestionState question;
+  final int serverId;
+  const UploadQuestionSuccessAction({
+    required this.question,
+    required this.serverId
+  });
 }
 @immutable
 class UploadQuestionFailedAction extends AppAction{

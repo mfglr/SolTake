@@ -96,8 +96,18 @@ class QuestionsState {
     _optional(newQuestions: questions.changeRate(questionId, rate));
   QuestionsState processing(int questionId) =>
     _optional(newQuestions: questions.processing(questionId));
-  QuestionsState uploadSuccess(int questionId) =>
-    _optional(newQuestions: questions.uploadSuccess(questionId));
+  QuestionsState uploadSuccess(QuestionState question, int serverId) =>
+    _optional(
+      newQuestions: questions.loadSuccess(serverId, question.changeId(serverId)).remove(question.id),
+      newUserQuestions: userQuestions.setOne(
+        question.userId,
+        _selectUserQuestionKeyPagination(question.userId).addOne(serverId).removeOne(question.id),
+      ),
+      newUserUnsolvedQuestions: userQuestions.setOne(
+        question.userId,
+        _selectUserUnsolvedQuestionKeyPagination(question.userId).addOne(serverId).removeOne(question.id)
+      )
+    );
   QuestionsState uploadFailed(int questionId) =>
     _optional(newQuestions: questions.uploadFailed(questionId));
 

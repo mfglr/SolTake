@@ -24,7 +24,6 @@ class QuestionContainerWidget extends StatelessWidget {
       EntityStatus.notFound => throw UnimplementedError(),
       EntityStatus.uploading => QuestionContainerUploadWidget(container: container),
       EntityStatus.processing => QuestionContainerUploadWidget(container: container),
-      EntityStatus.uploadSuccess => QuestionContainerUploadWidget(container: container),
       EntityStatus.uploadFailed => QuestionContainerUploadWidget(container: container),
     };
   }

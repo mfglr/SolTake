@@ -17,6 +17,7 @@ class UserState extends Entity<int> implements Avatar{
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
+  final bool isCurrentUser;
   final Multimedia? image;
   final Iterable<UserStoryState> stories;
 
@@ -46,6 +47,7 @@ class UserState extends Entity<int> implements Avatar{
     required this.numberOfFolloweds,
     required this.isFollower,
     required this.isFollowed,
+    required this.isCurrentUser,
     required this.image,
     required this.stories
   });
@@ -73,6 +75,7 @@ class UserState extends Entity<int> implements Avatar{
     numberOfFolloweds: newNumberOfFolloweds ?? numberOfFolloweds,
     isFollower: newIsFollower ?? isFollower,
     isFollowed: newIsFollowed ?? isFollowed,
+    isCurrentUser: isCurrentUser,
     image: newImage ?? image,
     stories: stories,
   );

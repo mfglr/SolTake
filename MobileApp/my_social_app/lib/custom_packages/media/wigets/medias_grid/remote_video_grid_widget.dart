@@ -65,7 +65,7 @@ class _RemoteVideoGridWidgetState extends State<RemoteVideoGridWidget> {
             Image.memory(
               _media.bytesOfFrame!,
               fit: BoxFit.cover,
-              height: constraints.constrainHeight(),
+              height: constraints.constrainWidth(),
               width: constraints.constrainWidth(),
             ),
             const PlayIcon()

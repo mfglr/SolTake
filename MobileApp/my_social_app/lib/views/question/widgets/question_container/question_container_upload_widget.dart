@@ -77,7 +77,7 @@ class QuestionContainerUploadWidget extends StatelessWidget {
                       child: QuestionStateWidget(question: question),
                     ),
                     SaveQuestionButton(question: question),
-                    QuestionItemPopupMenu(question: question),
+                    QuestionItemPopupMenu(container: container),
                   ],
                 )
               ],
@@ -101,7 +101,7 @@ class QuestionContainerUploadWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    QuestionLikeButton(question: question),
+                    QuestionLikeButton(container: container),
                     if(question.numberOfLikes > 0)
                       Container(
                         margin: const EdgeInsets.only(left: 5),
@@ -109,7 +109,7 @@ class QuestionContainerUploadWidget extends StatelessWidget {
                       ),
                     Container(
                       margin: const EdgeInsets.only(left: 8),
-                      child: QuestionCommentButtonWidget(question: question)
+                      child: QuestionCommentButtonWidget(container: container)
                     )
                   ],
                 ),
@@ -117,7 +117,7 @@ class QuestionContainerUploadWidget extends StatelessWidget {
                   children: [
                     if(question.numberOfVideoSolutions > 0)
                       DisplayVideoSolutionsButton(question: question),
-                    DisplaySolutionsButton(question: question)
+                    DisplaySolutionsButton(container: container)
                   ],
                 )
               ],

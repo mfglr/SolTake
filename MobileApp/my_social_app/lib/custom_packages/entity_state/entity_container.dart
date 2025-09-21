@@ -85,13 +85,6 @@ class EntityContainer<K,V> {
       entity: entity,
       rate: 1
     );
-  EntityContainer<K, V> uploadSuccess() => 
-    EntityContainer<K, V>._(
-      key: key,
-      status: EntityStatus.uploadSuccess,
-      entity: entity,
-      rate: 1
-    );
   EntityContainer<K,V> uploadFailed() => 
     EntityContainer<K, V>._(
       key: key,
@@ -100,22 +93,13 @@ class EntityContainer<K,V> {
       rate: rate
     );
 
-  void throwQuestionNotUploadedException({String? message}){
-    if(status != EntityStatus.loadSuccess || status != EntityStatus.uploadSuccess){
-      throw message ?? "The uploading or loading has not been completed yet. You cannot make changes!";
-    }
-  }
-
-  EntityContainer<K, V> update(V? entity,{String? message}){
-    throwQuestionNotUploadedException(message: message);
-    return EntityContainer<K, V>._(
+  EntityContainer<K, V> update(V? entity,{String? message}) =>
+    EntityContainer<K, V>._(
       key: key,
       status: status,
       entity: entity,
       rate: rate
     );
-  }
-    
 
   EntityContainer<K, V> delete() =>
     EntityContainer<K, V>._(

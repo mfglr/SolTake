@@ -20,6 +20,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       numberOfFolloweds: (json['numberOfFolloweds'] as num).toInt(),
       isFollower: json['isFollower'] as bool,
       isFollowed: json['isFollowed'] as bool,
+      isCurrentUser: json['isCurrentUser'] as bool,
       paginationKey: (json['paginationKey'] as num?)?.toInt(),
       paginationDate: json['paginationDate'] == null
           ? null
@@ -43,6 +44,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'numberOfFolloweds': instance.numberOfFolloweds,
       'isFollower': instance.isFollower,
       'isFollowed': instance.isFollowed,
+      'isCurrentUser': instance.isCurrentUser,
       'paginationKey': instance.paginationKey,
       'paginationDate': instance.paginationDate?.toIso8601String(),
       'image': instance.image,

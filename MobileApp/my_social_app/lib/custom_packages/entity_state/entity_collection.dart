@@ -24,12 +24,10 @@ class EntityCollection<K,V> {
 
   EntityCollection<K,V> upload(K key, V entity) =>
     EntityCollection._(_map.setOne(key,this[key].upload(entity)));
-  EntityCollection<K,V> changeRate(K key,double rate) =>
+  EntityCollection<K,V> changeRate(K key, double rate) =>
     EntityCollection._(_map.setOne(key, this[key].changeRate(rate)));
   EntityCollection<K,V> processing(K key) =>
     EntityCollection._(_map.setOne(key, this[key].processing()));
-  EntityCollection<K,V> uploadSuccess(K key) =>
-    EntityCollection._(_map.setOne(key, this[key].uploadSuccess()));
   EntityCollection<K,V> uploadFailed(K key) =>
     EntityCollection._(_map.setOne(key, this[key].uploadFailed()));
   

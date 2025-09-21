@@ -1,0 +1,4 @@
+enum QuestionActions{
+  delete,
+  report
+}

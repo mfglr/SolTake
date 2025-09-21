@@ -10,6 +10,12 @@ const report = {
   Languages.tr: "Şikayet Et"
 };
 
+const loadException = {
+    Languages.en: "You can't delete the question that is being uploaded.",
+    Languages.tr: "Yüklenen soruyu silemezsin."
+  };
+
+
 const reportCreatedMessage = {
   Languages.en: "Your report has been successfully received.",
   Languages.tr: "Şikayetiniz başarıyla alındı."

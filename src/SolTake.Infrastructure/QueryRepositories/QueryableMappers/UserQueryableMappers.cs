@@ -32,6 +32,7 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                         context.UserUserFollows.Count(follow => follow.FollowerId == user.Id),
                         context.UserUserFollows.Any(follow => follow.FollowerId == user.Id && follow.FollowedId == forUserId),
                         context.UserUserFollows.Any(follow => follow.FollowerId == forUserId && follow.FollowedId == user.Id),
+                        forUserId == user.Id,
                         user.Image,
                         stories
                             .Where(story => DateTime.UtcNow <= story.CreatedAt.AddDays(1))

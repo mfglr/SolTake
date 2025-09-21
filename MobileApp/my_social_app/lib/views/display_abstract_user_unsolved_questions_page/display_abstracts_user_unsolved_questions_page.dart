@@ -63,36 +63,39 @@ class _DisplayAbstractsUserUnsolvedQuestionsPageState extends State<DisplayAbstr
         NextUserUnsolvedQuestionsAction(userId: widget.user.id)
       ),
       converter: (store) => selectUserUnsolvedQuestions(store, widget.user.id),
-      builder: (context, pagination) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if(pagination.isEmpty)
-            Container(
-              margin: const EdgeInsets.only(top: 50),
-              child: Text(
-                noItems[getLanguage(context)]!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20
-                ),
+      builder: (context, pagination) => SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if(pagination.isEmpty)
+              Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: Text(
+                  noItems[getLanguage(context)]!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+                  ),
+                )
               )
-            )
-          else
-            QuestionContainerAbstractsWidget(
-              numberOfColumn: 2,
-              containers: pagination.containers,
-              onTap: (container) => 
-                Navigator
-                  .of(context)
-                  .push(MaterialPageRoute(builder: (context) => DisplayUserUnsolvedQuestionsPage(
-                    user: widget.user,
-                    firstDisplayedQuestionId: container.key,
-                  )))
-            ),
-          if(pagination.loadingNext)
-            const LoadingCircleWidget()
-        ],
+            else
+              QuestionContainerAbstractsWidget(
+                numberOfColumn: 2,
+                containers: pagination.containers,
+                onTap: (container) => 
+                  Navigator
+                    .of(context)
+                    .push(MaterialPageRoute(builder: (context) => DisplayUserUnsolvedQuestionsPage(
+                      user: widget.user,
+                      firstDisplayedQuestionId: container.key,
+                    )))
+              ),
+            if(pagination.loadingNext)
+              const LoadingCircleWidget()
+          ],
+        ),
       )
     );
   }

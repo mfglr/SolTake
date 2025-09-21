@@ -8,6 +8,5 @@ enum EntityStatus {
 
   uploading,
   processing,
-  uploadSuccess,
   uploadFailed,
 }

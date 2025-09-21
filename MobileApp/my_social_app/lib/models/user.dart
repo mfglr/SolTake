@@ -19,6 +19,7 @@ class User{
   final int numberOfFolloweds;
   final bool isFollower;
   final bool isFollowed;
+  final bool isCurrentUser;
   final int? paginationKey;
   final DateTime? paginationDate;
   final Multimedia? image;
@@ -36,6 +37,7 @@ class User{
     required this.numberOfFolloweds,
     required this.isFollower,
     required this.isFollowed,
+    required this.isCurrentUser,
     required this.paginationKey,
     required this.paginationDate,
     required this.image,
@@ -58,6 +60,7 @@ class User{
         numberOfFolloweds: numberOfFolloweds,
         isFollower: isFollower,
         isFollowed: isFollowed,
+        isCurrentUser: isCurrentUser,
         image: image,
         stories: stories.map((e) => e.toState())
       );

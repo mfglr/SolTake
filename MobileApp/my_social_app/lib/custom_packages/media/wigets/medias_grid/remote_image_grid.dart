@@ -57,7 +57,14 @@ class _RemoteImageGridState extends State<RemoteImageGrid> {
     return switch(_media.status) {
       MultimediaStatus.created => const LoadingWidget(),
       MultimediaStatus.started => const LoadingWidget(),
-      MultimediaStatus.completed => Image.memory(_media.bytes!, fit: BoxFit.cover),
+      MultimediaStatus.completed => LayoutBuilder(
+        builder: (context, constraints) => Image.memory(
+          _media.bytes!,
+          fit: BoxFit.cover,
+          height: constraints.constrainWidth(),
+          width: constraints.constrainWidth(),
+        ),
+      ),
       MultimediaStatus.failed => const FailedWidget(),
       MultimediaStatus.notFound => const NotFoundWidget()
     };

@@ -32,7 +32,6 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
         public async Task<CreateQuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {
             var userId = _accessTokenReader.GetRequiredAccountId();
-            var login = _accessTokenReader.GetLogin();
 
             var exam =
                await _examReadRepository.GetByIdAsync(request.ExamId, cancellationToken) ??
@@ -75,7 +74,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return new(question, login);
+                return new(question.Id);
             }
             catch (Exception)
             {
