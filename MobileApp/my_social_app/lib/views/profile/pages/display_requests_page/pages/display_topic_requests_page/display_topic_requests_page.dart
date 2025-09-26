@@ -9,7 +9,7 @@ import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/pages/select_topic_page/widgets/create_topic_request_button/create_topic_request_button.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_topic_requests_page/widgets/topic_requests_widget/topic_requests_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'display_topic_requests_page_constants.dart';
 
 class DisplayTopicRequestsPage extends StatefulWidget {

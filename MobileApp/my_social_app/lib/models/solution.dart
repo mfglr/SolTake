@@ -68,7 +68,7 @@ class Solution{
       isSaved: isSaved,
       userName: userName,
       content: content,
-      medias: medias,
+      medias: medias.map((media) => media.toMedia()),
       numberOfComments: numberOfComments,
       doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
       isUpvoted: isUpvoted,
@@ -78,6 +78,6 @@ class Solution{
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
       aiModelName: aiModelName,
-      aiImage: aiImage
+      aiImage: aiImage?.toMedia()
     );
 }

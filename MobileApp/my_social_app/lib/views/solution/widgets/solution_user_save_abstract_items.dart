@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/solutions_state/solution_user_save_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_abstract_item_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_abstract_widget/solution_container_abstract_widget.dart';
 
 class SolutionUserSaveAbstractItems extends StatefulWidget {
   final Pagination<int,SolutionUserSaveState> pagination;
@@ -49,20 +49,20 @@ class _SolutionUserSaveAbstractItemsState extends State<SolutionUserSaveAbstract
     if(widget.pagination.isLast && widget.pagination.values.isEmpty) return widget.noItems;
     return Column(
       children: [
-        Expanded(
-          child: GridView.builder(
-            controller: _scrollController,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: widget.pagination.values.length,
-            itemBuilder: (context,index) => SolutionAbstractItemWidget(
-              key: ValueKey(widget.pagination.values.elementAt(index).id),
-              solution: widget.pagination.values.elementAt(index).solution,
-              onTap: widget.onTap,
-            )
-          ),
-        ),
+        // Expanded(
+        //   child: GridView.builder(
+        //     controller: _scrollController,
+        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: 2,
+        //     ),
+        //     itemCount: widget.pagination.values.length,
+        //     itemBuilder: (context,index) => SolutionAbstractItemWidget(
+        //       key: ValueKey(widget.pagination.values.elementAt(index).id),
+        //       solution: widget.pagination.values.elementAt(index).solution,
+        //       onTap: widget.onTap,
+        //     )
+        //   ),
+        // ),
         if(widget.pagination.loadingNext)
           const LoadingCircleWidget(strokeWidth: 3),
       ],

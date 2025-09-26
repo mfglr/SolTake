@@ -10,7 +10,7 @@ import 'package:my_social_app/views/profile/pages/display_requests_page/pages/di
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/widgets/create_subject_button/create_subject_request_button.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_subject_requests_page/widgets/subject_requests_widget/subject_requests_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 
 class DisplaySubjectRequestsPage extends StatefulWidget {
   const DisplaySubjectRequestsPage({super.key});

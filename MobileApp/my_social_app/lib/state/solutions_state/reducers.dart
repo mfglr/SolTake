@@ -3,7 +3,7 @@ import 'package:my_social_app/state/solutions_state/actions.dart';
 import 'package:my_social_app/state/solutions_state/solutions_state.dart';
 import 'package:redux/redux.dart';
 
-// solutions
+// load solution
 SolutionsState loadSolutionReducer(SolutionsState prev, LoadSolutionAction action) =>
   prev.loading(action.solutionId);
 SolutionsState loadSolutionSuccessReducer(SolutionsState prev, LoadSolutionSuccessAction action) =>
@@ -12,9 +12,21 @@ SolutionsState loadSolutionFailedReducer(SolutionsState prev, LoadSolutionFailed
   prev.failed(action.solutionId);
 SolutionsState solutionNotFoundReducer(SolutionsState prev, SolutionNotFoundAction action) =>
   prev.notFound(action.solutionId);
+// load solution
 
-SolutionsState createSolutionSuccessReducer(SolutionsState prev, CreateSolutionSuccessAction action)
-  => prev.create(action.solution);
+//upload solution
+SolutionsState uploadSolutionReducer(SolutionsState prev, UploadSolutionAction action)
+  => prev.upload(action.solution);
+SolutionsState changeSolutionRateReducer(SolutionsState prev, ChangeSolutionRateAction action)
+  => prev.changeRate(action.solution, action.rate);
+SolutionsState markSolutionAsProcessing(SolutionsState prev, MarkSolutionAsProcessingAction action)
+  => prev.processing(action.solution);
+SolutionsState uploadSolutionSuccessReducer(SolutionsState prev, UploadSolutionSuccessAction action)
+  => prev.uploadSuccess(action.solution,action.serverId);
+SolutionsState uploadSolutionFailedReducer(SolutionsState prev,UploadSolutionFailedAction action)
+  => prev.uploadFailed(action.solution);
+//upload solution
+
 SolutionsState deleteSolutionSuccessReducer(SolutionsState prev, DeleteSolutionSuccessAction action)
   => prev.delete(action.solution);
 
@@ -116,15 +128,23 @@ SolutionsState refreshQuestionVideoSolutionsFailedReducer(SolutionsState prev, R
 
 
 Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
-  //solutions
+  //load solutions
   TypedReducer<SolutionsState,LoadSolutionAction>(loadSolutionReducer).call,
   TypedReducer<SolutionsState,LoadSolutionSuccessAction>(loadSolutionSuccessReducer).call,
   TypedReducer<SolutionsState,LoadSolutionFailedAction>(loadSolutionFailedReducer).call,
   TypedReducer<SolutionsState,SolutionNotFoundAction>(solutionNotFoundReducer).call,
+  //load solutions
 
-  TypedReducer<SolutionsState,CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  //upload solutions
+  TypedReducer<SolutionsState,UploadSolutionAction>(uploadSolutionReducer).call,
+  TypedReducer<SolutionsState,ChangeSolutionRateAction>(changeSolutionRateReducer).call,
+  TypedReducer<SolutionsState,MarkSolutionAsProcessingAction>(markSolutionAsProcessing).call,
+  TypedReducer<SolutionsState,UploadSolutionSuccessAction>(uploadSolutionSuccessReducer).call,
+  TypedReducer<SolutionsState,UploadSolutionFailedAction>(uploadSolutionFailedReducer).call,
+  //upload solutions
+
   TypedReducer<SolutionsState,DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
-
+  
   TypedReducer<SolutionsState,MakeSolutionUpvoteSuccessAction>(makeSolutionUpvoteSuccessReducer).call,
   TypedReducer<SolutionsState,RemoveSolutionUpvoteSuccessAction>(removeUpvoteSuccessReducer).call,
 

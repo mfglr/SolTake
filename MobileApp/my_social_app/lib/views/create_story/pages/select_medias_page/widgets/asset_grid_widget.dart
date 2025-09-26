@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class AssetGridWidget extends StatefulWidget {

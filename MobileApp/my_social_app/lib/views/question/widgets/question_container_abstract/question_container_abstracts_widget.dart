@@ -23,9 +23,11 @@ class QuestionContainerAbstractsWidget extends StatelessWidget {
           width: constraints.constrainWidth() / numberOfColumn,
           child: Container(
             margin: const EdgeInsets.all(1),
-            child: QuestionContainerAbstractWidget(
-              container: container,
-              onTap: onTap
+            child: GestureDetector(
+              onTap: () => onTap(container),
+              child: QuestionContainerAbstractWidget(
+                container: container,
+              ),
             ),
           ),
         ))

@@ -7,7 +7,7 @@ import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/notifications_state.dart/notification_state.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
 import 'package:my_social_app/views/notification/widgets/question_comment_created_notification_item/question_comment_created_notification_item_texts.dart';
-import 'package:my_social_app/views/question/pages/display_question_page/display_question_page.dart';
+import 'package:my_social_app/views/question/pages/display_question_page.dart';
 
 class QuestionCommentCreatedNotificationItem extends StatelessWidget {
   

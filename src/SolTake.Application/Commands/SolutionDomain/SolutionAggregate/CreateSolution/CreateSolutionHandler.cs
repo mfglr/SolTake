@@ -2,6 +2,7 @@
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.BlobService.Objects;
+using SolTake.Core;
 using SolTake.Domain.QuestionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.Abstracts;
 using SolTake.Domain.SolutionAggregate.DomainEvents;
@@ -9,7 +10,6 @@ using SolTake.Domain.SolutionAggregate.Entities;
 using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
-using SolTake.Core;
 
 namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolution
 {
@@ -26,6 +26,7 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
 
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
+
             var login = _accessTokenReader.GetLogin();
 
             var question =
@@ -50,7 +51,7 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
 
                 await _publisher.Publish(new SolutionCreatedDomainEvent(question, solution, login), cancellationToken);
 
-                return new(solution, login);
+                return new(solution.Id);
             }
             catch (Exception)
             {

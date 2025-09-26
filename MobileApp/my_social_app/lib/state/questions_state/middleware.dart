@@ -30,7 +30,7 @@ void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
   }
   next(action);
 }
-void uploadQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+void uploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is UploadQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
     QuestionService()
@@ -61,6 +61,39 @@ void uploadQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
+void reuploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is ReuploadQuestionAction){
+    ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
+    QuestionService()
+      .createQuestion(
+        action.question.medias as Iterable<LocalMedia>,
+        action.question.exam.id,
+        action.question.subject.id,
+        action.question.topic?.id,
+        action.question.content,
+        (rate){
+          store.dispatch(ChangeQuestionRateAction(questionId: action.question.id, rate: rate));
+          if(rate == 1){
+            store.dispatch(MarkQuestionStatusAsProcessing(questionId: action.question.id));
+          }
+        }
+      )
+      .then((response) {
+        store.dispatch(UploadQuestionSuccessAction(
+          question: action.question,
+          serverId: response.id
+        ));
+        ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(UploadQuestionFailedAction(questionId: action.question.id));
+        throw e;
+      });
+  }
+  next(action);
+}
+
+
 void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is DeleteQuestionAction){
     QuestionService()

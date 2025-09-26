@@ -31,6 +31,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
 
         public async Task<CreateQuestionResponseDto> Handle(CreateQuestionDto request, CancellationToken cancellationToken)
         {
+            throw new Exception();
             var userId = _accessTokenReader.GetRequiredAccountId();
 
             var exam =

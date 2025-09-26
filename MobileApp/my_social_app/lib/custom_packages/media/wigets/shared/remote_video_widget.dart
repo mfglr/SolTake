@@ -75,9 +75,10 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
                     .then((_) => setState(() {}));
                 }
               },
-              child: AspectRatio(
-                aspectRatio: widget.media.dimention.aspectRatio,
-                child: SizedBox(
+              child: LayoutBuilder(
+                builder: (context, constranits) => SizedBox(
+                  height: constranits.constrainHeight(),
+                  width: constranits.constrainWidth(),
                   child: VideoPlayer(
                     _controller,
                   ),

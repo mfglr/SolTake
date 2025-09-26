@@ -10,7 +10,7 @@ import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.da
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_user_vote/solution_user_votes_widget.dart';
 
 class DisplaySolutionDownvotesPage extends StatefulWidget {

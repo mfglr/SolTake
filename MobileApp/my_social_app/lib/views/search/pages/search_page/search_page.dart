@@ -15,7 +15,7 @@ import 'package:my_social_app/views/search/widgets/search_users_widget.dart';
 import 'package:my_social_app/views/search/widgets/user_user_searchs_widget.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 

@@ -6,7 +6,7 @@ import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/shared/slide_video_player/slide_video_player.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/solution_comment_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_video_page_slider/widgets/upvote_button.dart';

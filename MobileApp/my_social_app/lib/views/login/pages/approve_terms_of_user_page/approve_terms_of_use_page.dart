@@ -7,7 +7,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:my_social_app/views/login/pages/approve_terms_of_user_page/approve_terms_of_user_page_constants.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 
 class ApproveTermsOfUsePage extends StatefulWidget {
   const ApproveTermsOfUsePage({super.key});

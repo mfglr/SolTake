@@ -3,6 +3,8 @@ import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 
 //questions
+
+//load question
 @immutable
 class LoadQuestionAction extends AppAction{
   final int questionId;
@@ -23,13 +25,21 @@ class QuestionNotFoundAction extends AppAction{
   final int questionId;
   const QuestionNotFoundAction({required this.questionId});
 }
+//load question
 
+
+//upload question
 @immutable
 class UploadQuestionAction extends AppAction{
   final QuestionState question;
   const UploadQuestionAction({
     required this.question
   });
+}
+@immutable
+class ReuploadQuestionAction extends AppAction{
+  final QuestionState question;
+  const ReuploadQuestionAction({required this.question});
 }
 @immutable
 class ChangeQuestionRateAction extends AppAction{

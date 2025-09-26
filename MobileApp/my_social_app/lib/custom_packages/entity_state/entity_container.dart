@@ -11,7 +11,12 @@ class EntityContainer<K,V> {
   String get rateToString => "${(rate * 100).round()} %";
   bool get isLoadSuccess => status == EntityStatus.loadSuccess;
   bool get isNotLoadSuccess => status != EntityStatus.loadSuccess;
-  
+
+  bool get isUploadable =>
+    status == EntityStatus.processing ||
+    status == EntityStatus.uploadFailed ||
+    status == EntityStatus.uploading;
+
   const EntityContainer._({
     required this.key,
     required this.status,

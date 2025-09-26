@@ -16,7 +16,7 @@ import 'package:my_social_app/views/message/pages/conversation_page/widgets/mess
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/message_text_field.dart';
 import 'package:my_social_app/views/message/pages/conversation_page/widgets/scroll_to_bottom_button.dart';
 import 'package:my_social_app/views/message/pages/display_message_images_page/display_message_images_page.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 

@@ -1,4 +1,5 @@
 import 'package:my_social_app/constants/notifications_content.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/solutions_state/actions.dart';
@@ -8,18 +9,30 @@ import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
 //solutions
-void createSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is CreateSolutionAction){
+void uploadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
+  if(action is UploadSolutionAction){
     SolutionService()
       .create(
-        action.questionId,
-        action.content,
-        action.medias,
-        (rate){}
+        action.solution.questionId,
+        action.solution.content,
+        action.solution.medias as Iterable<LocalMedia>,
+        (rate){
+          store.dispatch(ChangeSolutionRateAction(rate: rate, solution: action.solution));
+          if(rate == 1){
+            store.dispatch(MarkSolutionAsProcessingAction(solution: action.solution));
+          }
+        }
       )
-      .then((solution){
-        store.dispatch(CreateSolutionSuccessAction(solution: solution.toSolutionState()));
+      .then((response){
+        store.dispatch(UploadSolutionSuccessAction(
+          solution: action.solution,
+          serverId: response.id
+        ));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
+      })
+      .catchError((e){
+        store.dispatch(UploadSolutionFailedAction(solution: action.solution));
+        throw e;
       });
   }
   next(action);
@@ -30,7 +43,7 @@ void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher ne
     SolutionService()
       .createByAI(action.modelId,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
       .then((solution){
-        store.dispatch(CreateSolutionSuccessAction(solution: solution.toSolutionState()));
+        // store.dispatch(UploadSolutionSuccessAction(solution: solution.toSolutionState()));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
       });
   }
@@ -72,7 +85,7 @@ void markSolutionAsIncorrectMiddleware(Store<AppState> store,action,NextDispatch
 void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionSolutionsAction){
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutionsPagination(store, action.questionId).next)
+      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutions(store, action.questionId).next)
       .then((solutions) => store.dispatch(NextQuestionSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -87,7 +100,7 @@ void nextQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatch
 void refreshQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionSolutionsAction){
     SolutionService()
-      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutionsPagination(store, action.questionId).first)
+      .getSolutionsByQuestionId(action.questionId, selectQuestionSolutions(store, action.questionId).first)
       .then((solutions) => store.dispatch(RefreshQuestionSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -105,7 +118,7 @@ void refreshQuestionSolutionsMiddleware(Store<AppState> store, action, NextDispa
 void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionCorrectSolutionsAction){
     SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId, selectQuestionCorrectSolutionsPagination(store, action.questionId).next)
+      .getCorrectSolutionsByQuestionId(action.questionId, selectQuestionCorrectSolutions(store, action.questionId).next)
       .then((solutions) => store.dispatch(NextQuestionCorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -120,7 +133,7 @@ void nextQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextD
 void refreshQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionCorrectSolutionsAction){
     SolutionService()
-      .getCorrectSolutionsByQuestionId(action.questionId, selectQuestionCorrectSolutionsPagination(store, action.questionId).first)
+      .getCorrectSolutionsByQuestionId(action.questionId, selectQuestionCorrectSolutions(store, action.questionId).first)
       .then((solutions) => store.dispatch(RefreshQuestionCorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -138,7 +151,7 @@ void refreshQuestionCorrectSolutionsMiddleware(Store<AppState> store, action, Ne
 void nextQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionPendingSolutionsAction){
     SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsPagination(store, action.questionId).next)
+      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutions(store, action.questionId).next)
       .then((solutions) => store.dispatch(NextQuestionPendingSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -153,7 +166,7 @@ void nextQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextD
 void refreshQuestionPendingSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionPendingSolutionsAction){
     SolutionService()
-      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsPagination(store, action.questionId).first)
+      .getPendingSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutions(store, action.questionId).first)
       .then((solutions) => store.dispatch(RefreshQuestionPendingSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -171,7 +184,7 @@ void refreshQuestionPendingSolutionsMiddleware(Store<AppState> store, action, Ne
 void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionIncorrectSolutionsAction){
     SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsPagination(store, action.questionId).next)
+      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionIncorrectSolutions(store, action.questionId).next)
       .then((solutions) => store.dispatch(NextQuestionIncorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -186,7 +199,7 @@ void nextQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, Nex
 void refreshQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionIncorrectSolutionsAction){
     SolutionService()
-      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionPendingSolutionsPagination(store, action.questionId).first)
+      .getIncorrectSolutionsByQuestionId(action.questionId, selectQuestionIncorrectSolutions(store, action.questionId).first)
       .then((solutions) => store.dispatch(RefreshQuestionIncorrectSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -204,7 +217,7 @@ void refreshQuestionIncorrectSolutionsMiddleware(Store<AppState> store, action, 
 void nextQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextQuestionVideoSolutionsAction){
     SolutionService()
-      .getVideoSolutions(action.questionId, selectQuestionVideoSolutionsPagination(store, action.questionId).next)
+      .getVideoSolutions(action.questionId, selectQuestionVideoSolutions(store, action.questionId).next)
       .then((solutions) => store.dispatch(NextQuestionVideoSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())
@@ -219,7 +232,7 @@ void nextQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDis
 void refreshQuestionVideoSolutionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshQuestionVideoSolutionsAction){
     SolutionService()
-      .getVideoSolutions(action.questionId, selectQuestionVideoSolutionsPagination(store, action.questionId).first)
+      .getVideoSolutions(action.questionId, selectQuestionVideoSolutions(store, action.questionId).first)
       .then((solutions) => store.dispatch(RefreshQuestionVideoSolutionsSuccessAction(
         questionId: action.questionId,
         solutions: solutions.map((solution) => solution.toSolutionState())

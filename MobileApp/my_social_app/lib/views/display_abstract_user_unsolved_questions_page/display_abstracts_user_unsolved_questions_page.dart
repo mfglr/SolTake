@@ -12,7 +12,7 @@ import 'package:my_social_app/custom_packages/entity_state/container_pagination.
 import 'package:my_social_app/views/display_abstract_user_unsolved_questions_page/display_abstracts_user_unsolved_questions_page_constants.dart';
 import 'package:my_social_app/views/question/pages/display_user_unsolved_questions_page/display_user_unsolved_questions_page.dart';
 import 'package:my_social_app/views/question/widgets/question_container_abstract/question_container_abstracts_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 
 class DisplayAbstractsUserUnsolvedQuestionsPage extends StatefulWidget {
   final UserState user;

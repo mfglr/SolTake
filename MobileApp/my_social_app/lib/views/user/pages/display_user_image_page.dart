@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/shared/not_found_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/not_found_widget.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/users_state/selectors.dart';

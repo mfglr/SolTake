@@ -75,10 +75,14 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
                     .then((_) => setState(() {}));
                 }
               },
-              child: AspectRatio(
-                aspectRatio: widget.media.dimention.aspectRatio,
-                child: VideoPlayer(
-                  _controller
+              child: LayoutBuilder(
+                builder: (context, constraints) => SizedBox(
+                  height: constraints.constrainHeight(),
+                  width: constraints.constrainWidth(),
+                  child: VideoPlayer(
+                    _controller,
+                    
+                  ),
                 ),
               ),
             ),

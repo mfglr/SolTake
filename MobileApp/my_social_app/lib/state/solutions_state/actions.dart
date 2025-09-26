@@ -1,4 +1,3 @@
-import 'package:app_file/app_file.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
@@ -28,19 +27,39 @@ class SolutionNotFoundAction extends AppAction{
 }
 
 @immutable
-class CreateSolutionAction extends AppAction{
-  final int questionId;
-  final String id;
-  final String? content;
-  final Iterable<AppFile> medias;
-  
-  const CreateSolutionAction({
-    required this.id,
-    required this.questionId,
-    required this.content,
-    required this.medias
+class UploadSolutionAction extends AppAction{
+  final SolutionState solution;
+  const UploadSolutionAction({required this.solution});
+}
+@immutable
+class ChangeSolutionRateAction extends AppAction{
+  final double rate;
+  final SolutionState solution;
+  const ChangeSolutionRateAction({
+    required this.rate,
+    required this.solution
   });
 }
+@immutable
+class MarkSolutionAsProcessingAction extends AppAction{
+  final SolutionState solution;
+  const MarkSolutionAsProcessingAction({required this.solution});
+}
+@immutable
+class UploadSolutionSuccessAction extends AppAction{
+  final SolutionState solution;
+  final int serverId;
+  const UploadSolutionSuccessAction({
+    required this.solution,
+    required this.serverId
+  });
+}
+@immutable
+class UploadSolutionFailedAction extends AppAction{
+  final SolutionState solution;
+  const UploadSolutionFailedAction({required this.solution});
+}
+
 @immutable
 class CreateSolutionByAIAction extends AppAction{
   final int modelId;
@@ -59,13 +78,7 @@ class CreateSolutionByAIAction extends AppAction{
     required this.isHighResulation
   });
 }
-@immutable
-class CreateSolutionSuccessAction extends AppAction{
-  final SolutionState solution;
-  const CreateSolutionSuccessAction({
-    required this.solution
-  });
-}
+
 @immutable
 class DeleteSolutionAction extends AppAction{
   final SolutionState solution;

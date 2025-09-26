@@ -18,29 +18,29 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          backgroundColor: Colors.white.withAlpha(153),
-          body: StoreConnector<AppState, Iterable<SolutionState>>(
-            onInit: (store) => 
-              getNextPageIfNoPage(
-                store,
-                selectQuestionVideoSolutionsPagination(store, questionId),
-                NextQuestionVideoSolutionsAction(questionId: questionId)
-              ),
-            converter: (store) => selectQuestionVideoSolutions(store, questionId),
-            builder: (context, solutions) => SolutionVideoPageSlider(
-              solutions: solutions,
-              onNext: (){
-                final store = StoreProvider.of<AppState>(context, listen: false);
-                getNextPageIfReady(
-                  store,
-                  selectQuestionVideoSolutionsPagination(store, questionId),
-                  NextQuestionVideoSolutionsAction(questionId: questionId)
-                );
-              },
-            )
-          ),
-        ),
+        // Scaffold(
+        //   backgroundColor: Colors.white.withAlpha(153),
+        //   body: StoreConnector<AppState, Iterable<SolutionState>>(
+        //     onInit: (store) => 
+        //       getNextPageIfNoPage(
+        //         store,
+        //         selectQuestionVideoSolutions(store, questionId),
+        //         NextQuestionVideoSolutionsAction(questionId: questionId)
+        //       ),
+        //     converter: (store) => selectQuestionVideoSolutions(store, questionId).containers,
+        //     builder: (context, solutions) => SolutionVideoPageSlider(
+        //       solutions: solutions,
+        //       onNext: (){
+        //         final store = StoreProvider.of<AppState>(context, listen: false);
+        //         getNextPageIfReady(
+        //           store,
+        //           selectQuestionVideoSolutions(store, questionId),
+        //           NextQuestionVideoSolutionsAction(questionId: questionId)
+        //         );
+        //       },
+        //     )
+        //   ),
+        // ),
         Positioned(
           top: MediaQuery.of(context).size.height / 16,
           left: 15,

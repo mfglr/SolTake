@@ -37,7 +37,7 @@ QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestio
 //questions
 
 //solutions
-QuestionsState createSolutionSuccessReducer(QuestionsState prev, CreateSolutionSuccessAction action) =>
+QuestionsState uploadSolutionReducer(QuestionsState prev, UploadSolutionAction action) =>
   prev.createSolution(action.solution);
 QuestionsState deleteSolutionSuccessReducer(QuestionsState prev, DeleteSolutionSuccessAction action) =>
   prev.deleteSolution(action.solution);
@@ -209,7 +209,7 @@ Reducer<QuestionsState> newQuestionsReducer = combineReducers<QuestionsState>([
   //questions
 
   //solutions
-  TypedReducer<QuestionsState, CreateSolutionSuccessAction>(createSolutionSuccessReducer).call,
+  TypedReducer<QuestionsState, UploadSolutionAction>(uploadSolutionReducer).call,
   TypedReducer<QuestionsState, DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
   //solutions
 

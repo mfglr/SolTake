@@ -17,7 +17,7 @@ import 'package:my_social_app/views/create_solution_by_ai/select_models_page/sel
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/widgets/ai_models_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 
 class SelectModelsPage extends StatefulWidget {

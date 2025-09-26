@@ -4,7 +4,7 @@ import 'package:my_social_app/state/notifications_state.dart/notification_state.
 import 'package:my_social_app/views/notification/widgets/comment_liked_notification_item/comment_liked_notification_item_texts.dart' show content;
 import 'package:my_social_app/views/notification/widgets/notification_bottom_text_content.dart';
 import 'package:my_social_app/views/notification/widgets/notification_item.dart';
-import 'package:my_social_app/views/question/pages/display_question_page/display_question_page.dart';
+import 'package:my_social_app/views/question/pages/display_question_page.dart';
 import 'package:my_social_app/views/solution/pages/display_solution_page.dart';
 
 class CommentLikedNotificationItem extends StatelessWidget {

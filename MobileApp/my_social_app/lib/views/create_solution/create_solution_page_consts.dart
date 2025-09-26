@@ -1,11 +1,16 @@
 import 'package:my_social_app/models/languages.dart';
 
 const addMediaButtonContent = {
-  Languages.en: 'Add Medias',
+  Languages.en: 'Add Media',
   Languages.tr: 'Medya Ekle'
 };
 
 const texFieldContent = {
   Languages.en: 'Type somethings about your solution...',
   Languages.tr: 'Çözümün hakkında bir şeyler yaz...'
+};
+
+const emptyException = {
+  Languages.en: "You must enter some content or at least add media to create a solution.",
+  Languages.tr: "Bir çözüm oluşturmak için içerik girmeli veya en azından bir medya eklemelisin."
 };

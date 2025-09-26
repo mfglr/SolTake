@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_frame_widget/media_frame_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/shared/not_found_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/not_found_widget.dart';
 import 'package:my_social_app/services/app_client.dart';
 
 class UserImageWidget extends StatelessWidget {

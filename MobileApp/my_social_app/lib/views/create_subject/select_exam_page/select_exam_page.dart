@@ -9,7 +9,7 @@ import 'package:my_social_app/views/create_subject/select_exam_page/widgets/exam
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 import 'select_exam_page_constants.dart';
 

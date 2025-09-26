@@ -9,7 +9,7 @@ import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/create_exam_request_button/create_exam_request_button.dart';
 import 'package:my_social_app/views/profile/pages/display_requests_page/pages/display_exam_requests_page/widgets/exam_requests_widget/exam_requests_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 
 import 'display_exam_requests_page_constants.dart';
 

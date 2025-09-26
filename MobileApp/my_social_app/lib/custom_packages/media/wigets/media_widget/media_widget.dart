@@ -22,8 +22,8 @@ class MediaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) => SizedBox(
-        width: constraints.constrainWidth(),
         height: constraints.constrainWidth() / media.dimention.aspectRatio,
+        width: constraints.constrainWidth(),
         child: Builder(
           builder: (context){
             if(media is LocalImage){

@@ -9,16 +9,12 @@ class NoCorrectSolutionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          noCorrectSolutions[getLanguage(context)]!,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 30
-          ),
-        )
-      ],
+    return Text(
+      noCorrectSolutions[getLanguage(context)]!,
+      textAlign: TextAlign.center,
+      style: const TextStyle(
+        fontSize: 30
+      ),
     );
   }
 }

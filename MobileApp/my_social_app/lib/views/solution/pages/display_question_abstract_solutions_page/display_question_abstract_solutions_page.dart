@@ -6,7 +6,7 @@ import 'package:my_social_app/views/solution/pages/display_question_abstract_sol
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_incorrect_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_pending_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_solutions_page.dart';
-import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/widgets/create_solution_button.dart';
+import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/widgets/create_solution_button/create_solution_button.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/widgets/create_solution_by_ai_button.dart';
 import 'display_question_abstract_solutions_page_constants.dart';
 

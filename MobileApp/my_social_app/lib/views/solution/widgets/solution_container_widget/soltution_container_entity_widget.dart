@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:multimedia_slider/multimedia_slider.dart';
-import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/services/app_client.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
 import 'package:my_social_app/services/latex_sperator/latex.dart';
 import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
-import 'package:my_social_app/views/shared/app_avatar/app_avatar.dart';
+import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
+import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_downvotes_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/display_solution_upvotes_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/downvote_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/save_solution_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_comment_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_popup_menu.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_state_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/upvote_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/display_solution_downvotes_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/display_solution_upvotes_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/downvote_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/save_solution_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_comment_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_popup_menu.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_state_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
-class SolutionItemWidget extends StatelessWidget {
-  final SolutionState solution;
-
-  const SolutionItemWidget({
+class SoltutionContainerEntityWidget extends StatelessWidget {
+  final EntityContainer<int, SolutionState> container;
+  
+  const SoltutionContainerEntityWidget({
     super.key,
-    required this.solution,
+    required this.container,
   });
 
   @override
   Widget build(BuildContext context) {
+    final solution = container.entity!;
+
     return Card(
       key: ValueKey(solution.id),
       child: Column(
@@ -40,28 +42,44 @@ class SolutionItemWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () => 
-                    Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(builder: (context) => UserPageById(userId: solution.userId))),
-                  style: ButtonStyle(
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: AppAvatar(
-                          avatar: solution,
-                          diameter: 45
-                        ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => 
+                        Navigator
+                          .of(context)
+                          .push(MaterialPageRoute(builder: (context) => UserPageById(userId: solution.userId))),
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      Text(solution.formatUserName(10))
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 5),
+                            child: UserImageWidget(
+                              image: solution.image,
+                              diameter: 45
+                            ),
+                          ),
+                          Text(solution.formatUserName(10))
+                        ],
+                      ),
+                    ),
+                    if(container.isUploadable)
+                      TextButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                        ),
+                        child: EntityContainerUploadStatus(
+                          container: container,
+                          diameter: 28,
+                          strokeWidth: 3,
+                        ),
+                      )
+                  ],
                 ),
                 Row(
                   children: [
@@ -120,12 +138,9 @@ class SolutionItemWidget extends StatelessWidget {
               ),
             )
           else
-            // MultimediaSlider(
-            //   medias: solution.medias,
-            //   blobServiceUrl: AppClient.blobService,
-            //   notFoundMediaPath: noMediaAssetPath,
-            //   noMediaPath: noMediaAssetPath,
-            // ),
+            MediaSlider(
+              medias: solution.medias,
+            ),
           Padding(
             padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
             child: Row(

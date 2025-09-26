@@ -3,8 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_status.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution_as_correct_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/mark_solution_as_incorrect_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/mark_solution_as_correct_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/mark_solution_as_incorrect_button.dart';
 
 class SolutionStateWidget extends StatelessWidget {
   final SolutionState solution;

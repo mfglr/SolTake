@@ -21,18 +21,26 @@ class MediaSlider extends StatefulWidget {
 class _MediaSliderState extends State<MediaSlider> {
   final PageController _controller = PageController();
   late int _index;
-  late final double _minAspectRatio;
 
   @override
   void initState() {
-    _minAspectRatio = widget.medias.map((e) => e.dimention.aspectRatio).min;
-
     _index = widget.activeIndex >= widget.medias.length || widget.activeIndex < 0 ? 0 : widget.activeIndex;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.jumpToPage(_index);
     });
     super.initState();
   }
+
+  @override
+  void didUpdateWidget(covariant MediaSlider oldWidget) {
+    _index = widget.activeIndex >= widget.medias.length || widget.activeIndex < 0 ? 0 : widget.activeIndex;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.jumpToPage(_index);
+    });
+    super.didUpdateWidget(oldWidget);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -40,7 +48,8 @@ class _MediaSliderState extends State<MediaSlider> {
         alignment: AlignmentDirectional.bottomCenter,
         children: [
           SizedBox(
-            height: constraints.constrainWidth() / _minAspectRatio,
+            height: constraints.constrainWidth() / widget.medias.map((e) => e.dimention.aspectRatio).min,
+            width: constraints.constrainWidth(),
             child: PageView.builder(
               controller: _controller,
               itemCount: widget.medias.length,

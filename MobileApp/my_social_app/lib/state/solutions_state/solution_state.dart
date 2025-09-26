@@ -1,6 +1,6 @@
-import 'package:multimedia/models/multimedia_type.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
 import 'package:my_social_app/state/solutions_state/solution_status.dart';
@@ -19,17 +19,16 @@ class SolutionState extends Entity<int> implements Avatar{
   final bool isDownvoted;
   final int numberOfDownvotes;
   final int state;
-  final Iterable<Multimedia> medias;
+  final Iterable<Media> medias;
   final int numberOfComments;
   final bool doesBelongToQuestionOfCurrentUser;
   final Media? image;
   final bool isCreatedByAI;
   final String? aiModelName;
-  final Multimedia? aiImage;
+  final Media? aiImage;
 
   @override
   int get avatarId => userId;
-
   @override
   Media? get avatar => image;
 
@@ -57,11 +56,46 @@ class SolutionState extends Entity<int> implements Avatar{
     required this.aiImage
   });
 
+  factory SolutionState.create({
+    required int id,
+    required int userId,
+    required String userName,
+    required Media? image,
+    required int questionId,
+    required String content,
+    required bool doesBelongToQuestionOfCurrentUser,
+    required Iterable<LocalMedia> medias,
+  }) =>
+    SolutionState(
+      id: id,
+      createdAt: DateTime.now(),
+      updatedAt: null,
+      questionId: questionId,
+      userId: userId,
+      isOwner: true,
+      isSaved: false,
+      userName: userName,
+      content: content,
+      isUpvoted: false,
+      numberOfUpvotes: 0,
+      isDownvoted: false,
+      numberOfDownvotes: 0,
+      medias: medias,
+      numberOfComments: 0,
+      state: SolutionStatus.pending,
+      doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
+      image: image,
+      isCreatedByAI: false,
+      aiModelName: null,
+      aiImage: null
+    ); 
+
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";
-  bool get hasVideo => medias.any((e) => e.multimediaType == MultimediaType.video);
+  bool get hasVideo => medias.any((e) => e.type == MultimediaType.video);
 
   SolutionState _optional({
+    int? newId,
     String? newUserName,
     String? newContent,
     bool? newIsSaved,
@@ -69,13 +103,13 @@ class SolutionState extends Entity<int> implements Avatar{
     int? newNumberOfUpvotes,
     bool? newIsDownvoted,
     int? newNumberOfDownvotes,
-    Iterable<Multimedia>? newMedias,
+    Iterable<Media>? newMedias,
     int? newNumberOfComments,
     int? newState,
     Media? newImage,
   })
     => SolutionState(
-        id: id,
+        id: newId ?? id,
         createdAt: createdAt,
         updatedAt: updatedAt,
         questionId: questionId,
@@ -97,6 +131,9 @@ class SolutionState extends Entity<int> implements Avatar{
         aiModelName: aiModelName,
         aiImage: aiImage
       );
+
+  SolutionState changeId(int id) =>
+    _optional(newId: id);
 
   SolutionState makeUpvote() =>
     _optional(

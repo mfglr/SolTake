@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:app_file/app_file.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/solution_endpoints.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
+import 'package:my_social_app/models/id_response.dart';
 import 'package:my_social_app/models/solution.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/custom_packages/entity_state/page.dart';
@@ -16,7 +17,7 @@ class SolutionService{
   static final SolutionService _singleton = SolutionService._(AppClient());
   factory SolutionService() => _singleton;
 
-  Future<MultipartRequest> _createSolutionRequest(int questionId, String? content, Iterable<AppFile> medias) async {
+  Future<MultipartRequest> _createSolutionRequest(int questionId, String? content, Iterable<LocalMedia> medias) async {
     MultipartRequest multiPartRequest = MultipartRequest(
       "POST",
       _appClient.generateUri("$solutionController/$createSolutionEndpoint")
@@ -29,10 +30,10 @@ class SolutionService{
     }
     return multiPartRequest;
   }
-  Future<Solution> create(int questionId, String? content, Iterable<AppFile> medias, void Function(double) callback) async {
+  Future<IdResponse> create(int questionId, String? content, Iterable<LocalMedia> medias, void Function(double) callback) async {
     var request = await _createSolutionRequest(questionId,content,medias);
     var data = await _appClient.postStream(request, callback);
-    return Solution.fromJson(jsonDecode(data));
+    return IdResponse.fromJson(jsonDecode(data));
   }
 
   Future<Solution> createByAI(int modelId, int questionId,String? blobName,double? duration,String? prompt,bool isHighResulation)

@@ -9,7 +9,7 @@ import 'package:my_social_app/views/create_story/pages/select_medias_page/widget
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:camera/camera.dart';
 import 'package:take_media/pages/take_media_page.dart';

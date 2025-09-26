@@ -3,7 +3,7 @@ import 'package:my_social_app/helpers/on_scroll_bottom.dart';
 import 'package:my_social_app/state/comments_state/comment_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/comment_item_widget.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentItemsWidget extends StatefulWidget {

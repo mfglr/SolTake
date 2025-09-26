@@ -220,7 +220,7 @@ class QuestionState extends Entity<int>{
           ? numberOfCorrectSolutions - 1
           : numberOfCorrectSolutions,
       newNumberOfVideoSolutions: 
-        solution.medias.any((e) => e.multimediaType == MultimediaType.video)
+        solution.medias.any((e) => e.type == MultimediaType.video)
           ? numberOfVideoSolutions - 1
           : numberOfVideoSolutions,
     );

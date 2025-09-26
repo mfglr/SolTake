@@ -9,8 +9,7 @@ import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.da
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
-import 'package:my_social_app/views/solution/widgets/solution_item/solution_item_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_widget.dart';
 
 class DisplaySolutionPage extends StatefulWidget {
   final int solutionId;
@@ -63,21 +62,13 @@ class _DisplaySolutionPageState extends State<DisplaySolutionPage> {
           LoadSolutionAction(solutionId: widget.solutionId)
         ),
       converter: (store) => selectSolution(store, widget.solutionId),
-      builder: (context, container){
-        if(container.isLoadSuccess){
-          return Scaffold(
-            appBar: AppBar(
-              leading: const AppBackButtonWidget(),
-              title: AppTitle(title: "${container.entity}${AppLocalizations.of(context)!.display_solutions_page_title}"),
-            ),
-            body: SolutionItemWidget(solution: container.entity!),
-          );
-        }
-        else{
-          return const LoadingCircleWidget();
-        }
-        
-      },
+      builder: (context, container) => Scaffold(
+        appBar: AppBar(
+          leading: const AppBackButtonWidget(),
+          title: AppTitle(title: "${container.entity}${AppLocalizations.of(context)!.display_solutions_page_title}"),
+        ),
+        body: SolutionContainerWidget(container: container),
+      )
     );
   }
 }

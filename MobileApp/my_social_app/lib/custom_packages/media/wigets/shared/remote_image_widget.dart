@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia_status.dart';
 import 'package:my_social_app/custom_packages/media/models/remote_image.dart';
-import 'package:my_social_app/custom_packages/media/wigets/shared/failed_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/shared/loading_widget.dart';
-import 'package:my_social_app/custom_packages/media/wigets/shared/not_found_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/failed_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/not_found_widget.dart';
 import 'package:my_social_app/exceptions/backend_exception.dart';
 
 class RemoteImageWidget extends StatefulWidget {

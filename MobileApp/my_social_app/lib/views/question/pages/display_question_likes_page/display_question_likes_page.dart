@@ -11,7 +11,7 @@ import 'package:my_social_app/views/question/pages/display_question_likes_page/d
 import 'package:my_social_app/views/question/widgets/question_user_like/question_user_likes_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 
 class DisplayQuestionLikesPage extends StatefulWidget {
   final int questionId;

@@ -10,7 +10,7 @@ import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/comment_header_widget.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/display_remain_replies_button.dart';
 import 'package:my_social_app/views/comment/modals/widgets/comment_item_widget/widgets/hide_replies_button/hide_replies_button.dart';
-import 'package:my_social_app/views/shared/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CommentItemWidget extends StatefulWidget {

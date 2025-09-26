@@ -17,12 +17,14 @@ import 'package:my_social_app/views/question/widgets/question_container/widgets/
 import 'package:my_social_app/views/question/widgets/question_container/widgets/topic_tag_item.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
+import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status.dart';
+import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status_modal/entity_container_upload_status_modal.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
-class QuestionContainerLoadSuccessWidget extends StatelessWidget {
+class QuestionContainerEntityWidget extends StatelessWidget {
   final EntityContainer<int, QuestionState> container;
-  const QuestionContainerLoadSuccessWidget({
+  const QuestionContainerEntityWidget({
     super.key,
     required this.container
   });
@@ -39,29 +41,51 @@ class QuestionContainerLoadSuccessWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () =>
-                    Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
-                  style: ButtonStyle(
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: UserImageWidget(
-                          key: ValueKey(question.userId),
-                          image: question.image,
-                          diameter: 45
-                        ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () =>
+                        Navigator
+                          .of(context)
+                          .push(MaterialPageRoute(builder: (context) => UserPageById(userId: question.userId))),
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      Text(question.formatUserName(10))
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 5),
+                            child: UserImageWidget(
+                              key: ValueKey(question.userId),
+                              image: question.image,
+                              diameter: 45
+                            ),
+                          ),
+                          Text(question.formatUserName(10))
+                        ],
+                      ),
+                    ),
+                    if(container.isUploadable)
+                      TextButton(
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => EntityContainerUploadStatusModal(
+                            container: container,
+                            reUpload: (){},
+                          )
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                        ),
+                        child: EntityContainerUploadStatus(
+                          container: container,
+                          diameter: 28,
+                          strokeWidth: 3,
+                        ),
+                      )
+                  ],
                 ),
                 Row(
                   children: [
@@ -102,7 +126,7 @@ class QuestionContainerLoadSuccessWidget extends StatelessWidget {
                     if(question.numberOfLikes > 0)
                       Container(
                         margin: const EdgeInsets.only(left: 5),
-                        child: DisplayQuestionLikesButton(question: question)
+                        child: DisplayQuestionLikesButton(container: container)
                       ),
                     Container(
                       margin: const EdgeInsets.only(left: 8),
