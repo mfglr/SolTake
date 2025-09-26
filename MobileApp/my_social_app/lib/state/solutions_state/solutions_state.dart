@@ -70,6 +70,8 @@ class SolutionsState {
           )
         : questionVideoSolutions
     );
+  SolutionsState reupload(SolutionState solution) => 
+    _optional(newSolutions: solutions.upload(solution.id, solution),);
   SolutionsState changeRate(SolutionState solution, double rate) =>
     _optional(newSolutions: solutions.changeRate(solution.id, rate));
   SolutionsState processing(SolutionState solution) =>

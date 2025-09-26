@@ -61,7 +61,7 @@ void uploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next
   }
   next(action);
 }
-void reuploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
+void reUploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is ReuploadQuestionAction){
     ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
     QuestionService()

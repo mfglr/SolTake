@@ -8,6 +8,7 @@ import 'package:my_social_app/views/question/widgets/question_container/widgets/
 import 'package:my_social_app/views/question/widgets/question_container/widgets/display_video_solutions_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_comment_button_widget.dart';
+import 'package:my_social_app/views/question/widgets/question_container/widgets/question_container_upload_status_modal/question_container_upload_status_modal.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_item_popup_menu/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_like_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_publishing_state/question_publishing_state_widget.dart';
@@ -18,7 +19,6 @@ import 'package:my_social_app/views/question/widgets/question_container/widgets/
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status.dart';
-import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status_modal/entity_container_upload_status_modal.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
@@ -71,9 +71,8 @@ class QuestionContainerEntityWidget extends StatelessWidget {
                       TextButton(
                         onPressed: () => showDialog(
                           context: context,
-                          builder: (context) => EntityContainerUploadStatusModal(
-                            container: container,
-                            reUpload: (){},
+                          builder: (context) => QuestionContainerUploadStatusModal(
+                            questionId: question.id
                           )
                         ),
                         style: ElevatedButton.styleFrom(
@@ -83,6 +82,10 @@ class QuestionContainerEntityWidget extends StatelessWidget {
                           container: container,
                           diameter: 28,
                           strokeWidth: 3,
+                          rateTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 11
+                          ),
                         ),
                       )
                   ],

@@ -92,6 +92,8 @@ class QuestionsState {
         _selectUserUnsolvedQuestionKeyPagination(question.userId).addOne(question.id)
       ),
     );
+   QuestionsState reupload(QuestionState question) =>
+    _optional(newQuestions: questions.upload(question.id, question));
   QuestionsState changeRate(int questionId, double rate) =>
     _optional(newQuestions: questions.changeRate(questionId, rate));
   QuestionsState processing(int questionId) =>

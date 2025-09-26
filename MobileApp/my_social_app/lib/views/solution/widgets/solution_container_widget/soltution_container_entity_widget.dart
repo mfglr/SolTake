@@ -10,6 +10,7 @@ import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.
 import 'package:my_social_app/views/shared/app_date_widget.dart';
 import 'package:my_social_app/views/shared/entity_container_upload_status/entity_container_upload_status.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_upload_status_modal/solution_container_upload_status_modal.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/display_solution_downvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/display_solution_upvotes_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/downvote_button.dart';
@@ -69,7 +70,12 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
                     ),
                     if(container.isUploadable)
                       TextButton(
-                        onPressed: (){},
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => SolutionContainerUploadStatusModal(
+                            solutionId: solution.id
+                          )
+                        ),
                         style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),
                         ),
@@ -77,6 +83,10 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
                           container: container,
                           diameter: 28,
                           strokeWidth: 3,
+                          rateTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 11
+                          ),
                         ),
                       )
                   ],

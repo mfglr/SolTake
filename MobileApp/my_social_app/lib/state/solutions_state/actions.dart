@@ -32,6 +32,11 @@ class UploadSolutionAction extends AppAction{
   const UploadSolutionAction({required this.solution});
 }
 @immutable
+class ReuploadSolutionAction extends AppAction{
+  final SolutionState solution;
+  const ReuploadSolutionAction({required this.solution});
+}
+@immutable
 class ChangeSolutionRateAction extends AppAction{
   final double rate;
   final SolutionState solution;

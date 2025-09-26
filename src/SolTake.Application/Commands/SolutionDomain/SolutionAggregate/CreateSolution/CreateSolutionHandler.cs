@@ -26,7 +26,6 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
 
         public async Task<CreateSolutionResponseDto> Handle(CreateSolutionDto request, CancellationToken cancellationToken)
         {
-
             var login = _accessTokenReader.GetLogin();
 
             var question =

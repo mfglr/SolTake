@@ -95,7 +95,7 @@ class EntityContainer<K,V> {
       key: key,
       status: EntityStatus.uploadFailed,
       entity: entity,
-      rate: rate
+      rate: 0
     );
 
   EntityContainer<K, V> update(V? entity,{String? message}) =>
