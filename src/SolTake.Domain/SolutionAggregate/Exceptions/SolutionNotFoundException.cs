@@ -14,6 +14,6 @@ namespace SolTake.Domain.SolutionAggregate.Exceptions
         };
 
         public override string GetErrorMessage(string culture) => _messages[culture];
-        public SolutionNotFoundException() : base((int)HttpStatusCode.BadRequest) { }
+        public SolutionNotFoundException() : base((int)HttpStatusCode.NotFound) { }
     }
 }

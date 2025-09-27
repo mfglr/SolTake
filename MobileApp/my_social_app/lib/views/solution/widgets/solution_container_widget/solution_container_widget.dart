@@ -4,6 +4,7 @@ import 'package:my_social_app/custom_packages/entity_state/entity_status.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/soltution_container_entity_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_loading_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_not_load_widget/solution_container_not_load_widget.dart';
 
 class SolutionContainerWidget extends StatelessWidget {
   final EntityContainer<int, SolutionState> container;
@@ -18,8 +19,8 @@ class SolutionContainerWidget extends StatelessWidget {
       EntityStatus.created => const SolutionContainerLoadingWidget(),
       EntityStatus.loading =>  const SolutionContainerLoadingWidget(),
       EntityStatus.loadSuccess => SoltutionContainerEntityWidget(container: container),
-      EntityStatus.loadFailed => throw UnimplementedError(),
-      EntityStatus.notFound => throw UnimplementedError(),
+      EntityStatus.loadFailed => SolutionContainerNotLoadWidget(container: container,),
+      EntityStatus.notFound => SolutionContainerNotLoadWidget(container: container,),
       EntityStatus.uploading => SoltutionContainerEntityWidget(container: container),
       EntityStatus.processing => SoltutionContainerEntityWidget(container: container),
       EntityStatus.uploadFailed => SoltutionContainerEntityWidget(container: container),

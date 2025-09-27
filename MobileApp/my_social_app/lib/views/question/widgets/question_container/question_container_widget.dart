@@ -16,15 +16,20 @@ class QuestionContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch(container.status){
-      EntityStatus.created => QuestionContainerLoadingWidget(container: container),
-      EntityStatus.loading => QuestionContainerLoadingWidget(container: container),
-      EntityStatus.loadSuccess => QuestionContainerEntityWidget(container: container),
-      EntityStatus.loadFailed => QuestionContainerNotLoadWidget(container: container,),
-      EntityStatus.notFound => QuestionContainerNotLoadWidget(container: container),
-      EntityStatus.uploading => QuestionContainerEntityWidget(container: container),
-      EntityStatus.processing => QuestionContainerEntityWidget(container: container),
-      EntityStatus.uploadFailed => QuestionContainerEntityWidget(container: container),
-    };
+    return Builder(
+      key: ValueKey(container.key),
+      builder: (context) {
+        return switch(container.status){
+          EntityStatus.created => QuestionContainerLoadingWidget(container: container),
+          EntityStatus.loading => QuestionContainerLoadingWidget(container: container),
+          EntityStatus.loadSuccess => QuestionContainerEntityWidget(container: container),
+          EntityStatus.loadFailed => QuestionContainerNotLoadWidget(container: container,),
+          EntityStatus.notFound => QuestionContainerNotLoadWidget(container: container),
+          EntityStatus.uploading => QuestionContainerEntityWidget(container: container),
+          EntityStatus.processing => QuestionContainerEntityWidget(container: container),
+          EntityStatus.uploadFailed => QuestionContainerEntityWidget(container: container),
+        };
+      }
+    );
   }
 }

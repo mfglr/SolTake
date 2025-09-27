@@ -23,31 +23,36 @@ class QuestionContainerAbstractWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch(container.status){
-      EntityStatus.created => const LoadingWidget(),
-      EntityStatus.loading => const LoadingWidget(),
-      EntityStatus.loadSuccess => MediaFrameWidget(
-        blobService: AppClient.blobService,
-        media: _getMedia,
-      ),
-      EntityStatus.loadFailed => const FailedWidget(),
-      EntityStatus.notFound => const NotFoundWidget(),
-      EntityStatus.uploading || EntityStatus.processing || EntityStatus.uploadFailed => Stack(
-        alignment: AlignmentDirectional.topEnd,
-        children: [
-          MediaFrameWidget(
+    return Builder(
+      key: ValueKey(container.key),
+      builder: (context) {
+        return switch(container.status){
+          EntityStatus.created => const LoadingWidget(),
+          EntityStatus.loading => const LoadingWidget(),
+          EntityStatus.loadSuccess => MediaFrameWidget(
             blobService: AppClient.blobService,
             media: _getMedia,
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: EntityContainerUploadStatus(
-              container: container,
-              diameter: 50,
-            ),
+          EntityStatus.loadFailed => const FailedWidget(),
+          EntityStatus.notFound => const NotFoundWidget(),
+          EntityStatus.uploading || EntityStatus.processing || EntityStatus.uploadFailed => Stack(
+            alignment: AlignmentDirectional.topEnd,
+            children: [
+              MediaFrameWidget(
+                blobService: AppClient.blobService,
+                media: _getMedia,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: EntityContainerUploadStatus(
+                  container: container,
+                  diameter: 50,
+                ),
+              )
+            ],
           )
-        ],
-      )
-    };
+        };
+      }
+    );
   }
 }
