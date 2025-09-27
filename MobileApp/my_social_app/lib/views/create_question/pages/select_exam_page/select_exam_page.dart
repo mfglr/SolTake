@@ -8,7 +8,7 @@ import 'package:my_social_app/state/exams_state/exam_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/pages/select_exam_page/widgets/create_exam_button/create_exam_button.dart';
-import 'package:my_social_app/views/create_question/widgets/exam_item_widget.dart';
+import 'package:my_social_app/views/create_question/pages/select_exam_page/widgets/exam_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';

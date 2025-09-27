@@ -23,9 +23,9 @@ class ExamItemWidget extends StatelessWidget {
                     Navigator
                       .of(context)
                       .pop((
-                        examId: exam.id,
-                        subjectId: value.subjectId,
-                        topicId: value.topicId,
+                        exam: exam,
+                        subject: value.subject,
+                        topic: value.topic,
                         content: value.content,
                         medias: value.medias
                       ));

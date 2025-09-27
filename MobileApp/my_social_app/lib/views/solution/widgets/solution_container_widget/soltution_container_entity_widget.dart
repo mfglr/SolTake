@@ -133,13 +133,13 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
                         : SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                                e.content,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold
-                                ),
+                              e.content,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold
                               ),
+                            ),
                           ))
                         .toList(),
                     ),

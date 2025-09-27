@@ -17,7 +17,13 @@ class QuestionService{
   static final QuestionService _singleton = QuestionService._(AppClient());
   factory QuestionService() => _singleton;
 
-  Future<MultipartRequest> _createQuestionRequest(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content) async{
+  Future<MultipartRequest> _createQuestionRequest(
+    Iterable<LocalMedia> medias,
+    int examId,
+    int subjectId,
+    int? topicId,
+    String? content
+  ) async{
     MultipartRequest request = MultipartRequest(
       "POST",
       _appClient.generateUri("$questionController/$createQuestioinEndpoint")

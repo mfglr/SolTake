@@ -9,7 +9,7 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/subjects_state/subject_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/create_question/pages/select_subject_page/widgets/create_subject_button/create_subject_button.dart';
-import 'package:my_social_app/views/create_question/widgets/subject_item_widget.dart';
+import 'package:my_social_app/views/create_question/pages/select_subject_page/widgets/subject_item_widget.dart';
 import 'package:my_social_app/views/shared/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
@@ -92,7 +92,10 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                   crossAxisCount: 2,
                   children: pagination
                     .values
-                    .map((e) => SubjectItemWidget(subject: e))
+                    .map((e) => SubjectItemWidget(
+                      exam: widget.exam,
+                      subject: e
+                    ))
                     .toList()
                 ),
               ),

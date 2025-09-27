@@ -6,7 +6,7 @@ import 'package:my_social_app/state/questions_state/selectors.dart';
 import 'package:my_social_app/state/story_state/actions.dart';
 import 'package:my_social_app/state/story_state/selectors.dart';
 import 'package:my_social_app/state/story_state/story_circle_state.dart';
-import 'package:my_social_app/helpers/start_creating_question.dart';
+import 'package:my_social_app/views/create_question/start_creating_question.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';

@@ -14,3 +14,8 @@ const addMedia = {
   Languages.en: "Add Medias",
   Languages.tr: "Medya Ekle"
 };
+
+const contentException = {
+  Languages.en: "You must enter content or add at least a media!",
+  Languages.tr: "İçerik girmeli ya da en az bir media eklemelisin!",
+};

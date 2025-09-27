@@ -9,6 +9,7 @@ import 'package:my_social_app/views/question/widgets/question_container/widgets/
 import 'package:my_social_app/views/question/widgets/question_container/widgets/exam_tag_item.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_comment_button_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_container_upload_status_modal/question_container_upload_status_modal.dart';
+import 'package:my_social_app/views/question/widgets/question_container/widgets/question_content_widget.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_item_popup_menu/question_item_popup_menu.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_like_button.dart';
 import 'package:my_social_app/views/question/widgets/question_container/widgets/question_publishing_state/question_publishing_state_widget.dart';
@@ -110,15 +111,26 @@ class QuestionContainerEntityWidget extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.only(bottom: margin),
-            color: Colors.white,
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height * 3 / 5
-            ),
-            child: Center(
-              child: MediaSlider(
-                medias: question.medias
-              ),
-            )
+            child: question.medias.isNotEmpty
+              ? Container(
+                  color: Colors.white,
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height * 3 / 5
+                  ),
+                  child: Center(
+                    child: MediaSlider(
+                      medias: question.medias
+                    )
+                  )
+                )
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height * 3 / 5,
+                  child: Center(
+                    child: QuestionContentWidget(
+                      question: question
+                    ),
+                  )
+                )
           ),
           Padding(
             padding: const EdgeInsets.only(left:margin, right: margin, top: margin),
