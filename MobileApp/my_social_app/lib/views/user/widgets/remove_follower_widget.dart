@@ -16,19 +16,20 @@ class RemoveFollowerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: (){
-        DialogCreator
-          .showAppDialog(
-            context,
-            AppLocalizations.of(context)!.show_remove_follower_dialog_title,
-            AppLocalizations.of(context)!.show_remove_follower_dialog_content,
-            AppLocalizations.of(context)!.show_remove_follower_dialog_content_of_approve_button,
-          )
-          .then((response){
-            if(response && context.mounted){
-              final store = StoreProvider.of<AppState>(context,listen: false);
-              // store.dispatch(RemoveFollowerAction(followerId: follower.userId));
-            }
-          });
+        // DialogCreator
+        //   .showAppDialog(
+        //     context,
+        //     AppLocalizations.of(context)!.show_remove_follower_dialog_title,
+        //     AppLocalizations.of(context)!.show_remove_follower_dialog_content,
+        //     AppLocalizations.of(context)!.show_remove_follower_dialog_content_of_approve_button,
+
+        //   )
+        //   .then((response){
+        //     if(response && context.mounted){
+        //       final store = StoreProvider.of<AppState>(context,listen: false);
+        //       // store.dispatch(RemoveFollowerAction(followerId: follower.userId));
+        //     }
+        //   });
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

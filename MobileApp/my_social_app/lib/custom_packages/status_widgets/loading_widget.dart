@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LoadingWidget extends StatelessWidget {
+  final double borderRadius;
   const LoadingWidget({
     super.key,
+    this.borderRadius = 0
   });
 
   static final _baseColor = Colors.grey.shade300;
@@ -20,6 +22,7 @@ class LoadingWidget extends StatelessWidget {
           width: constraints.constrainWidth(),
           decoration: BoxDecoration(
             color: _baseColor,
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
         )
       ),

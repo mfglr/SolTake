@@ -35,7 +35,9 @@ class CommentPopupMenu extends StatelessWidget {
               context,
               title[getLanguage(context)]!,
               description[getLanguage(context)]!,
-              delete[getLanguage(context)]!
+              delete[getLanguage(context)]!,
+              Icons.delete,
+              Colors.red
             );
             if(response && context.mounted){
               final store = StoreProvider.of<AppState>(context,listen: false);

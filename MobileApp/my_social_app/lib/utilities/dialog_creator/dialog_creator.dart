@@ -5,7 +5,14 @@ import 'dialog_creator_texts.dart';
 
 class DialogCreator{
 
-  static Future<bool> showAppDialog(BuildContext context, String title, String content,String contentOfApproveButton){
+  static Future<bool> showAppDialog(
+    BuildContext context,
+    String title,
+    String content,
+    String contentOfApproveButton,
+    IconData icon,
+    Color color,
+  ){
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -31,22 +38,20 @@ class DialogCreator{
               )
             ),
             TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop(true);
-              }, 
+              onPressed: () => Navigator.of(context).pop(true), 
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(right: 4),
-                    child: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
+                    child: Icon(
+                      icon,
+                      color: color,
                     )
                   ),
                   Text(
                     contentOfApproveButton,
-                    style: const TextStyle(color: Colors.red),
+                    style: TextStyle(color: color),
                   )
                 ],
               )

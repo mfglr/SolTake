@@ -61,7 +61,9 @@ class _MessageHomePageState extends State<MessageHomePage> {
         context,
         AppLocalizations.of(context)!.message_home_page_delete_conversations_title,
         AppLocalizations.of(context)!.message_home_page_delete_conversations_content,
-        AppLocalizations.of(context)!.message_home_page_content_aprove_button
+        AppLocalizations.of(context)!.message_home_page_content_aprove_button,
+        Icons.delete,
+        Colors.red
       )
       .then((response){
         if(response && mounted){

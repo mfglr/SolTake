@@ -31,13 +31,14 @@ class QuestionContainerEntityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double margin = 8;
     final question = container.entity!;
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
+            padding: const EdgeInsets.only(left: margin, right: margin, top: margin, bottom: margin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -108,6 +109,7 @@ class QuestionContainerEntityWidget extends StatelessWidget {
             ),
           ),
           Container(
+            margin: const EdgeInsets.only(bottom: margin),
             color: Colors.white,
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height * 3 / 5
@@ -119,7 +121,7 @@ class QuestionContainerEntityWidget extends StatelessWidget {
             )
           ),
           Padding(
-            padding: const EdgeInsets.only(left:12,right: 12,top: 15),
+            padding: const EdgeInsets.only(left:margin, right: margin, top: margin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -149,19 +151,19 @@ class QuestionContainerEntityWidget extends StatelessWidget {
           ),
           if(question.publishingState != QuestionPublishingState.published)
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(margin),
               child: QuestionPublishingStateWidget(question: question),
             ),
           if(question.content != null)
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(margin),
               child: ExtendableContent(
                 content: question.content!,
                 numberOfExtention: 25,
               ),
             ),
           Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(margin),
             child: Wrap(
               children: [
                 ExamTagItem(exam: question.exam),

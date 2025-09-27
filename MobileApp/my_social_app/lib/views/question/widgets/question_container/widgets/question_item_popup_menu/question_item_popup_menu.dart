@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/question_user_complaint_service.dart';
 import 'package:my_social_app/state/questions_state/actions.dart';
@@ -19,7 +18,7 @@ class QuestionItemPopupMenu extends StatelessWidget {
   
   const QuestionItemPopupMenu({
     super.key,
-    required this.container
+    required this.container,
   });
 
 
@@ -30,9 +29,11 @@ class QuestionItemPopupMenu extends StatelessWidget {
     DialogCreator
       .showAppDialog(
         context,
-        AppLocalizations.of(context)!.question_item_popup_menu_title,
-        AppLocalizations.of(context)!.question_item_popup_menu_description,
-        AppLocalizations.of(context)!.show_app_dialog_delete_button
+        title[getLanguage(context)]!,
+        content[getLanguage(context)]!,
+        delete[getLanguage(context)]!,
+        Icons.delete,
+        Colors.red
       )
       .then((response){
         if(response && context.mounted){
@@ -60,6 +61,23 @@ class QuestionItemPopupMenu extends StatelessWidget {
       });
   }
 
+  void _reload(BuildContext context){
+    DialogCreator
+      .showAppDialog(
+        context,
+        titleReload[getLanguage(context)]!,
+        contentReload[getLanguage(context)]!,
+        reload[getLanguage(context)]!,
+        Icons.replay_outlined,
+        Colors.black
+      )
+      .then((response){
+        if(response && context.mounted){
+          final store = StoreProvider.of<AppState>(context,listen: false);
+          store.dispatch(LoadQuestionAction(questionId: container.key));
+        }
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +88,14 @@ class QuestionItemPopupMenu extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      onSelected: (value) async {
+      onSelected: (value){
         switch(value){
           case QuestionActions.delete:
             _delete(context, question);
           case QuestionActions.report:
             _report(context, question);
+          case QuestionActions.reload:
+            _reload(context);
         }
       },
       itemBuilder: (context) {
@@ -117,7 +137,21 @@ class QuestionItemPopupMenu extends StatelessWidget {
                   )
                 ],
               )
+            ),
+          PopupMenuItem<QuestionActions>(
+            value: QuestionActions.reload,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  reload[getLanguage(context)]!
+                ),
+                const Icon(
+                  Icons.replay_outlined
+                )
+              ],
             )
+          )
         ];
       }
     );

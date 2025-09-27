@@ -25,7 +25,9 @@ class DeleteUserMenuItem extends StatelessWidget {
               context,
               dialogTitle[language]!,
               dialogContent[language]!,
-              dialogApproveButtonContent[language]!
+              dialogApproveButtonContent[language]!,
+              Icons.delete,
+              Colors.red
             )
             .then((value){
               if(value && context.mounted){

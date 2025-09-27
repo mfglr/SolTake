@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/custom_packages/entity_state/container_pagination.dart';
 import 'package:my_social_app/state/solutions_state/actions.dart';
 import 'package:my_social_app/state/solutions_state/selectors.dart';
 import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
@@ -18,29 +19,29 @@ class DisplayQuestionVideoSolutionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Scaffold(
-        //   backgroundColor: Colors.white.withAlpha(153),
-        //   body: StoreConnector<AppState, Iterable<SolutionState>>(
-        //     onInit: (store) => 
-        //       getNextPageIfNoPage(
-        //         store,
-        //         selectQuestionVideoSolutions(store, questionId),
-        //         NextQuestionVideoSolutionsAction(questionId: questionId)
-        //       ),
-        //     converter: (store) => selectQuestionVideoSolutions(store, questionId).containers,
-        //     builder: (context, solutions) => SolutionVideoPageSlider(
-        //       solutions: solutions,
-        //       onNext: (){
-        //         final store = StoreProvider.of<AppState>(context, listen: false);
-        //         getNextPageIfReady(
-        //           store,
-        //           selectQuestionVideoSolutions(store, questionId),
-        //           NextQuestionVideoSolutionsAction(questionId: questionId)
-        //         );
-        //       },
-        //     )
-        //   ),
-        // ),
+        Scaffold(
+          backgroundColor: Colors.white.withAlpha(153),
+          body: StoreConnector<AppState, ContainerPagination<int, SolutionState>>(
+            onInit: (store) => 
+              getNextPageIfNoPage(
+                store,
+                selectQuestionVideoSolutions(store, questionId),
+                NextQuestionVideoSolutionsAction(questionId: questionId)
+              ),
+            converter: (store) => selectQuestionVideoSolutions(store, questionId),
+            builder: (context, solutions) => SolutionVideoPageSlider(
+              solutions: solutions.containers.map((e) => e.entity!),
+              onNext: (){
+                final store = StoreProvider.of<AppState>(context, listen: false);
+                getNextPageIfReady(
+                  store,
+                  selectQuestionVideoSolutions(store, questionId),
+                  NextQuestionVideoSolutionsAction(questionId: questionId)
+                );
+              },
+            )
+          ),
+        ),
         Positioned(
           top: MediaQuery.of(context).size.height / 16,
           left: 15,

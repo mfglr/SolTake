@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/custom_packages/status_widgets/loading_widget.dart';
 
 class LoadingCircleWidget extends StatelessWidget {
   final double? strokeWidth;
@@ -11,12 +12,13 @@ class LoadingCircleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = diameter ?? 30;
     return SizedBox(
-      height: diameter ?? 30,
-      width: diameter ?? 30,
-      child: CircularProgressIndicator(
-        strokeWidth: strokeWidth ?? 4,
-      ),
+      height: t,
+      width: t,
+      child: LoadingWidget(
+        borderRadius: t / 2,
+      )
     );
   }
 }

@@ -11,7 +11,7 @@ import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
 //questions middleware
-void loadQuestionMiddleware(Store<AppState> store,action, NextDispatcher next){
+void loadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is LoadQuestionAction){
     QuestionService()
       .getById(action.questionId)
@@ -92,9 +92,7 @@ void reUploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher ne
   }
   next(action);
 }
-
-
-void deleteQuestionMiddleware(Store<AppState> store,action,NextDispatcher next){
+void deleteQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is DeleteQuestionAction){
     QuestionService()
       .delete(action.question.id)

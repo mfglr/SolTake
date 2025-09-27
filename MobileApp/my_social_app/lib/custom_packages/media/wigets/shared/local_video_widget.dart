@@ -12,7 +12,7 @@ class LocalVideoWidget extends StatefulWidget {
   const LocalVideoWidget({
     super.key,
     required this.media,
-    this.autoPlay = false,
+    required this.autoPlay,
   });
 
   @override

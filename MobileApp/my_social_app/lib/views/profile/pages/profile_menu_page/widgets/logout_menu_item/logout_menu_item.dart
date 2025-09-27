@@ -26,6 +26,8 @@ class LogoutMenuItem extends StatelessWidget {
               dialogTitle[language]!,
               dialogContent[language]!,
               approveButtonContent[language]!,
+              Icons.logout,
+              Colors.red
             )
             .then((value){
               if(value && context.mounted){

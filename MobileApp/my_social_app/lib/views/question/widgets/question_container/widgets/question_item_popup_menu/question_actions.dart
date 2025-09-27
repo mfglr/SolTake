@@ -1,4 +1,5 @@
 enum QuestionActions{
   delete,
-  report
+  report,
+  reload,
 }

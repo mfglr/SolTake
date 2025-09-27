@@ -14,7 +14,7 @@ class RemoteVideoWidget extends StatefulWidget {
     super.key,
     required this.media,
     required this.blobService,
-    this.autoPlay = false
+    required this.autoPlay,
   });
 
   @override
