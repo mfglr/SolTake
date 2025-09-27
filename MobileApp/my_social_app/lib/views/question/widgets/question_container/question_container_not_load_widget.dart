@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/custom_packages/status_widgets/loading_widget.dart';
-import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_status.dart';
+import 'package:my_social_app/custom_packages/status_widgets/failed_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/load_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/load_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/not_found_widget.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 
-class QuestionContainerLoadingWidget extends StatelessWidget {
+class QuestionContainerNotLoadWidget extends StatelessWidget {
   final EntityContainer<int, QuestionState> container;
-  const QuestionContainerLoadingWidget({
+
+  const QuestionContainerNotLoadWidget({
     super.key,
     required this.container
   });
@@ -15,7 +19,7 @@ class QuestionContainerLoadingWidget extends StatelessWidget {
     SizedBox(
       height: height,
       width: width,
-      child: LoadingWidget(
+      child: LoadWidget(
         borderRadius: height / 2,
       )
     );
@@ -23,6 +27,7 @@ class QuestionContainerLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double margin = 8;
+    
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,30 +40,25 @@ class QuestionContainerLoadingWidget extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(right: margin),
-                      child: const LoadingCircleWidget(
-                        diameter: 45,
+                      margin: const EdgeInsets.only(right: 5),
+                      child: const LoadCircleWidget(
+                        diameter: 35,
                       ),
                     ),
                     _buildLoadingRectangle(width: MediaQuery.of(context).size.width * 1 / 4)
                   ],
                 ),
-                const SizedBox(
-                  height: 18,
-                  width: 110,
-                  child: LoadingWidget(
-                    borderRadius: 9,
-                  )
-                )
+                _buildLoadingRectangle(width: MediaQuery.of(context).size.width * 1 / 4)
               ],
             ),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: margin),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 3 / 5,
-              child: const LoadingWidget(),
+              child: container.status == EntityStatus.notFound
+                ? const NotFoundWidget()
+                : const FailedWidget()
             ),
           ),
           Padding(
