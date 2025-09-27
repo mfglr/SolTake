@@ -16,7 +16,7 @@ import 'package:my_social_app/views/solution/widgets/solution_container_widget/w
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/downvote_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/save_solution_button.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_comment_button.dart';
-import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_popup_menu.dart';
+import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_popup_menu/solution_popup_menu.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/solution_state_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/widgets/upvote_button.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
@@ -32,14 +32,14 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final solution = container.entity!;
-
+    const double margin = 8;
     return Card(
       key: ValueKey(solution.id),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(margin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -148,11 +148,18 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
               ),
             )
           else
-            MediaSlider(
-              medias: solution.medias,
+            Container(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height * 3 / 5,
+              ),
+              child: Center(
+                child: MediaSlider(
+                  medias: solution.medias,
+                ),
+              ),
             ),
           Padding(
-            padding: const EdgeInsets.only(left:12,right: 12,top: 15,bottom: 15),
+            padding: const EdgeInsets.only(left:margin,right: margin,top: margin,bottom: margin),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -204,7 +211,7 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
           ),
           if(solution.content != null && !solution.isCreatedByAI)
             Padding(
-              padding: const EdgeInsets.only(left:12, right: 12, bottom: 15),
+              padding: const EdgeInsets.only(left:margin, right: margin, bottom: margin),
               child: ExtendableContent(
                 content: solution.content!,
                 numberOfExtention: 25,

@@ -202,6 +202,7 @@ final store = Store(
     //question user likes
 
     //solutions
+    loadSolutionMiddleware,
     uploadSolutionMiddleware,
     reuploadSolutionMiddleware,
     createSolutionByAiMiddleware,

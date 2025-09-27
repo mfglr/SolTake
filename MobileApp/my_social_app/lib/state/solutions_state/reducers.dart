@@ -7,9 +7,9 @@ import 'package:redux/redux.dart';
 SolutionsState loadSolutionReducer(SolutionsState prev, LoadSolutionAction action) =>
   prev.loading(action.solutionId);
 SolutionsState loadSolutionSuccessReducer(SolutionsState prev, LoadSolutionSuccessAction action) =>
-  prev.success(action.solution);
+  prev.loadSuccess(action.solution);
 SolutionsState loadSolutionFailedReducer(SolutionsState prev, LoadSolutionFailedAction action) =>
-  prev.failed(action.solutionId);
+  prev.loadFailed(action.solutionId);
 SolutionsState solutionNotFoundReducer(SolutionsState prev, SolutionNotFoundAction action) =>
   prev.notFound(action.solutionId);
 // load solution

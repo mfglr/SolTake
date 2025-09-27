@@ -45,9 +45,9 @@ class SolutionsState {
   //solutions
   SolutionsState loading(int solutionId) =>
     _optional(newSolutions: solutions.create(solutionId));
-  SolutionsState success(SolutionState solution) =>
+  SolutionsState loadSuccess(SolutionState solution) =>
     _optional(newSolutions: solutions.loadSuccess(solution.id, solution));
-  SolutionsState failed(int solutionId) =>
+  SolutionsState loadFailed(int solutionId) =>
     _optional(newSolutions: solutions.loadFailed(solutionId));
   SolutionsState notFound(int solutionId) =>
     _optional(newSolutions: solutions.notFound(solutionId));

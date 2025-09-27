@@ -1,5 +1,6 @@
 import 'package:my_social_app/constants/notifications_content.dart';
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
+import 'package:my_social_app/exceptions/backend_exception.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/services/solution_service.dart';
 import 'package:my_social_app/state/solutions_state/actions.dart';
@@ -9,6 +10,25 @@ import 'package:my_social_app/utilities/toast_creator.dart';
 import 'package:redux/redux.dart';
 
 //solutions
+void loadSolutionMiddleware(Store<AppState> store, action, NextDispatcher next){
+  if(action is LoadSolutionAction){
+    SolutionService()
+      .getSolutionById(action.solutionId)
+      .then((solution) => store.dispatch(LoadSolutionSuccessAction(solution: solution.toSolutionState())))
+      .catchError((e){
+        if(e is BackendException){
+          if(e.statusCode == 404){
+            store.dispatch(SolutionNotFoundAction(solutionId: action.solutionId));
+          }
+          else{
+            store.dispatch(LoadSolutionFailedAction(solutionId: action.solutionId));
+          }
+        }
+        throw e;
+      });
+  }
+  next(action);
+}
 void uploadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is UploadSolutionAction){
     SolutionService()

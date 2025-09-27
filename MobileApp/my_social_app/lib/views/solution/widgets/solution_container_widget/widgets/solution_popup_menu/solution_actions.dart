@@ -1,0 +1,4 @@
+enum SolutionActions{
+  delete,
+  reload
+}
