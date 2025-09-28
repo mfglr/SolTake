@@ -44,6 +44,9 @@ class QuestionItemPopupMenu extends StatelessWidget {
   }
 
   void _report(BuildContext context, QuestionState question){
+    if(container.isNotLoadSuccess){
+      throw loadException[getLanguage(context)]!;
+    }
     Navigator
       .of(context)
       .push(MaterialPageRoute(builder: (context) => ReportQuestionPage(question: question)))
@@ -62,6 +65,9 @@ class QuestionItemPopupMenu extends StatelessWidget {
   }
 
   void _reload(BuildContext context){
+    if(container.isNotLoadSuccess){
+      throw loadException[getLanguage(context)]!;
+    }
     DialogCreator
       .showAppDialog(
         context,

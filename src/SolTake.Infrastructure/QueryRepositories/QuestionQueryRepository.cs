@@ -109,7 +109,7 @@ namespace SolTake.Infrastructure.QueryRepositories
                 forUserId,
                 page,
                 question => 
-                    question.UserId != forUserId && 
+                    question.UserId != forUserId &&
                     question.Medias.Any(x => x.MultimediaType == MultimediaType.Video),
                 cancellationToken
             );

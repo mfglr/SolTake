@@ -16,9 +16,9 @@ const reload = {
 };
 
 const loadException = {
-    Languages.en: "You can't delete the question that is being uploaded.",
-    Languages.tr: "Yüklenen soruyu silemezsin."
-  };
+  Languages.en: "You cannot perform any actions on the uploaded question.",
+  Languages.tr: "Yüklenen soru üzerinde işlem yapamazsınız."
+};
 
 
 const reportCreatedMessage = {

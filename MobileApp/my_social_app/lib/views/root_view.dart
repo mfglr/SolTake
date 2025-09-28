@@ -9,12 +9,11 @@ import 'package:my_social_app/state/users_state/user_state.dart';
 import 'package:my_social_app/state/users_state/action.dart';
 import 'package:my_social_app/state/users_state/selectors.dart';
 import 'package:my_social_app/views/login/pages/application_loading_page.dart';
-import 'package:my_social_app/views/display_video_questions/display_video_questions.dart';
+import 'package:my_social_app/views/display_video_questions_page/display_video_questions_page.dart';
 import 'package:my_social_app/views/home_page/home_page.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/message_home_page.dart';
 import 'package:my_social_app/views/search/pages/search_page/search_page.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page.dart';
-import 'package:my_social_app/views/shared/app_avatar/widgets/profile_image_widget.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 
@@ -109,7 +108,7 @@ class _RootViewState extends State<RootView> {
           ),
           body: [
             const HomePage(),
-            const DisplayVideoQuestions(),
+            const DisplayVideoQuestionsPage(),
             const SearchPage(),
             const MessageHomePage(),
             const ProfilePage()

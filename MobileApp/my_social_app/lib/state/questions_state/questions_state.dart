@@ -201,6 +201,8 @@ class QuestionsState {
     );
   QuestionsState stopNextVideoQuestions() => 
     _optional(newVideoQuestions: videoQuestions.stopNext());
+  ContainerPagination<int, QuestionState> selectVideoQuestions() =>
+    ContainerPagination<int, QuestionState>.fromCollection(questions, videoQuestions);
   //video questions
 
   //user questions

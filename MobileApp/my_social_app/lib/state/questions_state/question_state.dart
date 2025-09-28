@@ -35,6 +35,16 @@ class QuestionState extends Entity<int>{
 
   int get state => numberOfCorrectSolutions >= 1 ? QuestionStatus.solved : QuestionStatus.unsolved;
 
+  int get findFirstVideoIndex {
+    for(var i = 0; i < medias.length; i++){
+      if(medias.elementAt(i).type == MultimediaType.video){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+
   QuestionState({
     required super.id,
     required this.createdAt,

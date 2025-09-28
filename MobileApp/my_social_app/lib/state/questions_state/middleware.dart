@@ -180,7 +180,7 @@ void refreshSearchPageQuestionsMiddleware(Store<AppState> store, action, NextDis
 void nextVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is NextVideoQuestionsAction){
     QuestionService()
-      .getVideoQuestions(selectVideoQuestionPagination(store).next)
+      .getVideoQuestions(selectVideoQuestions(store).next)
       .then((questions) => store.dispatch(NextVideoQuestionsSuccessAction(
         questions: questions.map((e) => e.toQuestionState())
       )))
@@ -194,7 +194,7 @@ void nextVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher 
 void refreshVideoQuestionsMiddleware(Store<AppState> store, action, NextDispatcher next){
   if(action is RefreshVideoQuestionsAction){
     QuestionService()
-      .getVideoQuestions(selectVideoQuestionPagination(store).first)
+      .getVideoQuestions(selectVideoQuestions(store).first)
       .then((questions) => store.dispatch(RefreshVideoQuestionsSuccessAction(
         questions: questions.map((e) => e.toQuestionState())
       )))

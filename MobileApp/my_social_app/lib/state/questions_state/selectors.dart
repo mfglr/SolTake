@@ -2,7 +2,6 @@ import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/container_pagination.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/custom_packages/entity_state/key_pagination.dart';
 import 'package:redux/redux.dart';
 
 EntityContainer<int, QuestionState> selectQuestion(Store<AppState> store, int questionId) =>
@@ -16,14 +15,10 @@ Future<bool> onHomeQuestionsLoaded(Store<AppState> store) =>
 //home questions
 
 //video questions
-KeyPagination<int> selectVideoQuestionPagination(Store<AppState> store) => 
-  store.state.questions.videoQuestions;
-Iterable<QuestionState> selectVideoQuestions(Store<AppState> store) =>
-  selectVideoQuestionPagination(store).keys.map((key) => store.state.questions.questions[key].entity!);
-(KeyPagination<int>, Iterable<QuestionState>) selectVideoPaginationAndQuestions(Store<AppState> store) =>
-  (selectVideoQuestionPagination(store), selectVideoQuestions(store));
+ContainerPagination<int, QuestionState> selectVideoQuestions(Store<AppState> store) =>
+  store.state.questions.selectVideoQuestions();
 Future<bool> onVideoQuestionsLoaded(Store<AppState> store) =>
-  store.onChange.map((state) => !store.state.questions.videoQuestions.loadingNext).first;
+  store.onChange.map((state) => !state.questions.selectVideoQuestions().loadingNext).first;
 //video questions
 
 //search page questions

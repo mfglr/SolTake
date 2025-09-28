@@ -21,36 +21,51 @@ class _ExtendableContentState extends State<ExtendableContent> {
   String _formatContent(String content) =>
     content.length <= widget.numberOfExtention ? content : "${content.substring(0,widget.numberOfExtention - 3)}...";
 
+  bool get _isExtendable => widget.content.length > widget.numberOfExtention;
+
+  void _onTap() => setState(() { _isExtended = !_isExtended; });
+
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => setState(() { _isExtended = !_isExtended; }),
-      style: ButtonStyle(
-        padding: WidgetStateProperty.all(EdgeInsets.zero),
-        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
-      child: Builder(
-        builder: (context){
-          if(_isExtended){
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 1 / 5
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  widget.content,
-                  style: widget.textStyle,
+    return Builder(
+      builder: (context){
+        if(!_isExtendable){
+          return Text(
+            widget.content,
+            style: widget.textStyle,
+          ); 
+        }
+
+        if(_isExtended){
+          return LayoutBuilder(
+            builder: (context, constraints) => GestureDetector(
+              onTap: _onTap,
+              child: SizedBox(
+                height: constraints.constrainHeight(),
+                width: constraints.constrainWidth(),
+                child: SingleChildScrollView(
+                  child: Text(
+                    widget.content,
+                    style: widget.textStyle,
+                  ),
                 ),
               ),
-            );
-          }
-          return Text(
+            ),
+          );
+        }
+        return TextButton(
+          onPressed: _onTap,
+          style: ButtonStyle(
+            padding: WidgetStateProperty.all(EdgeInsets.zero),
+            minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
             _formatContent(widget.content),
             style: widget.textStyle,
-          );
-        },
-      )
+          ),
+        );
+      },
     );
   }
 }

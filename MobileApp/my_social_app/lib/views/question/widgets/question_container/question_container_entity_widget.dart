@@ -169,9 +169,18 @@ class QuestionContainerEntityWidget extends StatelessWidget {
           if(question.content != null)
             Padding(
               padding: const EdgeInsets.all(margin),
-              child: ExtendableContent(
-                content: question.content!,
-                numberOfExtention: 25,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 1 / 5
+                ),
+                child: ExtendableContent(
+                  content: question.content!,
+                  numberOfExtention: 25,
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
               ),
             ),
           Container(
