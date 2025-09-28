@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia.dart';
 import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
 part 'ai_model.g.dart';
 
@@ -31,6 +31,6 @@ class AIModel {
       name: name,
       solPerInputToken: solPerInputToken,
       solPerOutputToken: solPerOutputToken,
-      image: image
+      image: image.toMedia()
     );
 }

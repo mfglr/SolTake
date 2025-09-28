@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia/models/multimedia.dart';
+import 'package:my_social_app/custom_packages/media/models/local_media.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
+import 'package:my_social_app/custom_packages/media/models/remote_video.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page.dart';
 import 'package:my_social_app/views/create_solution_by_ai/extract_video_frame_page/widgets/catch_frame_button/catch_frame_button.dart';
 import 'package:my_social_app/views/shared/slide_video_player/video_play_button.dart';
@@ -7,15 +9,13 @@ import 'package:my_social_app/views/shared/slide_video_player/video_progress_bar
 import 'package:video_player/video_player.dart';
 
 class FrameCatcher extends StatefulWidget {
-  final Multimedia media;
+  final Media media;
   final Widget? child;
-  final String baseBlobUrl;
-  final Map<String,String>? headers;
+  final String blobService;
   const FrameCatcher({
     super.key,
     required this.media,
-    required this.baseBlobUrl,
-    this.headers,
+    required this.blobService,
     this.child,
   });
 
@@ -66,8 +66,15 @@ class _FrameCatcherState extends State<FrameCatcher> {
 
   @override
   void initState() {
-    _url = Uri.parse("${widget.baseBlobUrl}/${widget.media.containerName}/${widget.media.blobName}");
-    _controller = VideoPlayerController.networkUrl(_url, httpHeaders: widget.headers ?? {});
+    if(widget.media is RemoteVideo){
+      final media = widget.media as RemoteVideo;
+      _url = Uri.parse("${widget.blobService}/${media.containerName}/${media.blobName}");
+      _controller = VideoPlayerController.networkUrl(_url);
+    }
+    else{
+      final media = widget.media as LocalMedia;
+      _controller = VideoPlayerController.file(media.file);
+    }
     _controller.setLooping(true);
     _controller.initialize().then((_) => _controller.play().then((_) => setState(() {})));
     super.initState();
@@ -91,7 +98,7 @@ class _FrameCatcherState extends State<FrameCatcher> {
             mainAxisSize: MainAxisSize.max,
             children: [
               AspectRatio(
-                aspectRatio: widget.media.aspectRatio,
+                aspectRatio: widget.media.dimention.aspectRatio,
                 child: VideoPlayer(_controller)
               ),
             ],
@@ -131,12 +138,12 @@ class _FrameCatcherState extends State<FrameCatcher> {
                     widget.child!,
                   Row(
                     children: [
-                      Expanded(
-                        child: VideoProgressBar(
-                          controller: _controller,
-                          duration: Duration(seconds: widget.media.duration.round())
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: VideoProgressBar(
+                      //     controller: _controller,
+                      //     duration: Duration(seconds: widget.media.duration.round())
+                      //   ),
+                      // ),
                       Container(
                         margin: const EdgeInsets.only(left: 4),
                         child: VideoPlayButton(controller: _controller)

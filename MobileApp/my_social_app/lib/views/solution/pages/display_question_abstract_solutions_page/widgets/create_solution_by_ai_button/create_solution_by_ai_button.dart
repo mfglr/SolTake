@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
+import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/solutions_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page.dart';
+
+import 'create_solution_by_ai_button_constants.dart';
 
 class CreateSolutionByAiButton extends StatelessWidget {
   final int questionId;
@@ -64,7 +67,12 @@ class CreateSolutionByAiButton extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(right: 8),
-          child: Text(AppLocalizations.of(context)!.create_solution_by_ai_button_label)
+          child: Text(
+            content[getLanguage(context)]!,
+            style: const TextStyle(
+              color: Colors.blue
+            ),
+          )
         ),
         FilledButton(
           style: FilledButton.styleFrom(

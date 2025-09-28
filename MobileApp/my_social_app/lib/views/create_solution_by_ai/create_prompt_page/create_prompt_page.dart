@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:multimedia/models/multimedia.dart';
-import 'package:multimedia/models/multimedia_type.dart';
 import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
 import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
+import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/frame_catcher.dart';
 import 'package:my_social_app/services/get_language.dart';
@@ -16,7 +17,7 @@ import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widg
 
 class CreatePromptPage extends StatefulWidget {
   final double position;
-  final Multimedia media;
+  final Media media;
 
   const CreatePromptPage({
     super.key,
@@ -43,10 +44,10 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
   @override
   void initState() {
     _controller.text = _prompt = defaultPrompt[getLanguage(context)]!;
-    if(widget.media.multimediaType == MultimediaType.video){
-      _frame = FrameCatcherService()
-        .catchFrame(widget.media.containerName, widget.media.blobName, widget.position);
-    }
+    // if(widget.media.type == MultimediaType.video){
+    //   _frame = FrameCatcherService()
+    //     .catchFrame(widget.media.containerName, widget.media.blobName, widget.position);
+    // }
 
     super.initState();  
   }
@@ -71,12 +72,10 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
               child: Builder(builder: (context){
-                if(widget.media.multimediaType == MultimediaType.image){
-                  return MultimediaImagePlayer(
+                if(widget.media.type == MultimediaType.image){
+                  return MediaWidget(
                     media: widget.media,
-                    blobServiceUrl: AppClient.blobService,
-                    notFoundImagePath: noMediaAssetPath,
-                    noImagePath: noMediaAssetPath
+                    blobService: AppClient.blobService,
                   );
                 } 
                 return FutureBuilder(

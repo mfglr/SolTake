@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multimedia_grid/multimedia_grid.dart';
-import 'package:my_social_app/constants/assets.dart';
+import 'package:my_social_app/custom_packages/media/wigets/media_frame_widget/media_frame_widget.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
@@ -62,11 +61,9 @@ class AiModelWidget extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 8),
                     height: MediaQuery.of(context).size.width / 4,
                     width: MediaQuery.of(context).size.width / 4,
-                    child: MultimediaGrid(
-                      state: aiModel.image,
-                      blobServiceUrl: AppClient.blobService,
-                      noMediaPath: noMediaAssetPath,
-                      notFoundMediaPath: noMediaAssetPath
+                    child: MediaFrameWidget(
+                      media: aiModel.image,
+                      blobService: AppClient.blobService,
                     ),
                   ),
                   Text(

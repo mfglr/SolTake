@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
@@ -22,10 +23,35 @@ class LocalVideoWidget extends StatefulWidget {
 class _LocalVideoWidgetState extends State<LocalVideoWidget> {
   late final VideoPlayerController _controller;
   double _rate = 0;
+  Iterable<(double,double)> _buffers = [];
   
   void _updateRate() =>
     setState(() => _rate = _controller.value.position.inMicroseconds / _controller.value.duration.inMicroseconds);   
   
+  void _updateBuffer(){
+    var duration = _controller.value.duration.inMicroseconds;
+    setState(
+      () => 
+        _buffers = _controller.value.buffered.map((e) => (
+          e.start.inMicroseconds / duration,
+          (e.end.inMicroseconds - e.start.inMicroseconds) / duration
+        ))
+    );
+  }
+
+  void _onTapMove(DragUpdateDetails details, double witdth){
+    final rate = details.localPosition.dy / witdth;
+    _controller
+      .seekTo(Duration(microseconds: (rate * _controller.value.duration.inMicroseconds).round()))
+      .then((_) => setState(() {}));
+  }
+
+  void _onTapDown(TapDownDetails details, double witdth){
+    final rate = details.localPosition.dx / witdth;
+    _controller
+      .seekTo(Duration(microseconds: (rate * _controller.value.duration.inMicroseconds).round()))
+      .then((_) => setState(() {}));
+  }
 
   @override
   void initState() {
@@ -41,6 +67,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
                 .then((_) => setState((){}))
             : setState((){})
         );
+    _controller.addListener(_updateBuffer);
     _controller.addListener(_updateRate);
     
     super.initState();
@@ -48,6 +75,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
 
   @override
   void dispose() {
+    _controller.removeListener(_updateBuffer);
     _controller.removeListener(_updateRate);
     _controller.dispose();
     super.dispose();
@@ -109,7 +137,12 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
               )
           ],
         ),
-        VideoDurationBar(rate: _rate)
+        VideoDurationBar(
+          rate: _rate,
+          buffers: _buffers,
+          onTapMove: _onTapMove,
+          onTapDown: _onTapDown,
+        )
       ],
     );
   }

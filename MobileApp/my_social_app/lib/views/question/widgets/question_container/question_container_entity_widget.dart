@@ -171,7 +171,7 @@ class QuestionContainerEntityWidget extends StatelessWidget {
           if(question.content != null)
             Padding(
               padding: const EdgeInsets.all(margin),
-              child: ConstrainedBox(
+              child: Container(
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height * 1 / 5
                 ),

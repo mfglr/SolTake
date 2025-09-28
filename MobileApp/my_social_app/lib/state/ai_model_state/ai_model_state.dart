@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
-import 'package:multimedia/models/multimedia.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 
 @immutable
 class AIModelState extends Entity<int>{
   final String name;
   final int solPerInputToken;
   final int solPerOutputToken;
-  final Multimedia image;
+  final Media image;
 
   AIModelState({
     required super.id,
