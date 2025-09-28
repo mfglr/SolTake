@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/views/solution/pages/display_question_video_solutions_page.dart';
+import 'package:my_social_app/views/solution/pages/display_question_video_solutions_page/display_question_video_solutions_page.dart';
 
 class DisplayVideoSolutionsButton extends StatelessWidget {
   final QuestionState question;

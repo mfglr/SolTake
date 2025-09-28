@@ -96,7 +96,9 @@ class _SelectDirectoryPageState extends State<SelectDirectoryPage> {
               Expanded(
                 child: Center(
                   child: MediaSlider(
-                    medias: _medias,activeIndex: activeIndex,
+                    medias: _medias,
+                    activeIndex: activeIndex,
+                    blobService: "",
                   ),
                 )
               ),

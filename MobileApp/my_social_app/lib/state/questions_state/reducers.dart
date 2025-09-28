@@ -41,6 +41,8 @@ QuestionsState dislikeQuestionSuccessReducer(QuestionsState prev, DislikeQuestio
 //solutions
 QuestionsState uploadSolutionReducer(QuestionsState prev, UploadSolutionAction action) =>
   prev.createSolution(action.solution);
+QuestionsState markSolutionAsCorrectReducer(QuestionsState prev, MarkSolutionAsCorrectAction action) =>
+  prev.markSolutionAsCorrect(action.solution);
 QuestionsState deleteSolutionSuccessReducer(QuestionsState prev, DeleteSolutionSuccessAction action) =>
   prev.deleteSolution(action.solution);
 //solutions
@@ -213,6 +215,7 @@ Reducer<QuestionsState> newQuestionsReducer = combineReducers<QuestionsState>([
 
   //solutions
   TypedReducer<QuestionsState, UploadSolutionAction>(uploadSolutionReducer).call,
+  TypedReducer<QuestionsState, MarkSolutionAsCorrectAction>(markSolutionAsCorrectReducer).call,
   TypedReducer<QuestionsState, DeleteSolutionSuccessAction>(deleteSolutionSuccessReducer).call,
   //solutions
 

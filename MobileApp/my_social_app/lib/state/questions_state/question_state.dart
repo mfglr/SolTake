@@ -185,8 +185,6 @@ class QuestionState extends Entity<int>{
     );
   QuestionState markSolutionAsCorrect(SolutionState solution) =>
     _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions + 1);
-  QuestionState markSolutionAsIncorrect(SolutionState solution) =>
-    _optional(newNumberOfCorrectSolutions: numberOfCorrectSolutions - 1);
   //solutions
 
   QuestionState like() =>

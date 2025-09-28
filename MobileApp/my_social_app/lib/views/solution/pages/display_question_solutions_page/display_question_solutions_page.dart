@@ -44,7 +44,15 @@ class DisplayQuestionSolutionsPage extends StatelessWidget {
         ),
         converter: (store) => selectQuestionSolutions(store, questionId),
         builder:(context, pagination) => SolutionContainerPaginationWidget(
-          noItemsWidget: const NoQuestionSolutions(),
+          noItemsWidget: Container(
+            margin: const EdgeInsets.only(top: 50),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                NoQuestionSolutions(),
+              ],
+            ),
+          ),
           pagination: pagination,
           containerKey: containerKey,
           onScrollBottom: (){

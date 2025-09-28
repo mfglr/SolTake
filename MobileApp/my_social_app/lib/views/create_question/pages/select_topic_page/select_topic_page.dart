@@ -6,6 +6,7 @@ import 'package:my_social_app/custom_packages/entity_state/entity_container.dart
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/custom_packages/media/pages/select_directory_page/select_directory_page.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/client_id_generator.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/state/exams_state/exam_state.dart';
@@ -157,7 +158,8 @@ class _SelectTopicPageState extends State<SelectTopicPage> {
                   margin: const EdgeInsets.only(bottom: 8),
                   width: MediaQuery.of(context).size.width * 3 / 5,
                   child: MediaSlider(
-                    medias: _medias
+                    medias: _medias,
+                    blobService: AppClient.blobService,
                   ),
                 ),
               OutlinedButton(

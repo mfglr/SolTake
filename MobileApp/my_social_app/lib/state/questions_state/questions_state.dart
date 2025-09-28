@@ -139,6 +139,13 @@ class QuestionsState {
         questions[solution.questionId].entity?.createSolution(solution)
       )
     );
+  QuestionsState markSolutionAsCorrect(SolutionState solution) =>
+    _optional(
+      newQuestions: questions.update(
+        solution.questionId,
+        questions[solution.questionId].entity?.markSolutionAsCorrect(solution)
+      )
+    );
   QuestionsState deleteSolution(SolutionState solution) =>
     _optional(
       newQuestions: questions.update(

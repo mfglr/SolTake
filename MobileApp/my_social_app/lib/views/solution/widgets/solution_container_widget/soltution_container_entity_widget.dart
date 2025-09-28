@@ -3,6 +3,7 @@ import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/latex_sperator/latex.dart';
 import 'package:my_social_app/services/latex_sperator/latex_sperator.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
@@ -155,6 +156,7 @@ class SoltutionContainerEntityWidget extends StatelessWidget {
               child: Center(
                 child: MediaSlider(
                   medias: solution.medias,
+                  blobService: AppClient.blobService,
                 ),
               ),
             ),

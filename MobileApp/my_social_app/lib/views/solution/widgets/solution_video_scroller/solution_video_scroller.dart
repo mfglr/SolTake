@@ -3,29 +3,30 @@ import 'package:my_social_app/custom_packages/entity_state/entity_container.dart
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
 import 'package:my_social_app/helpers/string_helpers.dart';
 import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/state/questions_state/question_state.dart';
-import 'package:my_social_app/views/question/widgets/question_video_scroller/comment_question_button.dart';
-import 'package:my_social_app/views/question/widgets/question_video_scroller/like_question_button.dart';
-import 'package:my_social_app/views/question/widgets/question_video_scroller/question_status_widget.dart';
-import 'package:my_social_app/views/question/widgets/question_video_scroller/solve_question_button.dart';
+import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/views/shared/app_avatar/widgets/user_image_widget.dart';
 import 'package:my_social_app/views/shared/extendable_content/extendable_content.dart';
+import 'package:my_social_app/views/solution/widgets/solution_video_scroller/comment_solution_button/comment_solution_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_video_scroller/downvote_solution_button/downvote_solution_button.dart';
+import 'package:my_social_app/views/solution/widgets/solution_video_scroller/solution_status_widget/solution_status_widget.dart';
+import 'package:my_social_app/views/solution/widgets/solution_video_scroller/upvote_solution_button/upvote_solution_button.dart';
 import 'package:my_social_app/views/user/pages/user_page/pages/user_page_by_id.dart';
 
-class QuestionVideoScroller extends StatefulWidget {
-  final Iterable<EntityContainer<int, QuestionState>> containers;
+class SolutionVideoScroller extends StatefulWidget {
+  final Iterable<EntityContainer<int, SolutionState>> containers;
   final void Function() onNext;
-  const QuestionVideoScroller({
+
+  const SolutionVideoScroller({
     super.key,
     required this.containers,
     required this.onNext
   });
 
   @override
-  State<QuestionVideoScroller> createState() => _QuestionVideoScrollerState();
+  State<SolutionVideoScroller> createState() => _SolutionVideoScrollerState();
 }
 
-class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
+class _SolutionVideoScrollerState extends State<SolutionVideoScroller> {
   final PageController _controller = PageController();
 
   void _onNext(){
@@ -60,14 +61,14 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
       itemCount: widget.containers.length,
       itemBuilder: (context, index){
         var container = widget.containers.elementAt(index);
-        var question = container.entity!; 
+        var solution = container.entity!; 
         return Stack(
           alignment: AlignmentDirectional.center,
           children: [
             MediaSlider(
-              medias: question.medias,
+              medias: solution.medias,
               blobService: AppClient.blobService,
-              activeIndex: question.findFirstVideoIndex,
+              activeIndex: solution.findFirstVideoIndex,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -75,26 +76,28 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  QuestionStatusWidget(
+                  SolutionStatusWidget(
                     container: container,
-                    size: 32,
+                    size: 36,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Expanded(
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: solution.content != null
+                            ? CrossAxisAlignment.start
+                            : CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                              onPressed: () => _goToUserPage(question.userId),
+                              onPressed: () => _goToUserPage(solution.userId),
                               style: ButtonStyle(
                                 padding: WidgetStateProperty.all(EdgeInsets.zero),
                                 minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               icon: UserImageWidget(
-                                image: question.image,
+                                image: solution.image,
                                 diameter: 60
                               ),
                             ),
@@ -103,27 +106,27 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextButton(
-                                    onPressed: () => _goToUserPage(question.userId),
+                                    onPressed: () => _goToUserPage(solution.userId),
                                     style: ButtonStyle(
                                       padding: WidgetStateProperty.all(EdgeInsets.zero),
                                       minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                     ),
                                     child: Text(
-                                      compressText(question.userName, 15),
+                                      compressText(solution.userName, 15),
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12
                                       ),
                                     ),
                                   ),
-                                  if(question.content != null)
+                                  if(solution.content != null)
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
                                         maxHeight: MediaQuery.of(context).size.height * 1 / 5
                                       ),
                                       child: ExtendableContent(
-                                        content: question.content!,
+                                        content: solution.content!,
                                         numberOfExtention: 30,
                                         textStyle: const TextStyle(
                                           color: Colors.black,
@@ -145,7 +148,7 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
                               color: Colors.black.withAlpha(128),
                               shape: BoxShape.circle
                             ),
-                            child: LikeQuestionButton(
+                            child: UpvoteSolutionButton(
                               container: container,
                               color: Colors.white,
                               size: 18,
@@ -157,7 +160,7 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
                               color: Colors.black.withAlpha(128),
                               shape: BoxShape.circle
                             ),
-                            child: CommentQuestionButton(
+                            child: DownvoteSolutionButton(
                               container: container,
                               color: Colors.white,
                               size: 18,
@@ -168,7 +171,7 @@ class _QuestionVideoScrollerState extends State<QuestionVideoScroller> {
                               color: Colors.black.withAlpha(128),
                               shape: BoxShape.circle
                             ),
-                            child: SolveQuestionButton(
+                            child: CommentSolutionButton(
                               container: container,
                               color: Colors.white,
                               size: 18,

@@ -3,6 +3,7 @@ import 'package:my_social_app/constants/solution.dart';
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/custom_packages/media/pages/select_directory_page/select_directory_page.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution/create_solution_page_consts.dart';
 import 'package:my_social_app/views/create_solution/create_solution_button.dart';
@@ -70,7 +71,8 @@ class _CreateSolutionPageState extends State<CreateSolutionPage> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 1.25,
                       child: MediaSlider(
-                        medias: _medias
+                        medias: _medias,
+                        blobService: AppClient.blobService,
                       ),
                     ),
                   ],

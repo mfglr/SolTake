@@ -32,6 +32,15 @@ class SolutionState extends Entity<int> implements Avatar{
   @override
   Media? get avatar => image;
 
+  int get findFirstVideoIndex {
+    for(var i = 0; i < medias.length; i++){
+      if(medias.elementAt(i).type == MultimediaType.video){
+        return i;
+      }
+    }
+    return -1;
+  }
+
   SolutionState({
     required super.id,
     required this.createdAt,

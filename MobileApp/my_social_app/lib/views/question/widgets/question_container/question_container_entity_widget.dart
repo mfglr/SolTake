@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
+import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/state/questions_state/question_publishing_state.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
@@ -119,7 +120,8 @@ class QuestionContainerEntityWidget extends StatelessWidget {
                   ),
                   child: Center(
                     child: MediaSlider(
-                      medias: question.medias
+                      medias: question.medias,
+                      blobService: AppClient.blobService,
                     )
                   )
                 )
