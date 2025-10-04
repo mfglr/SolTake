@@ -24,8 +24,8 @@ import 'package:my_social_app/views/create_question/pages/select_topic_page/widg
 import 'package:my_social_app/views/create_question/widgets/create_question_button/create_question_button.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/topics_state/topic_state.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'select_topic_page_texts.dart';
 

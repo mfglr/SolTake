@@ -1,9 +1,12 @@
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
+import 'package:my_social_app/state/ai_model_state/ai_model_state.dart';
 import 'package:my_social_app/state/avatar.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_status.dart';
+import 'package:my_social_app/state/users_state/user_state.dart';
 
 class SolutionState extends Entity<int> implements Avatar{
   final DateTime createdAt;
@@ -98,6 +101,45 @@ class SolutionState extends Entity<int> implements Avatar{
       aiModelName: null,
       aiImage: null
     ); 
+
+  factory SolutionState.createByAi({
+    required int id,
+    required UserState user,
+    required QuestionState question,
+    required AIModelState aiModel,
+    required String content,
+  }) =>
+    SolutionState(
+      id: id,
+      createdAt: DateTime.now(),
+      updatedAt: null,
+      questionId: question.id,
+      userId: user.id,
+      isOwner: true,
+      isSaved: false,
+      userName: user.userName,
+      content: content,
+      isUpvoted: false,
+      numberOfUpvotes: 0,
+      isDownvoted: false,
+      numberOfDownvotes: 0,
+      medias: [],
+      numberOfComments: 0,
+      state: SolutionStatus.pending,
+      doesBelongToQuestionOfCurrentUser: question.isOwner,
+      image: user.image,
+      isCreatedByAI: true,
+      aiModelName: aiModel.name,
+      aiImage: aiModel.image
+    );
+  SolutionState createByAiSuccess({
+    required int id,
+    required String content
+  }) => 
+    _optional(
+      newId: id,
+      newContent: content
+    );
 
   String formatUserName(int count)
     => userName.length <= count ? userName : "${userName.substring(0,10)}...";

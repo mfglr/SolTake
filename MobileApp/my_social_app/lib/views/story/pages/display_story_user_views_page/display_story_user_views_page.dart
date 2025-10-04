@@ -6,8 +6,8 @@ import 'package:my_social_app/state/story_state/actions.dart';
 import 'package:my_social_app/state/story_state/selectors.dart';
 import 'package:my_social_app/state/story_state/story_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/views/story/pages/display_story_user_views_page/widgets/story_user_view_items.dart';
 

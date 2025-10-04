@@ -4,7 +4,7 @@ import 'package:media_info/media_info.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FrameCatcher {
+class LocalFrameCatcher {
   static final MediaInfo _mediaInfo = MediaInfo();
 
   static String pathToName(String path,int positionMs) =>

@@ -9,8 +9,8 @@ import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/views/comment/modals/display_question_comments_modal.dart';
 import 'package:my_social_app/views/question/widgets/question_container/question_container_widget.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
 const _title = {

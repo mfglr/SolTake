@@ -7,7 +7,7 @@ import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution/create_solution_page_consts.dart';
 import 'package:my_social_app/views/create_solution/create_solution_button.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
 
 class CreateSolutionPage extends StatefulWidget {
   const CreateSolutionPage({

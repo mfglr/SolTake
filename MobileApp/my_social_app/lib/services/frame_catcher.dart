@@ -9,6 +9,6 @@ class FrameCatcherService{
   static final FrameCatcherService _singleton = FrameCatcherService._(AppClient());
   factory FrameCatcherService() => _singleton;
 
-  Future<Uint8List> catchFrame(String containerName, String blobName, double position) =>
-    _appClient.getBytes("$frameCatcherController/$containerName/$blobName/$position");
+  Future<Uint8List> catchFrame(String containerName, String blobName, int positionMs) =>
+    _appClient.getBytes("$frameCatcherController/$containerName/$blobName/$positionMs");
 }

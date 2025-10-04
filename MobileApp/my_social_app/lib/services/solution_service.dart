@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:my_social_app/constants/controllers.dart';
@@ -36,18 +38,25 @@ class SolutionService{
     return IdResponse.fromJson(jsonDecode(data));
   }
 
-  Future<Solution> createByAI(int modelId, int questionId,String? blobName,double? duration,String? prompt,bool isHighResulation)
+
+  MultipartRequest _createAISolutionRequest(int modelId, int questionId, Uint8List? bytes, String? prompt) {
+    MultipartRequest multiPartRequest = MultipartRequest(
+      "POST",
+      _appClient.generateUri("$solutionController/CreateByAI")
+    );
+    multiPartRequest.fields["questionId"] = questionId.toString();
+    if(prompt != null) multiPartRequest.fields["prompt"] = prompt;
+    if(bytes != null){
+      var file = MultipartFile.fromBytes("file", bytes, contentType: MediaType.parse("image"));
+      multiPartRequest.files.add(file);
+    }
+    return multiPartRequest;
+  }
+  Future<Solution> createByAI(int modelId, int questionId, Uint8List? bytes, String? prompt, void Function(double) callback)
     => _appClient
-        .post(
-          "$solutionController/$createSolutionByAiEndpoint",
-          body: {
-            'modelId': modelId,
-            'questionId': questionId,
-            'blobName': blobName,
-            'duration': duration,
-            'prompt': prompt,
-            'isHighResulation': isHighResulation
-          }
+        .postStream(
+          _createAISolutionRequest(modelId,questionId, bytes, prompt),
+          callback
         )
         .then((json) => Solution.fromJson(json));
 

@@ -89,7 +89,8 @@ void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher ne
   if(action is CreateSolutionByAIAction){
     ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
     SolutionService()
-      .createByAI(action.modelId,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
+      .createByAI(
+        action.solution.,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
       .then((solution){
         // store.dispatch(UploadSolutionSuccessAction(solution: solution.toSolutionState()));
         ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'create_topic_page_constants.dart';
 

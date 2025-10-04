@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/state/users_state/action.dart';
 import 'package:my_social_app/state/users_state/user_state.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'edit_name_page_texts.dart';
 

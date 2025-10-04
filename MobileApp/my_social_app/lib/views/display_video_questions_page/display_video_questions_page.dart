@@ -8,7 +8,7 @@ import 'package:my_social_app/state/questions_state/selectors.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/question/widgets/question_video_scroller/question_video_scroller.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/space_saving_widget.dart';
 import 'display_video_questions_page_constants.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
-import 'package:my_social_app/custom_packages/media/services/frame_catcher.dart';
+import 'package:my_social_app/custom_packages/media/services/local_frame_catcher.dart';
 import 'package:my_social_app/custom_packages/status_widgets/failed_widget.dart';
 import 'package:my_social_app/custom_packages/status_widgets/loading_widget.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
@@ -24,7 +24,7 @@ class _LocalVideoFrameWidgetState extends State<LocalVideoFrameWidget> {
 
   @override
   void initState() {
-    _bytes = FrameCatcher.catchFrame(widget.media);
+    _bytes = LocalFrameCatcher.catchFrame(widget.media);
     super.initState();
   }
 

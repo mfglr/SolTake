@@ -7,7 +7,7 @@ import 'package:my_social_app/state/notifications_state.dart/notification_state.
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/notification/widgets/no_notifications.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
 import 'package:my_social_app/views/notification/widgets/notification_items.dart';
 import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 

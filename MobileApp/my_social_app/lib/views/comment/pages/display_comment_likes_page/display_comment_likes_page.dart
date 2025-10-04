@@ -9,8 +9,8 @@ import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.da
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/comment/pages/display_comment_likes_page/widgets/no_comment_user_likes_widget.dart';
 import 'package:my_social_app/views/comment/pages/display_comment_likes_page/widgets/comment_user_likes_widget.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'display_comment_likes_page_texts.dart';

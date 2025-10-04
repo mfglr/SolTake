@@ -4,16 +4,18 @@ import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/video_duration_bar.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/volume_button.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:video_player/video_player.dart';
 
 class LocalVideoWidget extends StatefulWidget {
   final LocalVideo media;
   final bool autoPlay;
-
+  final BehaviorSubject<int>? positionSubject;
   const LocalVideoWidget({
     super.key,
     required this.media,
     required this.autoPlay,
+    this.positionSubject
   });
 
   @override
@@ -53,6 +55,12 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
       .then((_) => setState(() {}));
   }
 
+  void _onPositionChange(){
+    if(widget.positionSubject != null){
+      widget.positionSubject!.add(_controller.value.position.inMilliseconds);
+    }
+  }
+
   @override
   void initState() {
     _controller =
@@ -69,6 +77,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
         );
     _controller.addListener(_updateBuffer);
     _controller.addListener(_updateRate);
+    _controller.addListener(_onPositionChange);
     
     super.initState();
   }
@@ -77,6 +86,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
   void dispose() {
     _controller.removeListener(_updateBuffer);
     _controller.removeListener(_updateRate);
+    _controller.removeListener(_onPositionChange);
     _controller.dispose();
     super.dispose();
   }

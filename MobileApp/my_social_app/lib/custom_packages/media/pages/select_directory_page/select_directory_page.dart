@@ -10,8 +10,8 @@ import 'package:my_social_app/custom_packages/media/services/media_reader.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_slider/media_slider.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/message/pages/create_message_medias_page/constants.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class SelectDirectoryPage extends StatefulWidget {

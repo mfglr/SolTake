@@ -7,7 +7,7 @@ import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.da
 import 'package:my_social_app/state/solutions_state/selectors.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/state.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
 import 'package:my_social_app/views/solution/widgets/no_pending_solutions_widget/no_pending_solutions_widget.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_pagination_widget.dart';
 import 'display_question_pending_solutions_page_constants.dart';

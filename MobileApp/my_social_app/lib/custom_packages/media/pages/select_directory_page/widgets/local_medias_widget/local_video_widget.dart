@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:my_social_app/custom_packages/media/pages/select_directory_page/widgets/local_medias_widget/local_video_loading_widget.dart';
 import 'package:my_social_app/custom_packages/media/pages/select_directory_page/widgets/local_medias_widget/play_icon.dart';
-import 'package:my_social_app/custom_packages/media/services/frame_catcher.dart';
+import 'package:my_social_app/custom_packages/media/services/local_frame_catcher.dart';
 
 class LocalVideoWidget extends StatefulWidget {
   final LocalVideo media;
@@ -23,7 +23,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
 
   @override
   void initState() {
-    _bytes = FrameCatcher.catchFrame(widget.media);
+    _bytes = LocalFrameCatcher.catchFrame(widget.media);
     super.initState();
   }
 

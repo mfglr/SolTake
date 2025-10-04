@@ -7,8 +7,8 @@ import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/disp
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/display_requests_menu_item/display_requests_menu_item.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/display_saved_question_menu_item/display_saved_questions_menu_item.dart';
 import 'package:my_social_app/views/profile/pages/profile_menu_page/widgets/logout_menu_item/logout_menu_item.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 
 class ProfileMenuPage extends StatelessWidget {

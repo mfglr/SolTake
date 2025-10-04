@@ -14,7 +14,7 @@ import 'package:my_social_app/views/message/pages/create_conversation_page/creat
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/cancel_deletion_of_conversations_button.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/conversation_items.dart';
 import 'package:my_social_app/views/message/pages/message_home_page/widgets/delete_conversations_button.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 
 class MessageHomePage extends StatefulWidget {
   

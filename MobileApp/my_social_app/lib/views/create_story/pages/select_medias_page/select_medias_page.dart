@@ -6,8 +6,8 @@ import 'package:my_social_app/views/create_story/pages/select_medias_page/select
 import 'package:my_social_app/views/create_story/pages/select_medias_page/widgets/asset_grid_widget.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/widgets/go_further_button/go_further_button.dart';
 import 'package:my_social_app/views/create_story/pages/select_medias_page/widgets/selected_assets_widget.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
 import 'package:photo_manager/photo_manager.dart';

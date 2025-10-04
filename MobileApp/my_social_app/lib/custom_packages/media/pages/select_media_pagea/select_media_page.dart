@@ -7,8 +7,8 @@ import 'package:my_social_app/custom_packages/media/pages/select_media_pagea/wid
 import 'package:my_social_app/custom_packages/media/services/dimention_calculator.dart';
 import 'package:my_social_app/custom_packages/scroll_controller_extentions/scroll_controller_extentions.dart';
 import 'package:my_social_app/services/get_language.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class SelectMediaPage extends StatefulWidget {

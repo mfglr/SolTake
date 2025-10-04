@@ -1,21 +1,23 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/custom_packages/media/models/remote_video.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/play_button.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/video_duration_bar.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/volume_button.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:video_player/video_player.dart';
 
 class RemoteVideoWidget extends StatefulWidget {
   final String blobService;
   final RemoteVideo media;
   final bool autoPlay;
-  
+  final BehaviorSubject<int>? positionSubject;
+
   const RemoteVideoWidget({
     super.key,
     required this.media,
     required this.blobService,
     required this.autoPlay,
+    this.positionSubject
   });
 
   @override
@@ -56,6 +58,12 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
       .then((_) => setState(() {}));
   }
 
+  void _onPositionChange(){
+    if(widget.positionSubject != null){
+      widget.positionSubject!.add(_controller.value.position.inMilliseconds);
+    }
+  }
+
   @override
   void initState() {
     final url = "${widget.blobService}/${widget.media.containerName}/${widget.media.blobName}";
@@ -72,6 +80,7 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
         );
     _controller.addListener(_updateBuffer);
     _controller.addListener(_updateRate);
+    _controller.addListener(_onPositionChange);
     
     super.initState();
   }
@@ -80,6 +89,7 @@ class _RemoteVideoWidgetState extends State<RemoteVideoWidget> {
   void dispose() {
     _controller.removeListener(_updateBuffer);
     _controller.removeListener(_updateRate);
+    _controller.removeListener(_onPositionChange);
     _controller.dispose();
     super.dispose();
   }

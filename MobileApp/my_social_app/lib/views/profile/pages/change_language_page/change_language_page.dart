@@ -4,8 +4,8 @@ import 'package:my_social_app/state/login_state/login_state.dart';
 import 'package:my_social_app/models/languages.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/profile/pages/change_language_page/widgets/language_item.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 
 const contents = [ "Türkçe 🇹🇷", "English 🇺🇸" ];
 const languages = [ Languages.tr, Languages.en ];

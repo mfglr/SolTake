@@ -10,7 +10,7 @@ import 'package:my_social_app/views/display_abstracts_user_questions_page/displa
 import 'package:my_social_app/views/profile/pages/profile_page/profile_page_texts.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_info_card_widget.dart';
 import 'package:my_social_app/views/profile/pages/profile_page/widgets/profile_menu_button.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
 import 'package:my_social_app/views/shared/language_widget.dart';
 

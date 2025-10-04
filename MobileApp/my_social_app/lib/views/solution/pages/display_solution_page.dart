@@ -7,8 +7,8 @@ import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
 import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'package:my_social_app/views/solution/widgets/solution_container_widget/solution_container_widget.dart';
 
 class DisplaySolutionPage extends StatefulWidget {

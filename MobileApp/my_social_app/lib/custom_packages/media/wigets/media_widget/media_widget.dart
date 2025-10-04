@@ -8,19 +8,22 @@ import 'package:my_social_app/custom_packages/media/wigets/shared/local_image_wi
 import 'package:my_social_app/custom_packages/media/wigets/shared/local_video_widget.dart';
 import 'package:my_social_app/custom_packages/media/wigets/shared/remote_image_widget.dart' show RemoteImageWidget;
 import 'package:my_social_app/custom_packages/media/wigets/shared/remote_video_widget.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MediaWidget extends StatelessWidget {
   final Media media;
   final String blobService;
   final Widget? child;
   final bool autoPlay;
+  final BehaviorSubject<int>? positionSubject;
 
   const MediaWidget({
     super.key,
     required this.media,
     required this.blobService,
     this.child,
-    this.autoPlay = false
+    this.autoPlay = false,
+    this.positionSubject
   });
 
   @override
@@ -41,6 +44,7 @@ class MediaWidget extends StatelessWidget {
                 else if(media is LocalVideo){
                   return LocalVideoWidget(
                     media: media as LocalVideo,
+                    positionSubject: positionSubject,
                     autoPlay: autoPlay,
                   );
                 }
@@ -54,6 +58,7 @@ class MediaWidget extends StatelessWidget {
                   return RemoteVideoWidget(
                     blobService: blobService,
                     media: media as RemoteVideo,
+                    positionSubject: positionSubject,
                     autoPlay: autoPlay,
                   );
                 }

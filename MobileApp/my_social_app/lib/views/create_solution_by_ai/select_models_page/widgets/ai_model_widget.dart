@@ -28,11 +28,9 @@ class AiModelWidget extends StatelessWidget {
                 Navigator
                   .of(context)
                   .pop((
-                    modelId: aiModel.id,
-                    blobName: value.blobName,
-                    position: value.position,
+                    aiModel: aiModel,
                     prompt: value.prompt,
-                    isHighResulation: value.isHighResulation
+                    bytes: value.bytes
                   ));
               }
             });
@@ -41,9 +39,8 @@ class AiModelWidget extends StatelessWidget {
           Navigator
             .of(context)
             .pop((
-              model: aiModel.id,
-              blobName: null,
-              position: null,
+              aiModel: aiModel,
+              bytes: null,
               prompt: question.content
             ));
         }

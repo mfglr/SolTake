@@ -1,8 +1,11 @@
 ﻿using MediatR;
+using OpenAI.Chat;
+using SolTake.Application.Extentions;
 using SolTake.Application.InfrastructureServices;
 using SolTake.Application.InfrastructureServices.BlobService;
 using SolTake.Application.InfrastructureServices.IAService;
 using SolTake.Application.InfrastructureServices.IAService.Objects;
+using SolTake.Application.InfrastructureServices.OpenAIService;
 using SolTake.Core;
 using SolTake.Domain.AIModelAggregate.Abstracts;
 using SolTake.Domain.AIModelAggregate.Entities;
@@ -17,10 +20,11 @@ using SolTake.Domain.SolutionAggregate.Exceptions;
 using SolTake.Domain.SolutionAggregate.ValueObjects;
 using SolTake.Domain.TransactionAggregate.Abstracts;
 using SolTake.Domain.UserUserBlockAggregate.Abstracts;
+using System.ClientModel;
 
 namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSolutionByAI
 {
-    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher,IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
+    public class CreateSolutionByAIHandler(ChatGPT_Service chatGPTService, IQuestionReadRepository questionReadRepository, ISolutionWriteRepository solutionWriteRepository, IUnitOfWork unitOfWork, IFrameCatcher frameCatcher, IAccessTokenReader accessTokenReader, IImageToBase64Convertor imageToBase64Convertor, IBalanceRepository balanceRepository, IUserUserBlockRepository userUserBlockRepository, IPublisher publisher, ITransactionRepository transactionRepository, IAIModelCacheService aiModelCacheService, ChatClientProvider chatClientProvider) : IRequestHandler<CreateSolutionByAIDto, CreateSolutionByAIResponseDto>
     {
         private readonly ChatGPT_Service _chatGPTService = chatGPTService;
         private readonly IFrameCatcher _frameCatcher = frameCatcher;
@@ -34,6 +38,8 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
         private readonly IPublisher _publisher = publisher;
         private readonly ITransactionRepository _transactionRepository = transactionRepository;
         private readonly IAIModelCacheService _aiModelCacheService = aiModelCacheService;
+
+        private readonly ChatClientProvider _chatClientProvider = chatClientProvider;
 
         private async Task<ChatGBT_Response> GenerateAIResponse(AIModel model, CreateSolutionByAIDto request, Question question, CancellationToken cancellationToken)
         {
@@ -112,32 +118,57 @@ namespace SolTake.Application.Commands.SolutionDomain.SolutionAggregate.CreateSo
             return response;
         }
 
+
+        private IEnumerable<ChatMessage> GenerateChatMessagesAsync(CreateSolutionByAIDto request, CancellationToken cancellationToken)
+        {
+            var prompt = ChatMessageContentPart.CreateTextPart(request.Prompt);
+
+            if (request.File == null)
+                return [ new UserChatMessage([prompt]) ];
+
+            using var stream = request.File.OpenReadStream();
+            var bytes = stream.ToByteArrayAsync(cancellationToken: cancellationToken);
+            var binaryData = new BinaryData(bytes);
+
+            var vision = ChatMessageContentPart.CreateImagePart(binaryData, "jpeg", ChatImageDetailLevel.High);
+
+            return [ new UserChatMessage([prompt, vision ])];
+        }
+
         public async Task<CreateSolutionByAIResponseDto> Handle(CreateSolutionByAIDto request, CancellationToken cancellationToken)
         {
-            var login = _accessTokenReader.GetLogin();
+            //var login = _accessTokenReader.GetLogin();
 
-            var question =
-                await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
-                throw new QuestionNotFoundException();
+            //var question =
+            //    await _questionReadRepository.GetAsync(request.QuestionId, cancellationToken) ??
+            //    throw new QuestionNotFoundException();
 
-            if (await _userUserBlockRepository.ExistAsync(question.UserId, login.UserId, cancellationToken))
-                throw new QuestionNotFoundException();
+            //if (await _userUserBlockRepository.ExistAsync(question.UserId, login.UserId, cancellationToken))
+            //    throw new QuestionNotFoundException();
 
-            if (await _userUserBlockRepository.ExistAsync(login.UserId, question.UserId, cancellationToken))
-                throw new UserBlockedException();
+            //if (await _userUserBlockRepository.ExistAsync(login.UserId, question.UserId, cancellationToken))
+            //    throw new UserBlockedException();
 
-            //if (!await _balanceRepository.HasBalance(login.UserId, cancellationToken))
-            //    throw new InsufficientFundsException();
+            //var aiModel =
+            //    _aiModelCacheService.Get(request.ModelId) ??
+            //    throw new AIModelNotFoundException();
 
-            var aiModel =
-                _aiModelCacheService.Get(request.ModelId) ??
-                throw new AIModelNotFoundException();
+            //var response = await GenerateAIResponse(aiModel, request, question, cancellationToken);
 
-            var response = await GenerateAIResponse(aiModel, request, question, cancellationToken);
+
+
+
+
+            var client = _chatClientProvider.Get(request.Model);
+
+            var messages = GenerateChatMessagesAsync(request, cancellationToken);
+            ClientResult<ChatCompletion> result = await client.CompleteChatAsync(messages, cancellationToken: cancellationToken);
+
+            var content = result?.Value.Content.First().Text;
 
             //create solution
-            var content = new SolutionContent(response.Choices.First().Message.Content);
-            var solution = new Solution(request.QuestionId, login.UserId, content, aiModel.Id);
+            var solutionContent = new SolutionContent(content);
+            var solution = new Solution(request.QuestionId, login.UserId, solutionContent, aiModel.Id);
             solution.Create();
             await _solutionWriteRepository.CreateAsync(solution, cancellationToken);
 

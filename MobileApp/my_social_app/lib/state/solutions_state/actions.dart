@@ -67,20 +67,9 @@ class UploadSolutionFailedAction extends AppAction{
 
 @immutable
 class CreateSolutionByAIAction extends AppAction{
-  final int modelId;
-  final int questionId;
-  final String? blobName;
-  final double? position;
-  final String? prompt;
-  final bool isHighResulation;
-
+  final SolutionState solution;
   const CreateSolutionByAIAction({
-    required this.modelId,
-    required this.questionId,
-    required this.blobName,
-    required this.position,
-    required this.prompt,
-    required this.isHighResulation
+    required this.solution
   });
 }
 

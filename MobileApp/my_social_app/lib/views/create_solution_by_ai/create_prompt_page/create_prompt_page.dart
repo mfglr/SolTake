@@ -1,28 +1,16 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:multimedia_slider/widgets/multimedia_image_player.dart';
-import 'package:my_social_app/constants/assets.dart';
-import 'package:my_social_app/custom_packages/media/models/media.dart';
-import 'package:my_social_app/custom_packages/media/models/multimedia_type.dart';
-import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
-import 'package:my_social_app/services/app_client.dart';
-import 'package:my_social_app/services/frame_catcher.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/create_prompt_page_texts.dart';
 import 'package:my_social_app/views/create_solution_by_ai/create_prompt_page/widgets/create_solution_button/create_solution_button.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
-import 'package:my_social_app/views/shared/language_widget.dart';
-import 'package:my_social_app/custom_packages/status_widgets/loading_circle_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 
 class CreatePromptPage extends StatefulWidget {
-  final double position;
-  final Media media;
-
+  final Uint8List bytes;
   const CreatePromptPage({
     super.key,
-    required this.position,
-    required this.media
+    required this.bytes
   });
 
   @override
@@ -30,26 +18,19 @@ class CreatePromptPage extends StatefulWidget {
 }
 
 class _CreatePromptPageState extends State<CreatePromptPage> {
-  late final Future<Uint8List> _frame;
-  bool _isHighResulation = true;
-  late String _prompt;
+  String _prompt = "";
   final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = defaultPrompt[getLanguage(context)]!;
+    super.initState();
+  }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    _controller.text = _prompt = defaultPrompt[getLanguage(context)]!;
-    // if(widget.media.type == MultimediaType.video){
-    //   _frame = FrameCatcherService()
-    //     .catchFrame(widget.media.containerName, widget.media.blobName, widget.position);
-    // }
-
-    super.initState();  
   }
 
   @override
@@ -61,73 +42,17 @@ class _CreatePromptPageState extends State<CreatePromptPage> {
         actions: [
           CreateSolutionButton(
             prompt: _prompt,
-            isHighResulation: _isHighResulation
           )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            Image.memory(
+              widget.bytes,
+              fit: BoxFit.contain,
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              child: Builder(builder: (context){
-                if(widget.media.type == MultimediaType.image){
-                  return MediaWidget(
-                    media: widget.media,
-                    blobService: AppClient.blobService,
-                  );
-                } 
-                return FutureBuilder(
-                  future: _frame,
-                  builder: (context,state){
-                    if(state.connectionState == ConnectionState.done){
-                      return Image.memory(
-                        state.data!,
-                        fit: BoxFit.contain,
-                      );
-                    }
-                    return const LoadingCircleWidget();
-                  }
-                );
-              })
-                
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LanguageWidget(
-                      child: (language) => TextButton(
-                        onPressed: () => setState(() => _isHighResulation = !_isHighResulation),
-                        child: Text(
-                          highResulation[language]!,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20
-                          ),
-                        ),
-                      ),
-                    ),
-                    Checkbox(
-                      value: _isHighResulation,
-                      onChanged: (_) => setState(() => _isHighResulation = !_isHighResulation),
-                    ),
-                  ],
-                ),
-                // Container(
-                //   margin: const EdgeInsets.all(5),
-                //   child: LanguageWidget(
-                //     child: (language) => Text(
-                //       resulationExplation[language]!,
-                //       textAlign: TextAlign.center,
-                //     )
-                //   ),
-                // )
-              ],
             ),
             Container(
               margin: const EdgeInsets.all(8),

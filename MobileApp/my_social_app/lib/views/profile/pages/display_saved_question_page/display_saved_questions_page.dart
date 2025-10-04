@@ -7,8 +7,8 @@ import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.da
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/custom_packages/entity_state/pagination.dart';
 import 'package:my_social_app/views/question/widgets/question_user_save_items_widget/question_user_save_items_widget.dart';
-import 'package:my_social_app/views/shared/app_back_button_widget.dart';
-import 'package:my_social_app/views/shared/app_title.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
 import 'display_saved_questions_page_constants.dart';
 
 class DisplaySavedQuestionsPage extends StatelessWidget {
