@@ -57,44 +57,19 @@ void uploadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
   }
   next(action);
 }
-void reuploadSolutionMiddleware(Store<AppState> store,action,NextDispatcher next){
-  if(action is ReuploadSolutionAction){
-    SolutionService()
-      .create(
-        action.solution.questionId,
-        action.solution.content,
-        action.solution.medias as Iterable<LocalMedia>,
-        (rate){
-          store.dispatch(ChangeSolutionRateAction(rate: rate, solution: action.solution));
-          if(rate == 1){
-            store.dispatch(MarkSolutionAsProcessingAction(solution: action.solution));
-          }
-        }
-      )
-      .then((response){
-        store.dispatch(UploadSolutionSuccessAction(
-          solution: action.solution,
-          serverId: response.id
-        ));
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
-      })
-      .catchError((e){
-        store.dispatch(UploadSolutionFailedAction(solution: action.solution));
-        throw e;
-      });
-  }
-  next(action);
-}
 void createSolutionByAiMiddleware(Store<AppState> store,action,NextDispatcher next){
   if(action is CreateSolutionByAIAction){
-    ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
-    SolutionService()
-      .createByAI(
-        action.solution.,action.questionId,action.blobName,action.position,action.prompt,action.isHighResulation)
-      .then((solution){
-        // store.dispatch(UploadSolutionSuccessAction(solution: solution.toSolutionState()));
-        ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
-      });
+    // ToastCreator.displaySuccess(solutionCreationStartedNotification[getLanguageByStore(store)]!);
+    // SolutionService()
+    //   .createByAI(
+    //     action.solution.aiModelId!,
+    //     action.solution.questionId,
+        
+    //     ,action.isHighResulation)
+    //   .then((solution){
+    //     // store.dispatch(UploadSolutionSuccessAction(solution: solution.toSolutionState()));
+    //     ToastCreator.displaySuccess(solutionCreatedNotificationContent[getLanguageByStore(store)]!);
+    //   });
   }
   next(action);
 }

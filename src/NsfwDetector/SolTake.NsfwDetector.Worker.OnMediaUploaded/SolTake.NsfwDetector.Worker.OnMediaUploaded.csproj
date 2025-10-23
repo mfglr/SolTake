@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SolTake.NsfwDetector.Worker.OnMediaUploaded-10c0b739-0396-4e2e-8786-331458366e41</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.5.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.NsfwDetector.Application\SolTake.NsfwDetector.Application.csproj" />
+    <ProjectReference Include="..\SolTake.NsfwDetector.Infrastructure\SolTake.NsfwDetector.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

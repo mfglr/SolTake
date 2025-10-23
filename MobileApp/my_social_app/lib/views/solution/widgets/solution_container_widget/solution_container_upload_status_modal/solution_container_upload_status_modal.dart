@@ -40,7 +40,7 @@ class SolutionContainerUploadStatusModal extends StatelessWidget {
                 if(container.status == EntityStatus.uploadFailed){
                   final store = StoreProvider.of<AppState>(context,listen: false);
                   final solution = selectSolution(store, solutionId).entity!;
-                  store.dispatch(ReuploadSolutionAction(solution: solution));
+                  store.dispatch(UploadSolutionAction(solution: solution));
                 }
               },
               child: Text(

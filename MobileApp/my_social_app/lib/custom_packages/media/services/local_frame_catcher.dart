@@ -13,7 +13,7 @@ class LocalFrameCatcher {
   static Future<Uint8List> catchFrame(LocalVideo video, {int positionMs = 0}) async {
     var tempPath = await getTemporaryDirectory();
     
-    var dir = Directory("`${tempPath.path}/thumbnails");
+    var dir = Directory("${tempPath.path}/thumbnails");
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
@@ -25,6 +25,7 @@ class LocalFrameCatcher {
         .generateThumbnail(
           video.file.path,
           target,
+          positionMs: positionMs,
           video.dimention.width.toInt(),
           video.dimention.height.toInt()
         );

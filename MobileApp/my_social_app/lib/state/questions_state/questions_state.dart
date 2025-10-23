@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_social_app/constants/record_per_page.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/solutions_state/solution_state.dart';
 import 'package:my_social_app/custom_packages/entity_state/container_pagination.dart';
@@ -99,9 +100,9 @@ class QuestionsState {
     _optional(newQuestions: questions.changeRate(questionId, rate));
   QuestionsState processing(int questionId) =>
     _optional(newQuestions: questions.processing(questionId));
-  QuestionsState uploadSuccess(QuestionState question, int serverId) =>
+  QuestionsState uploadSuccess(QuestionState question, int serverId, Iterable<Media> medias) =>
     _optional(
-      newQuestions: questions.loadSuccess(serverId, question.changeId(serverId)).remove(question.id),
+      newQuestions: questions.loadSuccess(serverId, question.uploadSuccess(serverId, medias)).remove(question.id),
       newUserQuestions: userQuestions.setOne(
         question.userId,
         _selectUserQuestionKeyPagination(question.userId).addOne(serverId).removeOne(question.id),

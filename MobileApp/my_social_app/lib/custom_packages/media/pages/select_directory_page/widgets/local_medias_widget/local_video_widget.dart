@@ -30,7 +30,7 @@ class _LocalVideoWidgetState extends State<LocalVideoWidget> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) => FutureBuilder(
+      builder: (context, constraints) => FutureBuilder<Uint8List>(
         future: _bytes,
         builder: (context, snapShot) => switch(snapShot.connectionState) {
           ConnectionState.none => widget.loading,

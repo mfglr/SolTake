@@ -12,6 +12,8 @@ namespace SolTake.Core
         public double Width { get; private set; }
         public double Duration { get; private set; }
         public MultimediaType MultimediaType { get; private set; }
+        
+        private Multimedia() { }
 
         [JsonConstructor]
         private Multimedia(string containerName, string blobName, string? blobNameOfFrame, long size, double height, double width, double duration, MultimediaType multimediaType)

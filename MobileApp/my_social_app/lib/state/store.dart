@@ -167,7 +167,6 @@ final store = Store(
     //questions
     loadQuestionMiddleware,
     uploadQuestionMiddleware,
-    reUploadQuestionMiddleware,
     deleteQuestionMiddleware,
 
     nexHomeQuestionsMiddleware,
@@ -204,7 +203,6 @@ final store = Store(
     //solutions
     loadSolutionMiddleware,
     uploadSolutionMiddleware,
-    reuploadSolutionMiddleware,
     createSolutionByAiMiddleware,
     deleteSolutionMiddleware,
     markSolutionAsCorrectMiddleware,

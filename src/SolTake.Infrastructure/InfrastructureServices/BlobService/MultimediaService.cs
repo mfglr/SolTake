@@ -10,7 +10,6 @@ using SolTake.Core.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.Exceptions;
 using SolTake.Infrastructure.InfrastructureServices.BlobService.InternalServices;
 using Xabe.FFmpeg;
-using Xabe.FFmpeg.Downloader;
 
 namespace SolTake.Infrastructure.InfrastructureServices.BlobService
 {
@@ -19,6 +18,7 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
         private readonly IBlobService _blobService;
         private readonly UniqNameGenerator _uniqNameGenerator;
         private readonly IPathFinder _pathFinder;
+        private readonly string _scopeContainerName;
 
         public MultiMediaService(UniqNameGenerator uniqNameGenerator, IPathFinder pathFinder, IBlobService blobService)
         {
@@ -28,7 +28,6 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
             _scopeContainerName = $"{ContainerName.Temp}/{_uniqNameGenerator.Generate()}";
         }
 
-        private readonly string _scopeContainerName;
         private void Create() => Directory.CreateDirectory(_pathFinder.GetContainerPath(_scopeContainerName));
         private void Delete()
         {
@@ -37,7 +36,7 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
                 Directory.Delete(path, true);
         }
 
-        private async Task<Dimention> CalculatedimentionAsync(IFormFile file, CancellationToken cancellationToken)
+        private async Task<Application.InfrastructureServices.BlobService.Objects.Dimention> CalculatedimentionAsync(IFormFile file, CancellationToken cancellationToken)
         {
             using var stream = file.OpenReadStream();
             using var image = await Image.LoadAsync(stream, cancellationToken);
@@ -72,9 +71,10 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
             }
             return new(image.Height, image.Width);
         }
+
         private async Task<Multimedia> UploadImageAsync(string containerName, IFormFile file, CancellationToken cancellationToken, string? blobName = null)
         {
-            Dimention dimention = await CalculatedimentionAsync(file,cancellationToken);
+            var dimention = await CalculatedimentionAsync(file,cancellationToken);
 
             //manipulate and save tempdirectory;
             var stream0 = file.OpenReadStream();
@@ -119,7 +119,7 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
                 throw new ServerSideException();
 
             //calculate video dimention
-            Dimention dimention = new(videoCapture.Get(VideoCaptureProperties.FrameHeight), videoCapture.Get(VideoCaptureProperties.FrameWidth));
+            Core.Dimention dimention = new(videoCapture.Get(VideoCaptureProperties.FrameHeight), videoCapture.Get(VideoCaptureProperties.FrameWidth));
 
             //calculate video duration
             var duration = videoCapture.Get(VideoCaptureProperties.FrameCount) / videoCapture.Get(VideoCaptureProperties.Fps);

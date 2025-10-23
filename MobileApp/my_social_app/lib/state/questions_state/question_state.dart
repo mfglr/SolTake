@@ -135,7 +135,7 @@ class QuestionState extends Entity<int>{
       image: image,
     );
 
-  QuestionState changeId(int id) =>
+  QuestionState uploadSuccess(int id, Iterable<Media> medias) =>
     QuestionState(
       id: id,
       createdAt: createdAt,

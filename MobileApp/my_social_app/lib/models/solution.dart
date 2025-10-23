@@ -26,6 +26,7 @@ class Solution{
   final bool doesBelongToQuestionOfCurrentUser;
   final Multimedia? image;
   final bool isCreatedByAI;
+  final int? aiModelId;
   final String? aiModelName;
   final Multimedia? aiImage;
 
@@ -49,6 +50,7 @@ class Solution{
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
     required this.isCreatedByAI,
+    required this.aiModelId,
     required this.aiModelName,
     required this.aiImage
   });
@@ -77,6 +79,7 @@ class Solution{
       isCreatedByAI: isCreatedByAI,
       isDownvoted: isDownvoted,
       numberOfDownvotes: numberOfDownvotes,
+      aiModelId: aiModelId,
       aiModelName: aiModelName,
       aiImage: aiImage?.toMedia()
     );

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_social_app/custom_packages/media/models/local_video.dart';
 import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/custom_packages/media/models/remote_video.dart';
-import 'package:my_social_app/custom_packages/media/services/local_frame_catcher.dart';
 import 'package:my_social_app/custom_packages/media/wigets/media_widget/media_widget.dart';
 import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
 import 'package:my_social_app/custom_packages/status_widgets/app_title.dart';
@@ -31,14 +29,8 @@ class _ExtractFramePageState extends State<ExtractFramePage> {
   void _extractFrame() =>
     _positionSubject.first
       .then(
-        (positionMs) => 
-          widget.media is LocalVideo
-          ? LocalFrameCatcher
-              .catchFrame(
-                widget.media as LocalVideo,
-                positionMs: positionMs
-              )
-          : FrameCatcherService()
+        (positionMs) =>
+          FrameCatcherService()
               .catchFrame(
                 (widget.media as RemoteVideo).containerName,
                 (widget.media as RemoteVideo).blobName,

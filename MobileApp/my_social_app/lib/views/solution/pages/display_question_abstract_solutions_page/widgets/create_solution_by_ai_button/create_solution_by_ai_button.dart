@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_social_app/l10n/app_localizations.dart';
 import 'package:my_social_app/services/get_language.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
 import 'package:my_social_app/state/solutions_state/actions.dart';
 import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/create_solution_by_ai/select_models_page/select_models_page.dart';
@@ -10,10 +11,10 @@ import 'package:my_social_app/views/create_solution_by_ai/select_models_page/sel
 import 'create_solution_by_ai_button_constants.dart';
 
 class CreateSolutionByAiButton extends StatelessWidget {
-  final int questionId;
+  final QuestionState question;
   const CreateSolutionByAiButton({
     super.key,
-    required this.questionId
+    required this.question
   });
 
   Future<bool> createDialog(BuildContext context) =>
@@ -87,18 +88,18 @@ class CreateSolutionByAiButton extends StatelessWidget {
                 if(value && context.mounted){
                   Navigator
                     .of(context)
-                    .push(MaterialPageRoute(builder: (context) => SelectModelsPage(questionId: questionId)))
+                    .push(MaterialPageRoute(builder: (context) => SelectModelsPage(question: question)))
                     .then((value){
                       if(value != null && context.mounted){
                         final store = StoreProvider.of<AppState>(context,listen: false);
-                        store.dispatch(CreateSolutionByAIAction(
-                          modelId: value.modelId,
-                          questionId: questionId,
-                          blobName: value.blobName,
-                          position: value.position,
-                          prompt: value.prompt,
-                          isHighResulation: value.isHighResulation
-                        ));
+                        // store.dispatch(CreateSolutionByAIAction(
+                        //   modelId: value.modelId,
+                        //   questionId: questionId,
+                        //   blobName: value.blobName,
+                        //   position: value.position,
+                        //   prompt: value.prompt,
+                        //   isHighResulation: value.isHighResulation
+                        // ));
                       }
                     });
                 }

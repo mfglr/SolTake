@@ -7,7 +7,7 @@ namespace SolTake.Application.InfrastructureServices.OpenAIService
 {
     public class Gpt4OMini(IConfiguration configuration) : 
         ChatClient(
-            model: AIModels.Gpt_4o_Mini,
+            model: AIModels.Gpt4OMini,
             credential: new ApiKeyCredential(configuration["ChatGPT:ApiKey"]!),
             options: new OpenAIClientOptions()
             {

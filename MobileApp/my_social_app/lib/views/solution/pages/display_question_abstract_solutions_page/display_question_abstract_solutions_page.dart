@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:my_social_app/custom_packages/entity_state/action_dispathcers.dart';
+import 'package:my_social_app/custom_packages/entity_state/entity_container.dart';
 import 'package:my_social_app/services/get_language.dart';
 import 'package:my_social_app/custom_packages/status_widgets/app_back_button_widget.dart';
+import 'package:my_social_app/state/questions_state/actions.dart';
+import 'package:my_social_app/state/questions_state/question_state.dart';
+import 'package:my_social_app/state/questions_state/selectors.dart';
+import 'package:my_social_app/state/state.dart';
 import 'package:my_social_app/views/shared/label_pagination_widget/label_pagination_widget.dart';
+import 'package:my_social_app/views/shared/loading_view.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_correct_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_incorrect_solutions_page.dart';
 import 'package:my_social_app/views/solution/pages/display_question_abstract_solutions_page/pages/display_pending_solutions_page.dart';
@@ -53,52 +61,63 @@ class _DisplayQuestionAbstractSolutionsPageState extends State<DisplayQuestionAb
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const AppBackButtonWidget(),
-        title: Text(
-          title[getLanguage(context)]!,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold
-          ),
-        ),
+    return StoreConnector<AppState, EntityContainer<int, QuestionState>>(
+      onInit: (store) => loadIfNotLoading(
+        store,
+        selectQuestion(store,widget.questionId),
+        LoadQuestionAction(questionId: widget.questionId)
       ),
-      floatingActionButton:
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: CreateSolutionByAiButton(questionId: widget.questionId)
+      converter: (store) => selectQuestion(store,widget.questionId),
+      builder: (context, container) =>
+        container.isLoadSuccess
+          ? Scaffold(
+            appBar: AppBar(
+              leading: const AppBackButtonWidget(),
+              title: Text(
+                title[getLanguage(context)]!,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
             ),
-            CreateSolutionButton(questionId: widget.questionId),
-          ],
-        ),
-      body: Column(
-        children: [
-          LabelPaginationWidget(
-            labelBuilder: (isActive,index) => _labelBuilder(isActive,index),
-            page: _page,
-            labelCount: icons.length,
-            width: MediaQuery.of(context).size.width,
-            initialPage: 0,
-            pageController: _pageController
-          ),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
+            floatingActionButton:
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: CreateSolutionByAiButton(question: container.entity!)
+                  ),
+                  CreateSolutionButton(questionId: widget.questionId),
+                ],
+              ),
+            body: Column(
               children: [
-                DisplaySolutionsPage(questionId: widget.questionId),
-                DisplayCorrectSolutionsPage(questionId: widget.questionId),
-                DisplayPendingSolutionsPage(questionId: widget.questionId),
-                DisplayIncorrectSolutionsPage(questionId: widget.questionId),
+                LabelPaginationWidget(
+                  labelBuilder: (isActive,index) => _labelBuilder(isActive,index),
+                  page: _page,
+                  labelCount: icons.length,
+                  width: MediaQuery.of(context).size.width,
+                  initialPage: 0,
+                  pageController: _pageController
+                ),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    children: [
+                      DisplaySolutionsPage(questionId: widget.questionId),
+                      DisplayCorrectSolutionsPage(questionId: widget.questionId),
+                      DisplayPendingSolutionsPage(questionId: widget.questionId),
+                      DisplayIncorrectSolutionsPage(questionId: widget.questionId),
+                    ],
+                  ),
+                )
               ],
             ),
           )
-        ],
-      ),
+        : const LoadingView(),
     );
   }
 

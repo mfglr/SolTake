@@ -46,6 +46,7 @@ namespace SolTake.Infrastructure.QueryRepositories.QueryableMappers
                         join1.solution.Medias,
                         join1.user.Image,
                         join1.solution.IsCreatedByAI,
+                        join1.aiModel.Id,
                         join1.aiModel.Name.Value,
                         join1.aiModel.Image
                     )

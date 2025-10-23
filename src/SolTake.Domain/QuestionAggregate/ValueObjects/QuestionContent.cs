@@ -4,7 +4,7 @@ namespace SolTake.Domain.QuestionAggregate.ValueObjects
 {
     public class QuestionContent
     {
-        public readonly static int MaxSoluiontContentLength = 1000;
+        public readonly static int MaxSoluiontContentLength = 1024;
         public string Value { private set; get; }
 
         public QuestionContent(string value)

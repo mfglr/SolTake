@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
@@ -32,12 +31,10 @@ class SolutionService{
     }
     return multiPartRequest;
   }
-  Future<IdResponse> create(int questionId, String? content, Iterable<LocalMedia> medias, void Function(double) callback) async {
-    var request = await _createSolutionRequest(questionId,content,medias);
-    var data = await _appClient.postStream(request, callback);
-    return IdResponse.fromJson(jsonDecode(data));
-  }
-
+  Future<IdResponse> create(int questionId, String? content, Iterable<LocalMedia> medias, void Function(double) callback)
+    => _createSolutionRequest(questionId, content, medias)
+        .then((request) => _appClient.postStream(request, callback))
+        .then((json) => IdResponse.fromJson(jsonDecode(json)));
 
   MultipartRequest _createAISolutionRequest(int modelId, int questionId, Uint8List? bytes, String? prompt) {
     MultipartRequest multiPartRequest = MultipartRequest(
@@ -52,13 +49,13 @@ class SolutionService{
     }
     return multiPartRequest;
   }
-  Future<Solution> createByAI(int modelId, int questionId, Uint8List? bytes, String? prompt, void Function(double) callback)
+  Future<IdResponse> createByAI(int modelId, int questionId, Uint8List? bytes, String? prompt, void Function(double) callback)
     => _appClient
         .postStream(
           _createAISolutionRequest(modelId,questionId, bytes, prompt),
           callback
         )
-        .then((json) => Solution.fromJson(json));
+        .then((json) => IdResponse.fromJson(jsonDecode(json)));
 
   Future<void> delete(int solutionId) => 
     _appClient.delete("$solutionController/$deleteSolutionEndpoint/$solutionId");

@@ -17,8 +17,6 @@ SolutionsState solutionNotFoundReducer(SolutionsState prev, SolutionNotFoundActi
 //upload solution
 SolutionsState uploadSolutionReducer(SolutionsState prev, UploadSolutionAction action)
   => prev.upload(action.solution);
-SolutionsState reuploadSolutionReducer(SolutionsState prev, ReuploadSolutionAction action)
-  => prev.reupload(action.solution);
 SolutionsState changeSolutionRateReducer(SolutionsState prev, ChangeSolutionRateAction action)
   => prev.changeRate(action.solution, action.rate);
 SolutionsState markSolutionAsProcessing(SolutionsState prev, MarkSolutionAsProcessingAction action)
@@ -139,7 +137,6 @@ Reducer<SolutionsState> solutionsReducer = combineReducers<SolutionsState>([
 
   //upload solutions
   TypedReducer<SolutionsState,UploadSolutionAction>(uploadSolutionReducer).call,
-  TypedReducer<SolutionsState,ReuploadSolutionAction>(reuploadSolutionReducer).call,
   TypedReducer<SolutionsState,ChangeSolutionRateAction>(changeSolutionRateReducer).call,
   TypedReducer<SolutionsState,MarkSolutionAsProcessingAction>(markSolutionAsProcessing).call,
   TypedReducer<SolutionsState,UploadSolutionSuccessAction>(uploadSolutionSuccessReducer).call,

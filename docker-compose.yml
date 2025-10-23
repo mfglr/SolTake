@@ -1,0 +1,11 @@
+services:
+  questiondb:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+  
+  question.api:
+    image: question_api_image
+    build:
+      context: .
+      dockerfile: src/QuestionService/Dockerfile
+volumes:
+  questiondb_volume:

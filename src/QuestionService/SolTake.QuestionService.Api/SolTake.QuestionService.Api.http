@@ -1,0 +1,6 @@
+@SolTake.QuestionService.Api_HostAddress = http://localhost:5064
+
+GET {{SolTake.QuestionService.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

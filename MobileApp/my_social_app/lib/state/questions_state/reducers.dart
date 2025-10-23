@@ -18,14 +18,12 @@ QuestionsState questionNotFoundReducer(QuestionsState prev, QuestionNotFoundActi
 //uploading
 QuestionsState uploadQuestionReducer(QuestionsState prev, UploadQuestionAction action)
   => prev.upload(action.question);
-QuestionsState reuploadQuestionReducer(QuestionsState prev, ReuploadQuestionAction action)
-  => prev.reupload(action.question);
 QuestionsState changeQuestionRateReducer(QuestionsState prev, ChangeQuestionRateAction action)
   => prev.changeRate(action.questionId, action.rate);
 QuestionsState markQuestionStatusAsProcessingReducer(QuestionsState prev, MarkQuestionStatusAsProcessing action)
   => prev.processing(action.questionId);
 QuestionsState uploadQuestionSuccessReducer(QuestionsState prev, UploadQuestionSuccessAction action)
-  => prev.uploadSuccess(action.question,action.serverId);
+  => prev.uploadSuccess(action.question,action.serverId, action.medias);
 QuestionsState uploadQuestionFailedReducer(QuestionsState prev, UploadQuestionFailedAction action)
   => prev.uploadFailed(action.questionId);
 //uploading
@@ -201,7 +199,6 @@ Reducer<QuestionsState> newQuestionsReducer = combineReducers<QuestionsState>([
 
   //uploading
   TypedReducer<QuestionsState, UploadQuestionAction>(uploadQuestionReducer).call,
-  TypedReducer<QuestionsState, ReuploadQuestionAction>(reuploadQuestionReducer).call,
   TypedReducer<QuestionsState, ChangeQuestionRateAction>(changeQuestionRateReducer).call,
   TypedReducer<QuestionsState, MarkQuestionStatusAsProcessing>(markQuestionStatusAsProcessingReducer).call,
   TypedReducer<QuestionsState, UploadQuestionSuccessAction>(uploadQuestionSuccessReducer).call,

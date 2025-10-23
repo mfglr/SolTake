@@ -50,38 +50,8 @@ void uploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next
       .then((response) {
         store.dispatch(UploadQuestionSuccessAction(
           question: action.question,
-          serverId: response.id
-        ));
-        ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
-      })
-      .catchError((e){
-        store.dispatch(UploadQuestionFailedAction(questionId: action.question.id));
-        throw e;
-      });
-  }
-  next(action);
-}
-void reUploadQuestionMiddleware(Store<AppState> store, action, NextDispatcher next){
-  if(action is ReuploadQuestionAction){
-    ToastCreator.displaySuccess(questionCreationStartedNotificationContent[getLanguageByStore(store)]!);
-    QuestionService()
-      .createQuestion(
-        action.question.medias as Iterable<LocalMedia>,
-        action.question.exam.id,
-        action.question.subject.id,
-        action.question.topic?.id,
-        action.question.content,
-        (rate){
-          store.dispatch(ChangeQuestionRateAction(questionId: action.question.id, rate: rate));
-          if(rate == 1){
-            store.dispatch(MarkQuestionStatusAsProcessing(questionId: action.question.id));
-          }
-        }
-      )
-      .then((response) {
-        store.dispatch(UploadQuestionSuccessAction(
-          question: action.question,
-          serverId: response.id
+          serverId: response.id,
+          medias: response.medias.map((media) => media.toMedia())
         ));
         ToastCreator.displaySuccess(questionCreatedNotificationContent[getLanguageByStore(store)]!);
       })

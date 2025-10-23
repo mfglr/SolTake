@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.QuestionService.Application\SolTake.QuestionService.Application.csproj" />
+    <ProjectReference Include="..\SolTake.QuestionService.Infrastructure\SolTake.QuestionService.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -37,10 +37,10 @@ class QuestionContainerUploadStatusModal extends StatelessWidget {
             ),
             TextButton(
               onPressed: (){
+                final store = StoreProvider.of<AppState>(context,listen: false);
+                final container = selectQuestion(store, questionId);
                 if(container.status == EntityStatus.uploadFailed){
-                  final store = StoreProvider.of<AppState>(context,listen: false);
-                  final question = selectQuestion(store, questionId).entity!;
-                  store.dispatch(ReuploadQuestionAction(question: question));
+                  store.dispatch(UploadQuestionAction(question: container.entity!));
                 }
               },
               child: Text(

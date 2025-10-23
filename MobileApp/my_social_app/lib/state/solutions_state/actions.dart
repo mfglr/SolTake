@@ -32,9 +32,11 @@ class UploadSolutionAction extends AppAction{
   const UploadSolutionAction({required this.solution});
 }
 @immutable
-class ReuploadSolutionAction extends AppAction{
+class CreateSolutionByAIAction extends AppAction{
   final SolutionState solution;
-  const ReuploadSolutionAction({required this.solution});
+  const CreateSolutionByAIAction({
+    required this.solution
+  });
 }
 @immutable
 class ChangeSolutionRateAction extends AppAction{
@@ -65,13 +67,7 @@ class UploadSolutionFailedAction extends AppAction{
   const UploadSolutionFailedAction({required this.solution});
 }
 
-@immutable
-class CreateSolutionByAIAction extends AppAction{
-  final SolutionState solution;
-  const CreateSolutionByAIAction({
-    required this.solution
-  });
-}
+
 
 @immutable
 class DeleteSolutionAction extends AppAction{

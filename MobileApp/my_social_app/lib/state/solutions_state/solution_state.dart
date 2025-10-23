@@ -27,6 +27,7 @@ class SolutionState extends Entity<int> implements Avatar{
   final bool doesBelongToQuestionOfCurrentUser;
   final Media? image;
   final bool isCreatedByAI;
+  final int? aiModelId;
   final String? aiModelName;
   final Media? aiImage;
 
@@ -64,6 +65,7 @@ class SolutionState extends Entity<int> implements Avatar{
     required this.doesBelongToQuestionOfCurrentUser,
     required this.image,
     required this.isCreatedByAI,
+    required this.aiModelId,
     required this.aiModelName,
     required this.aiImage
   });
@@ -98,6 +100,7 @@ class SolutionState extends Entity<int> implements Avatar{
       doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
       image: image,
       isCreatedByAI: false,
+      aiModelId: null,
       aiModelName: null,
       aiImage: null
     ); 
@@ -129,6 +132,7 @@ class SolutionState extends Entity<int> implements Avatar{
       doesBelongToQuestionOfCurrentUser: question.isOwner,
       image: user.image,
       isCreatedByAI: true,
+      aiModelId: aiModel.id,
       aiModelName: aiModel.name,
       aiImage: aiModel.image
     );
@@ -179,6 +183,7 @@ class SolutionState extends Entity<int> implements Avatar{
         doesBelongToQuestionOfCurrentUser: doesBelongToQuestionOfCurrentUser,
         image: newImage ?? image,
         isCreatedByAI: isCreatedByAI,
+        aiModelId: aiModelId,
         aiModelName: aiModelName,
         aiImage: aiImage
       );

@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:my_social_app/constants/controllers.dart';
 import 'package:my_social_app/constants/question_endpoints.dart';
 import 'package:my_social_app/custom_packages/media/models/local_media.dart';
-import 'package:my_social_app/models/id_response.dart';
+import 'package:my_social_app/models/create_question.dart';
 import 'package:my_social_app/models/question.dart';
 import 'package:my_social_app/services/app_client.dart';
 import 'package:my_social_app/custom_packages/entity_state/page.dart';
@@ -46,11 +46,17 @@ class QuestionService{
     return request;
   }
 
-  Future<IdResponse> createQuestion(Iterable<LocalMedia> medias,int examId,int subjectId,int? topicId,String? content,void Function(double) callback) async {
-    var request = await _createQuestionRequest(medias,examId,subjectId,topicId,content);
-    var data = await _appClient.postStream(request, callback);
-    return IdResponse.fromJson(jsonDecode(data));
-  }
+  Future<CreateQuestion> createQuestion(
+    Iterable<LocalMedia> medias,
+    int examId,
+    int subjectId,
+    int? topicId,
+    String? content,
+    void Function(double) callback
+  ) =>
+    _createQuestionRequest(medias,examId,subjectId,topicId,content)
+      .then((request) => _appClient.postStream(request, callback))
+      .then((json) => CreateQuestion.fromJson(jsonDecode(json)));
 
   Future<void> delete(num questionId) =>
     _appClient

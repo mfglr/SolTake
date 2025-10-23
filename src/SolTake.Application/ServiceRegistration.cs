@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SolTake.Application.InfrastructureServices.IAService;
+using SolTake.Application.InfrastructureServices.OpenAIService;
 using SolTake.Application.PipelineBehaviours;
 using System.Reflection;
 
@@ -15,6 +16,7 @@ namespace SolTake.Application
             return services
                 .AddAutoMapper(c => c.AddMaps(assembly))
                 .AddMediatR(x => x.RegisterServicesFromAssembly(assembly))
+                .AddOpenAIServices()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(AppPipelineBehaviour<,>))
                 .AddScoped<ChatGPT_Service>();
         }

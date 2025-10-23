@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_social_app/custom_packages/media/models/media.dart';
 import 'package:my_social_app/state/actions.dart';
 import 'package:my_social_app/state/questions_state/question_state.dart';
 
@@ -37,11 +38,6 @@ class UploadQuestionAction extends AppAction{
   });
 }
 @immutable
-class ReuploadQuestionAction extends AppAction{
-  final QuestionState question;
-  const ReuploadQuestionAction({required this.question});
-}
-@immutable
 class ChangeQuestionRateAction extends AppAction{
   final int questionId;
   final double rate;
@@ -59,9 +55,11 @@ class MarkQuestionStatusAsProcessing extends AppAction{
 class UploadQuestionSuccessAction extends AppAction{
   final QuestionState question;
   final int serverId;
+  final Iterable<Media> medias;
   const UploadQuestionSuccessAction({
     required this.question,
-    required this.serverId
+    required this.serverId,
+    required this.medias
   });
 }
 @immutable

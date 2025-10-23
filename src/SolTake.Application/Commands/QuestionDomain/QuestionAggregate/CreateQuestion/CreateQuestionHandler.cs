@@ -74,7 +74,7 @@ namespace SolTake.Application.Commands.QuestionDomain.QuestionAggregate.CreateQu
                 //commit changes
                 await _unitOfWork.CommitAsync(cancellationToken);
 
-                return new(question.Id);
+                return new(question.Id, questionMedias);
             }
             catch (Exception)
             {

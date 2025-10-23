@@ -7,16 +7,10 @@ namespace SolTake.Infrastructure.InfrastructureServices.BlobService
     {
         private readonly IPathFinder _pathFinder = pathFinder;
 
-        public async Task<string> ToBase64(string containerName, string blobName,CancellationToken cancellationToken)
-        {
-            var bytes = await File.ReadAllBytesAsync(_pathFinder.GetPath(containerName, blobName), cancellationToken);
-            return $"data:image/jpeg;base64,{Convert.ToBase64String(bytes)}";
-        }
-
-        public async Task<string> ToBase64(Stream stream, CancellationToken cancellationToken)
+        public async Task<string> ToBase64(Stream stream, string format, CancellationToken cancellationToken)
         {
             var bytes = await stream.ToByteArrayAsync(cancellationToken);
-            return $"data:image/jpeg;base64,{Convert.ToBase64String(bytes)}";
+            return $"data:image/{format};base64,{Convert.ToBase64String(bytes)}";
         }
 
         public string ToBase64(byte[] bytes,string format) => $"data:image/{format};base64,{Convert.ToBase64String(bytes)}";

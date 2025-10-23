@@ -1,0 +1,22 @@
+services:
+  questiondb:
+    container_name: questiondb
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - questiondb_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123*
+      - MSSQL_PID=Evaluation
+
+  question.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DEVELOPMENT
+      - ConnectionStrings:SqlServer=ConnectionStrings:DefaultConnection=Server=questiondb,1433;Database=SolTakeQuestionDB;User=sa;Password=Password123*
+    ports:
+      - "5064:80"
+    depends_on:
+      - questiondb
