@@ -14,11 +14,8 @@
             ScopeContainerName = $"Temp/{_uniqNameGenerator.Generate()}";
         }
 
-        public Task Create(CancellationToken cancellationToken)
-        {
+        public void Create() =>
             Directory.CreateDirectory(_pathFinder.GetContainerPath(ScopeContainerName));
-            return Task.CompletedTask;
-        }
 
         public async Task<string> AddAsync(Stream stream, CancellationToken cancellationToken)
         {
@@ -28,12 +25,11 @@
             return path;
         }
 
-        public Task Delete(CancellationToken cancellationToken)
+        public void Delete()
         {
             var path = _pathFinder.GetContainerPath(ScopeContainerName);
             if (Directory.Exists(path))
                 Directory.Delete(path, true);
-            return Task.CompletedTask;
         }
     }
 }

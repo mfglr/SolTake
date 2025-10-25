@@ -11,16 +11,16 @@ namespace SolTake.QuestionService.Infrastructure
         {
             BsonClassMap.RegisterClassMap<Question>(cm =>
             {
-                cm.MapIdMember(p => p.Id);
-                cm.MapMember(p => p.CreatedAt);
-                cm.MapMember(p => p.Version);
-                cm.MapMember(p => p.UserId);
-                cm.MapMember(p => p.Content);
-                cm.MapMember(p => p.ExamId);
-                cm.MapMember(p => p.SubjectId);
-                cm.MapMember(p => p.Topics);
-                cm.MapMember(p => p.Media);
-
+                cm.MapIdMember(q => q.Id);
+                cm.MapMember(q => q.CreatedAt);
+                cm.MapMember(q => q.Version);
+                cm.MapMember(q => q.UserId);
+                cm.MapMember(q => q.Content);
+                cm.MapMember(q => q.ExamName);
+                cm.MapMember(q => q.SubjectName);
+                cm.MapMember(q => q.Topics);
+                cm.MapMember(q => q.Media);
+                cm.MapMember(q => q.UnpublishedReasons);
                 cm.IdMemberMap.SetSerializer(new GuidSerializer(GuidRepresentation.Standard));
             });
         }

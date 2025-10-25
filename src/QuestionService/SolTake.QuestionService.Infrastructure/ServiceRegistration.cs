@@ -7,7 +7,7 @@ namespace SolTake.QuestionService.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddQuestionInfrastructureServices(this IServiceCollection services, IConfiguration configuration) => services
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services) => services
                 .AddSingleton<IBlobService,LocalBlobService>()
                 .AddScoped<MongoContext>()
                 .AddScoped<IQuestionRepository, QuestionRepository>();

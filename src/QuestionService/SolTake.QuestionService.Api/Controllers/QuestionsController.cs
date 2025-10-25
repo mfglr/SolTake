@@ -1,6 +1,7 @@
 ﻿using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
-using SolTake.QuestionService.Application.ApplicationServices.Create;
+using SolTake.QuestionService.Application.UseCases.Create;
+using SolTake.QuestionService.Application.UseCases.MarkedQuestionAsDraft;
 
 namespace SolTake.QuestionService.Api.Controllers
 {
@@ -12,7 +13,11 @@ namespace SolTake.QuestionService.Api.Controllers
 
         [RequestSizeLimit(104857600)]
         [HttpPost]
-        public async Task Create([FromForm] string? content, [FromForm] int examId, [FromForm] int subjectId, [FromForm] IEnumerable<string> topics, [FromForm] IFormFileCollection media, CancellationToken cancellationToken) =>
-            await _mediator.Send(new CreateQuestionDto(content, examId, subjectId, topics, media), cancellationToken);
+        public async Task Create([FromForm] string? content, [FromForm] string examName, [FromForm] string subjectName, [FromForm] IEnumerable<string> topics, [FromForm] IFormFileCollection media, CancellationToken cancellationToken) =>
+            await _mediator.Send(new CreateQuestionDto(content, examName, subjectName, topics, media), cancellationToken);
+
+        [HttpPost]
+        public async Task MarkAsDraft(MarkedQuestionAsDraftDto request, CancellationToken cancellationToken) =>
+            await _mediator.Send(request, cancellationToken);
     }
 }

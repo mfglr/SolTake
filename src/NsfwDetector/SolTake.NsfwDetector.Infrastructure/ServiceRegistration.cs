@@ -5,7 +5,7 @@ namespace SolTake.NsfwDetector.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddNsfwDetectorInfrastructureServices(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
             => services
                 .AddSingleton<VideoFrameExtractor>()
                 .AddSingleton<ImageFrameExtractor>()

@@ -1,7 +1,7 @@
 using MassTransit;
 using MassTransit.Mediator;
 using SolTake.Core.Events;
-using SolTake.ThumbnailGenerator.Application.ApplicationServices.GenerateThumbnail;
+using SolTake.ThumbnailGenerator.Application.UseCases.GenerateThumbnail;
 
 namespace SolTake.ThumbnailGenerator.Generate720_OnMediaUploaded.Worker
 {

@@ -21,12 +21,13 @@ namespace SolTake.NsfwDetector.Infrastructure
 
         public async Task<IEnumerable<NsfwScore>> ClasifyAsync(string inputPath, string outputPath, MediaType type, CancellationToken cancellationToken)
         {
-            int resulation = int.Parse(_configuration["NsfwDetector:Resulation"]!);
-            int fps = int.Parse(_configuration["NsfwDetector:Fps"]!);
+            int resulation = int.Parse(_configuration["Resulation"]!);
 
             NsfwScoreResult scores;
             if (type == MediaType.Video)
             {
+                int fps = int.Parse(_configuration["Fps"]!);
+
                 var paths = await _videoFrameExtractor.ExtractAsync(inputPath, outputPath, resulation, fps, cancellationToken);
                 scores = await _internalNsfwDetector.ClassifyImagesAsync(paths, cancellationToken);
             }

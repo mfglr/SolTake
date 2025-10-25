@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using SolTake.NsfwDetector.Application.ApplicationServices.CalculateMediaNsfwScore;
+using SolTake.NsfwDetector.Application.UseCases.CalculateQuestionNsfwScore;
 
 namespace SolTake.NsfwDetector.Application
 {
@@ -12,7 +12,7 @@ namespace SolTake.NsfwDetector.Application
                 .AddSingleton<PathFinder>()
                 .AddScoped<TempDirectoryManager>()
                 .AddMediator(cfg => {
-                    cfg.AddConsumer<CalculateMediaNsfwScoreHandler>();
+                    cfg.AddConsumer<CalculateQuestionNsfwScoreHandler>();
                 });
 
     }

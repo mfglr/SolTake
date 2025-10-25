@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using SolTake.ThumbnailGenerator.Application.ApplicationServices.GenerateThumbnail;
+using SolTake.ThumbnailGenerator.Application.UseCases.CalculateMediaAspectRatios;
+using SolTake.ThumbnailGenerator.Application.UseCases.GenerateThumbnail;
 
 namespace SolTake.ThumbnailGenerator.Application
 {
@@ -11,6 +12,7 @@ namespace SolTake.ThumbnailGenerator.Application
                 .AddMediator(cfg =>
                 {
                     cfg.AddConsumer<GenerateThumbnailHandler>();
+                    cfg.AddConsumer<CalculateMediaAspectRatiosHandler>();
                 });
     }
 }

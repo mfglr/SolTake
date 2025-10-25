@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SolTake.QuestionService.SetQuestionMediaDimentions.Worker-d5263654-e648-46b1-93ab-a7d5c562ff05</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.5.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.QuestionService.Application\SolTake.QuestionService.Application.csproj" />
+    <ProjectReference Include="..\SolTake.QuestionService.Infrastructure\SolTake.QuestionService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

@@ -38,7 +38,7 @@ namespace SolTake.NsfwDetector.Infrastructure
 
         public async Task<NsfwScoreResult> ClassifyAsync(string text, CancellationToken cancellationToken)
         {
-            var json = JsonSerializer.Serialize(new { model = _model, text });
+            var json = JsonSerializer.Serialize(new { model = _model, input = text });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var result = await _client.PostAsync("", content, cancellationToken);
@@ -70,7 +70,6 @@ namespace SolTake.NsfwDetector.Infrastructure
 
             if (nsfwResult.Error != null)
                 throw new NsfwDetectorException(nsfwResult.Error.Message);
-
             return nsfwResult.Results!.First().CategoryScores;
         }
 

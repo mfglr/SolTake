@@ -21,8 +21,8 @@ builder.Services
             });
         }
     )
-    .AddQuestionApplicationServices()
-    .AddQuestionInfrastructureServices(builder.Configuration);
+    .AddApplicationServices()
+    .AddInfrastructureServices();
 
 var app = builder.Build();
 

@@ -11,7 +11,8 @@ namespace SolTake.ThumbnailGenerator.Infrastructure
                 .AddSingleton<UniqNameGenerator>()
                 .AddSingleton<IBlobService,LocalBlobService>()
                 .AddScoped<ITempDirectoryManager, TempDirectoryManager>()
-                .AddScoped<IThumbnailGenerator, ThumbnailGenerator>();
+                .AddScoped<IThumbnailGenerator, ThumbnailGenerator>()
+                .AddScoped<IDimentionCalculator,DimentionCalculator>();
 
     }
 }

@@ -4,15 +4,15 @@
     {
         public string ContainerName { get; private set; }
         public string BlobName { get; private set; }
-        public double AspectRatio { get; private set; }
+        public Dimention? Dimention { get; private set; }
         public MediaType Type { get; private set; }
         public IEnumerable<NsfwScore> Scores { get; private set; }
 
-        private Media(string containerName, string blobName, double aspectRatio, MediaType type, IEnumerable<NsfwScore> scores)
+        private Media(string containerName, string blobName, Dimention? dimention, MediaType type, IEnumerable<NsfwScore> scores)
         {
             ContainerName = containerName;
             BlobName = blobName;
-            AspectRatio = aspectRatio;
+            Dimention = dimention;
             Type = type;
             Scores = scores;
         }
@@ -26,9 +26,9 @@
         }
 
         public Media SetNsfw(IEnumerable<NsfwScore> scores) =>
-            new(ContainerName,BlobName,AspectRatio,Type, scores);
+            new(ContainerName, BlobName, Dimention, Type, scores);
 
-        public Media SetAspectRatio(double aspectRatio) =>
-           new(ContainerName, BlobName, aspectRatio, Type, Scores);
+        public Media SetAspectRatio(Dimention dimention) =>
+           new(ContainerName, BlobName, dimention, Type, Scores);
     }
 }
