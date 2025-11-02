@@ -21,15 +21,15 @@ namespace SolTake.QuestionService.Application.UseCases.Create
             {
                 var userId = 1;
                 var content = context.Message.Content != null ? new QuestionContent(context.Message.Content) : null;
-                var examName = new QuestionExamName(context.Message.ExamName);
-                var subjectName = new QuestionSubjectName(context.Message.SubjectName);
+                var exam = new QuestionExam(context.Message.ExamId);
+                var subject = new QuestionSubject(context.Message.SubjectId);
                 var topics = context.Message.Topics.Select(x => new QuestionTopic(x));
 
                 var types = _mediaTypeMapper.GetTypes(context.Message.Media);
                 blobNames = await _blobService.UploadAsync("QuestionMedia", context.Message.Media, context.CancellationToken);
                 var media = _mediaGenerator.Generate("QuestionMedia", types, blobNames);
 
-                var question = new Question(userId, content, examName, subjectName, topics, media);
+                var question = new Question(userId, content, exam, subject, context.Message.Media.Count, topics);
                 question.Create();
 
                 await _questionRepository.CreateAsync(question, context.CancellationToken);
@@ -37,19 +37,18 @@ namespace SolTake.QuestionService.Application.UseCases.Create
                 await _publishEndpoint.Publish(
                     new QuestionCreated(
                         question.Id,
-                        question.ExamName.Value,
+                        question.Exam.Id,
+                        question.Subject.Id,
                         question.Content?.Value,
                         topics.Select(x => x.Value),
-                        media.Select(x => new Media_QuestionCreated(x.ContainerName,x.BlobName,x.Type))
+                        media.Select(x => new Media_QuestionCreated(
+                            x.ContainerName,
+                            x.BlobName,
+                            x.Type
+                        ))
                     ),
                     context.CancellationToken
                 );
-
-                //foreach (var mediaItem in media)
-                //    await _publishEndpoint.Publish(
-                //        new MediaUploadedEvent(question.Id, mediaItem.ContainerName, mediaItem.BlobName, mediaItem.Type),
-                //        context.CancellationToken
-                //    );
             }
             catch (Exception)
             {

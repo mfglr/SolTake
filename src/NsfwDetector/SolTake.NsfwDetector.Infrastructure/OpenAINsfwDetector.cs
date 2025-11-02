@@ -41,8 +41,13 @@ namespace SolTake.NsfwDetector.Infrastructure
             var json = JsonSerializer.Serialize(new { model = _model, input = text });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var result = await _client.PostAsync("", content, cancellationToken);
-            using var stream = await result.Content.ReadAsStreamAsync(cancellationToken);
+            var response = await _client.PostAsync("", content, cancellationToken);
+            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                using var reader = new StreamReader(stream);
+                throw new NsfwDetectorException(await reader.ReadToEndAsync(cancellationToken));
+            }
             var nsfwResult = (await JsonSerializer.DeserializeAsync<NsfwResult>(stream, cancellationToken: cancellationToken))!;
 
             if (nsfwResult.Error != null)
@@ -66,6 +71,11 @@ namespace SolTake.NsfwDetector.Infrastructure
             using var request = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("", request, cancellationToken);
             using var contentStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                using var reader = new StreamReader(contentStream);
+                throw new NsfwDetectorException(await reader.ReadToEndAsync(cancellationToken));
+            }
             var nsfwResult = (await JsonSerializer.DeserializeAsync<NsfwResult>(contentStream, cancellationToken: cancellationToken))!;
 
             if (nsfwResult.Error != null)

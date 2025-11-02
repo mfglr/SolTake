@@ -12,9 +12,10 @@ namespace SolTake.ExamService.Application.ApplicationServices.Create
 
         public async Task Consume(ConsumeContext<CreateDto> context)
         {
+            var country = new Country(context.Message.Country);
             var name = new ExamName(context.Message.Name);
             var initialism = new ExamInitialism(context.Message.Initialism);
-            var exam = new Exam(name, initialism, []);
+            var exam = new Exam(country, name, initialism, context.Message.Subjects);
 
             await _examCreatorDomainService.CreateAsync(exam, context.CancellationToken);
 

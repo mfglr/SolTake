@@ -5,7 +5,8 @@ namespace SolTake.Core.Events.QuestionEvents
     public record Media_QuestionCreated(string ContainerName, string BlobName, MediaType Type);
     public record QuestionCreated(
         Guid Id,
-        string ExamName,
+        Guid ExamId,
+        Guid SubjectId,
         string? Content,
         IEnumerable<string> TopicNames,
         IEnumerable<Media_QuestionCreated> Media

@@ -10,10 +10,17 @@ namespace SolTake.ExamService.Infrastructure
         public Task CreateAsync(Exam exam, CancellationToken cancellationToken) =>
             _context.Exams.InsertOneAsync(exam, cancellationToken: cancellationToken);
 
-        public async Task DeleteAsync(ExamName name, CancellationToken cancellationToken)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter = Builders<Exam>.Filter.Eq(c => c.Name, name);
+            var filter = Builders<Exam>.Filter.Eq(c => c.Id, id);
             await _context.Exams.DeleteOneAsync(filter, cancellationToken: cancellationToken);
+        }
+
+        public async Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Exam>.Filter.Eq(e => e.Id, id);
+            var document = await _context.Exams.FindAsync(filter, cancellationToken: cancellationToken);
+            return await document.AnyAsync(cancellationToken);
         }
 
         public async Task<bool> ExistAsync(ExamName name, CancellationToken cancellationToken)
@@ -23,9 +30,9 @@ namespace SolTake.ExamService.Infrastructure
             return await document.AnyAsync(cancellationToken);
         }
 
-        public async Task<Exam?> GetByIdAsync(ExamName name, CancellationToken cancellationToken)
+        public async Task<Exam?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter = Builders<Exam>.Filter.Eq(c => c.Name, name);
+            var filter = Builders<Exam>.Filter.Eq(c => c.Id, id);
             var document = await _context.Exams.FindAsync(filter, cancellationToken: cancellationToken);
             return await document.FirstOrDefaultAsync(cancellationToken);
         }

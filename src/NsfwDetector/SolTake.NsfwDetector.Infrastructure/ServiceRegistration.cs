@@ -14,6 +14,7 @@ namespace SolTake.NsfwDetector.Infrastructure
                 .AddSingleton<NsfwClient>()
                 .AddSingleton<IInternalNsfwDetector, OpenAINsfwDetector>()
                 .AddSingleton<INsfwDetector, NsfwDetector>()
-                .AddSingleton<IBlobService,LocalBlobService>();
+                .AddSingleton<IBlobService,LocalBlobService>()
+                .AddSingleton<IFrameExtractor, FrameExtractor>();
     }
 }

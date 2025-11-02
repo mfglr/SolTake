@@ -11,6 +11,24 @@
             Category = category;
         }
 
+        public static IEnumerable<NsfwScore> Init() =>
+            [
+                Harassment(1),
+                HarassmentThreatening(1),
+                Sexual(1),
+                Hate(1),
+                HateThreatening(1),
+                Illicit(1),
+                IllicitViolent(1),
+                SelfHarmIntent(1),
+                SelfHarmInstructions(1),
+                SelfHarm(1),
+                SexualMinors(1),
+                Violence(1),
+                ViolenceGraphic(1)
+            ];
+
+
         public static NsfwScore Harassment(double score) => 
             new (score, NsfwCategory.Harassment);
 

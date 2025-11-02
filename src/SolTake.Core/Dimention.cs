@@ -1,6 +1,6 @@
 ﻿namespace SolTake.Core
 {
-    public record Dimention(double Height, double Width)
+    public record Dimention(double Width, double Height)
     {
         public bool IsPortrait() =>
             Height > Width;

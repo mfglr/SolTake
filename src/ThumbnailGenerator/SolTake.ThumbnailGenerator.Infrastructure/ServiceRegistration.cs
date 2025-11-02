@@ -7,12 +7,8 @@ namespace SolTake.ThumbnailGenerator.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services) =>
             services
-                .AddSingleton<PathFinder>()
-                .AddSingleton<UniqNameGenerator>()
                 .AddSingleton<IBlobService,LocalBlobService>()
-                .AddScoped<ITempDirectoryManager, TempDirectoryManager>()
-                .AddScoped<IThumbnailGenerator, ThumbnailGenerator>()
-                .AddScoped<IDimentionCalculator,DimentionCalculator>();
+                .AddScoped<IThumbnailGenerator, ThumbnailGenerator>();
 
     }
 }

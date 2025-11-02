@@ -2,6 +2,6 @@
 {
     public interface IThumbnailGenerator
     {
-        Task<Stream> GenerateAsync(Stream stream, double resulation, bool isSquare, CancellationToken cancellationToken);
+        Task GenerateAsync(string input, string output, double resulation, bool isSquare, CancellationToken cancellationToken);
     }
 }

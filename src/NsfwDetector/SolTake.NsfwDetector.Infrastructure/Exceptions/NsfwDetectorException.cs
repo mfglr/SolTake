@@ -4,7 +4,7 @@ using System.Net;
 
 namespace SolTake.NsfwDetector.Infrastructure.Exceptions
 {
-    internal class NsfwDetectorException(string message) : AppException((int)HttpStatusCode.InternalServerError,message: message)
+    public class NsfwDetectorException(string message) : AppException((int)HttpStatusCode.InternalServerError,message: message)
     {
         private readonly static string _messageEn = "Nsfw Detector Exception";
         private readonly static string _messageTr = "Nsfw Detector Exception";

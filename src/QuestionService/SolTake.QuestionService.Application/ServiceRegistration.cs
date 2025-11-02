@@ -1,9 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using SolTake.QuestionService.Application.UseCases.Create;
-using SolTake.QuestionService.Application.UseCases.SetMediaDimentions;
-using SolTake.QuestionService.Application.UseCases.SetMediaNsfwScore;
-using SolTake.QuestionService.Application.UseCases.SetQuestionNsfwScores;
+using SolTake.QuestionService.Application.UseCases.SetContentNsfwScore;
+using SolTake.QuestionService.Application.UseCases.SetTopicsNsfwScores;
 
 namespace SolTake.QuestionService.Application
 {
@@ -15,9 +14,8 @@ namespace SolTake.QuestionService.Application
                 .AddSingleton<MediaTypeMapper>()
                 .AddMediator(cfg => {
                     cfg.AddConsumer<CreateQuestionHandler>();
-                    cfg.AddConsumer<SetMediaNsfwScoreHandler>();
-                    cfg.AddConsumer<SetQuestionNsfwScoresHandler>();
-                    cfg.AddConsumer<SetMediaDimentionsHandler>();
+                    cfg.AddConsumer<SetContentNsfwScoreHandler>();
+                    cfg.AddConsumer<SetTopicsNsfwScoresHandler>();
                 });
     }
 }

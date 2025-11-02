@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SolTake.MediaMetadataService.Workers-02efb391-51a1-4df4-bbf8-9f20ac7ea997</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.5.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.MediaMetadataService.Application\SolTake.MediaMetadataService.Application.csproj" />
+    <ProjectReference Include="..\SolTake.MediaMetadataService.Infrastructure\SolTake.MediaMetadataService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

@@ -9,7 +9,7 @@ namespace SolTake.ExamService.Application.ApplicationServices.Exist
 
         public async Task Consume(ConsumeContext<ExistDto> context)
         {
-            var value = await _examRepository.ExistAsync(new(context.Message.Name), context.CancellationToken);
+            var value = await _examRepository.ExistAsync(context.Message.Id, context.CancellationToken);
             await context.RespondAsync(new ExistResponseDto(value));
         }
     }

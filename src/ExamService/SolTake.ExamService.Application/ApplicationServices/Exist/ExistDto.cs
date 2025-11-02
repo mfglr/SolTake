@@ -1,4 +1,4 @@
 ﻿namespace SolTake.ExamService.Application.ApplicationServices.Exist
 {
-    public record ExistDto(string Name);
+    public record ExistDto(Guid Id);
 }

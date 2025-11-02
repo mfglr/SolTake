@@ -10,10 +10,17 @@ namespace SolTake.SubjectService.Infrastructure
         public Task CreateAsync(Subject subject, CancellationToken cancellationToken)
             => _context.Subjects.InsertOneAsync(subject, cancellationToken: cancellationToken);
 
+        public async Task<Subject?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Subject>.Filter.Eq(x => x.Id, id);
+            using var document = await _context.Subjects.FindAsync(filter, cancellationToken: cancellationToken);
+            return await document.FirstOrDefaultAsync(cancellationToken);
+        }
+
         public async Task<bool> ExistAsync(SubjectName name, CancellationToken cancellationToken)
         {
             var filter = Builders<Subject>.Filter.Eq(s => s.Name, name);
-            var documet = await _context.Subjects.FindAsync(filter, cancellationToken: cancellationToken);
+            using var documet = await _context.Subjects.FindAsync(filter, cancellationToken: cancellationToken);
             return await documet.AnyAsync(cancellationToken);
         }
     }

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SolTake.ThumbnailGenerator.Workers-22120790-779f-403c-ad8b-4ec3bb256f69</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.5.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SolTake.ThumbnailGenerator.Application\SolTake.ThumbnailGenerator.Application.csproj" />
+    <ProjectReference Include="..\SolTake.ThumbnailGenerator.Infrastructure\SolTake.ThumbnailGenerator.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

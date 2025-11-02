@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SolTake.QuestionService.Application\SolTake.QuestionService.Application.csproj" />
+    <ProjectReference Include="..\SolTake.QuestionService.Domain\SolTake.QuestionService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

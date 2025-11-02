@@ -40,6 +40,10 @@ namespace SolTake.NsfwDetector.Infrastructure
             return _nsfwResultToNsfsCategories.Map(scores);
         }
 
-
+        public async Task<IEnumerable<NsfwScore>> ClasifyImageAsync(string inputPath, CancellationToken cancellationToken)
+        {
+            var scores = await _internalNsfwDetector.ClassifyImageAsync(inputPath, cancellationToken);
+            return _nsfwResultToNsfsCategories.Map(scores);
+        }
     }
 }

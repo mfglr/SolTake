@@ -2,5 +2,5 @@
 
 namespace SolTake.QuestionService.Application.UseCases.Create
 {
-    public record CreateQuestionDto(string? Content, string ExamName, string SubjectName, IEnumerable<string> Topics, IFormFileCollection Media);
+    public record CreateQuestionDto(string? Content, Guid ExamId, Guid SubjectId, IEnumerable<string> Topics, IFormFileCollection Media);
 }
